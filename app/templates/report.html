@@ -110,55 +110,66 @@
     <section class="report-section mb-4" id="economic-political-outline">
         <div class="eco-pol-card">
             <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-balance-scale"></i></span>Economic and Political Outline</div>
-            <div class="section-intro mb-3">{{ eco_political_intro|plain_text }}</div>
-            <div class="row g-4">
-                <!-- Economic Outline -->
-                <div class="col-lg-6">
-                    <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-chart-area"></i></span>Economic Outline</div>
-                    <div class="mb-3">{{ eco_outline_overview|safe }}</div>
-                    {% if eco_outline_main_indicators_table %}
-                    <div class="eco-pol-table table-responsive mb-3">
-                        {{ eco_outline_main_indicators_table|safe }}
+            <!-- Stack cards vertically instead of two columns -->
+            <div class="mb-3">
+                <div class="trade-card p-3 mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="trade-card-icon me-2"><i class="fas fa-chart-area"></i></span>
+                        <h5 class="mb-0">Economic Overview</h5>
+                    </div>
+                    {% if eco_outline_overview %}
+                    <div class="mb-2">
+                        {% for para in eco_outline_overview.split('\n') if para.strip() %}
+                            <div class="mb-2">{{ para|safe }}</div>
+                        {% endfor %}
                     </div>
                     {% endif %}
-                    <div class="mb-3">{{ eco_outline_main_sectors|safe }}</div>
-                    {% if eco_outline_breakdown_table %}
-                    <div class="eco-pol-table table-responsive mb-3">
-                        {{ eco_outline_breakdown_table|safe }}
+                    {% if eco_outline_main_sectors %}
+                    <div class="mb-2">
+                        <strong>Main Sectors:</strong>
+                        <ul class="mb-2 d-flex flex-wrap justify-content-center gap-3 main-sectors-list" style="list-style:none; padding:0; margin:0;">
+                            {% for sector in eco_outline_main_sectors.split('\n') if sector.strip() %}
+                                <li class="main-sector-item px-3 py-2">{{ sector|safe }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                     {% endif %}
-                    {% if eco_outline_economic_freedom or eco_outline_business_env %}
-                    <div class="eco-pol-stat-row mb-3">
+                    <div class="d-flex flex-wrap gap-2">
                         {% if eco_outline_economic_freedom %}
-                        <div class="eco-pol-stat-block">
+                        <div class="eco-pol-stat-block flex-fill mb-2">
                             <div class="fw-bold mb-1"><i class="fas fa-unlock-alt"></i> Economic Freedom</div>
                             {{ eco_outline_economic_freedom|safe }}
                         </div>
                         {% endif %}
                         {% if eco_outline_business_env %}
-                        <div class="eco-pol-stat-block">
+                        <div class="eco-pol-stat-block flex-fill mb-2">
                             <div class="fw-bold mb-1"><i class="fas fa-briefcase"></i> Business Env. Rank</div>
                             {{ eco_outline_business_env|safe }}
                         </div>
                         {% endif %}
                     </div>
-                    {% endif %}
                 </div>
-                <!-- Political Outline -->
-                <div class="col-lg-6">
-                    <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-landmark"></i></span>Political Outline</div>
+                <div class="trade-card p-3 mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="trade-card-icon me-2"><i class="fas fa-landmark"></i></span>
+                        <h5 class="mb-0">Political Overview</h5>
+                    </div>
                     {% if political_outline %}
-                    <div class="mb-3">{{ political_outline|safe }}</div>
+                    <div class="mb-2">
+                        {% for para in political_outline.split('\n') if para.strip() %}
+                            <div class="mb-2">{{ para|safe }}</div>
+                        {% endfor %}
+                    </div>
                     {% endif %}
-                    <div class="eco-pol-stat-row mb-3">
+                    <div class="d-flex flex-wrap gap-2">
                         {% if political_press_freedom %}
-                        <div class="eco-pol-stat-block">
+                        <div class="eco-pol-stat-block flex-fill mb-2">
                             <div class="fw-bold mb-1"><i class="fas fa-newspaper"></i> Press Freedom</div>
                             {{ political_press_freedom|safe }}
                         </div>
                         {% endif %}
                         {% if political_freedom %}
-                        <div class="eco-pol-stat-block">
+                        <div class="eco-pol-stat-block flex-fill mb-2">
                             <div class="fw-bold mb-1"><i class="fas fa-user-shield"></i> Political Freedom</div>
                             {{ political_freedom|safe }}
                         </div>
@@ -166,8 +177,21 @@
                     </div>
                 </div>
             </div>
+            <!-- Full-width tables below the cards -->
+            {% if eco_outline_main_indicators_table %}
+            <div class="mt-3">
+                <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Main Economic Indicators</h5>
+                <div class="eco-pol-table table-scroll table-responsive">{{ eco_outline_main_indicators_table|safe }}</div>
+            </div>
+            {% endif %}
+            {% if eco_outline_breakdown_table %}
+            <div class="mt-3">
+                <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Economic Breakdown</h5>
+                <div class="eco-pol-table table-scroll table-responsive">{{ eco_outline_breakdown_table|safe }}</div>
+            </div>
+            {% endif %}
             {% if eco_political_insights %}
-            <div class="eco-pol-insight">{{ eco_political_insights|plain_text }}</div>
+            <div class="eco-pol-insight mt-3">{{ eco_political_insights|plain_text }}</div>
             {% endif %}
         </div>
     </section>
