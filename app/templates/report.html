@@ -172,6 +172,111 @@
         </div>
     </section>
 
+    <!-- Foreign Trade in Figures Section -->
+    <section class="report-section mb-4" id="foreign-trade-in-figures">
+        <div class="eco-pol-card">
+            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-exchange-alt"></i></span>Foreign Trade in Figures</div>
+            <!-- Sticky sub-navigation for quick jumps -->
+            <nav class="trade-subnav mb-4 sticky-top bg-white py-2 px-2 rounded shadow-sm" style="z-index:2;top:70px;">
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="#trade-partners" class="trade-nav-link"><i class="fas fa-users"></i> Partners</a>
+                    <a href="#trade-products" class="trade-nav-link"><i class="fas fa-box"></i> Products</a>
+                    <a href="#trade-services" class="trade-nav-link"><i class="fas fa-shipping-fast"></i> Services</a>
+                    <a href="#trade-exchange" class="trade-nav-link"><i class="fas fa-coins"></i> Exchange Rate</a>
+                    <a href="#trade-monetary" class="trade-nav-link"><i class="fas fa-chart-bar"></i> Monetary</a>
+                </div>
+            </nav>
+            <div class="section-content">
+                {% if intro_text %}
+                <div class="mb-3">{{ intro_text|safe }}</div>
+                {% endif %}
+                <!-- Partners Card -->
+                <div id="trade-partners" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trade-card-icon me-2"><i class="fas fa-users fa-lg text-secondary"></i></span>
+                        <h4 class="mb-0">Main Trade Partners</h4>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            {% if main_customers_table %}
+                            <h5 class="mb-2"><i class="fas fa-arrow-up section-icon"></i> Main Export Partners</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_customers_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            {% if main_suppliers_table %}
+                            <h5 class="mb-2"><i class="fas fa-arrow-down section-icon"></i> Main Import Partners</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_suppliers_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Products Card -->
+                <div id="trade-products" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trade-card-icon me-2"><i class="fas fa-box fa-lg text-secondary"></i></span>
+                        <h4 class="mb-0">Main Products</h4>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            {% if main_export_products_table %}
+                            <h5 class="mb-2"><i class="fas fa-box-open section-icon"></i> Products Exported</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_export_products_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            {% if main_import_products_table %}
+                            <h5 class="mb-2"><i class="fas fa-boxes section-icon"></i> Products Imported</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_import_products_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Services Card -->
+                <div id="trade-services" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trade-card-icon me-2"><i class="fas fa-shipping-fast fa-lg text-secondary"></i></span>
+                        <h4 class="mb-0">Main Services</h4>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            {% if main_export_services_table %}
+                            <h5 class="mb-2"><i class="fas fa-shipping-fast section-icon"></i> Services Exported</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_export_services_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            {% if main_import_services_table %}
+                            <h5 class="mb-2"><i class="fas fa-truck-loading section-icon"></i> Services Imported</h5>
+                            <div class="eco-pol-table table-responsive mb-3">{{ main_import_services_table|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Exchange Rate Card -->
+                {% if exchange_rate_dl %}
+                <div id="trade-exchange" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trade-card-icon me-2"><i class="fas fa-coins fa-lg text-secondary"></i></span>
+                        <h4 class="mb-0">Exchange Rate System</h4>
+                    </div>
+                    <div class="eco-pol-table table-responsive mb-3">{{ exchange_rate_dl|safe }}</div>
+                </div>
+                {% endif %}
+                <!-- Monetary Indicators Card -->
+                {% if monetary_indicators_table %}
+                <div id="trade-monetary" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="trade-card-icon me-2"><i class="fas fa-chart-bar fa-lg text-secondary"></i></span>
+                        <h4 class="mb-0">Monetary Indicators</h4>
+                    </div>
+                    <div class="eco-pol-table table-responsive mb-3">{{ monetary_indicators_table|safe }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
     {# Add more sections here as needed, following the same structure: #}
     {#
     <section class="report-section mb-4" id="new-section">
@@ -182,4 +287,74 @@
     </section>
     #}
 </div>
+<style>
+.trade-subnav {
+    position: sticky;
+    top: 70px;
+    z-index: 10;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+}
+.trade-nav-link {
+    color: #2c3e50;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.4rem 1.1rem;
+    border-radius: 0.4rem;
+    transition: background 0.2s, color 0.2s;
+}
+.trade-nav-link:hover, .trade-nav-link.active {
+    background: #eaf1fb;
+    color: #3498db;
+}
+.trade-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    margin-bottom: 2rem;
+}
+.trade-card-icon {
+    color: #3498db;
+    font-size: 1.5rem;
+}
+@media (max-width: 991px) {
+    .trade-card { padding: 1rem; }
+}
+@media (max-width: 768px) {
+    .trade-card { padding: 0.7rem; }
+    .trade-subnav { top: 56px; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Highlight nav link on scroll
+    const navLinks = document.querySelectorAll('.trade-nav-link');
+    const sections = [
+        document.getElementById('trade-partners'),
+        document.getElementById('trade-products'),
+        document.getElementById('trade-services'),
+        document.getElementById('trade-exchange'),
+        document.getElementById('trade-monetary')
+    ].filter(Boolean);
+    function onScroll() {
+        let scrollPos = window.scrollY + 120;
+        sections.forEach((section, idx) => {
+            if (section.offsetTop <= scrollPos && (idx === sections.length-1 || sections[idx+1].offsetTop > scrollPos)) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                navLinks[idx].classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', onScroll);
+    navLinks.forEach((link, idx) => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            sections[idx].scrollIntoView({behavior:'smooth', block:'start'});
+        });
+    });
+});
+</script>
 {% endblock %} 

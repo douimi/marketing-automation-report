@@ -101,6 +101,9 @@ def start_report():
                 eco_political_data = None
                 eco_political_intro = None
                 eco_political_insights = None
+                trade_data = None
+                trade_intro = None
+                trade_insights = None
                 if not error_found:
                     eco_political_data = report_service.generate_santander_economic_political_outline(
                         form_data['destination_country_code'],
@@ -109,7 +112,15 @@ def start_report():
                     if isinstance(eco_political_data, dict) and 'error' in eco_political_data:
                         error_found = True
                         error_message = eco_political_data['error']
-
+                # --- Foreign Trade in Figures scraping ---
+                if not error_found:
+                    trade_data = report_service.generate_santander_foreign_trade_in_figures(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    if isinstance(trade_data, dict) and 'error' in trade_data:
+                        error_found = True
+                        error_message = trade_data['error']
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
@@ -131,6 +142,7 @@ def start_report():
                         'eco_political_data': eco_political_data,
                         'eco_political_intro': eco_political_intro,
                         'eco_political_insights': eco_political_insights,
+                        'trade_data': trade_data,
                         'datetime': datetime
                     }
                     global report_status
@@ -212,6 +224,7 @@ def show_report():
         flash('No report data available. Please generate a report first.', 'warning')
         return redirect(url_for('main.form_page'))
     eco_political_data = report.get('eco_political_data') or {}
+    trade_data = report.get('trade_data') or {}
     return render_template('report.html',
                          form_data=report.get('form_data'),
                          market_data=report.get('market_data'),
@@ -220,4 +233,5 @@ def show_report():
                          eco_political_intro=report.get('eco_political_intro'),
                          eco_political_insights=report.get('eco_political_insights'),
                          datetime=datetime,
-                         **eco_political_data) 
+                         **eco_political_data,
+                         **trade_data) 

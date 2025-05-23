@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures
 import os
 import openai
 from dotenv import load_dotenv
@@ -105,6 +105,27 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Economic and Political Outline scraping: {e}")
             return {"error": f"Error during Economic and Political Outline scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_foreign_trade_in_figures(self, destination_country_code, countries_config):
+        """Scrapes the Foreign Trade in Figures section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            # Do NOT login again, just go directly to the URL and scrape
+            print(f"Scraping Foreign Trade in Figures for {formatted_country_name}...")
+            scraped_data = scrape_santander_foreign_trade_in_figures(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Foreign Trade in Figures scraping: {e}")
+            return {"error": f"Error during Foreign Trade in Figures scraping for {destination_country_name}: {str(e)}"}
 
     def generate_openai_conclusion(self, market_data, form_data):
         """Generate a concise market analysis conclusion using OpenAI."""
@@ -231,6 +252,65 @@ class ReportGenerationService:
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political insights: {str(e)}")
             return "Error generating section insights. Please try again later."
+
+    def generate_openai_trade_intro(self, trade_data, form_data):
+        """Generate a short, engaging introduction for the Foreign Trade in Figures section using OpenAI."""
+        try:
+            prompt = f"""
+            Write a short, engaging introduction (3-4 sentences) about the foreign trade profile of {form_data['destination_country_name']} for a business audience. Use the following data for context:
+
+            {trade_data}
+
+            Focus on the country's trade position, key partners, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional business analyst introducing countries' trade profiles to executives."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=200
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI trade introduction: {str(e)}")
+            return "Error generating trade section introduction. Please try again later."
+
+    def generate_openai_trade_insights(self, trade_data, form_data):
+        """Generate a concise insights summary for the Foreign Trade in Figures section using OpenAI."""
+        try:
+            prompt = f"""
+            As a trade analysis expert, provide a concise and structured summary of the foreign trade situation in {form_data['destination_country_name']}. Base your analysis on this data:
+
+            {trade_data}
+
+            Please structure your response in the following format:
+
+            # Key Trade Insights
+            [2-3 sentences summarizing the most important trade findings]
+
+            ## Export Highlights
+            - [2-3 key export points, one line each]
+
+            ## Import Highlights
+            - [2-3 key import points, one line each]
+
+            Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a trade analysis expert providing concise, actionable insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=400
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
+            return "Error generating trade section insights. Please try again later."
 
     def close_driver(self):
         """Closes the Selenium WebDriver."""

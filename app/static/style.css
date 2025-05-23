@@ -151,4 +151,30 @@ body {
 @media (max-width: 768px) {
     .eco-pol-card { padding: 0.7rem; }
     .eco-pol-stat-row { flex-direction: column; gap: 0.5rem; }
+}
+
+/* Enhanced row separation for trade tables */
+.eco-pol-table table, .trade-card table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+.eco-pol-table tr, .trade-card tr {
+    border-bottom: 1px solid #e2e8f0;
+}
+.eco-pol-table tr:last-child, .trade-card tr:last-child {
+    border-bottom: none;
+}
+.eco-pol-table td, .eco-pol-table th, .trade-card td, .trade-card th {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+.eco-pol-table tbody tr:nth-child(even), .trade-card tbody tr:nth-child(even) {
+    background: #f6f8fc;
+}
+.eco-pol-table tbody tr:nth-child(odd), .trade-card tbody tr:nth-child(odd) {
+    background: #fff;
+}
+.eco-pol-table tbody tr:hover, .trade-card tbody tr:hover {
+    background: #eaf1fb;
 } 

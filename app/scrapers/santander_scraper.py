@@ -242,4 +242,223 @@ def scrape_santander_economic_political_outline(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Economic and Political Outline for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Economic and Political Outline for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_foreign_trade_in_figures(driver, formatted_country_name):
+    """
+    Navigates to the country's foreign-trade-in-figures page, clicks all 'See More' links for countries/products/services,
+    scrapes all relevant data, and removes the last row from each relevant table. All links in tables are converted to plain text.
+    """
+    target_url = f"https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/foreign-trade-in-figures"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    # Helper to click a link by id if present
+    def click_link_by_id(link_id):
+        try:
+            link = driver.find_element(By.ID, link_id)
+            driver.execute_script("arguments[0].click();", link)
+            time.sleep(1.2)  # Wait for table to expand
+        except Exception as e:
+            print(f"Could not click link with id {link_id}: {e}")
+
+    # Click all 'See More' links for countries, products, services
+    click_link_by_id('atlas_pays_export_lien')   # Main Customers
+    click_link_by_id('atlas_pays_import_lien')   # Main Suppliers
+    click_link_by_id('atlas_export_lien')        # Products Exported
+    click_link_by_id('atlas_import_lien')        # Products Imported
+    click_link_by_id('plus_export_236')          # Services Exported
+    click_link_by_id('plus_import_236')          # Services Imported
+
+    # Re-parse the page after all clicks
+    page_source = driver.page_source
+    soup = BeautifulSoup(page_source, 'html.parser')
+
+    # Helper to clean table: remove last row, convert <a> to plain text
+    def clean_table(table):
+        if not table:
+            return ''
+        # Remove last row
+        rows = table.find_all('tr')
+        if len(rows) > 1:
+            rows[-1].decompose()
+        # Convert all <a> to plain text
+        for a in table.find_all('a'):
+            a.replace_with(a.get_text(strip=True))
+        return str(table)
+
+    # 1. Intro paragraph (first <p> in main content)
+    intro_p = soup.find('p')
+    intro_text = str(intro_p) if intro_p else ''
+
+    # 2. All main tables (Foreign Trade Values, Indicators, Forecasts, Monetary Indicators)
+    tables = soup.find_all('table')
+    tables_html = [str(table) for table in tables]
+
+    # 3. Main Partner Countries (tables with class 'tableau1' and 'tableau2' after 'Main Partner Countries' h2)
+    main_partners_section = soup.find('h2', string=lambda t: t and 'Main Partner Countries' in t)
+    main_customers_table = main_suppliers_table = ''
+    if main_partners_section:
+        double_tableau = main_partners_section.find_next('div', id='doubletableau')
+        if double_tableau:
+            tables = double_tableau.find_all('table')
+            if len(tables) >= 2:
+                main_customers_table = clean_table(tables[0])
+                main_suppliers_table = clean_table(tables[1])
+
+    # 4. Main Products (tables with class 'tableau1' and 'tableau2' after 'Main products' h3)
+    main_products_section = soup.find('h3', string=lambda t: t and 'Main products' in t)
+    main_export_products_table = main_import_products_table = ''
+    if main_products_section:
+        double_tableau = main_products_section.find_next('div', id='doubletableau')
+        if double_tableau:
+            tables = double_tableau.find_all('table')
+            if len(tables) >= 2:
+                main_export_products_table = clean_table(tables[0])
+                main_import_products_table = clean_table(tables[1])
+
+    # 5. Main Services (tables with class 'tableau1' and 'tableau2' after 'Main Services' h2)
+    main_services_section = soup.find('h2', string=lambda t: t and 'Main Services' in t)
+    main_export_services_table = main_import_services_table = ''
+    if main_services_section:
+        double_tableau = main_services_section.find_next('div', id='doubletableau')
+        if double_tableau:
+            tables = double_tableau.find_all('table')
+            if len(tables) >= 2:
+                main_export_services_table = clean_table(tables[0])
+                main_import_services_table = clean_table(tables[1])
+
+    # 6. Exchange Rate System (dl.informations after 'Exchange Rate System' h2)
+    exchange_rate_section = soup.find('h2', string=lambda t: t and 'Exchange Rate System' in t)
+    exchange_rate_dl = ''
+    if exchange_rate_section:
+        dl = exchange_rate_section.find_next('dl', class_='informations')
+        if dl:
+            exchange_rate_dl = str(dl)
+
+    # 7. Monetary Indicators Table (last table on the page)
+    monetary_indicators_table = ''
+    all_tables = soup.find_all('table')
+    if all_tables:
+        monetary_indicators_table = str(all_tables[-1])
+
+    return {
+        'intro_text': intro_text,
+        'tables_html': tables_html,
+        'main_customers_table': main_customers_table,
+        'main_suppliers_table': main_suppliers_table,
+        'main_export_products_table': main_export_products_table,
+        'main_import_products_table': main_import_products_table,
+        'main_export_services_table': main_export_services_table,
+        'main_import_services_table': main_import_services_table,
+        'exchange_rate_dl': exchange_rate_dl,
+        'monetary_indicators_table': monetary_indicators_table
+    }
+
+
+def scrape_santander_economic_political_outline(driver, formatted_country_name):
+    """
+    Navigates to the country's economic-political-outline page and scrapes all required data for the Economic and Political Outline section.
+    Returns a dict with all fields needed for the template.
+    """
+    target_url = SANTANDER_ECO_POL_URL_TEMPLATE.format(formatted_country_name=formatted_country_name)
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        # Wait for the main content to load
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@class="fond-theme-atlas "]')))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+
+        # Economic Outline
+        eco_outline = soup.find('div', id='economique')
+        eco_outline_overview = ""
+        eco_outline_main_indicators_table = ""
+        eco_outline_main_sectors = ""
+        eco_outline_breakdown_table = ""
+        eco_outline_economic_freedom = ""
+        eco_outline_business_env = ""
+        if eco_outline:
+            # Economic Overview (all <p> under Economic Overview h3)
+            eco_overview_h3 = eco_outline.find('h3', string=lambda t: t and 'Economic Overview' in t)
+            if eco_overview_h3:
+                overview_ps = []
+                sib = eco_overview_h3.find_next_sibling()
+                while sib and sib.name == 'p':
+                    overview_ps.append(str(sib))
+                    sib = sib.find_next_sibling()
+                eco_outline_overview = "\n".join(overview_ps)
+            # Main Indicators Table
+            main_ind_table = eco_outline.find('table')
+            if main_ind_table and main_ind_table.find('th', string=lambda t: t and 'Main Indicators' in t):
+                eco_outline_main_indicators_table = str(main_ind_table)
+            # Main Sectors of Industry (after h3)
+            main_sectors_h3 = eco_outline.find('h3', string=lambda t: t and 'Main Sectors of Industry' in t)
+            if main_sectors_h3:
+                main_sectors_p = main_sectors_h3.find_next_sibling('p')
+                if main_sectors_p:
+                    eco_outline_main_sectors = str(main_sectors_p)
+            # Breakdown Table (after Main Sectors)
+            breakdown_table = None
+            for table in eco_outline.find_all('table'):
+                th = table.find('th')
+                if th and 'Breakdown of Economic Activity By Sector' in th.get_text():
+                    breakdown_table = table
+                    break
+            if breakdown_table:
+                eco_outline_breakdown_table = str(breakdown_table)
+            # Economic Freedom
+            eco_freedom_h3 = eco_outline.find('h3', string=lambda t: t and 'Economic Freedom' in t)
+            if eco_freedom_h3:
+                eco_freedom_dl = eco_freedom_h3.find_next_sibling('dl')
+                if eco_freedom_dl:
+                    eco_outline_economic_freedom = str(eco_freedom_dl)
+            # Business Environment Ranking
+            business_env_h3 = eco_outline.find('h3', string=lambda t: t and 'Business environment ranking' in t)
+            if business_env_h3:
+                business_env_dl = business_env_h3.find_next_sibling('dl')
+                if business_env_dl:
+                    eco_outline_business_env = str(business_env_dl)
+
+        # Political Outline
+        # Find the div after <a id="political">
+        political_anchor = soup.find('a', id='political')
+        political_outline = ""
+        political_press_freedom = ""
+        political_freedom = ""
+        if political_anchor:
+            pol_div = political_anchor.find_next_sibling('div')
+            if pol_div:
+                # Main political outline (first dl.informations)
+                pol_dl = pol_div.find('dl', class_='informations')
+                if pol_dl:
+                    political_outline = str(pol_dl)
+                # Freedom of the Press
+                press_h3 = pol_div.find('h3', string=lambda t: t and 'Freedom of the Press' in t)
+                if press_h3:
+                    press_dl = press_h3.find_next_sibling('dl')
+                    if press_dl:
+                        political_press_freedom = str(press_dl)
+                # Political Freedom
+                polfree_h3 = pol_div.find('h3', string=lambda t: t and 'Political Freedom' in t)
+                if polfree_h3:
+                    polfree_dl = polfree_h3.find_next_sibling('dl')
+                    if polfree_dl:
+                        political_freedom = str(polfree_dl)
+
+        return {
+            'eco_outline_overview': eco_outline_overview,
+            'eco_outline_main_indicators_table': eco_outline_main_indicators_table,
+            'eco_outline_main_sectors': eco_outline_main_sectors,
+            'eco_outline_breakdown_table': eco_outline_breakdown_table,
+            'eco_outline_economic_freedom': eco_outline_economic_freedom,
+            'eco_outline_business_env': eco_outline_business_env,
+            'political_outline': political_outline,
+            'political_press_freedom': political_press_freedom,
+            'political_freedom': political_freedom
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Economic and Political Outline for {formatted_country_name}: {e}")
         return {'error': f'Error scraping Economic and Political Outline for {formatted_country_name}: {str(e)}'} 
