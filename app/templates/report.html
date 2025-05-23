@@ -1,0 +1,536 @@
+{% extends "base.html" %}
+
+{% block title %}Market Analysis Report - {{ form_data.destination_country_name }}{% endblock %}
+
+{% block content %}
+<!-- Report Header -->
+<div class="report-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1>Market Analysis Report</h1>
+                <p class="lead mb-0">{{ form_data.destination_country_name }}</p>
+                <div class="report-meta">
+                    <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    <span><i class="fas fa-industry"></i> {{ form_data.sector }}</span>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <button onclick="window.print()" class="btn btn-light">
+                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Executive Summary -->
+<section class="report-section" id="executive-summary">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-pie"></i> Executive Summary</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="summary-card">
+                    <p class="lead">
+                        Analysis of market opportunities for {{ form_data.sector }} sector in {{ form_data.destination_country_name }}, 
+                        focusing on key economic indicators, trade relations, and market potential.
+                    </p>
+                    <div class="key-highlights mt-4">
+                        <div class="row g-4">
+                            <div class="col-md-3">
+                                <div class="highlight-card">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Population</h4>
+                                        <p class="mb-0">{{ market_data.population|format_number }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="highlight-card">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-city"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Urban Population</h4>
+                                        <p class="mb-0">{{ market_data.urban_population }}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="highlight-card">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Economy Type</h4>
+                                        <p class="mb-0">{{ market_data.economy_type }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="highlight-card">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>HDI Rank</h4>
+                                        <p class="mb-0">{{ market_data.hdi_rank }}/188</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Market Overview -->
+<section class="report-section" id="market-overview">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-globe"></i> Market Overview</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="info-card h-100">
+                    <h3>Economic Indicators</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Capital</th>
+                                    <td>{{ market_data.capital }}</td>
+                                </tr>
+                                <tr>
+                                    <th>HDI Value</th>
+                                    <td>{{ market_data.hdi_value }}/1</td>
+                                </tr>
+                                <tr>
+                                    <th>Currency</th>
+                                    <td>{{ market_data.currency }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-card h-100">
+                    <h3>Exchange Rates</h3>
+                    <div class="exchange-rates">
+                        <div class="rate-card">
+                            <div class="currency-icon">$</div>
+                            <div class="rate-details">
+                                <span class="rate-label">USD Rate</span>
+                                <span class="rate-value">1 {{ market_data.currency }} = {{ market_data.usd_rate }} USD</span>
+                            </div>
+                        </div>
+                        <div class="rate-card">
+                            <div class="currency-icon">€</div>
+                            <div class="rate-details">
+                                <span class="rate-label">EUR Rate</span>
+                                <span class="rate-value">1 {{ market_data.currency }} = {{ market_data.eur_rate }} EUR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trade Analysis -->
+<section class="report-section" id="trade-analysis">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-exchange-alt"></i> Trade Analysis</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Indicators (million USD)</th>
+                                    <th>2019</th>
+                                    <th>2020</th>
+                                    <th>2021</th>
+                                    <th>2022</th>
+                                    <th>2023</th>
+                                    <th>Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in market_data.trade_data %}
+                                <tr>
+                                    <td>{{ row.indicator }}</td>
+                                    <td>{{ row.y2019|format_number }}</td>
+                                    <td>{{ row.y2020|format_number }}</td>
+                                    <td>{{ row.y2021|format_number }}</td>
+                                    <td>{{ row.y2022|format_number }}</td>
+                                    <td>{{ row.y2023|format_number }}</td>
+                                    <td class="trend-cell">
+                                        {% set trend = (row.y2023 - row.y2019) / row.y2019 * 100 %}
+                                        {% if trend > 0 %}
+                                            <span class="trend-up"><i class="fas fa-arrow-up"></i> {{ "%.1f"|format(trend) }}%</span>
+                                        {% else %}
+                                            <span class="trend-down"><i class="fas fa-arrow-down"></i> {{ "%.1f"|format(trend|abs) }}%</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Infrastructure -->
+<section class="report-section" id="infrastructure">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-network-wired"></i> Infrastructure & Connectivity</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="info-card h-100">
+                    <h3>Digital Infrastructure</h3>
+                    <div class="infrastructure-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-laptop"></i></div>
+                            <div class="stat-content">
+                                <h4>Computer Access</h4>
+                                <p>{{ market_data.computers_per_100 }} per 100 inhabitants</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-wifi"></i></div>
+                            <div class="stat-content">
+                                <h4>Internet Penetration</h4>
+                                <p>{{ market_data.internet_users_per_100 }}% of population</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-card h-100">
+                    <h3>Communication</h3>
+                    <div class="infrastructure-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-phone"></i></div>
+                            <div class="stat-content">
+                                <h4>Telephone Lines</h4>
+                                <p>{{ market_data.phone_lines_per_100 }} per 100 inhabitants</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                            <div class="stat-content">
+                                <h4>Internet Domain</h4>
+                                <p>{{ market_data.internet_suffix }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Insights -->
+<section class="report-section" id="insights">
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-lightbulb"></i> Key Insights</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="insights-content">
+                        {{ openai_conclusion|markdown }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Report Styles */
+.report-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.report-meta {
+    margin-top: 1rem;
+}
+
+.report-meta span {
+    margin-right: 2rem;
+    opacity: 0.9;
+}
+
+.report-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 2rem;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 1rem;
+}
+
+.section-header h2 {
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+.section-header h2 i {
+    color: #3498db;
+}
+
+/* Cards */
+.info-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.info-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+}
+
+/* Highlights */
+.highlight-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.highlight-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.highlight-content h4 {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.highlight-content p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Exchange Rates */
+.exchange-rates {
+    display: grid;
+    gap: 1rem;
+}
+
+.rate-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.currency-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.rate-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.rate-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.rate-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Infrastructure Stats */
+.infrastructure-stats {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-content h4 {
+    font-size: 1rem;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.stat-content p {
+    margin: 0;
+    color: #6c757d;
+}
+
+/* Tables */
+.table {
+    margin: 0;
+}
+
+.table th {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.trend-cell {
+    font-weight: 600;
+}
+
+.trend-up {
+    color: #2ecc71;
+}
+
+.trend-down {
+    color: #e74c3c;
+}
+
+/* Insights */
+.insights-content {
+    color: #2c3e50;
+}
+
+.insights-content h1,
+.insights-content h2,
+.insights-content h3 {
+    color: #2c3e50;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.insights-content p {
+    line-height: 1.6;
+}
+
+.insights-content ul {
+    padding-left: 1.5rem;
+}
+
+/* Print Styles */
+@media print {
+    .report-header {
+        background: none !important;
+        color: #2c3e50;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .report-section {
+        page-break-inside: avoid;
+    }
+    
+    .info-card {
+        box-shadow: none;
+        border: 1px solid #dee2e6;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .report-header {
+        padding: 2rem 0;
+    }
+    
+    .highlight-card {
+        padding: 1rem;
+    }
+    
+    .info-card {
+        padding: 1rem;
+    }
+    
+    .report-meta span {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add smooth scrolling to all links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+});
+</script>
+{% endblock %} 

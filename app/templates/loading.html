@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+
+{% block title %}Generating Your Report{% endblock %}
+
+{% block content %}
+<div class="loading-container">
+    <div class="loading-content text-center">
+        <div class="progress-indicator">
+            <div class="circle-loader" id="mainLoader">
+                <div class="checkmark draw"></div>
+            </div>
+        </div>
+        
+        <h1 class="mt-4 mb-3">Generating Your Report</h1>
+        
+        <div class="progress-steps">
+            <div class="step" id="step1">
+                <div class="step-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Market Data</h3>
+                    <p class="step-status">Gathering market information...</p>
+                </div>
+            </div>
+            
+            <div class="step" id="step2">
+                <div class="step-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Analysis</h3>
+                    <p class="step-status">Processing market indicators...</p>
+                </div>
+            </div>
+            
+            <div class="step" id="step3">
+                <div class="step-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="step-content">
+                    <h3>AI Insights</h3>
+                    <p class="step-status">Generating recommendations...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-message mt-4">
+            <p class="lead">Please wait while we prepare your comprehensive market analysis</p>
+            <p class="text-muted">This usually takes about 30-45 seconds</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.loading-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.loading-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 90%;
+}
+
+.progress-steps {
+    margin: 3rem 0;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step.completed {
+    opacity: 1;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #2c3e50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.5rem;
+}
+
+.step-icon i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.step-status {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.circle-loader {
+    border: 3px solid rgba(0, 0, 0, 0.2);
+    border-left-color: #2c3e50;
+    animation: loader-spin 1.2s infinite linear;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.load-complete {
+    -webkit-animation: none;
+    animation: none;
+    border-color: #2c3e50;
+    transition: border 500ms ease-out;
+}
+
+.checkmark {
+    display: none;
+}
+
+.checkmark.draw:after {
+    animation-duration: 800ms;
+    animation-timing-function: ease;
+    animation-name: checkmark;
+    transform: scaleX(-1) rotate(135deg);
+}
+
+.checkmark:after {
+    opacity: 1;
+    height: 40px;
+    width: 20px;
+    transform-origin: left top;
+    border-right: 3px solid #2c3e50;
+    border-top: 3px solid #2c3e50;
+    content: '';
+    left: 28px;
+    top: 38px;
+    position: absolute;
+}
+
+@keyframes loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        height: 0;
+        width: 0;
+        opacity: 1;
+    }
+    20% {
+        height: 0;
+        width: 20px;
+        opacity: 1;
+    }
+    40% {
+        height: 40px;
+        width: 20px;
+        opacity: 1;
+    }
+    100% {
+        height: 40px;
+        width: 20px;
+        opacity: 1;
+    }
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 1rem;
+    display: none;
+}
+
+/* Add animation for steps */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.step:nth-child(1) { animation-delay: 0.2s; }
+.step:nth-child(2) { animation-delay: 0.4s; }
+.step:nth-child(3) { animation-delay: 0.6s; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentStep = 1;
+    const steps = document.querySelectorAll('.step');
+    let checkStatusInterval;
+    let retryCount = 0;
+    const MAX_RETRIES = 60; // 2 minutes (120 seconds / 2 second interval)
+    
+    function updateSteps() {
+        steps.forEach((step, index) => {
+            if (index + 1 < currentStep) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+                step.querySelector('.step-status').textContent = 'Completed';
+            } else if (index + 1 === currentStep) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active', 'completed');
+            }
+        });
+    }
+
+    function showError(message) {
+        const loadingContent = document.querySelector('.loading-content');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message alert alert-danger mt-4';
+        errorDiv.textContent = message;
+        
+        // Remove any existing error messages
+        const existingError = loadingContent.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        loadingContent.appendChild(errorDiv);
+        
+        // Update UI to show error state
+        const mainLoader = document.getElementById('mainLoader');
+        mainLoader.style.borderLeftColor = '#dc3545';
+        mainLoader.style.animation = 'none';
+    }
+
+    function handleComplete(redirectUrl) {
+        console.log('Handling completion, redirect URL:', redirectUrl);
+        
+        // Show completion animation
+        const mainLoader = document.getElementById('mainLoader');
+        mainLoader.classList.add('load-complete');
+        mainLoader.querySelector('.checkmark').style.display = 'block';
+        
+        // Update all steps to completed
+        currentStep = 4;
+        updateSteps();
+        
+        // Clear the interval
+        if (checkStatusInterval) {
+            clearInterval(checkStatusInterval);
+        }
+        
+        // Redirect after a short delay to show completion
+        setTimeout(() => {
+            console.log('Redirecting to:', redirectUrl);
+            window.location.href = redirectUrl;
+        }, 1000);
+    }
+
+    function checkStatus() {
+        console.log('Checking status, retry count:', retryCount);
+        
+        fetch('/check_status')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Status response:', data);
+                retryCount++;
+                
+                if (data.status === 'complete') {
+                    console.log('Report generation complete');
+                    handleComplete(data.redirect_url);
+                } else if (data.status === 'error') {
+                    console.log('Error in report generation:', data.message);
+                    clearInterval(checkStatusInterval);
+                    showError(data.message || 'An error occurred while generating the report.');
+                } else if (retryCount >= MAX_RETRIES) {
+                    console.log('Maximum retries reached');
+                    clearInterval(checkStatusInterval);
+                    showError('Report generation timed out. Please try again.');
+                } else {
+                    // Update progress animation
+                    currentStep = Math.min(3, Math.floor(retryCount / 10) + 1);
+                    updateSteps();
+                }
+            })
+            .catch(error => {
+                console.error('Error checking status:', error);
+                clearInterval(checkStatusInterval);
+                showError('Failed to check report status. Please refresh the page.');
+            });
+    }
+
+    // Start checking status immediately and then every 2 seconds
+    console.log('Starting status checks');
+    checkStatus();
+    checkStatusInterval = setInterval(checkStatus, 2000);
+    
+    // Initial step animation
+    updateSteps();
+});
+</script>
+{% endblock %} 

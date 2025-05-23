@@ -1,0 +1,27 @@
+[
+    {
+        "name": "United States",
+        "code": "US",
+        "iso_numeric": "840"
+    },
+    {
+        "name": "Canada",
+        "code": "CA",
+        "iso_numeric": "124"
+    },
+    {
+        "name": "United Kingdom",
+        "code": "GB",
+        "iso_numeric": "826"
+    },
+    {
+        "name": "Germany",
+        "code": "DE",
+        "iso_numeric": "276"
+    },
+    {
+        "name": "France",
+        "code": "FR",
+        "iso_numeric": "250"
+    }
+] 

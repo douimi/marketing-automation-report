@@ -1,0 +1,12 @@
+/* Custom styles for the Marketing Automation Report Generator */
+body {
+    font-family: sans-serif;
+}
+
+.card-header h2 {
+    margin-bottom: 0;
+}
+
+.alert {
+    margin-top: 1rem;
+} 

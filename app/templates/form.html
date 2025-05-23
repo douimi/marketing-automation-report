@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Marketing Report{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Generate Marketing Report</h2>
+        </div>
+        <div class="card-body">
+            <form id="reportForm" method="POST" action="{{ url_for('main.start_report') }}">
+                <div class="mb-4">
+                    <label for="origin_country" class="form-label">Origin Country</label>
+                    <select class="form-select" id="origin_country" name="origin_country" required>
+                        <option value="" disabled selected>Select Origin Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country.code }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="destination_country" class="form-label">Destination Country</label>
+                    <select class="form-select" id="destination_country" name="destination_country" required>
+                        <option value="" disabled selected>Select Destination Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country.code }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="hs6_product_code" class="form-label">Product Category</label>
+                    <select class="form-select" id="hs6_product_code" name="hs6_product_code" required>
+                        <option value="" disabled selected>Select Product</option>
+                        {% for product in products %}
+                            <option value="{{ product.hs6 }}">{{ product.hs6 }} - {{ product.description }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="sector" class="form-label">Industry Sector</label>
+                    <select class="form-select" id="sector" name="sector" required>
+                        <option value="" disabled selected>Select Sector</option>
+                        {% for sector in sectors %}
+                            <option value="{{ sector.name }}">{{ sector.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-file-alt me-2"></i>Generate Report
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 800px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    padding: 1.5rem;
+}
+
+.card-header h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem;
+    }
+}
+</style>
+
+<script>
+document.getElementById('reportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = `
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    `;
+    document.body.appendChild(loadingOverlay);
+    
+    // Submit form
+    fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        loadingOverlay.remove();
+    });
+});
+</script>
+
+<style>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+</style>
+{% endblock %} 

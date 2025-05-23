@@ -1,0 +1,11 @@
+Flask
+Flask-Login
+requests
+selenium
+openai
+webdriver-manager
+python-dotenv
+Jinja2>=3.0
+markupsafe>=2.0
+markdown2>=2.4.0
+# Add other dependencies as needed 
