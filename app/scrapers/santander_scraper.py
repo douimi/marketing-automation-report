@@ -63,7 +63,7 @@ def login_santander(driver, email, password):
     # Wait for login to complete
     try:
         print(f"Waiting for URL to change from {driver.current_url} or for a known post-login element...")
-        time.sleep(5) # Give time for redirection or error message to appear
+        time.sleep(2) # Give time for redirection or error message to appear
         current_page_url = driver.current_url
         if SANTANDER_LOGIN_URL in current_page_url and current_page_url.endswith("#identification"): # Often hash is added for on-page forms
              print(f"Still on {current_page_url}. Checking if login form elements are still present...")

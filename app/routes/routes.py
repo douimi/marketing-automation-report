@@ -52,8 +52,17 @@ def start_report():
         }
         
         countries_config = current_app.config.get('COUNTRIES', [])
+        products_config = current_app.config.get('PRODUCTS', [])
         form_data['origin_country_name'] = get_country_name_from_code(form_data['origin_country_code'], countries_config)
         form_data['destination_country_name'] = get_country_name_from_code(form_data['destination_country_code'], countries_config)
+        # Map hs6_product_code to product_name (description)
+        hs6_code = form_data.get('hs6_product_code')
+        product_name = None
+        for product in products_config:
+            if product.get('hs6') == hs6_code:
+                product_name = product.get('description')
+                break
+        form_data['product_name'] = product_name or hs6_code or ''
         
         # Reset global status
         global report_status
@@ -121,6 +130,21 @@ def start_report():
                     if isinstance(trade_data, dict) and 'error' in trade_data:
                         error_found = True
                         error_message = trade_data['error']
+                # --- MacMap Market Access Conditions scraping ---
+                macmap_data = None
+                macmap_intro = None
+                macmap_insights = None
+                if not error_found:
+                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
+                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config)
+                    macmap_data = report_service.generate_macmap_market_access_conditions(
+                        reporter_iso3n,
+                        partner_iso3n,
+                        form_data['hs6_product_code']
+                    )
+                    if isinstance(macmap_data, dict) and 'error' in macmap_data:
+                        error_found = True
+                        error_message = macmap_data['error']
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
@@ -132,6 +156,9 @@ def start_report():
                     # Generate OpenAI intro/insights for eco-political section
                     eco_political_intro = report_service.generate_openai_eco_political_intro(eco_political_data, form_data)
                     eco_political_insights = report_service.generate_openai_eco_political_insights(eco_political_data, form_data)
+                    # Generate OpenAI intro/insights for MacMap section
+                    macmap_intro = report_service.generate_openai_macmap_intro(macmap_data, form_data)
+                    macmap_insights = report_service.generate_openai_macmap_insights(macmap_data, form_data)
                     # Store all report data in the global cache
                     global reports_cache
                     reports_cache[report_id] = {
@@ -143,6 +170,9 @@ def start_report():
                         'eco_political_intro': eco_political_intro,
                         'eco_political_insights': eco_political_insights,
                         'trade_data': trade_data,
+                        'macmap_data': macmap_data,
+                        'macmap_intro': macmap_intro,
+                        'macmap_insights': macmap_insights,
                         'datetime': datetime
                     }
                     global report_status
@@ -225,6 +255,8 @@ def show_report():
         return redirect(url_for('main.form_page'))
     eco_political_data = report.get('eco_political_data') or {}
     trade_data = report.get('trade_data') or {}
+    macmap_data = report.get('macmap_data') or {}
+    print('DEBUG: macmap_data =', macmap_data)
     return render_template('report.html',
                          form_data=report.get('form_data'),
                          market_data=report.get('market_data'),
@@ -232,6 +264,17 @@ def show_report():
                          openai_conclusion=report.get('openai_conclusion'),
                          eco_political_intro=report.get('eco_political_intro'),
                          eco_political_insights=report.get('eco_political_insights'),
+                         macmap_intro=report.get('macmap_intro'),
+                         macmap_insights=report.get('macmap_insights'),
                          datetime=datetime,
                          **eco_political_data,
-                         **trade_data) 
+                         **trade_data,
+                         macmap_data=macmap_data
+                         )
+
+def get_country_iso_numeric_from_code(country_code, countries_config):
+    """Retrieves the iso_numeric code from its alpha-2 code using the loaded config."""
+    for country in countries_config:
+        if country.get("code") == country_code:
+            return country.get("iso_numeric")
+    return None 

@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures
+from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
 from dotenv import load_dotenv
@@ -126,6 +127,68 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Foreign Trade in Figures scraping: {e}")
             return {"error": f"Error during Foreign Trade in Figures scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_macmap_market_access_conditions(self, reporter_iso3n, partner_iso3n, product_hs6):
+        """Scrapes the Market Access Conditions section from MacMap."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+        try:
+            print(f"Scraping MacMap Market Access Conditions for reporter={reporter_iso3n}, partner={partner_iso3n}, product={product_hs6}...")
+            scraped_data = scrape_macmap_market_access_conditions(self.driver, reporter_iso3n, partner_iso3n, product_hs6)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during MacMap Market Access Conditions scraping: {e}")
+            return {"error": f"Error during MacMap Market Access Conditions scraping: {str(e)}"}
+
+    def generate_openai_macmap_intro(self, macmap_data, form_data):
+        """Generate a short, engaging introduction for the Market Access Conditions section using OpenAI."""
+        try:
+            prompt = f"""
+            Write a concise, business-focused introduction (3-4 sentences) for a report section on Market Access Conditions for {form_data['destination_country_name']} (importing from {form_data['origin_country_name']}, product: {form_data['product_name']}).
+            Use the following data for context:
+
+            {macmap_data}
+
+            Focus on the relevance of market access, key challenges, and opportunities. Do not include lists or bullet points. Keep it under 120 words.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional business analyst introducing market access conditions to executives."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=200
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI MacMap introduction: {str(e)}")
+            return "Error generating market access introduction. Please try again later."
+
+    def generate_openai_macmap_insights(self, macmap_data, form_data):
+        """Generate actionable insights for the Market Access Conditions section using OpenAI."""
+        try:
+            prompt = f"""
+            As a market access expert, provide 3-5 actionable insights or recommendations for a business considering exporting {form_data['product_name']} from {form_data['origin_country_name']} to {form_data['destination_country_name']}, based on the following data:
+
+            {macmap_data}
+
+            Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a market access expert providing concise, actionable insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=300
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI MacMap insights: {str(e)}")
+            return "Error generating market access insights. Please try again later."
 
     def generate_openai_conclusion(self, market_data, form_data):
         """Generate a concise market analysis conclusion using OpenAI."""
