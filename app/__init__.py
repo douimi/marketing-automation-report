@@ -5,6 +5,8 @@ from flask_login import LoginManager
 import json
 import os
 import markdown2
+from bs4 import BeautifulSoup
+import re
 
 login_manager = LoginManager()
 
@@ -78,6 +80,20 @@ def create_app():
         if isinstance(value, (int, float)):
             return "{:,}".format(value)
         return value
+
+    def strip_html_and_markdown(text):
+        if not text:
+            return ''
+        # Remove HTML tags
+        text = BeautifulSoup(text, 'html.parser').get_text()
+        # Remove Markdown formatting (basic)
+        text = re.sub(r'[#*_`>\-\[\]()]', '', text)
+        text = re.sub(r'\n{2,}', '\n', text)
+        return text.strip()
+
+    @app.template_filter('plain_text')
+    def plain_text_filter(text):
+        return strip_html_and_markdown(text)
 
     return app
 

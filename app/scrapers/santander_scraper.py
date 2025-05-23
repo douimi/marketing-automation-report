@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from bs4 import BeautifulSoup
 
 SANTANDER_LOGIN_URL = "https://santandertrade.com/en/" # As confirmed by user
 PRE_LOGIN_FORM_BUTTON_XPATH = "//*[@id='btn_login_menu']" # User provided XPath to reveal login form
@@ -81,7 +82,8 @@ def login_santander(driver, email, password):
 
 def scrape_santander_country_data(driver, formatted_country_name):
     """
-    Navigates to the country's general presentation page and scrapes data.
+    Navigates to the country's general presentation page and scrapes data from 'donnees1' and the Foreign Trade in Figures table.
+    Returns a dict with clean plain text for both sections.
     """
     target_url = SANTANDER_MARKET_ANALYSIS_URL_TEMPLATE.format(formatted_country_name=formatted_country_name)
     print(f"Navigating to: {target_url}")
@@ -91,32 +93,45 @@ def scrape_santander_country_data(driver, formatted_country_name):
         # Wait for the main content div to be present
         content_div_xpath = "//*[@id='contenu-contenu']"
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
-        
-        # Extract all text from the content div
-        # More specific XPaths can be used for structured data
-        content_element = driver.find_element(By.XPATH, content_div_xpath)
-        data = content_element.text
-        
-        if not data:
-            print(f"No data extracted from {target_url}. The content div might be empty or structure changed.")
-            # Attempt to get page source for debugging if data is empty
-            page_source = driver.page_source
-            if "entry of this content is reserved for subscribers" in page_source.lower() or "please log on" in page_source.lower():
-                print("Content is restricted or login was not successful.")
-                return "Error: Content is restricted or login was not successful. Please check credentials and subscription."
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
 
-            return f"No text data found in #contenu-contenu for {formatted_country_name}. Check page structure."
-            
-        print(f"Successfully scraped data for {formatted_country_name}")
-        return data
+        # Extract donnees1 section
+        donnees1 = soup.find(id="donnees1")
+        donnees1_text = ""
+        if donnees1:
+            donnees1_text = str(donnees1)
+
+        # Extract donnees2 section
+        donnees2 = soup.find(id="donnees2")
+        donnees2_text = ""
+        if donnees2:
+            donnees2_text = str(donnees2)
+
+        # Extract Foreign Trade in Figures table
+        trade_table = soup.select_one('#contenu-contenu > div:nth-of-type(2) > div:nth-of-type(6) > div:nth-of-type(1) > table')
+        trade_table_data = []
+        if trade_table:
+            headers = [th.get_text(strip=True) for th in trade_table.find_all('th')]
+            for row in trade_table.find_all('tr')[1:]:
+                cells = [td.get_text(strip=True) for td in row.find_all(['td', 'th'])]
+                if len(cells) == len(headers):
+                    trade_table_data.append(dict(zip(headers, cells)))
+                else:
+                    trade_table_data.append(cells)
+
+        # Return both sections as structured data
+        return {
+            'donnees1_text': donnees1_text,
+            'donnees2_text': donnees2_text,
+            'trade_table': trade_table_data
+        }
     except Exception as e:
         print(f"Error scraping Santander country data for {formatted_country_name}: {e}")
-        # Try to get page title or current URL for context
         current_url = driver.current_url
         page_title = driver.title
         print(f"Current URL during error: {current_url}")
         print(f"Page title during error: {page_title}")
-        # Check if it's a known error page
         if "page not found" in page_title.lower() or "error 404" in driver.page_source.lower():
-             return f"Error: Page not found for country {formatted_country_name} at {target_url}."
-        return f"Error scraping Santander data for {formatted_country_name}. Details: {str(e)}" 
+            return {"error": f"Error: Page not found for country {formatted_country_name} at {target_url}."}
+        return {"error": f"Error scraping Santander data for {formatted_country_name}. Details: {str(e)}"} 

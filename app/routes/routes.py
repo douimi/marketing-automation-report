@@ -14,6 +14,7 @@ main_bp = Blueprint('main', __name__, template_folder='../templates')
 report_status = {
     'status': 'processing',
     'market_data': None,
+    'openai_intro': None,
     'openai_conclusion': None,
     'error_message': None
 }
@@ -52,6 +53,7 @@ def start_report():
         report_status = {
             'status': 'processing',
             'market_data': None,
+            'openai_intro': None,
             'openai_conclusion': None,
             'error_message': None
         }
@@ -73,24 +75,37 @@ def start_report():
                     countries_config
                 )
                 
-                if raw_santander_data and not raw_santander_data.startswith("Error:"):
+                # Updated error check for dict or string
+                error_found = False
+                error_message = None
+                if isinstance(raw_santander_data, dict) and 'error' in raw_santander_data:
+                    error_found = True
+                    error_message = raw_santander_data['error']
+                elif isinstance(raw_santander_data, str) and raw_santander_data.startswith("Error:"):
+                    error_found = True
+                    error_message = raw_santander_data
+
+                if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
                     market_data = data_processor.parse_raw_data(raw_santander_data)
                     
+                    # Generate OpenAI introduction
+                    openai_intro = report_service.generate_openai_intro(raw_santander_data, form_data)
                     # Generate OpenAI conclusion
                     openai_conclusion = report_service.generate_openai_conclusion(raw_santander_data, form_data)
                     
                     # Update global status
                     global report_status
                     report_status['market_data'] = market_data
+                    report_status['openai_intro'] = openai_intro
                     report_status['openai_conclusion'] = openai_conclusion
                     report_status['status'] = 'complete'
                     current_app.logger.info("Report generation completed successfully")
                 else:
                     report_status['status'] = 'error'
-                    report_status['error_message'] = raw_santander_data
-                    current_app.logger.error(f"Error in report generation: {raw_santander_data}")
+                    report_status['error_message'] = error_message or raw_santander_data
+                    current_app.logger.error(f"Error in report generation: {error_message or raw_santander_data}")
                     
             except Exception as e:
                 current_app.logger.error(f"Report generation failed: {e}", exc_info=True)
@@ -135,6 +150,7 @@ def check_status():
     if report_status['status'] == 'complete':
         # Store the data in session when complete
         session['market_data'] = report_status['market_data']
+        session['openai_intro'] = report_status.get('openai_intro')
         session['openai_conclusion'] = report_status['openai_conclusion']
         session.modified = True
         
@@ -164,5 +180,6 @@ def show_report():
     return render_template('report.html',
                          form_data=session.get('report_form_data'),
                          market_data=session.get('market_data'),
+                         openai_intro=session.get('openai_intro'),
                          openai_conclusion=session.get('openai_conclusion'),
                          datetime=datetime) 

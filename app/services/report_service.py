@@ -128,6 +128,30 @@ class ReportGenerationService:
             current_app.logger.error(f"Error generating OpenAI conclusion: {str(e)}")
             return "Error generating market insights. Please try again later."
 
+    def generate_openai_intro(self, market_data, form_data):
+        """Generate a short, engaging introduction about the selected country using OpenAI."""
+        try:
+            prompt = f"""
+            Write a short, engaging introduction (3-4 sentences) about {form_data['destination_country_name']} for a business audience. Use the following data for context:
+
+            {market_data}
+
+            Focus on the country's global relevance, economic profile, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional business analyst introducing countries to executives."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=200
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI introduction: {str(e)}")
+            return "Error generating country introduction. Please try again later."
+
     def close_driver(self):
         """Closes the Selenium WebDriver."""
         if self.driver:
