@@ -304,7 +304,13 @@
     <!-- Import/Export Flows Section -->
     <section class="report-section mb-4" id="import-export-flows">
         <div class="section-header"><i class="fas fa-random section-icon"></i>Import/Export Flows</div>
+        {% if flows_intro %}
+        <div class="section-intro mb-3">{{ flows_intro|plain_text }}</div>
+        {% endif %}
         <div class="section-content">
+            <div class="mb-4">
+                <canvas id="flowsChart" height="120"></canvas>
+            </div>
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="trade-card p-3 h-100">
@@ -313,7 +319,7 @@
                             <h5 class="mb-0">Export Flows</h5>
                         </div>
                         {% if flows_data.export_table_html %}
-                        <div class="eco-pol-table table-scroll table-responsive">{{ flows_data.export_table_html|safe }}</div>
+                        <div class="eco-pol-table table-scroll table-responsive" id="export-flows-table">{{ flows_data.export_table_html|safe }}</div>
                         {% else %}
                         <p>No export flow data available.</p>
                         {% endif %}
@@ -326,7 +332,7 @@
                             <h5 class="mb-0">Import Flows</h5>
                         </div>
                         {% if flows_data.import_table_html %}
-                        <div class="eco-pol-table table-scroll table-responsive">{{ flows_data.import_table_html|safe }}</div>
+                        <div class="eco-pol-table table-scroll table-responsive" id="import-flows-table">{{ flows_data.import_table_html|safe }}</div>
                         {% else %}
                         <p>No import flow data available.</p>
                         {% endif %}
@@ -334,6 +340,9 @@
                 </div>
             </div>
         </div>
+        {% if flows_insights %}
+        <div class="eco-pol-insight mt-3">{{ flows_insights|plain_text }}</div>
+        {% endif %}
     </section>
 
     <!-- Market Access Conditions Section (MacMap) -->
@@ -499,32 +508,79 @@
     .trade-subnav { top: 56px; }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Highlight nav link on scroll
-    const navLinks = document.querySelectorAll('.trade-nav-link');
-    const sections = [
-        document.getElementById('trade-partners'),
-        document.getElementById('trade-products'),
-        document.getElementById('trade-services'),
-        document.getElementById('trade-exchange'),
-        document.getElementById('trade-monetary')
-    ].filter(Boolean);
-    function onScroll() {
-        let scrollPos = window.scrollY + 120;
-        sections.forEach((section, idx) => {
-            if (section.offsetTop <= scrollPos && (idx === sections.length-1 || sections[idx+1].offsetTop > scrollPos)) {
-                navLinks.forEach(l => l.classList.remove('active'));
-                navLinks[idx].classList.add('active');
+// Helper to parse HTML table into JS data
+function parseTable(tableId) {
+    const table = document.getElementById(tableId)?.querySelector('table');
+    if (!table) return {labels: [], values: []};
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    let labels = [];
+    let values = [];
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td, th');
+        if (cells.length >= 2) {
+            let label = cells[0].innerText.trim();
+            // Remove 'Country' or similar header rows from labels
+            if (label.toLowerCase() === 'country') return;
+            labels.push(label);
+            // Try to parse the first numeric value in the row (skip non-numeric)
+            let val = null;
+            for (let i = 1; i < cells.length; ++i) {
+                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
+                if (!isNaN(num)) { val = num; break; }
             }
-        });
-    }
-    window.addEventListener('scroll', onScroll);
-    navLinks.forEach((link, idx) => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            sections[idx].scrollIntoView({behavior:'smooth', block:'start'});
-        });
+            values.push(val ?? 0);
+        }
+    });
+    return {labels, values};
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const exportData = parseTable('export-flows-table');
+    const importData = parseTable('import-flows-table');
+    // Merge labels
+    const allLabels = Array.from(new Set([...exportData.labels, ...importData.labels]));
+    const exportValues = allLabels.map(l => {
+        const idx = exportData.labels.indexOf(l);
+        return idx !== -1 ? exportData.values[idx] : 0;
+    });
+    const importValues = allLabels.map(l => {
+        const idx = importData.labels.indexOf(l);
+        return idx !== -1 ? importData.values[idx] : 0;
+    });
+    const ctx = document.getElementById('flowsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: allLabels,
+            datasets: [
+                {
+                    label: 'Export',
+                    backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1,
+                    data: exportValues
+                },
+                {
+                    label: 'Import',
+                    backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                    borderColor: 'rgba(46, 204, 113, 1)',
+                    borderWidth: 1,
+                    data: importValues
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Import/Export Flows by Country/Partner' }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Country/Partner' } },
+                y: { title: { display: true, text: 'Value' }, beginAtZero: true }
+            }
+        }
     });
 });
 </script>

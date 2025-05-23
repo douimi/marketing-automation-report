@@ -149,6 +149,8 @@ def start_report():
                         error_message = macmap_data['error']
                 # --- Import/Export Flows scraping ---
                 flows_data = None
+                flows_intro = None
+                flows_insights = None
                 if not error_found:
                     flows_data = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
@@ -158,6 +160,9 @@ def start_report():
                     if isinstance(flows_data, dict) and 'error' in flows_data:
                         error_found = True
                         error_message = flows_data['error']
+                    else:
+                        flows_intro = report_service.generate_openai_flows_intro(flows_data, form_data)
+                        flows_insights = report_service.generate_openai_flows_insights(flows_data, form_data)
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
@@ -184,6 +189,8 @@ def start_report():
                         'eco_political_insights': eco_political_insights,
                         'trade_data': trade_data,
                         'flows_data': flows_data,
+                        'flows_intro': flows_intro,
+                        'flows_insights': flows_insights,
                         'macmap_data': macmap_data,
                         'macmap_intro': macmap_intro,
                         'macmap_insights': macmap_insights,
@@ -271,7 +278,8 @@ def show_report():
     trade_data = report.get('trade_data') or {}
     macmap_data = report.get('macmap_data') or {}
     flows_data = report.get('flows_data') or {}
-    print('DEBUG: macmap_data =', macmap_data)
+    flows_intro = report.get('flows_intro')
+    flows_insights = report.get('flows_insights')
     return render_template('report.html',
                          form_data=report.get('form_data'),
                          market_data=report.get('market_data'),
@@ -283,6 +291,8 @@ def show_report():
                          macmap_insights=report.get('macmap_insights'),
                          datetime=datetime,
                          flows_data=flows_data,
+                         flows_intro=flows_intro,
+                         flows_insights=flows_insights,
                          **eco_political_data,
                          **trade_data,
                          macmap_data=macmap_data

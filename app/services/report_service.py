@@ -388,6 +388,63 @@ class ReportGenerationService:
             current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
             return "Error generating trade section insights. Please try again later."
 
+    def generate_openai_flows_intro(self, flows_data, form_data):
+        """Generate a short, engaging introduction for the Import/Export Flows section using OpenAI."""
+        try:
+            prompt = f"""
+            Write a concise, business-focused introduction (3-4 sentences) for a report section on Import/Export Flows for {form_data['product_name']} between {form_data['origin_country_name']} (exporter) and {form_data['destination_country_name']} (importer).
+            Use the following HTML tables for context (export and import flows):
+
+            Export Table:
+            {flows_data.get('export_table_html', '')}
+
+            Import Table:
+            {flows_data.get('import_table_html', '')}
+
+            Focus on the main trends, key partners, and any notable patterns. Do not include lists or bullet points. Keep it under 120 words.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional business analyst introducing trade flows to executives."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=200
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI flows introduction: {str(e)}")
+            return "Error generating flows introduction. Please try again later."
+
+    def generate_openai_flows_insights(self, flows_data, form_data):
+        """Generate actionable insights for the Import/Export Flows section using OpenAI."""
+        try:
+            prompt = f"""
+            As a trade flows expert, provide 3-5 actionable insights or recommendations for a business considering trading {form_data['product_name']} between {form_data['origin_country_name']} and {form_data['destination_country_name']}, based on the following HTML tables (export and import flows):
+
+            Export Table:
+            {flows_data.get('export_table_html', '')}
+
+            Import Table:
+            {flows_data.get('import_table_html', '')}
+
+            Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
+            """
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a trade flows expert providing concise, actionable insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=300
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
+            return "Error generating flows insights. Please try again later."
+
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""
         # 1. Santander General Presentation
