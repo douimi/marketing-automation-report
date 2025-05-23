@@ -23,9 +23,9 @@
         </div>
     </div>
 
-    <!-- Country Profile Section -->
+    <!-- General Presentation Section -->
     <section class="report-section mb-4" id="country-profile">
-        <div class="section-header"><i class="fas fa-info-circle section-icon"></i>Country Profile</div>
+        <div class="section-header"><i class="fas fa-info-circle section-icon"></i>General Presentation</div>
         <div class="section-intro">{{ openai_intro|plain_text }}</div>
         <div class="section-content">
             <div class="stat-row">
@@ -56,55 +56,118 @@
                 {% if market_data.business_languages %}<li><b>Business Language(s):</b> {{ market_data.business_languages }}</li>{% endif %}
                 {% if market_data.religion %}<li><b>Religion:</b> {{ market_data.religion }}</li>{% endif %}
             </ul>
+            <!-- Foreign Trade in Figures Table (moved here) -->
+            <div class="mt-4">
+                <h4 class="mb-3"><i class="fas fa-exchange-alt section-icon"></i>Foreign Trade in Figures</h4>
+                {% if market_data.trade_table and market_data.trade_table|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-striped">
+                        <thead class="table-accent">
+                            <tr>
+                                <th>Foreign Trade Indicators</th>
+                                <th>2019</th>
+                                <th>2020</th>
+                                <th>2021</th>
+                                <th>2022</th>
+                                <th>2023</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in market_data.trade_table %}
+                            <tr>
+                                {% if row is mapping %}
+                                    <td>{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</td>
+                                    <td>{{ row.get('2019', '') }}</td>
+                                    <td>{{ row.get('2020', '') }}</td>
+                                    <td>{{ row.get('2021', '') }}</td>
+                                    <td>{{ row.get('2022', '') }}</td>
+                                    <td>{{ row.get('2023', '') }}</td>
+                                {% else %}
+                                    <td>{{ row[0] if row|length > 0 else '' }}</td>
+                                    <td>{{ row[1] if row|length > 1 else '' }}</td>
+                                    <td>{{ row[2] if row|length > 2 else '' }}</td>
+                                    <td>{{ row[3] if row|length > 3 else '' }}</td>
+                                    <td>{{ row[4] if row|length > 4 else '' }}</td>
+                                    <td>{{ row[5] if row|length > 5 else '' }}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <p>No trade data available.</p>
+                {% endif %}
+                {% if trade_insights %}
+                <div class="section-insights">{{ trade_insights|plain_text }}</div>
+                {% endif %}
+            </div>
         </div>
         <div class="section-insights">{{ openai_conclusion|plain_text }}</div>
     </section>
 
-    <!-- Trade Section -->
-    <section class="report-section mb-4" id="trade">
-        <div class="section-header"><i class="fas fa-exchange-alt section-icon"></i>Foreign Trade in Figures</div>
-        <div class="section-content">
-            {% if market_data.trade_table and market_data.trade_table|length > 0 %}
-            <div class="table-responsive">
-                <table class="table table-hover align-middle table-striped">
-                    <thead class="table-accent">
-                        <tr>
-                            <th>Foreign Trade Indicators</th>
-                            <th>2019</th>
-                            <th>2020</th>
-                            <th>2021</th>
-                            <th>2022</th>
-                            <th>2023</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in market_data.trade_table %}
-                        <tr>
-                            {% if row is mapping %}
-                                <td>{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</td>
-                                <td>{{ row.get('2019', '') }}</td>
-                                <td>{{ row.get('2020', '') }}</td>
-                                <td>{{ row.get('2021', '') }}</td>
-                                <td>{{ row.get('2022', '') }}</td>
-                                <td>{{ row.get('2023', '') }}</td>
-                            {% else %}
-                                <td>{{ row[0] if row|length > 0 else '' }}</td>
-                                <td>{{ row[1] if row|length > 1 else '' }}</td>
-                                <td>{{ row[2] if row|length > 2 else '' }}</td>
-                                <td>{{ row[3] if row|length > 3 else '' }}</td>
-                                <td>{{ row[4] if row|length > 4 else '' }}</td>
-                                <td>{{ row[5] if row|length > 5 else '' }}</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    <!-- Economic and Political Outline Section -->
+    <section class="report-section mb-4" id="economic-political-outline">
+        <div class="eco-pol-card">
+            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-balance-scale"></i></span>Economic and Political Outline</div>
+            <div class="section-intro mb-3">{{ eco_political_intro|plain_text }}</div>
+            <div class="row g-4">
+                <!-- Economic Outline -->
+                <div class="col-lg-6">
+                    <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-chart-area"></i></span>Economic Outline</div>
+                    <div class="mb-3">{{ eco_outline_overview|safe }}</div>
+                    {% if eco_outline_main_indicators_table %}
+                    <div class="eco-pol-table table-responsive mb-3">
+                        {{ eco_outline_main_indicators_table|safe }}
+                    </div>
+                    {% endif %}
+                    <div class="mb-3">{{ eco_outline_main_sectors|safe }}</div>
+                    {% if eco_outline_breakdown_table %}
+                    <div class="eco-pol-table table-responsive mb-3">
+                        {{ eco_outline_breakdown_table|safe }}
+                    </div>
+                    {% endif %}
+                    {% if eco_outline_economic_freedom or eco_outline_business_env %}
+                    <div class="eco-pol-stat-row mb-3">
+                        {% if eco_outline_economic_freedom %}
+                        <div class="eco-pol-stat-block">
+                            <div class="fw-bold mb-1"><i class="fas fa-unlock-alt"></i> Economic Freedom</div>
+                            {{ eco_outline_economic_freedom|safe }}
+                        </div>
+                        {% endif %}
+                        {% if eco_outline_business_env %}
+                        <div class="eco-pol-stat-block">
+                            <div class="fw-bold mb-1"><i class="fas fa-briefcase"></i> Business Env. Rank</div>
+                            {{ eco_outline_business_env|safe }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Political Outline -->
+                <div class="col-lg-6">
+                    <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-landmark"></i></span>Political Outline</div>
+                    {% if political_outline %}
+                    <div class="mb-3">{{ political_outline|safe }}</div>
+                    {% endif %}
+                    <div class="eco-pol-stat-row mb-3">
+                        {% if political_press_freedom %}
+                        <div class="eco-pol-stat-block">
+                            <div class="fw-bold mb-1"><i class="fas fa-newspaper"></i> Press Freedom</div>
+                            {{ political_press_freedom|safe }}
+                        </div>
+                        {% endif %}
+                        {% if political_freedom %}
+                        <div class="eco-pol-stat-block">
+                            <div class="fw-bold mb-1"><i class="fas fa-user-shield"></i> Political Freedom</div>
+                            {{ political_freedom|safe }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            {% else %}
-                <p>No trade data available.</p>
-            {% endif %}
-            {% if trade_insights %}
-            <div class="section-insights">{{ trade_insights|plain_text }}</div>
+            {% if eco_political_insights %}
+            <div class="eco-pol-insight">{{ eco_political_insights|plain_text }}</div>
             {% endif %}
         </div>
     </section>

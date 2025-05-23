@@ -1,5 +1,6 @@
 Flask
 Flask-Login
+Flask-Session
 requests
 selenium
 openai

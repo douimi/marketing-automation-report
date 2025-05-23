@@ -7,6 +7,7 @@ import threading
 from flask import g
 from werkzeug.local import LocalProxy
 import time
+import uuid
 
 main_bp = Blueprint('main', __name__, template_folder='../templates')
 
@@ -16,8 +17,14 @@ report_status = {
     'market_data': None,
     'openai_intro': None,
     'openai_conclusion': None,
+    'eco_political_data': None,
+    'eco_political_intro': None,
+    'eco_political_insights': None,
     'error_message': None
 }
+
+# Global in-memory cache for reports (keyed by report_id)
+reports_cache = {}
 
 @main_bp.route('/')
 @login_required
@@ -55,10 +62,15 @@ def start_report():
             'market_data': None,
             'openai_intro': None,
             'openai_conclusion': None,
+            'eco_political_data': None,
+            'eco_political_intro': None,
+            'eco_political_insights': None,
             'error_message': None
         }
         
-        # Store form data in session
+        # Generate a unique report_id and store in session
+        report_id = str(uuid.uuid4())
+        session['report_id'] = report_id
         session['report_form_data'] = form_data
         session.modified = True
         
@@ -85,21 +97,43 @@ def start_report():
                     error_found = True
                     error_message = raw_santander_data
 
+                # --- Economic and Political Outline scraping ---
+                eco_political_data = None
+                eco_political_intro = None
+                eco_political_insights = None
+                if not error_found:
+                    eco_political_data = report_service.generate_santander_economic_political_outline(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    if isinstance(eco_political_data, dict) and 'error' in eco_political_data:
+                        error_found = True
+                        error_message = eco_political_data['error']
+
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
                     market_data = data_processor.parse_raw_data(raw_santander_data)
-                    
                     # Generate OpenAI introduction
                     openai_intro = report_service.generate_openai_intro(raw_santander_data, form_data)
                     # Generate OpenAI conclusion
                     openai_conclusion = report_service.generate_openai_conclusion(raw_santander_data, form_data)
-                    
-                    # Update global status
+                    # Generate OpenAI intro/insights for eco-political section
+                    eco_political_intro = report_service.generate_openai_eco_political_intro(eco_political_data, form_data)
+                    eco_political_insights = report_service.generate_openai_eco_political_insights(eco_political_data, form_data)
+                    # Store all report data in the global cache
+                    global reports_cache
+                    reports_cache[report_id] = {
+                        'form_data': form_data,
+                        'market_data': market_data,
+                        'openai_intro': openai_intro,
+                        'openai_conclusion': openai_conclusion,
+                        'eco_political_data': eco_political_data,
+                        'eco_political_intro': eco_political_intro,
+                        'eco_political_insights': eco_political_insights,
+                        'datetime': datetime
+                    }
                     global report_status
-                    report_status['market_data'] = market_data
-                    report_status['openai_intro'] = openai_intro
-                    report_status['openai_conclusion'] = openai_conclusion
                     report_status['status'] = 'complete'
                     current_app.logger.info("Report generation completed successfully")
                 else:
@@ -136,7 +170,7 @@ def start_report():
 @login_required
 def loading_page():
     """Show loading page while report is being generated."""
-    if 'report_form_data' not in session:
+    if 'report_id' not in session:
         return redirect(url_for('main.form_page'))
     return render_template('loading.html')
 
@@ -148,12 +182,8 @@ def check_status():
     current_app.logger.info(f"Checking status. Current status: {report_status['status']}")
     
     if report_status['status'] == 'complete':
-        # Store the data in session when complete
-        session['market_data'] = report_status['market_data']
-        session['openai_intro'] = report_status.get('openai_intro')
-        session['openai_conclusion'] = report_status['openai_conclusion']
+        # Store only the report_id in session when complete
         session.modified = True
-        
         current_app.logger.info("Status check: Report is complete")
         return jsonify({
             'status': 'complete',
@@ -173,13 +203,21 @@ def check_status():
 @login_required
 def show_report():
     """Display the generated report."""
-    if 'report_form_data' not in session or 'market_data' not in session:
+    if 'report_id' not in session:
         flash('No report data available. Please generate a report first.', 'warning')
         return redirect(url_for('main.form_page'))
-    
+    report_id = session.get('report_id')
+    report = reports_cache.get(report_id)
+    if not report:
+        flash('No report data available. Please generate a report first.', 'warning')
+        return redirect(url_for('main.form_page'))
+    eco_political_data = report.get('eco_political_data') or {}
     return render_template('report.html',
-                         form_data=session.get('report_form_data'),
-                         market_data=session.get('market_data'),
-                         openai_intro=session.get('openai_intro'),
-                         openai_conclusion=session.get('openai_conclusion'),
-                         datetime=datetime) 
+                         form_data=report.get('form_data'),
+                         market_data=report.get('market_data'),
+                         openai_intro=report.get('openai_intro'),
+                         openai_conclusion=report.get('openai_conclusion'),
+                         eco_political_intro=report.get('eco_political_intro'),
+                         eco_political_insights=report.get('eco_political_insights'),
+                         datetime=datetime,
+                         **eco_political_data) 

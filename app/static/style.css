@@ -80,4 +80,75 @@ body {
 @media print {
     .report-section { box-shadow: none !important; border-radius: 0 !important; }
     body { background: #fff !important; }
+}
+
+/* Economic and Political Outline Section */
+.eco-pol-card {
+    background: #f6f8fc;
+    border: 1.5px solid var(--border-color);
+    border-radius: 0.7rem;
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+}
+.eco-pol-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 1.1rem;
+}
+.eco-pol-header .eco-pol-icon {
+    margin-right: 0.7rem;
+    font-size: 1.4rem;
+}
+.eco-pol-stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.eco-pol-stat-block {
+    min-width: 110px;
+    flex: 1 1 110px;
+    background: #eaf1fb;
+    border-radius: 0.4rem;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    color: var(--accent);
+    font-size: 1.05rem;
+}
+.eco-pol-insight {
+    background: #e3f6f5;
+    border-left: 4px solid var(--secondary);
+    padding: 1rem 1.2rem;
+    border-radius: 0.3rem;
+    color: var(--accent);
+    font-size: 1.09rem;
+    margin-top: 1.2rem;
+}
+.eco-pol-table {
+    background: #fff;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.2rem;
+    overflow-x: auto;
+}
+.eco-pol-table th {
+    background: var(--secondary);
+    color: #fff;
+    font-weight: 600;
+}
+.eco-pol-table td, .eco-pol-table th {
+    padding: 0.5rem 0.7rem;
+}
+@media (max-width: 991px) {
+    .eco-pol-card { padding: 1rem; }
+    .eco-pol-stat-row { gap: 0.6rem; }
+}
+@media (max-width: 768px) {
+    .eco-pol-card { padding: 0.7rem; }
+    .eco-pol-stat-row { flex-direction: column; gap: 0.5rem; }
 } 
