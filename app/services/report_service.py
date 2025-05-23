@@ -165,7 +165,7 @@ class ReportGenerationService:
             Focus on the relevance of market access, key challenges, and opportunities. Do not include lists or bullet points. Keep it under 120 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing market access conditions to executives."},
                     {"role": "user", "content": prompt}
@@ -189,7 +189,7 @@ class ReportGenerationService:
             Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market access expert providing concise, actionable insights."},
                     {"role": "user", "content": prompt}
@@ -230,7 +230,7 @@ class ReportGenerationService:
             """
 
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market analysis expert providing concise, actionable insights."},
                     {"role": "user", "content": prompt}
@@ -256,7 +256,7 @@ class ReportGenerationService:
             Focus on the country's global relevance, economic profile, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries to executives."},
                     {"role": "user", "content": prompt}
@@ -280,7 +280,7 @@ class ReportGenerationService:
             Focus on the country's economic and political profile, recent trends, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' economic and political context to executives."},
                     {"role": "user", "content": prompt}
@@ -315,7 +315,7 @@ class ReportGenerationService:
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market and political analysis expert providing concise, actionable insights."},
                     {"role": "user", "content": prompt}
@@ -339,7 +339,7 @@ class ReportGenerationService:
             Focus on the country's trade position, key partners, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' trade profiles to executives."},
                     {"role": "user", "content": prompt}
@@ -374,7 +374,7 @@ class ReportGenerationService:
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade analysis expert providing concise, actionable insights."},
                     {"role": "user", "content": prompt}
@@ -403,7 +403,7 @@ class ReportGenerationService:
             Focus on the main trends, key partners, and any notable patterns. Do not include lists or bullet points. Keep it under 120 words.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing trade flows to executives."},
                     {"role": "user", "content": prompt}
@@ -431,7 +431,7 @@ class ReportGenerationService:
             Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
             """
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade flows expert providing concise, actionable insights."},
                     {"role": "user", "content": prompt}
