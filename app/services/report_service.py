@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -127,6 +127,19 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Foreign Trade in Figures scraping: {e}")
             return {"error": f"Error during Foreign Trade in Figures scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_import_export_flows(self, product_hs6, origin_code, destination_code):
+        """Scrapes the Import/Export Flows tables from SantanderTrade."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+        try:
+            print(f"Scraping Import/Export Flows for product={product_hs6}, origin={origin_code}, destination={destination_code}...")
+            flows_data = scrape_santander_import_export_flows(self.driver, product_hs6, origin_code, destination_code)
+            return flows_data
+        except Exception as e:
+            print(f"An error occurred during Import/Export Flows scraping: {e}")
+            return {"error": f"Error during Import/Export Flows scraping: {str(e)}"}
 
     def generate_macmap_market_access_conditions(self, reporter_iso3n, partner_iso3n, product_hs6):
         """Scrapes the Market Access Conditions section from MacMap."""
@@ -374,6 +387,34 @@ class ReportGenerationService:
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
             return "Error generating trade section insights. Please try again later."
+
+    def generate_full_report(self, form_data, countries_config, products_config):
+        """Orchestrates the full scraping and returns all data for the report."""
+        # 1. Santander General Presentation
+        santander_data = self.generate_santander_report_data(form_data['destination_country_code'], countries_config)
+        # 2. Santander Economic/Political Outline
+        eco_pol_data = self.generate_santander_economic_political_outline(form_data['destination_country_code'], countries_config)
+        # 3. Santander Foreign Trade in Figures
+        trade_data = self.generate_santander_foreign_trade_in_figures(form_data['destination_country_code'], countries_config)
+        # 4. Import/Export Flows (NEW)
+        flows_data = self.generate_santander_import_export_flows(
+            form_data['hs6_product_code'],
+            form_data['origin_country_code'],
+            form_data['destination_country_code']
+        )
+        # 5. MacMap
+        macmap_data = self.generate_macmap_market_access_conditions(
+            get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config),
+            get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config),
+            form_data['hs6_product_code']
+        )
+        return {
+            'santander_data': santander_data,
+            'eco_pol_data': eco_pol_data,
+            'trade_data': trade_data,
+            'flows_data': flows_data,
+            'macmap_data': macmap_data
+        }
 
     def close_driver(self):
         """Closes the Selenium WebDriver."""

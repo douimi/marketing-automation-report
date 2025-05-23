@@ -147,6 +147,17 @@ def start_report():
                     if isinstance(macmap_data, dict) and 'error' in macmap_data:
                         error_found = True
                         error_message = macmap_data['error']
+                # --- Import/Export Flows scraping ---
+                flows_data = None
+                if not error_found:
+                    flows_data = report_service.generate_santander_import_export_flows(
+                        form_data['hs6_product_code'],
+                        form_data['origin_country_code'],
+                        form_data['destination_country_code']
+                    )
+                    if isinstance(flows_data, dict) and 'error' in flows_data:
+                        error_found = True
+                        error_message = flows_data['error']
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
@@ -172,6 +183,7 @@ def start_report():
                         'eco_political_intro': eco_political_intro,
                         'eco_political_insights': eco_political_insights,
                         'trade_data': trade_data,
+                        'flows_data': flows_data,
                         'macmap_data': macmap_data,
                         'macmap_intro': macmap_intro,
                         'macmap_insights': macmap_insights,
@@ -258,6 +270,7 @@ def show_report():
     eco_political_data = report.get('eco_political_data') or {}
     trade_data = report.get('trade_data') or {}
     macmap_data = report.get('macmap_data') or {}
+    flows_data = report.get('flows_data') or {}
     print('DEBUG: macmap_data =', macmap_data)
     return render_template('report.html',
                          form_data=report.get('form_data'),
@@ -269,6 +282,7 @@ def show_report():
                          macmap_intro=report.get('macmap_intro'),
                          macmap_insights=report.get('macmap_insights'),
                          datetime=datetime,
+                         flows_data=flows_data,
                          **eco_political_data,
                          **trade_data,
                          macmap_data=macmap_data
