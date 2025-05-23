@@ -39,11 +39,10 @@ class ReportGenerationService:
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
         chrome_options = Options()
-        # Add any desired options like headless mode, etc.
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--window-size=1920,1080")
         
         # Try to use WebDriverManager to automatically get the correct ChromeDriver
         try:

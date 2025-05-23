@@ -9,4 +9,7 @@ python-dotenv
 Jinja2>=3.0
 markupsafe>=2.0
 markdown2>=2.4.0
+beautifulsoup4
+html5lib
+lxml
 # Add other dependencies as needed 
