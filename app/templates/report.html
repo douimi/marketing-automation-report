@@ -348,6 +348,39 @@
         {% endif %}
     </section>
 
+    <!-- Trade Shows Section -->
+    <section class="report-section mb-4" id="trade-shows">
+        <div class="section-header"><i class="fas fa-calendar-alt section-icon"></i>Trade Shows</div>
+        <div class="section-content">
+            {% if trade_shows_data and trade_shows_data|length > 0 %}
+            <div class="row g-4">
+                {% for show in trade_shows_data %}
+                <div class="col-md-6">
+                    <div class="trade-card p-3 h-100">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="trade-card-icon me-2"><i class="fas fa-calendar"></i></span>
+                            <h5 class="mb-0">
+                                {% if show.url %}
+                                    <a href="{{ show.url }}" target="_blank" rel="noopener" class="text-decoration-underline">{{ show.name }}</a>
+                                {% else %}
+                                    {{ show.name }}
+                                {% endif %}
+                            </h5>
+                        </div>
+                        <div class="mb-1"><strong>Location:</strong> {{ show.location }}</div>
+                        <div class="mb-1"><strong>Date:</strong> {{ show.date }}</div>
+                        <div class="mb-1"><strong>Description:</strong> {{ show.description }}</div>
+                        <div class="mb-1"><strong>Sectors:</strong> {{ show.sectors }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No trade shows found for the selected sector and country.</p>
+            {% endif %}
+        </div>
+    </section>
+
     <!-- Market Access Conditions Section (MacMap) -->
     <section class="report-section mb-4" id="market-access-conditions">
         <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-door-open"></i></span>Market Access Conditions</div>

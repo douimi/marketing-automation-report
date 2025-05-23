@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -39,7 +39,7 @@ class ReportGenerationService:
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
+        #chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--window-size=1920,1080")
@@ -444,6 +444,19 @@ class ReportGenerationService:
             current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
             return "Error generating flows insights. Please try again later."
 
+    def generate_santander_trade_shows(self, sector_code, destination_country_iso3n):
+        """Scrapes the Trade Shows section from SantanderTrade for the given sector and country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return []
+        try:
+            print(f"Scraping Trade Shows for sector={sector_code}, country={destination_country_iso3n}...")
+            shows = scrape_santander_trade_shows(self.driver, sector_code, destination_country_iso3n)
+            return shows
+        except Exception as e:
+            print(f"An error occurred during Trade Shows scraping: {e}")
+            return []
+
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""
         # 1. Santander General Presentation
@@ -458,7 +471,12 @@ class ReportGenerationService:
             form_data['origin_country_code'],
             form_data['destination_country_code']
         )
-        # 5. MacMap
+        # 5. Trade Shows (NEW)
+        trade_shows_data = self.generate_santander_trade_shows(
+            form_data['sector_code'],
+            form_data['destination_country_iso3n']
+        )
+        # 6. MacMap
         macmap_data = self.generate_macmap_market_access_conditions(
             get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config),
             get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config),
@@ -469,6 +487,7 @@ class ReportGenerationService:
             'eco_pol_data': eco_pol_data,
             'trade_data': trade_data,
             'flows_data': flows_data,
+            'trade_shows_data': trade_shows_data,
             'macmap_data': macmap_data
         }
 

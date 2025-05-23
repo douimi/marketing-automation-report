@@ -55,6 +55,7 @@ def start_report():
         
         countries_config = current_app.config.get('COUNTRIES', [])
         products_config = current_app.config.get('PRODUCTS', [])
+        sectors_config = current_app.config.get('SECTORS', [])
         form_data['origin_country_name'] = get_country_name_from_code(form_data['origin_country_code'], countries_config)
         form_data['destination_country_name'] = get_country_name_from_code(form_data['destination_country_code'], countries_config)
         # Map hs6_product_code to product_name (description)
@@ -65,6 +66,28 @@ def start_report():
                 product_name = product.get('description')
                 break
         form_data['product_name'] = product_name or hs6_code or ''
+        # Add sector_code (from sector name)
+        selected_sector_name = form_data.get('sector')
+        sector_code = None
+        for sector in sectors_config:
+            if sector.get('name') == selected_sector_name:
+                sector_code = sector.get('code')
+                break
+        form_data['sector_code'] = sector_code or ''
+        # Add destination_country_iso3n
+        destination_country_iso3n = None
+        for country in countries_config:
+            if country.get('code') == form_data['destination_country_code']:
+                destination_country_iso3n = country.get('iso_numeric')
+                break
+        form_data['destination_country_iso3n'] = destination_country_iso3n or ''
+        # Add destination_country_iso2 (for Trade Shows)
+        destination_country_iso2 = None
+        for country in countries_config:
+            if country.get('code') == form_data['destination_country_code']:
+                destination_country_iso2 = country.get('ISO2')
+                break
+        form_data['destination_country_iso2'] = destination_country_iso2 or ''
         
         # Reset global status
         global report_status
@@ -163,6 +186,13 @@ def start_report():
                     else:
                         flows_intro = report_service.generate_openai_flows_intro(flows_data, form_data)
                         flows_insights = report_service.generate_openai_flows_insights(flows_data, form_data)
+                # --- Trade Shows scraping ---
+                trade_shows_data = None
+                if not error_found:
+                    trade_shows_data = report_service.generate_santander_trade_shows(
+                        form_data['sector_code'],
+                        form_data['destination_country_iso2']
+                    )
                 if raw_santander_data and not error_found:
                     # Process the raw data into structured format
                     data_processor = MarketDataProcessor()
@@ -191,6 +221,7 @@ def start_report():
                         'flows_data': flows_data,
                         'flows_intro': flows_intro,
                         'flows_insights': flows_insights,
+                        'trade_shows_data': trade_shows_data,
                         'macmap_data': macmap_data,
                         'macmap_intro': macmap_intro,
                         'macmap_insights': macmap_insights,
@@ -280,6 +311,7 @@ def show_report():
     flows_data = report.get('flows_data') or {}
     flows_intro = report.get('flows_intro')
     flows_insights = report.get('flows_insights')
+    trade_shows_data = report.get('trade_shows_data') or []
     return render_template('report.html',
                          form_data=report.get('form_data'),
                          market_data=report.get('market_data'),
@@ -293,6 +325,7 @@ def show_report():
                          flows_data=flows_data,
                          flows_intro=flows_intro,
                          flows_insights=flows_insights,
+                         trade_shows_data=trade_shows_data,
                          **eco_political_data,
                          **trade_data,
                          macmap_data=macmap_data

@@ -405,4 +405,73 @@ def scrape_santander_import_export_flows(driver, product_hs6, origin_code, desti
         except Exception as e:
             print(f"Error scraping {flow} flow table: {e}")
             results[f'{flow}_table_html'] = f'<p>Error scraping {flow} flow table: {e}</p>'
-    return results 
+    return results
+
+
+def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n):
+    """
+    Scrapes the Trade Shows section from SantanderTrade for the given sector and country ISO3N code.
+    Returns a list of trade shows, each as a dict with keys: 'name', 'url', 'location', 'date', 'description', 'sectors'.
+    """
+    import os
+    import json
+    from bs4 import BeautifulSoup
+    import urllib.parse
+    import time
+
+    base_url = (
+        "https://santandertrade.com/en/portal/reach-business-counterparts/trade-shows?"
+        "todo=valider&csrf=1e9e01a18167ba7a1908d67985cb0d4d&keyword=&code_secteur={sector_code}&pays_recherche={country_code}#result"
+    )
+    url = base_url.format(sector_code=sector_code, country_code=destination_country_iso3n)
+    print(f"Navigating to Trade Shows URL: {url}")
+    driver.get(url)
+    time.sleep(2)
+    # Click the form-submit button if present
+    try:
+        submit_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="form-submit"]'))
+        )
+        driver.execute_script("arguments[0].click();", submit_button)
+        time.sleep(2)
+    except Exception as e:
+        print(f"Could not find or click the Trade Shows submit button: {e}")
+    page_source = driver.page_source
+    soup = BeautifulSoup(page_source, 'html.parser')
+
+    shows = []
+    results_div = soup.find('div', id='resultats')
+    if not results_div:
+        print("No trade shows found on the page.")
+        return shows
+
+    for card in results_div.find_all('div', class_='desc-resultats'):
+        # Name and URL
+        name_tag = card.find('div', class_='titre-haut-salon').find('a')
+        name = name_tag.get_text(strip=True) if name_tag else ''
+        url = urllib.parse.urljoin("https://santandertrade.com", name_tag['href']) if name_tag and name_tag.has_attr('href') else ''
+        # Location
+        country_tag = card.find('div', class_='country')
+        location = country_tag.get_text(strip=True) if country_tag else ''
+        # Date
+        type_tag = card.find('div', class_='type')
+        date = type_tag.get_text(strip=True) if type_tag else ''
+        # Description
+        desc_tag = card.find('div', class_='resumer')
+        description = desc_tag.get_text(strip=True) if desc_tag else ''
+        # Sectors
+        sectors_tag = card.find('div', class_='sectors-line')
+        sectors = ''
+        if sectors_tag:
+            sectors_span = sectors_tag.find('span', itemprop='name')
+            if sectors_span:
+                sectors = sectors_span.get_text(strip=True)
+        shows.append({
+            'name': name,
+            'url': url,
+            'location': location,
+            'date': date,
+            'description': description,
+            'sectors': sectors
+        })
+    return shows 
