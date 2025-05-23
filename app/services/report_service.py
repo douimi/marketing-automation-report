@@ -176,7 +176,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI MacMap introduction: {str(e)}")
-            return "Error generating market access introduction. Please try again later."
+            return ""
 
     def generate_openai_macmap_insights(self, macmap_data, form_data):
         """Generate actionable insights for the Market Access Conditions section using OpenAI."""
@@ -200,7 +200,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI MacMap insights: {str(e)}")
-            return "Error generating market access insights. Please try again later."
+            return ""
 
     def generate_openai_conclusion(self, market_data, form_data):
         """Generate a concise market analysis conclusion using OpenAI."""
@@ -243,7 +243,7 @@ class ReportGenerationService:
 
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI conclusion: {str(e)}")
-            return "Error generating market insights. Please try again later."
+            return ""
 
     def generate_openai_intro(self, market_data, form_data):
         """Generate a short, engaging introduction about the selected country using OpenAI."""
@@ -267,7 +267,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI introduction: {str(e)}")
-            return "Error generating country introduction. Please try again later."
+            return ""
 
     def generate_openai_eco_political_intro(self, eco_pol_data, form_data):
         """Generate a short, engaging introduction for the Economic and Political Outline section using OpenAI."""
@@ -291,7 +291,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political introduction: {str(e)}")
-            return "Error generating section introduction. Please try again later."
+            return ""
 
     def generate_openai_eco_political_insights(self, eco_pol_data, form_data):
         """Generate a concise insights summary for the Economic and Political Outline section using OpenAI."""
@@ -326,7 +326,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political insights: {str(e)}")
-            return "Error generating section insights. Please try again later."
+            return ""
 
     def generate_openai_trade_intro(self, trade_data, form_data):
         """Generate a short, engaging introduction for the Foreign Trade in Figures section using OpenAI."""
@@ -350,7 +350,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade introduction: {str(e)}")
-            return "Error generating trade section introduction. Please try again later."
+            return ""
 
     def generate_openai_trade_insights(self, trade_data, form_data):
         """Generate a concise insights summary for the Foreign Trade in Figures section using OpenAI."""
@@ -385,7 +385,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
-            return "Error generating trade section insights. Please try again later."
+            return ""
 
     def generate_openai_flows_intro(self, flows_data, form_data):
         """Generate a short, engaging introduction for the Import/Export Flows section using OpenAI."""
@@ -414,7 +414,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows introduction: {str(e)}")
-            return "Error generating flows introduction. Please try again later."
+            return ""
 
     def generate_openai_flows_insights(self, flows_data, form_data):
         """Generate actionable insights for the Import/Export Flows section using OpenAI."""
@@ -442,7 +442,7 @@ class ReportGenerationService:
             return response.choices[0].message.content
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
-            return "Error generating flows insights. Please try again later."
+            return ""
 
     def generate_santander_trade_shows(self, sector_code, destination_country_iso3n):
         """Scrapes the Trade Shows section from SantanderTrade for the given sector and country."""
