@@ -17,8 +17,11 @@
                     </div>
                 </div>
             </div>
-            <button onclick="window.print()" class="btn btn-accent px-4 py-2">
+            <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2 me-2">
                 <i class="fas fa-file-pdf me-2"></i>Export PDF
+            </button>
+            <button id="exportWordBtn" class="btn btn-outline-primary px-4 py-2">
+                <i class="fas fa-file-word me-2"></i>Export Word
             </button>
         </div>
     </div>
@@ -510,78 +513,140 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Helper to parse HTML table into JS data
-function parseTable(tableId) {
+// Helper to parse flows table for time series data
+function parseFlowsTimeSeries(tableId) {
     const table = document.getElementById(tableId)?.querySelector('table');
-    if (!table) return {labels: [], values: []};
-    const rows = Array.from(table.querySelectorAll('tbody tr'));
-    let labels = [];
-    let values = [];
-    rows.forEach(row => {
-        const cells = row.querySelectorAll('td, th');
-        if (cells.length >= 2) {
-            let label = cells[0].innerText.trim();
-            // Remove 'Country' or similar header rows from labels
-            if (label.toLowerCase() === 'country') return;
-            labels.push(label);
-            // Try to parse the first numeric value in the row (skip non-numeric)
-            let val = null;
-            for (let i = 1; i < cells.length; ++i) {
-                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
-                if (!isNaN(num)) { val = num; break; }
-            }
-            values.push(val ?? 0);
+    if (!table) return {partners: [], years: [], data: {}};
+    let years = [];
+    let partners = [];
+    let data = {};
+    // Try to get years from <thead>
+    const thead = table.querySelector('thead');
+    if (thead) {
+        const ths = thead.querySelectorAll('th');
+        for (let i = 1; i < ths.length; ++i) {
+            let year = ths[i].innerText.trim();
+            if (/^\d{4}$/.test(year)) years.push(year);
         }
-    });
-    return {labels, values};
+    }
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    // If no <thead>, check if first row is header
+    let startIdx = 0;
+    if (years.length === 0 && rows.length > 0) {
+        const firstRowCells = Array.from(rows[0].querySelectorAll('td, th'));
+        if (firstRowCells.length > 1 && firstRowCells[0].innerText.trim().toLowerCase() === 'country') {
+            for (let i = 1; i < firstRowCells.length; ++i) {
+                let year = firstRowCells[i].innerText.trim();
+                if (/^\d{4}$/.test(year)) years.push(year);
+            }
+            startIdx = 1; // skip this row for data
+        }
+    }
+    for (let r = startIdx; r < rows.length; ++r) {
+        const cells = rows[r].querySelectorAll('td, th');
+        if (cells.length >= 2) {
+            let partner = cells[0].innerText.trim();
+            if (partner.toLowerCase() === 'country') continue;
+            partners.push(partner);
+            data[partner] = [];
+            for (let i = 1; i < cells.length && i <= years.length; ++i) {
+                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
+                data[partner].push(!isNaN(num) ? num : null);
+            }
+        }
+    }
+    return {partners, years, data};
 }
 document.addEventListener('DOMContentLoaded', function() {
-    const exportData = parseTable('export-flows-table');
-    const importData = parseTable('import-flows-table');
-    // Merge labels
-    const allLabels = Array.from(new Set([...exportData.labels, ...importData.labels]));
-    const exportValues = allLabels.map(l => {
-        const idx = exportData.labels.indexOf(l);
-        return idx !== -1 ? exportData.values[idx] : 0;
+    const exportSeries = parseFlowsTimeSeries('export-flows-table');
+    const importSeries = parseFlowsTimeSeries('import-flows-table');
+    // Use the same years for both charts (union)
+    const allYears = Array.from(new Set([...(exportSeries.years || []), ...(importSeries.years || [])])).sort();
+    // Prepare datasets for each partner (export and import)
+    const datasets = [];
+    // Export partners
+    exportSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Export: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = exportSeries.years.indexOf(year);
+                return yearIdx !== -1 ? exportSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(52, 152, 219, 1)',
+            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            tension: 0.3,
+            spanGaps: true
+        });
     });
-    const importValues = allLabels.map(l => {
-        const idx = importData.labels.indexOf(l);
-        return idx !== -1 ? importData.values[idx] : 0;
+    // Import partners
+    importSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Import: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = importSeries.years.indexOf(year);
+                return yearIdx !== -1 ? importSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(46, 204, 113, 1)',
+            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+            borderDash: [5, 5],
+            tension: 0.3,
+            spanGaps: true
+        });
     });
     const ctx = document.getElementById('flowsChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: allLabels,
-            datasets: [
-                {
-                    label: 'Export',
-                    backgroundColor: 'rgba(52, 152, 219, 0.7)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    borderWidth: 1,
-                    data: exportValues
-                },
-                {
-                    label: 'Import',
-                    backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    borderWidth: 1,
-                    data: importValues
-                }
-            ]
+            labels: allYears,
+            datasets: datasets
         },
         options: {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                title: { display: true, text: 'Import/Export Flows by Country/Partner' }
+                title: { display: true, text: 'Import/Export Flows Evolution by Year' }
             },
             scales: {
-                x: { title: { display: true, text: 'Country/Partner' } },
+                x: { title: { display: true, text: 'Year' } },
                 y: { title: { display: true, text: 'Value' }, beginAtZero: true }
             }
         }
     });
+});
+// Export as Word document
+function exportReportToWord(filename = 'report.doc') {
+    // Clone the report content
+    const content = document.querySelector('.container-xl').cloneNode(true);
+    // Add the logo at the top
+    const logo = document.createElement('img');
+    logo.src = 'https://www.indegate.com/storage/2020/02/blue-and-white-indegate.png';
+    logo.alt = 'Indegate Logo';
+    logo.style.height = '40px';
+    logo.style.width = 'auto';
+    logo.style.display = 'block';
+    logo.style.margin = '0 auto 24px auto';
+    content.insertBefore(logo, content.firstChild);
+    // Prepare HTML for Word
+    const html = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset='utf-8'><title>Exported Report</title></head>
+        <body>${content.innerHTML}</body>
+        </html>
+    `;
+    const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }, 0);
+}
+document.getElementById('exportWordBtn').addEventListener('click', function() {
+    exportReportToWord('Indegate_Market_Report.doc');
 });
 </script>
 {% endblock %} 
