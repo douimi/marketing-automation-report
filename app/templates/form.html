@@ -12,31 +12,22 @@
             <form id="reportForm" method="POST" action="{{ url_for('main.start_report') }}">
                 <div class="mb-4">
                     <label for="origin_country" class="form-label">Origin Country</label>
-                    <select class="form-select" id="origin_country" name="origin_country" required>
+                    <select class="form-select" id="origin_country" name="origin_country" required style="width: 100%">
                         <option value="" disabled selected>Select Origin Country</option>
-                        {% for country in countries %}
-                            <option value="{{ country.code }}">{{ country.name }}</option>
-                        {% endfor %}
                     </select>
                 </div>
 
                 <div class="mb-4">
                     <label for="destination_country" class="form-label">Destination Country</label>
-                    <select class="form-select" id="destination_country" name="destination_country" required>
+                    <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
                         <option value="" disabled selected>Select Destination Country</option>
-                        {% for country in countries %}
-                            <option value="{{ country.code }}">{{ country.name }}</option>
-                        {% endfor %}
                     </select>
                 </div>
 
                 <div class="mb-4">
                     <label for="hs6_product_code" class="form-label">Product Category</label>
-                    <select class="form-select" id="hs6_product_code" name="hs6_product_code" required>
+                    <select class="form-select" id="hs6_product_code" name="hs6_product_code" required style="width: 100%">
                         <option value="" disabled selected>Select Product</option>
-                        {% for product in products %}
-                            <option value="{{ product.hs6 }}">{{ product.hs6 }} - {{ product.description }}</option>
-                        {% endfor %}
                     </select>
                 </div>
 
@@ -57,6 +48,68 @@
         </div>
     </div>
 </div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    function formatProduct(product) {
+        if (product.loading) return product.text;
+        return $('<span>' + product.text + '</span>');
+    }
+    function formatProductSelection(product) {
+        return product.text || product.id;
+    }
+    $('#origin_country, #destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+    $('#hs6_product_code').select2({
+        ajax: {
+            url: '/api/products',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 2,
+        templateResult: formatProduct,
+        templateSelection: formatProductSelection,
+        placeholder: 'Select a product',
+        allowClear: true
+    });
+});
+</script>
 
 <style>
 .container {

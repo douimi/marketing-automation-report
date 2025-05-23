@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash, session, jsonify, copy_current_request_context
+from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash, session, jsonify, copy_current_request_context, send_from_directory
 from flask_login import login_required
 from ..services.report_service import ReportGenerationService, get_country_name_from_code
 from ..services.data_processor import MarketDataProcessor
@@ -8,6 +8,8 @@ from flask import g
 from werkzeug.local import LocalProxy
 import time
 import uuid
+import os
+import json
 
 main_bp = Blueprint('main', __name__, template_folder='../templates')
 
@@ -277,4 +279,32 @@ def get_country_iso_numeric_from_code(country_code, countries_config):
     for country in countries_config:
         if country.get("code") == country_code:
             return country.get("iso_numeric")
-    return None 
+    return None
+
+@main_bp.route('/api/countries')
+@login_required
+def api_countries():
+    search = request.args.get('search', '').lower()
+    countries_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../config/countries.json'))
+    with open(countries_path, encoding='utf-8') as f:
+        countries = json.load(f)
+    filtered = [c for c in countries if search in c['name'].lower() or search in c['code'].lower() or search in c.get('ISO2', '').lower()]
+    results = [{
+        'id': c['code'],
+        'text': f"{c['name']} ({c['code']})"
+    } for c in filtered[:30]]  # Limit results for performance
+    return jsonify(items=results)
+
+@main_bp.route('/api/products')
+@login_required
+def api_products():
+    search = request.args.get('search', '').lower()
+    products_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../config/products.json'))
+    with open(products_path, encoding='utf-8') as f:
+        products = json.load(f)
+    filtered = [p for p in products if search in p['description'].lower() or search in p['hs6'].lower()]
+    results = [{
+        'id': p['hs6'],
+        'text': f"{p['hs6']} - {p['description']}"
+    } for p in filtered[:30]]  # Limit results for performance
+    return jsonify(items=results) 
