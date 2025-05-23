@@ -31,9 +31,6 @@ def login_santander(driver, email, password):
         time.sleep(2) # Wait for form to appear after click
     except Exception as e:
         print(f"Could not find or click button to reveal login form ({PRE_LOGIN_FORM_BUTTON_XPATH}). Error: {e}")
-        # driver.save_screenshot("debug_reveal_button_error.png")
-        # with open("debug_reveal_button_error.html", "w", encoding="utf-8") as f:
-        #     f.write(driver.page_source)
         return # Cannot proceed if this fails
 
     # Now, wait for the actual email field to be present
@@ -42,9 +39,6 @@ def login_santander(driver, email, password):
         print("Email field is present.")
     except Exception as e:
         print(f"Email field ({SANTANDER_EMAIL_XPATH}) not found after attempting to reveal form. Login cannot proceed. Error: {e}")
-        # driver.save_screenshot("debug_email_field_not_found.png")
-        # with open("debug_email_field_not_found.html", "w", encoding="utf-8") as f:
-        #     f.write(driver.page_source)
         return # Cannot proceed if email field isn't found
 
     # Use JavaScript to fill forms
@@ -62,7 +56,6 @@ def login_santander(driver, email, password):
         print("Login button clicked.")
     except Exception as e:
         print(f"Could not find or click final login button ({SANTANDER_LOGIN_BUTTON_XPATH}). Error: {e}")
-        # driver.save_screenshot("debug_login_button_error.png")
         return
 
     # Wait for login to complete
