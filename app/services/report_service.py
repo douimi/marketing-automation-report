@@ -164,7 +164,8 @@ class ReportGenerationService:
 
             Focus on the relevance of market access, key challenges, and opportunities. Do not include lists or bullet points. Keep it under 120 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing market access conditions to executives."},
@@ -174,6 +175,8 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI MacMap introduction: {str(e)}")
             return ""
@@ -188,6 +191,7 @@ class ReportGenerationService:
 
             Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
             """
+            """
             response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -198,6 +202,8 @@ class ReportGenerationService:
                 max_tokens=300
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI MacMap insights: {str(e)}")
             return ""
@@ -229,7 +235,8 @@ class ReportGenerationService:
             Total response should not exceed 300 words.
             """
 
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market analysis expert providing concise, actionable insights."},
@@ -240,7 +247,8 @@ class ReportGenerationService:
             )
 
             return response.choices[0].message.content
-
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI conclusion: {str(e)}")
             return ""
@@ -255,7 +263,8 @@ class ReportGenerationService:
 
             Focus on the country's global relevance, economic profile, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries to executives."},
@@ -265,6 +274,8 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI introduction: {str(e)}")
             return ""
@@ -279,7 +290,8 @@ class ReportGenerationService:
 
             Focus on the country's economic and political profile, recent trends, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' economic and political context to executives."},
@@ -289,6 +301,8 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political introduction: {str(e)}")
             return ""
@@ -314,7 +328,8 @@ class ReportGenerationService:
 
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market and political analysis expert providing concise, actionable insights."},
@@ -324,6 +339,8 @@ class ReportGenerationService:
                 max_tokens=400
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political insights: {str(e)}")
             return ""
@@ -338,7 +355,8 @@ class ReportGenerationService:
 
             Focus on the country's trade position, key partners, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' trade profiles to executives."},
@@ -348,6 +366,8 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade introduction: {str(e)}")
             return ""
@@ -373,7 +393,8 @@ class ReportGenerationService:
 
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade analysis expert providing concise, actionable insights."},
@@ -383,6 +404,8 @@ class ReportGenerationService:
                 max_tokens=400
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
             return ""
@@ -402,7 +425,8 @@ class ReportGenerationService:
 
             Focus on the main trends, key partners, and any notable patterns. Do not include lists or bullet points. Keep it under 120 words.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing trade flows to executives."},
@@ -412,6 +436,8 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows introduction: {str(e)}")
             return ""
@@ -430,7 +456,8 @@ class ReportGenerationService:
 
             Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
             """
-            response = openai.chat.completions.create(
+            """
+                        response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade flows expert providing concise, actionable insights."},
@@ -440,6 +467,8 @@ class ReportGenerationService:
                 max_tokens=300
             )
             return response.choices[0].message.content
+            """
+            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
             return ""

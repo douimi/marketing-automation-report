@@ -259,7 +259,7 @@ def scrape_santander_foreign_trade_in_figures(driver, formatted_country_name):
         try:
             link = driver.find_element(By.ID, link_id)
             driver.execute_script("arguments[0].click();", link)
-            time.sleep(1.2)  # Wait for table to expand
+            time.sleep(1)  # Wait for table to expand
         except Exception as e:
             print(f"Could not click link with id {link_id}: {e}")
 
@@ -386,7 +386,7 @@ def scrape_santander_import_export_flows(driver, product_hs6, origin_code, desti
             WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="ief_wrapper"]/div[2]/div[1]/div[2]/table'))
             )
-            time.sleep(1.5)  # Let the table fully render
+            time.sleep(1)  # Let the table fully render
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, 'html.parser')
             table = soup.select_one('#ief_wrapper > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > table')
@@ -426,7 +426,6 @@ def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n)
     url = base_url.format(sector_code=sector_code, country_code=destination_country_iso3n)
     print(f"Navigating to Trade Shows URL: {url}")
     driver.get(url)
-    time.sleep(2)
     # Click the form-submit button if present
     try:
         submit_button = WebDriverWait(driver, 10).until(
