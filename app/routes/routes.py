@@ -13,18 +13,6 @@ import json
 
 main_bp = Blueprint('main', __name__, template_folder='../templates')
 
-# Global variable to store report status
-report_status = {
-    'status': 'processing',
-    'market_data': None,
-    'openai_intro': None,
-    'openai_conclusion': None,
-    'eco_political_data': None,
-    'eco_political_intro': None,
-    'eco_political_insights': None,
-    'error_message': None
-}
-
 # Global in-memory cache for reports (keyed by report_id)
 reports_cache = {}
 
@@ -89,24 +77,16 @@ def start_report():
                 break
         form_data['destination_country_iso2'] = destination_country_iso2 or ''
         
-        # Reset global status
-        global report_status
-        report_status = {
-            'status': 'processing',
-            'market_data': None,
-            'openai_intro': None,
-            'openai_conclusion': None,
-            'eco_political_data': None,
-            'eco_political_intro': None,
-            'eco_political_insights': None,
-            'error_message': None
-        }
-        
-        # Generate a unique report_id and store in session
+        # Set per-report status in reports_cache
         report_id = str(uuid.uuid4())
         session['report_id'] = report_id
         session['report_form_data'] = form_data
         session.modified = True
+        global reports_cache
+        reports_cache[report_id] = {
+            'status': 'processing',
+            'error_message': None
+        }
         
         # Create a copy of the application context for the background thread
         @copy_current_request_context
@@ -207,9 +187,8 @@ def start_report():
                     # Generate OpenAI intro/insights for MacMap section
                     macmap_intro = report_service.generate_openai_macmap_intro(macmap_data, form_data)
                     macmap_insights = report_service.generate_openai_macmap_insights(macmap_data, form_data)
-                    # Store all report data in the global cache
-                    global reports_cache
-                    reports_cache[report_id] = {
+                    # Update the report in reports_cache with all data and set status to complete
+                    reports_cache[report_id].update({
                         'form_data': form_data,
                         'market_data': market_data,
                         'openai_intro': openai_intro,
@@ -225,20 +204,20 @@ def start_report():
                         'macmap_data': macmap_data,
                         'macmap_intro': macmap_intro,
                         'macmap_insights': macmap_insights,
-                        'datetime': datetime
-                    }
-                    global report_status
-                    report_status['status'] = 'complete'
+                        'datetime': datetime,
+                        'status': 'complete',
+                        'error_message': None
+                    })
                     current_app.logger.info("Report generation completed successfully")
                 else:
-                    report_status['status'] = 'error'
-                    report_status['error_message'] = error_message or raw_santander_data
+                    reports_cache[report_id]['status'] = 'error'
+                    reports_cache[report_id]['error_message'] = error_message or raw_santander_data
                     current_app.logger.error(f"Error in report generation: {error_message or raw_santander_data}")
                     
             except Exception as e:
                 current_app.logger.error(f"Report generation failed: {e}", exc_info=True)
-                report_status['status'] = 'error'
-                report_status['error_message'] = str(e)
+                reports_cache[report_id]['status'] = 'error'
+                reports_cache[report_id]['error_message'] = str(e)
             finally:
                 if report_service:
                     report_service.close_driver()
@@ -271,27 +250,36 @@ def loading_page():
 @main_bp.route('/check_status')
 @login_required
 def check_status():
-    """Check the status of report generation."""
-    global report_status
-    current_app.logger.info(f"Checking status. Current status: {report_status['status']}")
-    
-    if report_status['status'] == 'complete':
-        # Store only the report_id in session when complete
+    """Check the status of report generation for the current user's report_id."""
+    from flask import make_response
+    report_id = session.get('report_id')
+    if not report_id or report_id not in reports_cache:
+        resp = make_response(jsonify({'status': 'error', 'message': 'No report in progress.'}))
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return resp
+    status = reports_cache[report_id].get('status', 'processing')
+    current_app.logger.info(f"Checking status for report_id {report_id}. Current status: {status}")
+    if status == 'complete':
         session.modified = True
         current_app.logger.info("Status check: Report is complete")
-        return jsonify({
+        resp = make_response(jsonify({
             'status': 'complete',
             'redirect_url': url_for('main.show_report')
-        })
-    elif report_status['status'] == 'error':
-        current_app.logger.info(f"Status check: Error - {report_status['error_message']}")
-        return jsonify({
+        }))
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return resp
+    elif status == 'error':
+        current_app.logger.info(f"Status check: Error - {reports_cache[report_id].get('error_message')}")
+        resp = make_response(jsonify({
             'status': 'error',
-            'message': report_status['error_message']
-        })
-    
+            'message': reports_cache[report_id].get('error_message', 'Unknown error')
+        }))
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return resp
     current_app.logger.info("Status check: Still processing")
-    return jsonify({'status': 'processing'})
+    resp = make_response(jsonify({'status': 'processing'}))
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    return resp
 
 @main_bp.route('/report')
 @login_required

@@ -225,80 +225,53 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let currentStep = 1;
-    const steps = document.querySelectorAll('.step');
-    let checkStatusInterval;
-    let retryCount = 0;
-    const MAX_RETRIES = 60; // 2 minutes (120 seconds / 2 second interval)
-    const MAX_WAIT_TIME = 180000; // 3 minutes in ms
-    let timedOut = false;
-
-    function updateSteps() {
-        steps.forEach((step, index) => {
-            if (index + 1 < currentStep) {
-                step.classList.add('completed');
-                step.classList.remove('active');
-                step.querySelector('.step-status').textContent = 'Completed';
-            } else if (index + 1 === currentStep) {
-                step.classList.add('active');
-                step.classList.remove('completed');
+let pollInterval = null;
+let pollStart = Date.now();
+let warningShown = false;
+let warningMs = 300000; // 5 minutes
+function pollStatus() {
+    // Add cache-busting param
+    const url = '/check_status?_=' + new Date().getTime();
+    fetch(url, { cache: 'no-store' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'complete') {
+                window.location.href = data.redirect_url;
+            } else if (data.status === 'error') {
+                showError(data.message || 'An error occurred.');
             } else {
-                step.classList.remove('active', 'completed');
+                // Still processing
+                if (!warningShown && Date.now() - pollStart > warningMs) {
+                    showWarning('This is taking longer than usual. Please keep this page open.');
+                    warningShown = true;
+                }
             }
+        })
+        .catch(err => {
+            showError('Network error. <button id="retryBtn" class="btn btn-primary mt-2">Try Again</button>');
         });
+}
+function showError(msg) {
+    clearInterval(pollInterval);
+    document.getElementById('loading-message').innerHTML = msg;
+    const btn = document.getElementById('retryBtn');
+    if (btn) btn.onclick = function() {
+        document.getElementById('loading-message').innerHTML = 'Retrying...';
+        pollInterval = setInterval(pollStatus, 2000);
+    };
+}
+function showWarning(msg) {
+    let warningDiv = document.getElementById('loading-warning');
+    if (!warningDiv) {
+        warningDiv = document.createElement('div');
+        warningDiv.id = 'loading-warning';
+        warningDiv.className = 'alert alert-warning mt-3';
+        document.querySelector('.loading-content').appendChild(warningDiv);
     }
-
-    function showError(message) {
-        const loadingContent = document.querySelector('.loading-content');
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message alert alert-danger mt-4';
-        errorDiv.textContent = message;
-        // Remove any existing error messages
-        const existingError = loadingContent.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        loadingContent.appendChild(errorDiv);
-        // Update UI to show error state
-        const mainLoader = document.getElementById('mainLoader');
-        mainLoader.style.borderLeftColor = '#dc3545';
-        mainLoader.style.animation = 'none';
-    }
-
-    function checkStatus() {
-        if (timedOut) return;
-        fetch('/check_status')
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'complete') {
-                    clearInterval(checkStatusInterval);
-                    window.location.href = data.redirect_url;
-                } else if (data.status === 'error') {
-                    clearInterval(checkStatusInterval);
-                    showError(data.message || 'An error occurred during report generation.');
-                } else {
-                    // Still processing
-                    retryCount++;
-                    updateSteps();
-                }
-            })
-            .catch(error => {
-                retryCount++;
-                if (retryCount >= MAX_RETRIES) {
-                    clearInterval(checkStatusInterval);
-                    showError('Network error or server not responding. Please refresh the page or try again later.');
-                }
-            });
-    }
-
-    checkStatusInterval = setInterval(checkStatus, 2000);
-    // Fallback: after MAX_WAIT_TIME, show a message
-    setTimeout(function() {
-        timedOut = true;
-        clearInterval(checkStatusInterval);
-        showError('This is taking longer than usual. Please refresh the page or try again later.');
-    }, MAX_WAIT_TIME);
+    warningDiv.innerHTML = msg;
+}
+document.addEventListener('DOMContentLoaded', function() {
+    pollInterval = setInterval(pollStatus, 2000);
 });
 </script>
 {% endblock %} 
