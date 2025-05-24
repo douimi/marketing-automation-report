@@ -91,55 +91,49 @@ def start_report():
         # Create a copy of the application context for the background thread
         @copy_current_request_context
         def generate_report_with_context():
+            import time as _time
+            t0 = _time.time()
             try:
                 report_service = None
                 countries_config = current_app.config.get('COUNTRIES', [])
-                
+                print(f'[TIMING] Start report generation: {round(_time.time() - t0, 2)}s')
                 report_service = ReportGenerationService()
-                raw_santander_data = report_service.generate_santander_report_data(
-                    form_data['destination_country_code'], 
-                    countries_config
-                )
-                
-                # Updated error check for dict or string
-                error_found = False
-                error_message = None
-                if isinstance(raw_santander_data, dict) and 'error' in raw_santander_data:
-                    error_found = True
-                    error_message = raw_santander_data['error']
-                elif isinstance(raw_santander_data, str) and raw_santander_data.startswith("Error:"):
-                    error_found = True
-                    error_message = raw_santander_data
-
-                # --- Economic and Political Outline scraping ---
-                eco_political_data = None
-                eco_political_intro = None
-                eco_political_insights = None
-                trade_data = None
-                trade_intro = None
-                trade_insights = None
-                if not error_found:
+                if not report_service.driver:
+                    reports_cache[report_id]['status'] = 'error'
+                    reports_cache[report_id]['error_message'] = 'Failed to initialize Selenium WebDriver.'
+                    return
+                # Scrape Santander General Presentation
+                try:
+                    raw_santander_data = report_service.generate_santander_report_data(
+                        form_data['destination_country_code'], 
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping santander country data: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Santander General Presentation: {e}")
+                    raw_santander_data = {}
+                # Scrape Economic and Political Outline
+                try:
                     eco_political_data = report_service.generate_santander_economic_political_outline(
                         form_data['destination_country_code'],
                         countries_config
                     )
-                    if isinstance(eco_political_data, dict) and 'error' in eco_political_data:
-                        error_found = True
-                        error_message = eco_political_data['error']
-                # --- Foreign Trade in Figures scraping ---
-                if not error_found:
+                    print(f'[TIMING] After scraping economic/political outline: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Economic/Political Outline: {e}")
+                    eco_political_data = {}
+                # Scrape Foreign Trade in Figures
+                try:
                     trade_data = report_service.generate_santander_foreign_trade_in_figures(
                         form_data['destination_country_code'],
                         countries_config
                     )
-                    if isinstance(trade_data, dict) and 'error' in trade_data:
-                        error_found = True
-                        error_message = trade_data['error']
-                # --- MacMap Market Access Conditions scraping ---
-                macmap_data = None
-                macmap_intro = None
-                macmap_insights = None
-                if not error_found:
+                    print(f'[TIMING] After scraping foreign trade in figures: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Foreign Trade in Figures: {e}")
+                    trade_data = {}
+                # Scrape MacMap Market Access Conditions
+                try:
                     reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
                     partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config)
                     macmap_data = report_service.generate_macmap_market_access_conditions(
@@ -147,73 +141,83 @@ def start_report():
                         partner_iso3n,
                         form_data['hs6_product_code']
                     )
-                    if isinstance(macmap_data, dict) and 'error' in macmap_data:
-                        error_found = True
-                        error_message = macmap_data['error']
-                # --- Import/Export Flows scraping ---
-                flows_data = None
-                flows_intro = None
-                flows_insights = None
-                if not error_found:
+                    print(f'[TIMING] After scraping MacMap: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping MacMap: {e}")
+                    macmap_data = {}
+                # Scrape Import/Export Flows
+                try:
                     flows_data = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
                         form_data['origin_country_code'],
                         form_data['destination_country_code']
                     )
-                    if isinstance(flows_data, dict) and 'error' in flows_data:
-                        error_found = True
-                        error_message = flows_data['error']
-                    else:
-                        flows_intro = report_service.generate_openai_flows_intro(flows_data, form_data)
-                        flows_insights = report_service.generate_openai_flows_insights(flows_data, form_data)
-                # --- Trade Shows scraping ---
-                trade_shows_data = None
-                if not error_found:
+                    print(f'[TIMING] After scraping import/export flows: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Import/Export Flows: {e}")
+                    flows_data = {}
+                # Scrape Trade Shows
+                try:
                     trade_shows_data = report_service.generate_santander_trade_shows(
                         form_data['sector_code'],
                         form_data['destination_country_iso2']
                     )
-                if raw_santander_data and not error_found:
-                    # Process the raw data into structured format
+                    print(f'[TIMING] After scraping trade shows: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Trade Shows: {e}")
+                    trade_shows_data = []
+                # Data processing and OpenAI calls (optional, wrap in try/except for each)
+                try:
                     data_processor = MarketDataProcessor()
                     market_data = data_processor.parse_raw_data(raw_santander_data)
-                    # Generate OpenAI introduction
-                    openai_intro = report_service.generate_openai_intro(raw_santander_data, form_data)
-                    # Generate OpenAI conclusion
-                    openai_conclusion = report_service.generate_openai_conclusion(raw_santander_data, form_data)
-                    # Generate OpenAI intro/insights for eco-political section
-                    eco_political_intro = report_service.generate_openai_eco_political_intro(eco_political_data, form_data)
-                    eco_political_insights = report_service.generate_openai_eco_political_insights(eco_political_data, form_data)
-                    # Generate OpenAI intro/insights for MacMap section
-                    macmap_intro = report_service.generate_openai_macmap_intro(macmap_data, form_data)
-                    macmap_insights = report_service.generate_openai_macmap_insights(macmap_data, form_data)
-                    # Update the report in reports_cache with all data and set status to complete
-                    reports_cache[report_id].update({
-                        'form_data': form_data,
-                        'market_data': market_data,
-                        'openai_intro': openai_intro,
-                        'openai_conclusion': openai_conclusion,
-                        'eco_political_data': eco_political_data,
-                        'eco_political_intro': eco_political_intro,
-                        'eco_political_insights': eco_political_insights,
-                        'trade_data': trade_data,
-                        'flows_data': flows_data,
-                        'flows_intro': flows_intro,
-                        'flows_insights': flows_insights,
-                        'trade_shows_data': trade_shows_data,
-                        'macmap_data': macmap_data,
-                        'macmap_intro': macmap_intro,
-                        'macmap_insights': macmap_insights,
-                        'datetime': datetime,
-                        'status': 'complete',
-                        'error_message': None
-                    })
-                    current_app.logger.info("Report generation completed successfully")
-                else:
-                    reports_cache[report_id]['status'] = 'error'
-                    reports_cache[report_id]['error_message'] = error_message or raw_santander_data
-                    current_app.logger.error(f"Error in report generation: {error_message or raw_santander_data}")
-                    
+                    print(f'[TIMING] After parsing market data: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error processing market data: {e}")
+                    market_data = {}
+                def safe_openai_call(fn, *args, **kwargs):
+                    try:
+                        return fn(*args, **kwargs)
+                    except Exception as e:
+                        current_app.logger.error(f"OpenAI error: {e}")
+                        return ''
+                openai_intro = safe_openai_call(report_service.generate_openai_intro, raw_santander_data, form_data)
+                print(f'[TIMING] After OpenAI intro: {round(_time.time() - t0, 2)}s')
+                openai_conclusion = safe_openai_call(report_service.generate_openai_conclusion, raw_santander_data, form_data)
+                print(f'[TIMING] After OpenAI conclusion: {round(_time.time() - t0, 2)}s')
+                eco_political_intro = safe_openai_call(report_service.generate_openai_eco_political_intro, eco_political_data, form_data)
+                print(f'[TIMING] After OpenAI eco_political_intro: {round(_time.time() - t0, 2)}s')
+                eco_political_insights = safe_openai_call(report_service.generate_openai_eco_political_insights, eco_political_data, form_data)
+                print(f'[TIMING] After OpenAI eco_political_insights: {round(_time.time() - t0, 2)}s')
+                macmap_intro = safe_openai_call(report_service.generate_openai_macmap_intro, macmap_data, form_data)
+                print(f'[TIMING] After OpenAI macmap_intro: {round(_time.time() - t0, 2)}s')
+                macmap_insights = safe_openai_call(report_service.generate_openai_macmap_insights, macmap_data, form_data)
+                print(f'[TIMING] After OpenAI macmap_insights: {round(_time.time() - t0, 2)}s')
+                flows_intro = safe_openai_call(report_service.generate_openai_flows_intro, flows_data, form_data)
+                print(f'[TIMING] After OpenAI flows_intro: {round(_time.time() - t0, 2)}s')
+                flows_insights = safe_openai_call(report_service.generate_openai_flows_insights, flows_data, form_data)
+                print(f'[TIMING] After OpenAI flows_insights: {round(_time.time() - t0, 2)}s')
+                # Always update the report as complete, even if some sections are missing
+                reports_cache[report_id].update({
+                    'form_data': form_data,
+                    'market_data': market_data,
+                    'openai_intro': openai_intro,
+                    'openai_conclusion': openai_conclusion,
+                    'eco_political_data': eco_political_data,
+                    'eco_political_intro': eco_political_intro,
+                    'eco_political_insights': eco_political_insights,
+                    'trade_data': trade_data,
+                    'flows_data': flows_data,
+                    'flows_intro': flows_intro,
+                    'flows_insights': flows_insights,
+                    'trade_shows_data': trade_shows_data,
+                    'macmap_data': macmap_data,
+                    'macmap_intro': macmap_intro,
+                    'macmap_insights': macmap_insights,
+                    'datetime': datetime,
+                    'status': 'complete',
+                    'error_message': None
+                })
+                current_app.logger.info("Report generation completed (with possible missing sections)")
             except Exception as e:
                 current_app.logger.error(f"Report generation failed: {e}", exc_info=True)
                 reports_cache[report_id]['status'] = 'error'
