@@ -245,6 +245,575 @@ def scrape_santander_economic_political_outline(driver, formatted_country_name):
         return {'error': f'Error scraping Economic and Political Outline for {formatted_country_name}: {str(e)}'}
 
 
+def scrape_santander_operating_a_business(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Operating a Business' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/operating-a-business"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        # Wait for the main content div to be present
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            # Remove 'Return to top' links from the concatenated HTML
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            # Remove feedback and footer elements
+            # Remove <span class="remarque-atlas"> and its parent <p class="contact-atlas">
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            # Remove <p class="droits">
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            # Remove <span> with 'All Rights Reserved' or 'Latest Update'
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        # Legal Forms of Companies & Business Setup Procedures
+        legal_section = get_section_by_anchor('legal')
+        # The Active Population in Figures
+        active_population_section = get_section_by_anchor('active')
+        # Working Conditions
+        working_conditions_section = get_section_by_anchor('working')
+        # The Cost of Labour
+        cost_of_labour_section = get_section_by_anchor('cost')
+        # Management of Human Resources
+        management_section = get_section_by_anchor('management')
+
+        # Extract update date if present
+        update_span = main.find('span', string=lambda t: t and 'Latest Update' in t)
+        update_date = ''
+        if update_span:
+            update_date = update_span.find_next(string=True)
+        else:
+            droits = main.find('p', class_='droits')
+            if droits:
+                update_date = droits.get_text(strip=True)
+
+        return {
+            'legal_section': legal_section,
+            'active_population_section': active_population_section,
+            'working_conditions_section': working_conditions_section,
+            'cost_of_labour_section': cost_of_labour_section,
+            'management_section': management_section,
+            'update_date': update_date,
+            'raw_html': str(main)  # Optionally, for debugging or further parsing
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Operating a Business for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Operating a Business for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_tax_system(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Tax System' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/tax-system"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        corporate_taxes_section = get_section_by_anchor('company')
+        accounting_rules_section = get_section_by_anchor('accounting')
+        consumption_taxes_section = get_section_by_anchor('consumption')
+        individual_taxes_section = get_section_by_anchor('individual')
+        double_taxation_section = get_section_by_anchor('international')
+        sources_section = get_section_by_anchor('sources')
+
+        return {
+            'corporate_taxes_section': corporate_taxes_section,
+            'accounting_rules_section': accounting_rules_section,
+            'consumption_taxes_section': consumption_taxes_section,
+            'individual_taxes_section': individual_taxes_section,
+            'double_taxation_section': double_taxation_section,
+            'sources_section': sources_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Tax System for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Tax System for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_legal_environment(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Legal Environment' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/legal-environment"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        business_contract_section = get_section_by_anchor('business')
+        intellectual_property_section = get_section_by_anchor('intellectual')
+        legal_framework_section = get_section_by_anchor('legal')
+        dispute_resolution_section = get_section_by_anchor('idr')
+
+        return {
+            'business_contract_section': business_contract_section,
+            'intellectual_property_section': intellectual_property_section,
+            'legal_framework_section': legal_framework_section,
+            'dispute_resolution_section': dispute_resolution_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Legal Environment for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Legal Environment for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_foreign_investment(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Foreign Investment' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/foreign-investment"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        fdi_figures_section = get_section_by_anchor('fdi')
+        why_invest_section = get_section_by_anchor('why')
+        protection_section = get_section_by_anchor('protection')
+        administrative_section = get_section_by_anchor('administrative')
+        office_section = get_section_by_anchor('office')
+        aid_section = get_section_by_anchor('aid')
+        opportunities_section = get_section_by_anchor('opportunities')
+        sectors_section = get_section_by_anchor('sectors')
+        finding_section = get_section_by_anchor('finding')
+
+        return {
+            'fdi_figures_section': fdi_figures_section,
+            'why_invest_section': why_invest_section,
+            'protection_section': protection_section,
+            'administrative_section': administrative_section,
+            'office_section': office_section,
+            'aid_section': aid_section,
+            'opportunities_section': opportunities_section,
+            'sectors_section': sectors_section,
+            'finding_section': finding_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Foreign Investment for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Foreign Investment for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_business_practices(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Business Practices' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/business-practices"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        business_culture_section = get_section_by_anchor('business-relations')
+        opening_hours_section = get_section_by_anchor('working-hours')
+
+        return {
+            'business_culture_section': business_culture_section,
+            'opening_hours_section': opening_hours_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Business Practices for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Business Practices for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_entry_requirements(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Entry Requirements' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/entry-requirements"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        passport_visa_section = get_section_by_anchor('passeport')
+        customs_taxes_section = get_section_by_anchor('taxes')
+        health_section = get_section_by_anchor('health')
+        safety_section = get_section_by_anchor('safety')
+
+        return {
+            'passport_visa_section': passport_visa_section,
+            'customs_taxes_section': customs_taxes_section,
+            'health_section': health_section,
+            'safety_section': safety_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Entry Requirements for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Entry Requirements for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_practical_information(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Practical Information' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/practical-information"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        eating_out_section = get_section_by_anchor('eating')
+        getting_around_section = get_section_by_anchor('getting')
+        time_section = get_section_by_anchor('time')
+        climate_section = get_section_by_anchor('climate')
+        electrical_section = get_section_by_anchor('electrical')
+        paying_section = get_section_by_anchor('paying')
+        speaking_section = get_section_by_anchor('speaking')
+        emergency_section = get_section_by_anchor('emergency')
+        communications_section = get_section_by_anchor('communications')
+
+        return {
+            'eating_out_section': eating_out_section,
+            'getting_around_section': getting_around_section,
+            'time_section': time_section,
+            'climate_section': climate_section,
+            'electrical_section': electrical_section,
+            'paying_section': paying_section,
+            'speaking_section': speaking_section,
+            'emergency_section': emergency_section,
+            'communications_section': communications_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Practical Information for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Practical Information for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_living_in_country(driver, formatted_country_name):
+    """
+    Navigates to the country's 'Living in the Country' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/establish-overseas/{formatted_country_name}/living-in-the-country"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        expatriates_section = get_section_by_anchor('expatriates')
+        ranking_section = get_section_by_anchor('ranking')
+        renting_section = get_section_by_anchor('renting')
+        school_section = get_section_by_anchor('school')
+        health_section = get_section_by_anchor('health')
+        tourism_section = get_section_by_anchor('tourism')
+        individual_section = get_section_by_anchor('individual')
+        religion_section = get_section_by_anchor('religion')
+
+        return {
+            'expatriates_section': expatriates_section,
+            'ranking_section': ranking_section,
+            'renting_section': renting_section,
+            'school_section': school_section,
+            'health_section': health_section,
+            'tourism_section': tourism_section,
+            'individual_section': individual_section,
+            'religion_section': religion_section,
+            'raw_html': str(main)
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Living in the Country for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Living in the Country for {formatted_country_name}: {str(e)}'}
+
+
 def scrape_santander_foreign_trade_in_figures(driver, formatted_country_name):
     """
     Navigates to the country's foreign-trade-in-figures page, clicks all 'See More' links for countries/products/services,
@@ -268,8 +837,8 @@ def scrape_santander_foreign_trade_in_figures(driver, formatted_country_name):
     click_link_by_id('atlas_pays_import_lien')   # Main Suppliers
     click_link_by_id('atlas_export_lien')        # Products Exported
     click_link_by_id('atlas_import_lien')        # Products Imported
-    click_link_by_id('plus_export_236')          # Services Exported
-    click_link_by_id('plus_import_236')          # Services Imported
+    #click_link_by_id('plus_export_236')          # Services Exported
+    #click_link_by_id('plus_import_236')          # Services Imported
 
     # Re-parse the page after all clicks
     page_source = driver.page_source

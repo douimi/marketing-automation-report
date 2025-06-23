@@ -132,6 +132,86 @@ def start_report():
                 except Exception as e:
                     current_app.logger.error(f"Error scraping Foreign Trade in Figures: {e}")
                     trade_data = {}
+                # Scrape Operating a Business (NEW)
+                try:
+                    operating_a_business_data = report_service.generate_santander_operating_a_business(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping operating a business: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Operating a Business: {e}")
+                    operating_a_business_data = {}
+                # Scrape Tax System (NEW)
+                try:
+                    tax_system_data = report_service.generate_santander_tax_system(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping tax system: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Tax System: {e}")
+                    tax_system_data = {}
+                # Scrape Legal Environment (NEW)
+                try:
+                    legal_environment_data = report_service.generate_santander_legal_environment(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping legal environment: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Legal Environment: {e}")
+                    legal_environment_data = {}
+                # Scrape Foreign Investment (NEW)
+                try:
+                    foreign_investment_data = report_service.generate_santander_foreign_investment(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping foreign investment: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Foreign Investment: {e}")
+                    foreign_investment_data = {}
+                # Scrape Business Practices (NEW)
+                try:
+                    business_practices_data = report_service.generate_santander_business_practices(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping business practices: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Business Practices: {e}")
+                    business_practices_data = {}
+                # Scrape Entry Requirements (NEW)
+                try:
+                    entry_requirements_data = report_service.generate_santander_entry_requirements(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping entry requirements: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Entry Requirements: {e}")
+                    entry_requirements_data = {}
+                # Scrape Practical Information (NEW)
+                try:
+                    practical_information_data = report_service.generate_santander_practical_information(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping practical information: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Practical Information: {e}")
+                    practical_information_data = {}
+                # Scrape Living in the Country (NEW)
+                try:
+                    living_in_country_data = report_service.generate_santander_living_in_country(
+                        form_data['destination_country_code'],
+                        countries_config
+                    )
+                    print(f'[TIMING] After scraping living in the country: {round(_time.time() - t0, 2)}s')
+                except Exception as e:
+                    current_app.logger.error(f"Error scraping Living in the Country: {e}")
+                    living_in_country_data = {}
                 # Scrape MacMap Market Access Conditions
                 try:
                     reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
@@ -206,6 +286,14 @@ def start_report():
                     'eco_political_intro': eco_political_intro,
                     'eco_political_insights': eco_political_insights,
                     'trade_data': trade_data,
+                    'operating_a_business_data': operating_a_business_data,
+                    'tax_system_data': tax_system_data,
+                    'legal_environment_data': legal_environment_data,
+                    'foreign_investment_data': foreign_investment_data,
+                    'business_practices_data': business_practices_data,
+                    'entry_requirements_data': entry_requirements_data,
+                    'practical_information_data': practical_information_data,
+                    'living_in_country_data': living_in_country_data,
                     'flows_data': flows_data,
                     'flows_intro': flows_intro,
                     'flows_insights': flows_insights,
@@ -304,6 +392,14 @@ def show_report():
     flows_intro = report.get('flows_intro')
     flows_insights = report.get('flows_insights')
     trade_shows_data = report.get('trade_shows_data') or []
+    operating_a_business_data = report.get('operating_a_business_data') or {}
+    tax_system_data = report.get('tax_system_data') or {}
+    legal_environment_data = report.get('legal_environment_data') or {}
+    foreign_investment_data = report.get('foreign_investment_data') or {}
+    business_practices_data = report.get('business_practices_data') or {}
+    entry_requirements_data = report.get('entry_requirements_data') or {}
+    practical_information_data = report.get('practical_information_data') or {}
+    living_in_country_data = report.get('living_in_country_data') or {}
     return render_template('report.html',
                          form_data=report.get('form_data'),
                          market_data=report.get('market_data'),
@@ -318,6 +414,14 @@ def show_report():
                          flows_intro=flows_intro,
                          flows_insights=flows_insights,
                          trade_shows_data=trade_shows_data,
+                         operating_a_business_data=operating_a_business_data,
+                         tax_system_data=tax_system_data,
+                         legal_environment_data=legal_environment_data,
+                         foreign_investment_data=foreign_investment_data,
+                         business_practices_data=business_practices_data,
+                         entry_requirements_data=entry_requirements_data,
+                         practical_information_data=practical_information_data,
+                         living_in_country_data=living_in_country_data,
                          **eco_political_data,
                          **trade_data,
                          macmap_data=macmap_data

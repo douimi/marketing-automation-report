@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -485,6 +485,166 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Trade Shows scraping: {e}")
             return []
+
+    def generate_santander_operating_a_business(self, destination_country_code, countries_config):
+        """Scrapes the Operating a Business section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Operating a Business for {formatted_country_name}...")
+            scraped_data = scrape_santander_operating_a_business(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Operating a Business scraping: {e}")
+            return {"error": f"Error during Operating a Business scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_tax_system(self, destination_country_code, countries_config):
+        """Scrapes the Tax System section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Tax System for {formatted_country_name}...")
+            scraped_data = scrape_santander_tax_system(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Tax System scraping: {e}")
+            return {"error": f"Error during Tax System scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_legal_environment(self, destination_country_code, countries_config):
+        """Scrapes the Legal Environment section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Legal Environment for {formatted_country_name}...")
+            scraped_data = scrape_santander_legal_environment(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Legal Environment scraping: {e}")
+            return {"error": f"Error during Legal Environment scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_foreign_investment(self, destination_country_code, countries_config):
+        """Scrapes the Foreign Investment section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Foreign Investment for {formatted_country_name}...")
+            scraped_data = scrape_santander_foreign_investment(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Foreign Investment scraping: {e}")
+            return {"error": f"Error during Foreign Investment scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_business_practices(self, destination_country_code, countries_config):
+        """Scrapes the Business Practices section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Business Practices for {formatted_country_name}...")
+            scraped_data = scrape_santander_business_practices(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Business Practices scraping: {e}")
+            return {"error": f"Error during Business Practices scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_entry_requirements(self, destination_country_code, countries_config):
+        """Scrapes the Entry Requirements section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Entry Requirements for {formatted_country_name}...")
+            scraped_data = scrape_santander_entry_requirements(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Entry Requirements scraping: {e}")
+            return {"error": f"Error during Entry Requirements scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_practical_information(self, destination_country_code, countries_config):
+        """Scrapes the Practical Information section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Practical Information for {formatted_country_name}...")
+            scraped_data = scrape_santander_practical_information(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Practical Information scraping: {e}")
+            return {"error": f"Error during Practical Information scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_living_in_country(self, destination_country_code, countries_config):
+        """Scrapes the Living in the Country section for the given country."""
+        if not self.driver:
+            print("WebDriver not initialized. Cannot generate report.")
+            return {"error": "WebDriver not initialized."}
+
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Could not find country name for code {destination_country_code}."}
+
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+
+        try:
+            print(f"Scraping Living in the Country for {formatted_country_name}...")
+            scraped_data = scrape_santander_living_in_country(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Living in the Country scraping: {e}")
+            return {"error": f"Error during Living in the Country scraping for {destination_country_name}: {str(e)}"}
 
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""
