@@ -1,5 +1,7 @@
 import os
-from app import app
+from app import create_app
+
+app = create_app()
 
 # Generate certificate if not present
 if not (os.path.exists("cert.pem") and os.path.exists("key.pem")):
