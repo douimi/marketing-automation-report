@@ -1289,6 +1289,80 @@ def scrape_santander_identify_suppliers(driver, formatted_country_name):
         return {'error': f'Error scraping Identify Suppliers for {formatted_country_name}: {str(e)}'}
 
 
+def scrape_santander_trade_compliance(driver, formatted_country_name):
+    """
+    Navigates to the country's 'trade-compliance' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/trade-compliance"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            # Remove any script tags
+            for script in section_soup.find_all('script'):
+                script.decompose()
+            # Remove any form elements
+            for form in section_soup.find_all('div', id='formulaire_remarque'):
+                form.decompose()
+            for contact in section_soup.find_all('div', id='contient-contact-atlas'):
+                contact.decompose()
+            return str(section_soup).strip()
+
+        # Extract the main trade compliance section
+        trade_compliance_section = get_section_by_anchor('atlas__doing-business__1-commerce_regles')
+
+        # Get update date
+        update_date = ''
+        droits_p = main.find('p', class_='droits')
+        if droits_p:
+            date_span = droits_p.find('span')
+            if date_span:
+                update_date = date_span.get_text(strip=True)
+
+        return {
+            'trade_compliance_section': trade_compliance_section,
+            'update_date': update_date
+        }
+
+    except Exception as e:
+        print(f"Error scraping Trade Compliance for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Trade Compliance for {formatted_country_name}: {str(e)}'}
+
+
 def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n):
     """
     Scrapes the Trade Shows section from SantanderTrade for the given sector and country ISO3N code.

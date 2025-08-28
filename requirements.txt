@@ -13,4 +13,5 @@ markdown2>=2.4.0
 beautifulsoup4
 html5lib
 lxml
+ijson
 # Add other dependencies as needed 

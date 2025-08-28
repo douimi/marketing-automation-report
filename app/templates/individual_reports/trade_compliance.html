@@ -1,0 +1,50 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}International Trade Compliance{% endblock %}
+
+{% block report_icon %}fas fa-gavel{% endblock %}
+
+{% block report_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% if trade_compliance_data.error %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ trade_compliance_data.error }}
+                </div>
+            {% else %}
+                <!-- Trade Compliance Section -->
+                {% if trade_compliance_data.trade_compliance_section %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-gavel section-icon"></i>International Trade Compliance
+                    </div>
+                    <div class="section-content">
+                        {{ trade_compliance_data.trade_compliance_section|safe }}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Show message if no data found -->
+                {% if not trade_compliance_data.trade_compliance_section %}
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No trade compliance information is currently available for this country.
+                </div>
+                {% endif %}
+
+                <!-- Update Date -->
+                {% if trade_compliance_data.update_date %}
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        Last updated: {{ trade_compliance_data.update_date }}
+                    </small>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

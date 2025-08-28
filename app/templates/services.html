@@ -18,10 +18,14 @@
                 <div class="category-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <h3 class="category-title">Analyze Market Trends</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#analyzeMarketTrends" aria-expanded="false" aria-controls="analyzeMarketTrends">
+                    <h3 class="category-title">Analyze Market Trends</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Collect market information and select the most promising target countries for your products and services.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="analyzeMarketTrends">
+                    <div class="services-list">
                     <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="service-item">
                         <i class="fas fa-info-circle me-2"></i>
                         <span>General Presentation</span>
@@ -68,6 +72,7 @@
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,10 +83,14 @@
                 <div class="category-icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <h3 class="category-title">Reach Business Counterparts</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#reachBusinessCounterparts" aria-expanded="false" aria-controls="reachBusinessCounterparts">
+                    <h3 class="category-title">Reach Business Counterparts</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Identify new business opportunities using databases of importers and exporters worldwide.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="reachBusinessCounterparts">
+                    <div class="services-list">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="service-item">
                         <i class="fas fa-random me-2"></i>
@@ -121,6 +130,7 @@
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,10 +141,14 @@
                 <div class="category-icon">
                     <i class="fas fa-cogs"></i>
                 </div>
-                <h3 class="category-title">Manage Business Operations</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#manageBusinessOperations" aria-expanded="false" aria-controls="manageBusinessOperations">
+                    <h3 class="category-title">Manage Business Operations</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Optimize business procedures, compliance and operational costs for your international operations.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="manageBusinessOperations">
+                    <div class="services-list">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="service-item">
                         <i class="fas fa-briefcase me-2"></i>
@@ -147,6 +161,10 @@
                     <a href="{{ url_for('main.service_form', service_type='legal-environment') }}" class="service-item">
                         <i class="fas fa-gavel me-2"></i>
                         <span>Legal Environment</span>
+                    </a>
+                    <a href="{{ url_for('main.service_form', service_type='trade-compliance') }}" class="service-item">
+                        <i class="fas fa-gavel me-2"></i>
+                        <span>International Trade Compliance</span>
                     </a>
                     {% else %}
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
@@ -164,7 +182,13 @@
                         <span>Legal Environment</span>
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
+                    <div class="service-item locked-service" onclick="showLoginPrompt()">
+                        <i class="fas fa-gavel me-2"></i>
+                        <span>International Trade Compliance</span>
+                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    </div>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,10 +199,14 @@
                 <div class="category-icon">
                     <i class="fas fa-globe-americas"></i>
                 </div>
-                <h3 class="category-title">Foreign Investment Analysis</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#foreignInvestmentAnalysis" aria-expanded="false" aria-controls="foreignInvestmentAnalysis">
+                    <h3 class="category-title">Foreign Investment Analysis</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Learn how to operate a business abroad and manage international investments effectively.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="foreignInvestmentAnalysis">
+                    <div class="services-list">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.service_form', service_type='foreign-investment') }}" class="service-item">
                         <i class="fas fa-globe-americas me-2"></i>
@@ -209,6 +237,7 @@
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,10 +248,14 @@
                 <div class="category-icon">
                     <i class="fas fa-passport"></i>
                 </div>
-                <h3 class="category-title">Entry Requirements & Logistics</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#entryRequirementsLogistics" aria-expanded="false" aria-controls="entryRequirementsLogistics">
+                    <h3 class="category-title">Entry Requirements & Logistics</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Manage entry procedures, logistics and compliance for your international business travel.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="entryRequirementsLogistics">
+                    <div class="services-list">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.service_form', service_type='entry-requirements') }}" class="service-item">
                         <i class="fas fa-id-card me-2"></i>
@@ -244,6 +277,7 @@
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,10 +288,14 @@
                 <div class="category-icon">
                     <i class="fas fa-file-alt"></i>
                 </div>
-                <h3 class="category-title">Complete Market Report</h3>
+                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#completeMarketReport" aria-expanded="false" aria-controls="completeMarketReport">
+                    <h3 class="category-title">Complete Market Report</h3>
+                    <i class="fas fa-chevron-down collapse-icon"></i>
+                </div>
                 <p class="category-description">Get comprehensive market intelligence with all sections combined in a single detailed report.</p>
                 
-                <div class="services-list">
+                <div class="collapse" id="completeMarketReport">
+                    <div class="services-list">
                     {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.form_page') }}" class="service-item featured-service-item">
                         <i class="fas fa-rocket me-2"></i>
@@ -270,6 +308,7 @@
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
+                    </div>
                 </div>
                 <div class="feature-badge">
                     <span>Premium Service</span>
@@ -479,6 +518,43 @@
     .category-description {
         font-size: 0.9rem;
     }
+}
+
+/* Collapsible header styles */
+.category-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.category-header:hover {
+    opacity: 0.8;
+}
+
+.category-header .category-title {
+    margin: 0;
+    flex: 1;
+}
+
+.collapse-icon {
+    transition: transform 0.3s ease;
+    color: var(--bs-primary);
+    font-size: 0.9rem;
+}
+
+.category-header[aria-expanded="true"] .collapse-icon {
+    transform: rotate(180deg);
+}
+
+.collapse {
+    transition: all 0.3s ease-in-out;
+}
+
+.collapsing {
+    overflow: hidden;
 }
 </style>
 

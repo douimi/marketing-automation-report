@@ -190,6 +190,13 @@ def service_form(service_type):
             'requires': ['destination_country'],
             'form_template': 'service_form_country_only.html'
         },
+        'trade-compliance': {
+            'title': 'International Trade Compliance',
+            'description': 'International conventions, trade regulations, customs procedures, and compliance requirements.',
+            'icon': 'fas fa-gavel',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
         'import-export-flows': {
             'title': 'Import/Export Flows',
             'description': 'Product-specific trade flows between origin and destination countries with trend analysis.',
@@ -357,6 +364,8 @@ def start_individual_service():
                     service_data['distribution_data'] = report_service.generate_santander_distributing_product(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'identify-suppliers':
                     service_data['supplier_data'] = report_service.generate_santander_identify_suppliers(form_data['destination_country_code'], None, login_required=True)
+                elif service_type == 'trade-compliance':
+                    service_data['trade_compliance_data'] = report_service.generate_santander_trade_compliance(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'import-export-flows':
                     service_data['flows_data'] = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
