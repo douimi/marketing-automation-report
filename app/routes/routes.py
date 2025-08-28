@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash, session, jsonify, copy_current_request_context, send_from_directory
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..services.report_service import ReportGenerationService, get_country_name_from_code
 from ..services.data_processor import MarketDataProcessor
 from datetime import datetime
@@ -16,13 +16,46 @@ main_bp = Blueprint('main', __name__, template_folder='../templates')
 # Global in-memory cache for reports (keyed by report_id)
 reports_cache = {}
 
+@main_bp.route('/health')
+def health_check():
+    """Simple health check endpoint without authentication."""
+    return {'status': 'ok', 'message': 'Application is running'}, 200
+
+@main_bp.route('/test')
+def test_page():
+    """Simple test page without external dependencies."""
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Test Page</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            .container { max-width: 600px; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Test Page</h1>
+            <p>This is a simple test page without external dependencies.</p>
+            <p>If you can see this page, the Flask application is working correctly.</p>
+            <p>The issue is likely with external resources (CDNs, images, etc.) in the main templates.</p>
+        </div>
+    </body>
+    </html>
+    '''
+
 @main_bp.route('/')
-@login_required
 def home():
+    return render_template('home.html')
+
+@main_bp.route('/markets')
+@login_required
+def markets_page():
+    """Redirect to services page for backward compatibility."""
     return redirect(url_for('main.services_page'))
 
 @main_bp.route('/services')
-@login_required
 def services_page():
     """Display the services page with all available services."""
     return render_template('services.html')
@@ -30,15 +63,19 @@ def services_page():
 @main_bp.route('/form', methods=['GET'])
 @login_required
 def form_page():
-    countries = current_app.config.get('COUNTRIES', [])
-    products = current_app.config.get('PRODUCTS', [])
-    sectors = current_app.config.get('SECTORS', [])
-    return render_template('form.html', countries=countries, products=products, sectors=sectors)
+    # Only load sectors - countries and products use AJAX
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    sectors = config_service.get_sectors()
+    return render_template('form.html', sectors=sectors)
 
 @main_bp.route('/service/<service_type>', methods=['GET'])
-@login_required
 def service_form(service_type):
     """Display form for individual service generation."""
+    # Check if service requires authentication (all except general-presentation)
+    if service_type != 'general-presentation' and not current_user.is_authenticated:
+        flash('Please login to access this service.', 'warning')
+        return redirect(url_for('auth.login'))
+    
     # Define service configurations
     service_config = {
         'general-presentation': {
@@ -146,15 +183,13 @@ def service_form(service_type):
         return redirect(url_for('main.services_page'))
     
     config = service_config[service_type]
-    countries = current_app.config.get('COUNTRIES', [])
-    products = current_app.config.get('PRODUCTS', [])
-    sectors = current_app.config.get('SECTORS', [])
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    # Only load sectors - countries and products use AJAX
+    sectors = config_service.get_sectors()
     
     return render_template(config['form_template'], 
                          service=config, 
                          service_type=service_type,
-                         countries=countries, 
-                         products=products, 
                          sectors=sectors)
 
 @main_bp.route('/start_individual_service', methods=['POST'])
@@ -182,43 +217,32 @@ def start_individual_service():
         if 'sector' in request.form:
             form_data['sector'] = request.form.get('sector')
         
-        # Get config data
-        countries_config = current_app.config.get('COUNTRIES', [])
-        products_config = current_app.config.get('PRODUCTS', [])
-        sectors_config = current_app.config.get('SECTORS', [])
+        # Get config service for optimized lookups
+        config_service = current_app.config.get('CONFIG_SERVICE')
         
-        # Enrich form_data with names
+        # Enrich form_data with names using optimized lookups
         if 'origin_country_code' in form_data:
-            form_data['origin_country_name'] = get_country_name_from_code(form_data['origin_country_code'], countries_config)
+            country = config_service.find_country_by_code(form_data['origin_country_code'])
+            form_data['origin_country_name'] = country.get('name') if country else None
         
         if 'destination_country_code' in form_data:
-            form_data['destination_country_name'] = get_country_name_from_code(form_data['destination_country_code'], countries_config)
+            country = config_service.find_country_by_code(form_data['destination_country_code'])
+            form_data['destination_country_name'] = country.get('name') if country else None
         
         if 'hs6_product_code' in form_data:
-            hs6_code = form_data.get('hs6_product_code')
-            product_name = None
-            for product in products_config:
-                if product.get('hs6') == hs6_code:
-                    product_name = product.get('description')
-                    break
-            form_data['product_name'] = product_name or hs6_code or ''
+            product = config_service.find_product_by_hs6(form_data['hs6_product_code'])
+            form_data['product_name'] = product.get('description') if product else form_data['hs6_product_code'] or ''
         
         if 'sector' in form_data:
-            selected_sector_name = form_data.get('sector')
-            sector_code = None
-            for sector in sectors_config:
-                if sector.get('name') == selected_sector_name:
-                    sector_code = sector.get('code')
-                    break
-            form_data['sector_code'] = sector_code or ''
+            sector = config_service.find_sector_by_name(form_data.get('sector'))
+            form_data['sector_code'] = sector.get('code') if sector else ''
         
         # Add additional country data if needed
         if 'destination_country_code' in form_data:
-            for country in countries_config:
-                if country.get('code') == form_data['destination_country_code']:
-                    form_data['destination_country_iso3n'] = country.get('iso_numeric', '')
-                    form_data['destination_country_iso2'] = country.get('ISO2', '')
-                    break
+            country = config_service.find_country_by_code(form_data['destination_country_code'])
+            if country:
+                form_data['destination_country_iso3n'] = country.get('iso_numeric', '')
+                form_data['destination_country_iso2'] = country.get('ISO2', '')
         
         # Set per-report status in reports_cache
         report_id = str(uuid.uuid4())
@@ -240,7 +264,6 @@ def start_individual_service():
             t0 = _time.time()
             try:
                 report_service = None
-                countries_config = current_app.config.get('COUNTRIES', [])
                 print(f'[TIMING] Start individual service generation ({service_type}): {round(_time.time() - t0, 2)}s')
                 
                 report_service = ReportGenerationService()
@@ -257,7 +280,7 @@ def start_individual_service():
                     form_data['sector'] = 'General Business'
                 
                 if service_type == 'general-presentation':
-                    raw_data = report_service.generate_santander_report_data(form_data['destination_country_code'], countries_config)
+                    raw_data = report_service.generate_santander_report_data(form_data['destination_country_code'], None)
                     from ..services.data_processor import MarketDataProcessor
                     data_processor = MarketDataProcessor()
                     service_data = {
@@ -266,27 +289,27 @@ def start_individual_service():
                         'openai_conclusion': report_service.generate_openai_conclusion(raw_data, form_data)
                     }
                 elif service_type == 'economic-political':
-                    service_data['eco_political_data'] = report_service.generate_santander_economic_political_outline(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['eco_political_data'] = report_service.generate_santander_economic_political_outline(form_data['destination_country_code'], None, login_required=True)
                     service_data['eco_political_intro'] = report_service.generate_openai_eco_political_intro(service_data['eco_political_data'], form_data)
                     service_data['eco_political_insights'] = report_service.generate_openai_eco_political_insights(service_data['eco_political_data'], form_data)
                 elif service_type == 'operating-business':
-                    service_data['operating_a_business_data'] = report_service.generate_santander_operating_a_business(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['operating_a_business_data'] = report_service.generate_santander_operating_a_business(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'tax-system':
-                    service_data['tax_system_data'] = report_service.generate_santander_tax_system(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['tax_system_data'] = report_service.generate_santander_tax_system(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'legal-environment':
-                    service_data['legal_environment_data'] = report_service.generate_santander_legal_environment(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['legal_environment_data'] = report_service.generate_santander_legal_environment(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'foreign-investment':
-                    service_data['foreign_investment_data'] = report_service.generate_santander_foreign_investment(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['foreign_investment_data'] = report_service.generate_santander_foreign_investment(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'business-practices':
-                    service_data['business_practices_data'] = report_service.generate_santander_business_practices(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['business_practices_data'] = report_service.generate_santander_business_practices(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'entry-requirements':
-                    service_data['entry_requirements_data'] = report_service.generate_santander_entry_requirements(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['entry_requirements_data'] = report_service.generate_santander_entry_requirements(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'practical-information':
-                    service_data['practical_information_data'] = report_service.generate_santander_practical_information(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['practical_information_data'] = report_service.generate_santander_practical_information(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'living-in-country':
-                    service_data['living_in_country_data'] = report_service.generate_santander_living_in_country(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['living_in_country_data'] = report_service.generate_santander_living_in_country(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'foreign-trade':
-                    service_data['trade_data'] = report_service.generate_santander_foreign_trade_in_figures(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['trade_data'] = report_service.generate_santander_foreign_trade_in_figures(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'import-export-flows':
                     service_data['flows_data'] = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
@@ -303,8 +326,8 @@ def start_individual_service():
                         login_required=True
                     )
                 elif service_type == 'market-access':
-                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
-                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config)
+                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'])
+                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'])
                     service_data['macmap_data'] = report_service.generate_macmap_market_access_conditions(
                         reporter_iso3n,
                         partner_iso3n,
@@ -361,41 +384,25 @@ def start_report():
             'sector': request.form.get('sector')
         }
         
-        countries_config = current_app.config.get('COUNTRIES', [])
-        products_config = current_app.config.get('PRODUCTS', [])
-        sectors_config = current_app.config.get('SECTORS', [])
-        form_data['origin_country_name'] = get_country_name_from_code(form_data['origin_country_code'], countries_config)
-        form_data['destination_country_name'] = get_country_name_from_code(form_data['destination_country_code'], countries_config)
+        config_service = current_app.config.get('CONFIG_SERVICE')
+        # Use optimized lookups
+        origin_country = config_service.find_country_by_code(form_data['origin_country_code'])
+        form_data['origin_country_name'] = origin_country.get('name') if origin_country else None
+        
+        destination_country = config_service.find_country_by_code(form_data['destination_country_code'])
+        form_data['destination_country_name'] = destination_country.get('name') if destination_country else None
+        
         # Map hs6_product_code to product_name (description)
-        hs6_code = form_data.get('hs6_product_code')
-        product_name = None
-        for product in products_config:
-            if product.get('hs6') == hs6_code:
-                product_name = product.get('description')
-                break
-        form_data['product_name'] = product_name or hs6_code or ''
+        product = config_service.find_product_by_hs6(form_data.get('hs6_product_code'))
+        form_data['product_name'] = product.get('description') if product else form_data.get('hs6_product_code', '')
+        
         # Add sector_code (from sector name)
-        selected_sector_name = form_data.get('sector')
-        sector_code = None
-        for sector in sectors_config:
-            if sector.get('name') == selected_sector_name:
-                sector_code = sector.get('code')
-                break
-        form_data['sector_code'] = sector_code or ''
-        # Add destination_country_iso3n
-        destination_country_iso3n = None
-        for country in countries_config:
-            if country.get('code') == form_data['destination_country_code']:
-                destination_country_iso3n = country.get('iso_numeric')
-                break
-        form_data['destination_country_iso3n'] = destination_country_iso3n or ''
-        # Add destination_country_iso2 (for Trade Shows)
-        destination_country_iso2 = None
-        for country in countries_config:
-            if country.get('code') == form_data['destination_country_code']:
-                destination_country_iso2 = country.get('ISO2')
-                break
-        form_data['destination_country_iso2'] = destination_country_iso2 or ''
+        sector = config_service.find_sector_by_name(form_data.get('sector'))
+        form_data['sector_code'] = sector.get('code') if sector else ''
+        
+        # Add destination_country_iso3n and iso2
+        form_data['destination_country_iso3n'] = destination_country.get('iso_numeric') if destination_country else ''
+        form_data['destination_country_iso2'] = destination_country.get('ISO2') if destination_country else ''
         
         # Set per-report status in reports_cache
         report_id = str(uuid.uuid4())
@@ -415,7 +422,6 @@ def start_report():
             t0 = _time.time()
             try:
                 report_service = None
-                countries_config = current_app.config.get('COUNTRIES', [])
                 print(f'[TIMING] Start report generation: {round(_time.time() - t0, 2)}s')
                 report_service = ReportGenerationService()
                 if not report_service.driver:
@@ -544,8 +550,8 @@ def start_report():
                     living_in_country_data = {}
                 # Scrape MacMap Market Access Conditions
                 try:
-                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
-                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config)
+                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'])
+                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'])
                     macmap_data = report_service.generate_macmap_market_access_conditions(
                         reporter_iso3n,
                         partner_iso3n,
@@ -771,37 +777,129 @@ def show_report():
                          macmap_data=macmap_data
                          )
 
-def get_country_iso_numeric_from_code(country_code, countries_config):
+def get_country_iso_numeric_from_code(country_code, countries_config=None):
     """Retrieves the iso_numeric code from its alpha-2 code using the loaded config."""
-    for country in countries_config:
-        if country.get("code") == country_code:
-            return country.get("iso_numeric")
+    # For backward compatibility, still accept countries_config parameter
+    # But prefer using the config service for better performance
+    if countries_config:
+        for country in countries_config:
+            if country.get("code") == country_code:
+                return country.get("iso_numeric")
+        return None
+    
+    # Use config service if available
+    from flask import current_app
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    if config_service:
+        country = config_service.find_country_by_code(country_code)
+        return country.get("iso_numeric") if country else None
     return None
 
 @main_bp.route('/api/countries')
 @login_required
 def api_countries():
     search = request.args.get('search', '').lower()
-    countries_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../config/countries.json'))
-    with open(countries_path, encoding='utf-8') as f:
-        countries = json.load(f)
-    filtered = [c for c in countries if search in c['name'].lower() or search in c['code'].lower() or search in c.get('ISO2', '').lower()]
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    
+    if search:
+        filtered = config_service.search_countries(search, 30)
+    else:
+        filtered = config_service.get_countries(30)
+    
     results = [{
         'id': c['code'],
         'text': f"{c['name']} ({c['code']})"
-    } for c in filtered[:30]]  # Limit results for performance
+    } for c in filtered]  # Already limited by config service
     return jsonify(items=results)
 
 @main_bp.route('/api/products')
 @login_required
 def api_products():
     search = request.args.get('search', '').lower()
-    products_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../config/products.json'))
-    with open(products_path, encoding='utf-8') as f:
-        products = json.load(f)
-    filtered = [p for p in products if search in p['description'].lower() or search in p['hs6'].lower()]
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    
+    if search:
+        filtered = config_service.search_products(search, 30)
+    else:
+        filtered = config_service.get_products(30)
+    
     results = [{
         'id': p['hs6'],
         'text': f"{p['hs6']} - {p['description']}"
-    } for p in filtered[:30]]  # Limit results for performance
-    return jsonify(items=results) 
+    } for p in filtered]  # Already limited by config service
+    return jsonify(items=results)
+
+# API endpoints for configuration data searching (for AJAX dropdowns)
+@main_bp.route('/api/search/countries', methods=['GET'])
+@login_required
+def search_countries_api():
+    """Search countries for AJAX dropdown."""
+    query = request.args.get('q', '').strip()
+    limit = int(request.args.get('limit', 10))
+    
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    if query:
+        results = config_service.search_countries(query, limit)
+    else:
+        results = config_service.get_countries(limit)
+    
+    # Format for Select2 or similar dropdown libraries
+    formatted_results = [
+        {
+            'id': country.get('code'),
+            'text': f"{country.get('name')} ({country.get('code')})",
+            'name': country.get('name'),
+            'code': country.get('code'),
+            'iso2': country.get('ISO2'),
+            'iso_numeric': country.get('iso_numeric')
+        }
+        for country in results
+    ]
+    
+    return jsonify({'results': formatted_results})
+
+@main_bp.route('/api/search/products', methods=['GET'])
+@login_required
+def search_products_api():
+    """Search products for AJAX dropdown."""
+    query = request.args.get('q', '').strip()
+    limit = int(request.args.get('limit', 10))
+    
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    if query:
+        results = config_service.search_products(query, limit)
+    else:
+        results = config_service.get_products(limit)
+    
+    # Format for Select2 or similar dropdown libraries
+    formatted_results = [
+        {
+            'id': product.get('hs6'),
+            'text': f"{product.get('hs6')} - {product.get('description', '')[:100]}{'...' if len(product.get('description', '')) > 100 else ''}",
+            'hs6': product.get('hs6'),
+            'description': product.get('description')
+        }
+        for product in results
+    ]
+    
+    return jsonify({'results': formatted_results})
+
+@main_bp.route('/api/search/sectors', methods=['GET'])
+@login_required
+def search_sectors_api():
+    """Get all sectors (usually small dataset)."""
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    results = config_service.get_sectors()
+    
+    # Format for Select2 or similar dropdown libraries
+    formatted_results = [
+        {
+            'id': sector.get('name'),
+            'text': sector.get('name'),
+            'name': sector.get('name'),
+            'code': sector.get('code')
+        }
+        for sector in results
+    ]
+    
+    return jsonify({'results': formatted_results}) 

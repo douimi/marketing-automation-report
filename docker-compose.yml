@@ -11,6 +11,8 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - FLASK_ENV=production
+      - GUNICORN_WORKERS=2
+      - GUNICORN_THREADS=4
     ports:
       - "8000:8000"
     volumes:
@@ -18,6 +20,12 @@ services:
       - ./app/config:/app/app/config:ro
     depends_on:
       - redis
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
 
   redis:
     image: redis:7-alpine

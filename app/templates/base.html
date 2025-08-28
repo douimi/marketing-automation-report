@@ -119,12 +119,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    {% if current_user.is_authenticated %}
+                    <!-- Always visible navigation items -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.services_page') }}">
-                            <i class="fas fa-th-large me-1"></i>Services
+                            <i class="fas fa-chart-line me-1"></i>Markets
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showComingSoon('Club')">
+                            <i class="fas fa-users me-1"></i>Club
+                        </a>
+                    </li>
+                    
+                    {% if current_user.is_authenticated %}
+                    <!-- Authenticated user items -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.form_page') }}">
                             <i class="fas fa-file-alt me-1"></i>Complete Report
@@ -138,9 +146,10 @@
                     </li>
                     {% endblock %}
                     {% else %}
+                    <!-- Non-authenticated user items -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                            <i class="fas fa-sign-in-alt me-1"></i>Login / Register
                         </a>
                     </li>
                     {% endif %}
@@ -187,6 +196,11 @@
 
         // Add current year to footer
         document.querySelector('.footer').innerHTML = document.querySelector('.footer').innerHTML.replace('{{ current_year }}', new Date().getFullYear());
+        
+        // Coming soon functionality
+        window.showComingSoon = function(feature) {
+            showToast(`${feature} is coming soon! Stay tuned for updates.`, 'info');
+        }
     </script>
 </body>
 </html> 

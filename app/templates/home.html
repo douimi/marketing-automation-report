@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="row align-items-center min-vh-75">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <div class="brand-section mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://www.indegate.com/storage/2020/02/blue-and-white-indegate.png" alt="Indegate" class="hero-logo me-3">
+                                <span class="hero-divider">|</span>
+                                <span class="hero-subtitle">Trade Intelligence</span>
+                            </div>
+                        </div>
+                        
+                        <h1 class="hero-title mb-3">Committed to the internationalization of global companies</h1>
+                        
+                        <div class="hero-cta-section">
+                            <h3 class="cta-title mb-3">Want to discover our content selection?</h3>
+                            <p class="cta-subtitle mb-4">Let us know about your country or area of interest to begin</p>
+                            
+                            <div class="search-form-container">
+                                <div class="input-group search-input-group">
+                                    <input type="text" class="form-control search-input" placeholder="Enter a target country" id="countrySearch">
+                                    <button class="btn btn-cta" type="button" onclick="redirectToMarkets()">
+                                        Get started
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="hero-image-container">
+                        <!-- Placeholder for hero image - you can replace with actual shipping/trade image -->
+                        <div class="hero-image-placeholder">
+                            <i class="fas fa-ship fa-8x text-white opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Overview Section -->
+<section class="services-overview-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Markets Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="service-title">Markets</h4>
+                    <p class="service-description">Information, tools and resources to help you grow your business abroad.</p>
+                    <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-primary">Explore Markets</a>
+                </div>
+            </div>
+            
+            <!-- Business Network Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 class="service-title">Business Network</h4>
+                    <p class="service-description">An innovative business network platform exclusively dedicated to our global clients.</p>
+                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                </div>
+            </div>
+            
+            <!-- Trade Management Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h4 class="service-title">Manage Shipments</h4>
+                    <p class="service-description">Optimize customs procedures, costs and trade compliance for your international shipping.</p>
+                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                </div>
+            </div>
+            
+            <!-- Currency Analysis Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h4 class="service-title">Currency Analysis</h4>
+                    <p class="service-description">Analyze currency markets, manage exchange rates and minimize risks.</p>
+                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                </div>
+            </div>
+            
+            <!-- Establish Overseas Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h4 class="service-title">Establish Overseas</h4>
+                    <p class="service-description">Learn how to operate a business abroad and manage international investments.</p>
+                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                </div>
+            </div>
+            
+            <!-- Banking Service -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-overview-card h-100">
+                    <div class="service-icon-container">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h4 class="service-title">Bank With Us</h4>
+                    <p class="service-description">Make the most of your available capital and find solutions to trade internationally.</p>
+                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Links Section -->
+<section class="footer-links-section py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5>Assistance</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">FAQ</a></li>
+                    <li><a href="#" class="text-light">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h5>Trade Compliance</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Terms of use</a></li>
+                    <li><a href="#" class="text-light">Data privacy</a></li>
+                    <li><a href="#" class="text-light">Cookies information</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h5>Discover Our Platform</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Our Company</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+            <p class="mb-0">&copy; Indegate - {{ current_year }}</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.8)), 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23134e8a"/><circle cx="200" cy="150" r="80" fill="%23ffffff" opacity="0.1"/><circle cx="800" cy="400" r="120" fill="%23ffffff" opacity="0.05"/><rect x="600" y="100" width="200" height="100" fill="%23ffffff" opacity="0.08"/></svg>');
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh;
+    position: relative;
+    color: white;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    padding: 2rem 0;
+}
+
+.hero-logo {
+    height: 50px;
+    width: auto;
+}
+
+.hero-divider {
+    font-size: 2rem;
+    font-weight: 300;
+    color: white;
+    margin: 0 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+
+.cta-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.cta-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.search-form-container {
+    max-width: 500px;
+}
+
+.search-input-group {
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 50px 0 0 50px;
+}
+
+.search-input:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.btn-cta {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 0 50px 50px 0;
+    transition: all 0.3s ease;
+}
+
+.btn-cta:hover {
+    background: #c0392b;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.hero-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.hero-image-placeholder {
+    text-align: center;
+    padding: 3rem;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.services-overview-section {
+    background: #f8f9fa;
+}
+
+.service-overview-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.service-overview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon-container {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.service-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.service-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.footer-links-section {
+    background: #2c3e50 !important;
+}
+
+.footer-links-section a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links-section a:hover {
+    color: #3498db !important;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    .cta-title {
+        font-size: 1.3rem;
+    }
+    
+    .search-input-group {
+        flex-direction: column;
+        border-radius: 10px;
+    }
+    
+    .search-input {
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-cta {
+        border-radius: 10px;
+        width: 100%;
+    }
+    
+    .hero-image-placeholder {
+        display: none;
+    }
+}
+</style>
+
+<script>
+function redirectToMarkets() {
+    const searchValue = document.getElementById('countrySearch').value;
+    // Redirect to markets page - could potentially pre-fill search if needed
+    window.location.href = "{{ url_for('main.services_page') }}";
+}
+
+// Allow Enter key to trigger search
+document.getElementById('countrySearch').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        redirectToMarkets();
+    }
+});
+
+// Add current year to footer
+document.addEventListener('DOMContentLoaded', function() {
+    const yearElements = document.querySelectorAll('[data-year]');
+    yearElements.forEach(el => {
+        el.textContent = new Date().getFullYear();
+    });
+});
+</script>
+{% endblock %}

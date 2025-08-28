@@ -73,10 +73,9 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    # Load configuration for dropdowns
-    app.config['COUNTRIES'] = load_config('countries.json')
-    app.config['PRODUCTS'] = load_config('products.json')
-    app.config['SECTORS'] = load_config('sectors.json')
+    # Initialize config service for lazy loading
+    from .services.config_service import get_config_service
+    app.config['CONFIG_SERVICE'] = get_config_service()
 
     # Register blueprints
     from .auth.auth import auth_bp
@@ -115,39 +114,4 @@ def create_app():
 
     return app
 
-def load_config(filename):
-    config_path = os.path.join(os.path.dirname(__file__), 'config', filename)
-    if not os.path.exists(config_path):
-        # Create default empty config if it doesn't exist
-        if filename == 'countries.json':
-            default_data = [{"name": "United States", "code": "US", "iso_numeric": "840"}]
-        elif filename == 'products.json':
-            default_data = [{"hs6": "010101", "description": "Live horses"}]
-        elif filename == 'sectors.json':
-            default_data = [{"name": "Agriculture"}]
-        else:
-            default_data = []
-        
-        os.makedirs(os.path.dirname(config_path), exist_ok=True)
-        with open(config_path, 'w') as f:
-            json.dump(default_data, f, indent=4)
-        return default_data
-        
-    try:
-        with open(config_path, 'r') as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON from {config_path}. Returning empty list.")
-        # Create default empty config if it's corrupted
-        if filename == 'countries.json':
-            default_data = [{"name": "United States", "code": "US", "iso_numeric": "840"}]
-        elif filename == 'products.json':
-            default_data = [{"hs6": "010101", "description": "Live horses"}]
-        elif filename == 'sectors.json':
-            default_data = [{"name": "Agriculture"}]
-        else:
-            default_data = []
-        
-        with open(config_path, 'w') as f:
-            json.dump(default_data, f, indent=4)
-        return default_data 
+# Old load_config function removed - now using ConfigService for lazy loading 

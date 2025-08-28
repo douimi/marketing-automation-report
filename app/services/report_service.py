@@ -25,12 +25,21 @@ def format_country_name_for_url(country_name):
     """Converts country name to lowercase and replaces spaces with hyphens."""
     return country_name.lower().replace(" ", "-")
 
-def get_country_name_from_code(country_code, countries_config):
+def get_country_name_from_code(country_code, countries_config=None):
     """Retrieves the country name from its code using the loaded config."""
-    for country in countries_config:
-        if country.get("code") == country_code:
-            return country.get("name")
-    return None # Or raise an error
+    # For backward compatibility, still accept countries_config parameter
+    # But prefer using the config service for better performance
+    if countries_config:
+        for country in countries_config:
+            if country.get("code") == country_code:
+                return country.get("name")
+        return None
+    
+    # Use config service if available
+    from .config_service import get_config_service
+    config_service = get_config_service()
+    country = config_service.find_country_by_code(country_code)
+    return country.get("name") if country else None
 
 class ReportGenerationService:
     def __init__(self):
