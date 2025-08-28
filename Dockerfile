@@ -29,7 +29,9 @@ COPY . .
 
 # Create non-root user to run the app
 RUN useradd -m appuser \
-    && chown -R appuser:appuser /app
+    && chown -R appuser:appuser /app \
+    && mkdir -p /app/app/config \
+    && chmod 755 /app/app/config
 USER appuser
 
 # Expose application port

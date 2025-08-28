@@ -13,38 +13,69 @@ import re
 login_manager = LoginManager()
 
 def load_users():
-    users_path = os.path.join(os.path.dirname(__file__), 'config', 'users.json')
-    if not os.path.exists(users_path):
-        # Create a default users.json if it doesn't exist
-        default_users = {"admin": "password123"} # Example user
-        with open(users_path, 'w') as f:
-            json.dump(default_users, f)
-        return default_users
-    with open(users_path, 'r') as f:
-        return json.load(f)
+    """Load users using the robust user service."""
+    from .services.user_service import get_user_service
+    user_service = get_user_service()
+    return user_service.get_all_users()
 
 class User:
-    def __init__(self, username):
+    def __init__(self, username, user_data=None):
         self.id = username
+        self.username = username
+        
+        if user_data is None:
+            users = load_users()
+            user_data = users.get(username, {})
+        
+        self.email = user_data.get('email', '')
+        self.phone = user_data.get('phone', '')
+        self.company = user_data.get('company', '')
+        self.preferred_target_country = user_data.get('preferred_target_country', '')
+        self.full_name = user_data.get('full_name', username.title())
+        self.created_at = user_data.get('created_at', '')
+        self._is_active = user_data.get('is_active', True)
 
     @staticmethod
     def get(user_id):
         users = load_users()
-        if user_id in users:
-            return User(user_id)
+        if user_id in users and users[user_id].get('is_active', True):
+            return User(user_id, users[user_id])
         return None
 
     def is_authenticated(self):
         return True
 
     def is_active(self):
-        return True
+        return self._is_active
 
     def is_anonymous(self):
         return False
 
     def get_id(self):
         return self.id
+    
+    def get_display_name(self):
+        """Get the user's display name (full name or username)."""
+        return self.full_name if self.full_name else self.username.title()
+    
+    def update_profile(self, **kwargs):
+        """Update user profile information."""
+        from .services.user_service import get_user_service
+        user_service = get_user_service()
+        
+        success = user_service.update_user(self.username, **kwargs)
+        if success:
+            # Update the current object with new values
+            for key, value in kwargs.items():
+                if key in ['email', 'phone', 'company', 'preferred_target_country', 'full_name']:
+                    setattr(self, key, value)
+        return success
+
+def create_user(username, password, email, phone="", company="", preferred_target_country="", full_name=""):
+    """Create a new user account."""
+    from .services.user_service import get_user_service
+    user_service = get_user_service()
+    return user_service.create_user(username, password, email, phone, company, preferred_target_country, full_name)
 
 @login_manager.user_loader
 def load_user(user_id):

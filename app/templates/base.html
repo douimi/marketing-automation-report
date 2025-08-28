@@ -105,6 +105,101 @@
             align-items: center;
             z-index: 9999;
         }
+
+        /* User dropdown styles */
+        .user-dropdown {
+            display: flex !important;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: white !important;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .user-avatar {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .user-info {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .user-title {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .user-dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 0;
+            min-width: 280px;
+            margin-top: 10px;
+        }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .user-avatar-large {
+            margin-right: 15px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .dropdown-section-header {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #f8f9fa;
+            margin: 0;
+        }
+
+        .user-dropdown-menu .dropdown-item {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown-menu .dropdown-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .user-dropdown-menu .dropdown-item.text-danger:hover {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .dropdown-header {
+            padding: 0 !important;
+            margin: 0;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -138,18 +233,73 @@
                             <i class="fas fa-file-alt me-1"></i>Complete Report
                         </a>
                     </li>
-                    {% block nav_actions %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.logout') }}">
-                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    
+                    <!-- User Profile Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle user-dropdown" href="#" id="userDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">{{ current_user.get_display_name() }}</div>
+                                <div class="user-title">{{ current_user.company or 'User' }}</div>
+                            </div>
                         </a>
+                        <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
+                            <li class="dropdown-header">
+                                <div class="user-profile-header">
+                                    <div class="user-avatar-large">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">{{ current_user.get_display_name() }}</div>
+                                        <div class="text-muted small">{{ current_user.company or 'Indegate Consulting' }}</div>
+                                        <div class="text-muted small">Managing Director</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-section-header">Personal details</li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('auth.profile') }}">
+                                    <i class="fas fa-user me-2"></i>My account
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="showComingSoon('Alerts')">
+                                    <i class="fas fa-bell me-2"></i>My alerts
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('auth.edit_profile') }}">
+                                    <i class="fas fa-cog me-2"></i>My preferences
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="showComingSoon('Messages')">
+                                    <i class="fas fa-envelope me-2"></i>Portal messages
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    {% endblock %}
+                    {% block nav_actions %}{% endblock %}
                     {% else %}
                     <!-- Non-authenticated user items -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login / Register
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">
+                            <i class="fas fa-user-plus me-1"></i>Register
                         </a>
                     </li>
                     {% endif %}
@@ -196,8 +346,8 @@
 
         // Add current year to footer
         document.querySelector('.footer').innerHTML = document.querySelector('.footer').innerHTML.replace('{{ current_year }}', new Date().getFullYear());
-        
-        // Coming soon functionality
+
+        // Coming soon notification
         window.showComingSoon = function(feature) {
             showToast(`${feature} is coming soon! Stay tuned for updates.`, 'info');
         }

@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-user-circle me-2"></i>My Profile
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="profile-info">
+                                <h5 class="text-muted mb-3">Personal Information</h5>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Full Name</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-user me-2 text-primary"></i>
+                                        {{ current_user.full_name or current_user.username.title() }}
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Username</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-at me-2 text-primary"></i>
+                                        {{ current_user.username }}
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Email</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-envelope me-2 text-primary"></i>
+                                        {{ current_user.email or 'Not provided' }}
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Phone</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-phone me-2 text-primary"></i>
+                                        {{ current_user.phone or 'Not provided' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="profile-info">
+                                <h5 class="text-muted mb-3">Business Information</h5>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Company</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-building me-2 text-primary"></i>
+                                        {{ current_user.company or 'Not provided' }}
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Preferred Target Country</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-globe me-2 text-primary"></i>
+                                        {% if current_user.preferred_target_country %}
+                                            {{ current_user.preferred_target_country }}
+                                        {% else %}
+                                            Not selected
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item mb-3">
+                                    <label class="form-label text-muted">Member Since</label>
+                                    <div class="info-value">
+                                        <i class="fas fa-calendar me-2 text-primary"></i>
+                                        {% if current_user.created_at %}
+                                            {{ current_user.created_at[:10] }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-edit me-2"></i>Edit Profile
+                        </a>
+                        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.info-item {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-value {
+    font-weight: 500;
+    color: #2c3e50;
+    padding: 0.5rem 0;
+}
+
+.profile-info h5 {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+}
+
+.btn-primary:hover {
+    background-color: #1a252f;
+    border-color: #1a252f;
+}
+</style>
+{% endblock %}
