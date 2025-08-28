@@ -1363,6 +1363,157 @@ def scrape_santander_trade_compliance(driver, formatted_country_name):
         return {'error': f'Error scraping Trade Compliance for {formatted_country_name}: {str(e)}'}
 
 
+def scrape_santander_business_directories(driver, industry_code, country_code):
+    """
+    Navigates to the business directories page, fills the form with industry and country,
+    and scrapes all business directory results.
+    Returns a dict with all directories data.
+    """
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait, Select
+    from selenium.webdriver.support import expected_conditions as EC
+    import time
+    
+    target_url = "https://santandertrade.com/en/portal/reach-business-counterparts/business-directories"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        # Wait for the form to be present
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "code_secteur")))
+        
+        # Select industry
+        industry_select = Select(driver.find_element(By.ID, "code_secteur"))
+        industry_select.select_by_value(industry_code)
+        print(f"Selected industry: {industry_code}")
+        
+        # Select country/geographical area
+        country_select = Select(driver.find_element(By.ID, "pays_recherche"))
+        
+        # Try to select by value first (direct Santander country code)
+        try:
+            country_select.select_by_value(country_code)
+            print(f"Selected country by value: {country_code}")
+        except:
+            # If that fails, try to find by country name mapping
+            print(f"Could not select country by value {country_code}, trying country name mapping...")
+            # Create a basic mapping from common country codes to Santander codes
+            country_mapping = {
+                'US': '18',  # United States
+                'FR': '20',  # France  
+                'DE': '54',  # Germany
+                'GB': '44',  # United Kingdom
+                'CN': '11',  # China
+                'JP': '31',  # Japan
+                'CA': '9',   # Canada
+                'AU': '4',   # Australia
+                'ES': '17',  # Spain
+                'IT': '30',  # Italy
+                'BR': '7',   # Brazil
+                'IN': '25',  # India
+                'MX': '35',  # Mexico
+            }
+            
+            santander_code = country_mapping.get(country_code)
+            if santander_code:
+                country_select.select_by_value(santander_code)
+                print(f"Selected country using mapping: {country_code} -> {santander_code}")
+            else:
+                # Fallback: select "World" if specific country not found
+                country_select.select_by_value('240')  # World
+                print(f"Could not map country {country_code}, selected 'World' as fallback")
+        
+        # Click search button
+        search_button = driver.find_element(By.ID, "bouton")
+        search_button.click()
+        print("Search button clicked")
+        
+        # Wait for results to load
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "zone_de_resultats")))
+        time.sleep(3)  # Additional wait for dynamic content
+        
+        # Get page source and parse with BeautifulSoup
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        
+        # Extract results summary
+        results_summary = ""
+        summary_elem = soup.find('h2', class_='no-bg-bd')
+        if summary_elem:
+            results_summary = summary_elem.get_text(strip=True)
+        
+        # Extract all business directories
+        directories = []
+        directory_cards = soup.find_all('div', class_='card-service-result')
+        
+        for card in directory_cards:
+            directory = {}
+            
+            # Extract name and URL
+            link_elem = card.find('a', class_='lien-externe')
+            if link_elem:
+                directory['name'] = link_elem.get_text(strip=True)
+                directory['url'] = link_elem.get('href', '')
+            
+            # Extract geographical coverage
+            geo_elem = card.find('div', class_='text-right')
+            if geo_elem:
+                geo_text = geo_elem.get_text(strip=True)
+                directory['geographical_coverage'] = geo_text.replace('🌐', '').strip()
+            
+            # Extract description (text between name and sectors line)
+            description_parts = []
+            for elem in card.children:
+                if hasattr(elem, 'get_text'):
+                    text = elem.get_text(strip=True)
+                    if text and not elem.find('a') and not elem.find('i', class_='fa-industry'):
+                        if text not in [directory.get('name', ''), directory.get('geographical_coverage', '')]:
+                            description_parts.append(text)
+            directory['description'] = ' '.join(description_parts)
+            
+            # Extract sector
+            sector_elem = card.find('div', class_='sectors-line')
+            if sector_elem:
+                directory['sector'] = sector_elem.get_text(strip=True).replace('🏭', '').strip()
+            
+            # Extract tags/categories
+            tags = []
+            tag_elems = card.find_all('div', class_='tag-style')
+            for tag_elem in tag_elems:
+                spans = tag_elem.find_all('span')
+                for span in spans:
+                    tags.append(span.get_text(strip=True))
+            directory['tags'] = tags
+            
+            if directory.get('name'):  # Only add if we have a name
+                directories.append(directory)
+        
+        # No longer extracting section headers (categories) as requested
+        
+        # Extract navigation/pagination info
+        pagination = []
+        pagination_elem = soup.find('div', class_='ordre-affichage')
+        if pagination_elem:
+            pagination_links = pagination_elem.find_all('a', class_='pagination-lien')
+            for link in pagination_links:
+                pagination.append(link.get_text(strip=True))
+        
+        return {
+            'results_summary': results_summary,
+            'total_directories': len(directories),
+            'directories': directories,
+            'pagination': pagination,
+            'search_params': {
+                'industry_code': industry_code,
+                'country_code': country_code
+            }
+        }
+
+    except Exception as e:
+        print(f"Error scraping Business Directories: {e}")
+        return {'error': f'Error scraping Business Directories: {str(e)}'}
+
+
 def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n):
     """
     Scrapes the Trade Shows section from SantanderTrade for the given sector and country ISO3N code.

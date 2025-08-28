@@ -1,0 +1,137 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}Business Directories{% endblock %}
+
+{% block report_icon %}fas fa-building{% endblock %}
+
+{% block report_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% if business_directories_data.error %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ business_directories_data.error }}
+                </div>
+            {% else %}
+                <!-- Search Summary -->
+                {% if business_directories_data.results_summary %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-search section-icon"></i>Search Results
+                    </div>
+                    <div class="section-content">
+                        <div class="alert alert-info">
+                            <h5 class="mb-0">{{ business_directories_data.results_summary }}</h5>
+                        </div>
+                        {% if business_directories_data.country_name %}
+                        <div class="search-params mb-3">
+                            <small class="text-muted">
+                                <strong>Search Parameters:</strong>
+                                Industry Code: {{ business_directories_data.search_params.industry_code }}, 
+                                Country: {{ business_directories_data.country_name }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Business Directories -->
+                {% if business_directories_data.directories %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-building section-icon"></i>Business Directories
+                        <span class="badge bg-primary ms-2">{{ business_directories_data.total_directories }} directories</span>
+                    </div>
+                    <div class="section-content">
+                        {% for directory in business_directories_data.directories %}
+                        <div class="directory-card mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="card-title mb-2">
+                                                {% if directory.url %}
+                                                <a href="{{ directory.url }}" target="_blank" class="text-decoration-none">
+                                                    {{ directory.name }}
+                                                    <i class="fas fa-external-link-alt ms-1 small"></i>
+                                                </a>
+                                                {% else %}
+                                                {{ directory.name }}
+                                                {% endif %}
+                                            </h5>
+                                            {% if directory.description %}
+                                            <p class="card-text text-muted mb-2">{{ directory.description }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            {% if directory.geographical_coverage %}
+                                            <span class="badge bg-secondary mb-2">
+                                                <i class="fas fa-globe me-1"></i>{{ directory.geographical_coverage }}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    {% if directory.sector %}
+                                    <div class="mb-2">
+                                        <small class="text-muted">
+                                            <i class="fas fa-industry me-1"></i>{{ directory.sector }}
+                                        </small>
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if directory.tags %}
+                                    <div class="tags">
+                                        {% for tag in directory.tags %}
+                                        <span class="badge bg-light text-dark me-1">{{ tag }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+
+
+
+                <!-- Show message if no directories found -->
+                {% if not business_directories_data.directories and not business_directories_data.error %}
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No business directories found for the selected criteria.
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.directory-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.directory-card:hover {
+    transform: translateY(-2px);
+}
+
+
+
+.search-params {
+    font-size: 0.9rem;
+}
+
+.tags .badge {
+    font-size: 0.75rem;
+}
+
+.section-header .badge {
+    font-size: 0.75rem;
+}
+</style>
+{% endblock %}

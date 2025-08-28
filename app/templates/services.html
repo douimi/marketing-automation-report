@@ -108,6 +108,10 @@
                         <i class="fas fa-door-open me-2"></i>
                         <span>Market Access Conditions</span>
                     </a>
+                    <a href="{{ url_for('main.service_form', service_type='business-directories') }}" class="service-item">
+                        <i class="fas fa-building me-2"></i>
+                        <span>Business Directories</span>
+                    </a>
                     {% else %}
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
                         <i class="fas fa-random me-2"></i>
@@ -127,6 +131,11 @@
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
                         <i class="fas fa-door-open me-2"></i>
                         <span>Market Access Conditions</span>
+                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    </div>
+                    <div class="service-item locked-service" onclick="showLoginPrompt()">
+                        <i class="fas fa-building me-2"></i>
+                        <span>Business Directories</span>
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}

@@ -197,6 +197,13 @@ def service_form(service_type):
             'requires': ['destination_country'],
             'form_template': 'service_form_country_only.html'
         },
+        'business-directories': {
+            'title': 'Business Directories',
+            'description': 'Find industry-specific business directories and commercial partners in your target country.',
+            'icon': 'fas fa-building',
+            'requires': ['industry', 'geographical_area'],
+            'form_template': 'service_form_industry_country.html'
+        },
         'import-export-flows': {
             'title': 'Import/Export Flows',
             'description': 'Product-specific trade flows between origin and destination countries with trend analysis.',
@@ -264,6 +271,16 @@ def start_individual_service():
         
         if 'sector' in request.form:
             form_data['sector'] = request.form.get('sector')
+        
+        # Handle business directories specific fields
+        if 'industry' in request.form:
+            form_data['industry_code'] = request.form.get('industry')
+        
+        if 'geographical_area' in request.form:
+            form_data['geographical_area_code'] = request.form.get('geographical_area')
+            # For business directories, the geographical_area is actually a country
+            # Add it as destination_country_code for consistency with other services
+            form_data['destination_country_code'] = request.form.get('geographical_area')
         
         # Get config service for optimized lookups
         config_service = current_app.config.get('CONFIG_SERVICE')
@@ -366,6 +383,12 @@ def start_individual_service():
                     service_data['supplier_data'] = report_service.generate_santander_identify_suppliers(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'trade-compliance':
                     service_data['trade_compliance_data'] = report_service.generate_santander_trade_compliance(form_data['destination_country_code'], None, login_required=True)
+                elif service_type == 'business-directories':
+                    service_data['business_directories_data'] = report_service.generate_santander_business_directories(
+                        form_data['industry_code'], 
+                        form_data['destination_country_code'], 
+                        login_required=True
+                    )
                 elif service_type == 'import-export-flows':
                     service_data['flows_data'] = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
