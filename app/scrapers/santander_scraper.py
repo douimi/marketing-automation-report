@@ -3,6 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from bs4 import BeautifulSoup
+import json
+import os
 
 SANTANDER_LOGIN_URL = "https://santandertrade.com/en/" # As confirmed by user
 PRE_LOGIN_FORM_BUTTON_XPATH = "//*[@id='btn_login_menu']" # User provided XPath to reveal login form
@@ -11,6 +13,46 @@ SANTANDER_PASSWORD_XPATH = "//*[@id='identification_mot_de_passe']"
 SANTANDER_LOGIN_BUTTON_XPATH = "//*[@id='identification_go']"
 SANTANDER_MARKET_ANALYSIS_URL_TEMPLATE = "https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/general-presentation"
 SANTANDER_ECO_POL_URL_TEMPLATE = "https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/economic-political-outline"
+
+def get_santander_country_code(country_code):
+    """
+    Dynamically look up the Santander country code from countries.json file.
+    
+    Args:
+        country_code (str): The country code to look up (can be 2-letter or 3-letter ISO code)
+        
+    Returns:
+        str: The Santander country code (ISO2 field) or None if not found
+    """
+    try:
+        # Get the path to countries.json (relative to this file)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        config_dir = os.path.join(current_dir, '..', 'config')
+        countries_file = os.path.join(config_dir, 'countries.json')
+        
+        # Load countries data
+        with open(countries_file, 'r', encoding='utf-8') as f:
+            countries = json.load(f)
+        
+        # Search for the country by code (3-letter) or ISO2 (2-letter if applicable)
+        for country in countries:
+            # Check if the provided code matches either the 'code' field or any other identifier
+            if (country.get('code') == country_code or 
+                country.get('ISO2') == country_code or
+                country.get('name', '').upper() == country_code.upper()):
+                
+                # Return the ISO2 field which contains the Santander internal ID
+                santander_code = country.get('ISO2')
+                if santander_code:
+                    print(f"Found Santander code for {country_code}: {santander_code} ({country.get('name')})")
+                    return santander_code
+        
+        print(f"No Santander code found for country: {country_code}")
+        return None
+        
+    except Exception as e:
+        print(f"Error loading countries.json: {e}")
+        return None
 
 def login_santander(driver, email, password):
     """
@@ -1395,29 +1437,18 @@ def scrape_santander_business_directories(driver, industry_code, country_code):
             country_select.select_by_value(country_code)
             print(f"Selected country by value: {country_code}")
         except:
-            # If that fails, try to find by country name mapping
-            print(f"Could not select country by value {country_code}, trying country name mapping...")
-            # Create a basic mapping from common country codes to Santander codes
-            country_mapping = {
-                'US': '18',  # United States
-                'FR': '20',  # France  
-                'DE': '54',  # Germany
-                'GB': '44',  # United Kingdom
-                'CN': '11',  # China
-                'JP': '31',  # Japan
-                'CA': '9',   # Canada
-                'AU': '4',   # Australia
-                'ES': '17',  # Spain
-                'IT': '30',  # Italy
-                'BR': '7',   # Brazil
-                'IN': '25',  # India
-                'MX': '35',  # Mexico
-            }
+            # If that fails, try to find by country code lookup from countries.json
+            print(f"Could not select country by value {country_code}, trying country lookup...")
+            santander_code = get_santander_country_code(country_code)
             
-            santander_code = country_mapping.get(country_code)
             if santander_code:
-                country_select.select_by_value(santander_code)
-                print(f"Selected country using mapping: {country_code} -> {santander_code}")
+                try:
+                    country_select.select_by_value(santander_code)
+                    print(f"Selected country using lookup: {country_code} -> {santander_code}")
+                except:
+                    print(f"Could not select Santander code {santander_code} for {country_code}, falling back to World")
+                    # Fallback: select "World" if specific country not found
+                    country_select.select_by_value('240')  # World
             else:
                 # Fallback: select "World" if specific country not found
                 country_select.select_by_value('240')  # World
