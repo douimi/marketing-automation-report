@@ -243,15 +243,27 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
         method: 'POST',
         body: new FormData(this)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.redirect_url) {
+            // Redirect to the centralized loading page
             window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+            loadingOverlay.remove();
+        } else {
+            alert('Unexpected response format. Please try again.');
+            loadingOverlay.remove();
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
         loadingOverlay.remove();
     });
 });
