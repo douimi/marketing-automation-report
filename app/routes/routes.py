@@ -436,7 +436,8 @@ def start_report():
                 try:
                     eco_political_data = report_service.generate_santander_economic_political_outline(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping economic/political outline: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -446,7 +447,8 @@ def start_report():
                 try:
                     trade_data = report_service.generate_santander_foreign_trade_in_figures(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping foreign trade in figures: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -456,7 +458,8 @@ def start_report():
                 try:
                     operating_a_business_data = report_service.generate_santander_operating_a_business(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping operating a business: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -466,7 +469,8 @@ def start_report():
                 try:
                     tax_system_data = report_service.generate_santander_tax_system(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping tax system: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -476,7 +480,8 @@ def start_report():
                 try:
                     legal_environment_data = report_service.generate_santander_legal_environment(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping legal environment: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -486,7 +491,8 @@ def start_report():
                 try:
                     foreign_investment_data = report_service.generate_santander_foreign_investment(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping foreign investment: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -496,7 +502,8 @@ def start_report():
                 try:
                     business_practices_data = report_service.generate_santander_business_practices(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping business practices: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -506,7 +513,8 @@ def start_report():
                 try:
                     entry_requirements_data = report_service.generate_santander_entry_requirements(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping entry requirements: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -516,7 +524,8 @@ def start_report():
                 try:
                     practical_information_data = report_service.generate_santander_practical_information(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping practical information: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -526,7 +535,8 @@ def start_report():
                 try:
                     living_in_country_data = report_service.generate_santander_living_in_country(
                         form_data['destination_country_code'],
-                        countries_config
+                        countries_config,
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping living in the country: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -550,7 +560,8 @@ def start_report():
                     flows_data = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],
                         form_data['origin_country_code'],
-                        form_data['destination_country_code']
+                        form_data['destination_country_code'],
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping import/export flows: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
@@ -560,7 +571,8 @@ def start_report():
                 try:
                     trade_shows_data = report_service.generate_santander_trade_shows(
                         form_data['sector_code'],
-                        form_data['destination_country_iso2']
+                        form_data['destination_country_iso2'],
+                        login_required=False
                     )
                     print(f'[TIMING] After scraping trade shows: {round(_time.time() - t0, 2)}s')
                 except Exception as e:
