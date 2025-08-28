@@ -47,7 +47,7 @@
 
         <div class="loading-message mt-4">
             <p class="lead">Please wait while we prepare your comprehensive market analysis</p>
-            <p class="text-muted">This usually takes about 3-5 minutes/p>
+            <p class="text-muted">This usually takes about 3-5 minutes</p>
         </div>
     </div>
 </div>
@@ -232,14 +232,22 @@ let warningMs = 300000; // 5 minutes
 function pollStatus() {
     // Add cache-busting param
     const url = '/check_status?_=' + new Date().getTime();
+    console.log('Polling status...', url);
     fetch(url, { cache: 'no-store' })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Status response:', response.status, response.statusText);
+            return response.json();
+        })
         .then(data => {
+            console.log('Status data:', data);
             if (data.status === 'complete') {
+                console.log('Report complete, redirecting to:', data.redirect_url);
                 window.location.href = data.redirect_url;
             } else if (data.status === 'error') {
+                console.log('Error status:', data.message);
                 showError(data.message || 'An error occurred.');
             } else {
+                console.log('Still processing...');
                 // Still processing
                 if (!warningShown && Date.now() - pollStart > warningMs) {
                     showWarning('This is taking longer than usual. Please keep this page open.');
@@ -248,15 +256,24 @@ function pollStatus() {
             }
         })
         .catch(err => {
+            console.error('Polling error:', err);
             showError('Network error. <button id="retryBtn" class="btn btn-primary mt-2">Try Again</button>');
         });
 }
 function showError(msg) {
     clearInterval(pollInterval);
-    document.getElementById('loading-message').innerHTML = msg;
+    const loadingMessage = document.querySelector('.loading-message');
+    loadingMessage.innerHTML = `
+        <div class="alert alert-danger">
+            <h5>Error</h5>
+            <p>${msg}</p>
+            <button id="retryBtn" class="btn btn-primary">Try Again</button>
+            <a href="/" class="btn btn-secondary ms-2">Go Home</a>
+        </div>
+    `;
     const btn = document.getElementById('retryBtn');
     if (btn) btn.onclick = function() {
-        document.getElementById('loading-message').innerHTML = 'Retrying...';
+        loadingMessage.innerHTML = '<p class="lead">Retrying...</p>';
         pollInterval = setInterval(pollStatus, 2000);
     };
 }

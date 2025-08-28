@@ -23,14 +23,22 @@
                         <div class="hero-cta-section">
                             <h3 class="cta-title mb-3">Want to discover our content selection?</h3>
                             <p class="cta-subtitle mb-4">Let us know about your country or area of interest to begin</p>
+                            <div class="alert alert-info mb-4" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px;">
+                                <i class="fas fa-gift me-2"></i>
+                                <strong>Free Sample:</strong> Try our General Presentation service for any country - no registration required!
+                            </div>
                             
                             <div class="search-form-container">
-                                <div class="input-group search-input-group">
-                                    <input type="text" class="form-control search-input" placeholder="Enter a target country" id="countrySearch">
-                                    <button class="btn btn-cta" type="button" onclick="redirectToMarkets()">
-                                        Get started
-                                    </button>
-                                </div>
+                                <form id="homeCountryForm">
+                                    <div class="input-group search-input-group">
+                                        <select class="form-select search-input" id="countrySearch" name="destination_country" required>
+                                            <option value="" disabled selected>Enter a target country</option>
+                                        </select>
+                                        <button class="btn btn-cta" type="submit">
+                                            <i class="fas fa-play me-2"></i>Get Free Report
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -361,20 +369,181 @@
         display: none;
     }
 }
-</style>
 
-<script>
-function redirectToMarkets() {
-    const searchValue = document.getElementById('countrySearch').value;
-    // Redirect to markets page - could potentially pre-fill search if needed
-    window.location.href = "{{ url_for('main.services_page') }}";
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
-// Allow Enter key to trigger search
-document.getElementById('countrySearch').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        redirectToMarkets();
+/* Select2 custom styling for home page */
+.search-form-container .select2-container {
+    width: 100% !important;
+}
+
+.search-form-container .select2-container .select2-selection--single {
+    height: auto !important;
+    padding: 1rem 1.5rem !important;
+    border: none !important;
+    border-radius: 50px 0 0 50px !important;
+    font-size: 1rem !important;
+    background: white !important;
+}
+
+.search-form-container .select2-container .select2-selection--single .select2-selection__rendered {
+    padding: 0 !important;
+    color: #666 !important;
+}
+
+.search-form-container .select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.search-form-container .select2-dropdown {
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    background: white !important;
+}
+
+.search-form-container .select2-results__option {
+    color: #333 !important;
+    background: white !important;
+    padding: 10px 15px !important;
+}
+
+.search-form-container .select2-results__option--highlighted {
+    background: #3498db !important;
+    color: white !important;
+}
+
+.search-form-container .select2-results__option--selected {
+    background: #2c3e50 !important;
+    color: white !important;
+}
+
+/* Ensure dropdown text is always visible */
+.search-form-container .select2-results {
+    background: white !important;
+}
+
+.search-form-container .select2-results__options {
+    background: white !important;
+}
+
+@media (max-width: 768px) {
+    .search-form-container .select2-container .select2-selection--single {
+        border-radius: 10px !important;
+        margin-bottom: 0.5rem;
     }
+}
+</style>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    
+    $('#countrySearch').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Enter a target country',
+        allowClear: true,
+        dropdownParent: $('.search-form-container')
+    });
+});
+
+// Handle form submission
+document.getElementById('homeCountryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const selectedCountry = document.getElementById('countrySearch').value;
+    if (!selectedCountry) {
+        alert('Please select a country first.');
+        return;
+    }
+    
+    // Show loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = `
+        <div class="d-flex flex-column align-items-center">
+            <div class="spinner-border text-light mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="text-light">Generating General Presentation report...</div>
+        </div>
+    `;
+    document.body.appendChild(loadingOverlay);
+    
+    // Create form data for General Presentation service
+    const formData = new FormData();
+    formData.append('service_type', 'general-presentation');
+    formData.append('destination_country', selectedCountry);
+    
+    // Submit to the individual service endpoint
+    fetch("{{ url_for('main.start_individual_service') }}", {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+            loadingOverlay.remove();
+        } else {
+            alert('Unexpected response format. Please try again.');
+            loadingOverlay.remove();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        let errorMessage = 'An error occurred. Please try again.';
+        if (error && error.message) {
+            errorMessage = 'Error: ' + error.message;
+        }
+        alert(errorMessage);
+        loadingOverlay.remove();
+    });
 });
 
 // Add current year to footer

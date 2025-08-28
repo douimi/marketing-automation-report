@@ -45,6 +45,20 @@ def test_page():
     </html>
     '''
 
+@main_bp.route('/test_session')
+def test_session():
+    """Test session functionality."""
+    import uuid
+    if 'test_id' not in session:
+        session['test_id'] = str(uuid.uuid4())
+        session.modified = True
+    
+    return jsonify({
+        'test_id': session.get('test_id'),
+        'session_keys': list(session.keys()),
+        'is_authenticated': current_user.is_authenticated if current_user else False
+    })
+
 @main_bp.route('/')
 def home():
     return render_template('home.html')
@@ -193,11 +207,17 @@ def service_form(service_type):
                          sectors=sectors)
 
 @main_bp.route('/start_individual_service', methods=['POST'])
-@login_required
 def start_individual_service():
     """Initialize individual service generation and return loading page."""
     try:
         service_type = request.form.get('service_type')
+        
+        # Check if service requires authentication (all except general-presentation)
+        if service_type != 'general-presentation' and not current_user.is_authenticated:
+            return jsonify({
+                'status': 'error',
+                'message': 'Please login to access this service.'
+            }), 401
         
         # Build form_data based on service requirements
         form_data = {
@@ -346,6 +366,7 @@ def start_individual_service():
                 
                 print(f'[TIMING] Individual service generation completed: {round(_time.time() - t0, 2)}s')
                 current_app.logger.info(f"Individual service generation completed for {service_type}")
+                current_app.logger.info(f"Report {report_id} marked as complete in cache")
                 
             except Exception as e:
                 current_app.logger.error(f"Individual service generation failed: {e}", exc_info=True)
@@ -670,21 +691,32 @@ def start_report():
         })
 
 @main_bp.route('/loading')
-@login_required
 def loading_page():
     """Show loading page while report is being generated."""
     if 'report_id' not in session:
+        # For non-authenticated users, redirect to home instead of form page
+        if not current_user.is_authenticated:
+            return redirect(url_for('main.home'))
         return redirect(url_for('main.form_page'))
     return render_template('loading.html')
 
 @main_bp.route('/check_status')
-@login_required
 def check_status():
     """Check the status of report generation for the current user's report_id."""
     from flask import make_response
     report_id = session.get('report_id')
-    if not report_id or report_id not in reports_cache:
-        resp = make_response(jsonify({'status': 'error', 'message': 'No report in progress.'}))
+    current_app.logger.info(f"Check status called. Session report_id: {report_id}")
+    current_app.logger.info(f"Available reports in cache: {list(reports_cache.keys())}")
+    
+    if not report_id:
+        current_app.logger.warning("No report_id in session")
+        resp = make_response(jsonify({'status': 'error', 'message': 'No report ID in session.'}))
+        resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        return resp
+        
+    if report_id not in reports_cache:
+        current_app.logger.warning(f"Report ID {report_id} not found in cache")
+        resp = make_response(jsonify({'status': 'error', 'message': 'Report not found in cache.'}))
         resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
         return resp
     status = reports_cache[report_id].get('status', 'processing')
@@ -712,11 +744,13 @@ def check_status():
     return resp
 
 @main_bp.route('/report')
-@login_required
 def show_report():
     """Display the generated report."""
     if 'report_id' not in session:
         flash('No report data available. Please generate a report first.', 'warning')
+        # For non-authenticated users, redirect to home instead of services page
+        if not current_user.is_authenticated:
+            return redirect(url_for('main.home'))
         return redirect(url_for('main.services_page'))
     report_id = session.get('report_id')
     report = reports_cache.get(report_id)
@@ -796,7 +830,6 @@ def get_country_iso_numeric_from_code(country_code, countries_config=None):
     return None
 
 @main_bp.route('/api/countries')
-@login_required
 def api_countries():
     search = request.args.get('search', '').lower()
     config_service = current_app.config.get('CONFIG_SERVICE')
@@ -831,7 +864,6 @@ def api_products():
 
 # API endpoints for configuration data searching (for AJAX dropdowns)
 @main_bp.route('/api/search/countries', methods=['GET'])
-@login_required
 def search_countries_api():
     """Search countries for AJAX dropdown."""
     query = request.args.get('q', '').strip()
