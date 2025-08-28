@@ -1,6 +1,8 @@
 # This file can be initially empty or used for Flask app initialization 
 
 from flask import Flask
+from flask_session import Session
+from redis import Redis
 from flask_login import LoginManager
 import json
 import os
@@ -50,7 +52,23 @@ def load_user(user_id):
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your-secret-key'  # Change this to a secure secret key
+    # Core security and session config (env-overridable)
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'change-me-in-prod')
+    app.config['SESSION_PERMANENT'] = False
+    app.config['SESSION_USE_SIGNER'] = True
+
+    # Server-side session using Redis for multi-user, multi-worker deployments
+    redis_url = os.getenv('REDIS_URL') or os.getenv('SESSION_REDIS_URL')
+    if redis_url:
+        app.config['SESSION_TYPE'] = 'redis'
+        app.config['SESSION_REDIS'] = Redis.from_url(redis_url)
+    else:
+        # Fallback to filesystem (local dev)
+        app.config['SESSION_TYPE'] = 'filesystem'
+        app.config['SESSION_FILE_DIR'] = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'flask_session'))
+        os.makedirs(app.config['SESSION_FILE_DIR'], exist_ok=True)
+
+    Session(app)
 
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'

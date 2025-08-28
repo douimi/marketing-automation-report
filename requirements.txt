@@ -1,6 +1,7 @@
 Flask
 Flask-Login
 Flask-Session
+redis
 requests
 selenium
 openai

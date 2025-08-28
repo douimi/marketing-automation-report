@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+import tempfile
 from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
@@ -39,26 +40,46 @@ class ReportGenerationService:
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
         chrome_options = Options()
-        #chrome_options.add_argument("--headless")
+        # Robust headless settings for containers
+        chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-software-rasterizer")
+        chrome_options.add_argument("--remote-debugging-port=9222")
         chrome_options.add_argument("--window-size=1920,1080")
-        
-        # Try to use WebDriverManager to automatically get the correct ChromeDriver
+
+        # Use unique temp user data to avoid profile locking across concurrent runs
+        user_data_dir = tempfile.mkdtemp(prefix="chrome-user-data-")
+        data_path = tempfile.mkdtemp(prefix="chrome-data-")
+        cache_dir = tempfile.mkdtemp(prefix="chrome-cache-")
+        chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
+        chrome_options.add_argument(f"--data-path={data_path}")
+        chrome_options.add_argument(f"--disk-cache-dir={cache_dir}")
+
+        # Respect container-provided binaries if present
+        chrome_bin = os.getenv("CHROME_BIN", "/usr/bin/chromium")
+        chromedriver_path = os.getenv("CHROMEDRIVER", "/usr/bin/chromedriver")
+        if os.path.exists(chrome_bin):
+            chrome_options.binary_location = chrome_bin
+
+        # Prefer system chromedriver in Docker; else fallback to WebDriverManager
         try:
-            print("Initializing WebDriver with ChromeDriverManager...")
-            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-            print("WebDriver initialized successfully with ChromeDriverManager.")
+            if os.path.exists(chromedriver_path):
+                print(f"Initializing WebDriver with system chromedriver at {chromedriver_path}...")
+                service = ChromeService(executable_path=chromedriver_path)
+                self.driver = webdriver.Chrome(service=service, options=chrome_options)
+                print("WebDriver initialized successfully with system chromedriver.")
+            else:
+                raise FileNotFoundError("System chromedriver not found; using WebDriverManager")
         except Exception as e:
-            print(f"Error initializing WebDriver with ChromeDriverManager: {e}")
-            print("Attempting to initialize WebDriver with default ChromeDriver path...")
-            # Fallback or specific path if WebDriverManager fails or is not preferred
+            print(f"System chromedriver init failed: {e}")
             try:
-                 self.driver = webdriver.Chrome(options=chrome_options)
-                 print("WebDriver initialized successfully with default ChromeDriver path.")
+                print("Initializing WebDriver with ChromeDriverManager...")
+                self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
+                print("WebDriver initialized successfully with ChromeDriverManager.")
             except Exception as e2:
-                print(f"Error initializing WebDriver with default path: {e2}")
-                print("Please ensure ChromeDriver is in your PATH or specify its location.")
+                print(f"Error initializing WebDriver with ChromeDriverManager: {e2}")
                 self.driver = None # Ensure driver is None if initialization fails
 
     def generate_santander_report_data(self, destination_country_code, countries_config):

@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    image: marketing-automation-report:latest
+    container_name: marketing-report-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FLASK_ENV=production
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./flask_session:/app/flask_session
+      - ./app/config:/app/app/config:ro
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: marketing-report-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+
+
