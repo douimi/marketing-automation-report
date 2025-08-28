@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Back to Services -->
+    <div class="mb-4">
+        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Services
+        </a>
+    </div>
+
+    <!-- Service Header -->
+    <div class="text-center mb-5">
+        <div class="service-icon-large mb-3">
+            <i class="{{ service.icon }}"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
+        <p class="lead text-muted">{{ service.description }}</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                        <input type="hidden" name="service_type" value="{{ service_type }}">
+                        
+                        <div class="mb-4">
+                            <label for="origin_country" class="form-label">
+                                <i class="fas fa-flag me-2"></i>Origin Country
+                            </label>
+                            <select class="form-select" id="origin_country" name="origin_country" required style="width: 100%">
+                                <option value="" disabled selected>Select Origin Country</option>
+                            </select>
+                            <div class="form-text">Select the country from which you're exporting</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="destination_country" class="form-label">
+                                <i class="fas fa-flag-checkered me-2"></i>Destination Country
+                            </label>
+                            <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
+                                <option value="" disabled selected>Select Destination Country</option>
+                            </select>
+                            <div class="form-text">Select the country to which you're exporting</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="hs6_product_code" class="form-label">
+                                <i class="fas fa-box me-2"></i>Product Category
+                            </label>
+                            <select class="form-select" id="hs6_product_code" name="hs6_product_code" required style="width: 100%">
+                                <option value="" disabled selected>Select Product</option>
+                            </select>
+                            <div class="form-text">Choose the specific product you want to analyze</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Features -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 class="text-center mb-4">What You'll Get</h4>
+            <div class="row g-4">
+                {% if service_type == 'import-export-flows' %}
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h6>Trade Flow Data</h6>
+                        <p class="text-muted small">Historical import/export volumes and values</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h6>Market Partners</h6>
+                        <p class="text-muted small">Key trading partners and market share</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-trending-up"></i>
+                        </div>
+                        <h6>Trend Analysis</h6>
+                        <p class="text-muted small">Multi-year trends and growth patterns</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                        <h6>Visual Charts</h6>
+                        <p class="text-muted small">Interactive charts and data visualization</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <h6>Tariff Information</h6>
+                        <p class="text-muted small">Applied tariffs and duty rates</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h6>Trade Remedies</h6>
+                        <p class="text-muted small">Anti-dumping and safeguard measures</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h6>Regulatory Requirements</h6>
+                        <p class="text-muted small">Standards and certification requirements</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <h6>Market Access</h6>
+                        <p class="text-muted small">Entry conditions and restrictions</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    function formatProduct(product) {
+        if (product.loading) return product.text;
+        return $('<span>' + product.text + '</span>');
+    }
+    function formatProductSelection(product) {
+        return product.text || product.id;
+    }
+    
+    $('#origin_country, #destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+    
+    $('#hs6_product_code').select2({
+        ajax: {
+            url: '/api/products',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 2,
+        templateResult: formatProduct,
+        templateSelection: formatProductSelection,
+        placeholder: 'Select a product',
+        allowClear: true
+    });
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = `
+        <div class="d-flex flex-column align-items-center">
+            <div class="spinner-border text-light mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="text-light">Generating {{ service.title }} report...</div>
+        </div>
+    `;
+    document.body.appendChild(loadingOverlay);
+    
+    // Submit form
+    fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        loadingOverlay.remove();
+    });
+});
+</script>
+
+<style>
+.service-icon-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+}
+
+.feature-box {
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+    height: 100%;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .display-5 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %}

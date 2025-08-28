@@ -1,0 +1,78 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Foreign Trade in Figures" %}
+{% set service_icon = "fas fa-exchange-alt" %}
+
+{% block report_content %}
+<div class="section-content">
+    <!-- Partners Card -->
+    <div id="trade-partners" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+        <div class="d-flex align-items-center mb-3">
+            <span class="trade-card-icon me-2"><i class="fas fa-users fa-lg text-secondary"></i></span>
+            <h4 class="mb-0">Main Trade Partners</h4>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                {% if main_customers_table %}
+                <h5 class="mb-2"><i class="fas fa-arrow-up section-icon"></i> Main Export Partners</h5>
+                <div class="eco-pol-table table-responsive mb-3">{{ main_customers_table|safe }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                {% if main_suppliers_table %}
+                <h5 class="mb-2"><i class="fas fa-arrow-down section-icon"></i> Main Import Partners</h5>
+                <div class="eco-pol-table table-responsive mb-3">{{ main_suppliers_table|safe }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Products Card -->
+    <div id="trade-products" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
+        <div class="d-flex align-items-center mb-3">
+            <span class="trade-card-icon me-2"><i class="fas fa-box fa-lg text-secondary"></i></span>
+            <h4 class="mb-0">Main Products</h4>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                {% if main_export_products_table %}
+                <h5 class="mb-2"><i class="fas fa-box-open section-icon"></i> Products Exported</h5>
+                <div class="eco-pol-table table-responsive mb-3">{{ main_export_products_table|safe }}</div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                {% if main_import_products_table %}
+                <h5 class="mb-2"><i class="fas fa-boxes section-icon"></i> Products Imported</h5>
+                <div class="eco-pol-table table-responsive mb-3">{{ main_import_products_table|safe }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.trade-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    margin-bottom: 2rem;
+}
+
+.trade-card-icon {
+    color: #3498db;
+    font-size: 1.5rem;
+}
+
+.eco-pol-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.section-icon {
+    color: #3498db;
+    margin-right: 0.5rem;
+}
+</style>
+{% endblock %}

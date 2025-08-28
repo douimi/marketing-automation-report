@@ -1,0 +1,76 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Practical Information" %}
+{% set service_icon = "fas fa-info" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if practical_information_data.eating_out_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-utensils"></i></span>
+            <h5 class="mb-0">Eating Out</h5>
+        </div>
+        <div class="santander-html">{{ practical_information_data.eating_out_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if practical_information_data.getting_around_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-bus"></i></span>
+            <h5 class="mb-0">Getting Around</h5>
+        </div>
+        <div class="santander-html">{{ practical_information_data.getting_around_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if practical_information_data.climate_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-cloud-sun"></i></span>
+            <h5 class="mb-0">Climate</h5>
+        </div>
+        <div class="santander-html">{{ practical_information_data.climate_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if practical_information_data.communications_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-wifi"></i></span>
+            <h5 class="mb-0">Communications</h5>
+        </div>
+        <div class="santander-html">{{ practical_information_data.communications_section|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.business-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.business-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(44,62,80,0.1);
+}
+
+.business-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+</style>
+{% endblock %}

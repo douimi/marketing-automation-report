@@ -1,0 +1,150 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Market Access Conditions" %}
+{% set service_icon = "fas fa-door-open" %}
+
+{% block report_content %}
+{% if macmap_intro %}
+<div class="section-intro mb-4">{{ macmap_intro|plain_text }}</div>
+{% endif %}
+
+<div class="section-content">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+            <div class="access-card p-3 h-100">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="access-card-icon me-2"><i class="fas fa-flag"></i></span>
+                    <h5 class="mb-0">Exporting Country</h5>
+                </div>
+                <div>{{ macmap_data.overview.exporting_country or form_data.origin_country_name or 'N/A' }}</div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="access-card p-3 h-100">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="access-card-icon me-2"><i class="fas fa-flag-checkered"></i></span>
+                    <h5 class="mb-0">Importing Country</h5>
+                </div>
+                <div>{{ macmap_data.overview.importing_country or form_data.destination_country_name or 'N/A' }}</div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="access-card p-3 h-100">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="access-card-icon me-2"><i class="fas fa-box"></i></span>
+                    <h5 class="mb-0">Product</h5>
+                </div>
+                <div>{{ macmap_data.overview.product or form_data.product_name or 'Product not specified' }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customs Tariffs -->
+    <div class="mt-4">
+        <h5 class="mb-2"><i class="fas fa-percent section-icon"></i> Customs Tariffs</h5>
+        {% if macmap_data.customs_tariffs and macmap_data.customs_tariffs|length > 0 %}
+        <div class="eco-pol-table table-responsive mb-3">
+            <table class="table table-hover align-middle table-striped">
+                <thead class="table-accent">
+                    <tr>
+                        <th>Tariff Regime</th>
+                        <th>Applied Tariff</th>
+                        <th>AVE</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tariff in macmap_data.customs_tariffs %}
+                    <tr>
+                        <td>{{ tariff.tariff_regime }}</td>
+                        <td>{{ tariff.applied_tariff }}</td>
+                        <td>{{ tariff.ave }}</td>
+                        <td>{{ tariff.note }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No customs tariff data available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Regulatory Requirements -->
+    <div class="mt-4">
+        <h5 class="mb-2"><i class="fas fa-clipboard-check section-icon"></i> Regulatory Requirements</h5>
+        {% if macmap_data.regulatory_requirements and macmap_data.regulatory_requirements|length > 0 %}
+        <div class="eco-pol-table table-responsive mb-3">
+            <table class="table table-hover align-middle table-striped">
+                <thead class="table-accent">
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in macmap_data.regulatory_requirements %}
+                    <tr>
+                        <td>{{ req.code }}</td>
+                        <td>{{ req.description }}</td>
+                        <td>{{ req.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No regulatory requirements data available.</p>
+        {% endif %}
+    </div>
+
+    {% if macmap_data.source_info %}
+    <div class="mt-3 text-muted small">{{ macmap_data.source_info }}</div>
+    {% endif %}
+</div>
+
+{% if macmap_insights %}
+<div class="eco-pol-insight mt-4 p-3 bg-light rounded">{{ macmap_insights|plain_text }}</div>
+{% endif %}
+
+<style>
+.access-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+}
+
+.access-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.eco-pol-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.section-icon {
+    color: #3498db;
+    margin-right: 0.5rem;
+}
+
+.table-accent {
+    background: #f8f9fa;
+}
+
+.eco-pol-insight {
+    border-left: 4px solid #3498db;
+}
+</style>
+{% endblock %}

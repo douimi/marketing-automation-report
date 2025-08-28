@@ -1,0 +1,133 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Economic and Political Outline" %}
+{% set service_icon = "fas fa-balance-scale" %}
+
+{% block report_content %}
+{% if eco_political_intro %}
+<div class="section-intro mb-4">{{ eco_political_intro|plain_text }}</div>
+{% endif %}
+
+<div class="mb-3">
+    <div class="trade-card p-3 mb-3">
+        <div class="d-flex align-items-center mb-2">
+            <span class="trade-card-icon me-2"><i class="fas fa-chart-area"></i></span>
+            <h5 class="mb-0">Economic Overview</h5>
+        </div>
+        {% if eco_political_data.eco_outline_overview %}
+        <div class="mb-2">
+            {% for para in eco_political_data.eco_outline_overview.split('\n') if para.strip() %}
+                <div class="mb-2">{{ para|safe }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if eco_political_data.eco_outline_main_sectors %}
+        <div class="mb-2">
+            <strong>Main Sectors:</strong>
+            <ul class="mb-2 d-flex flex-wrap justify-content-center gap-3 main-sectors-list" style="list-style:none; padding:0; margin:0;">
+                {% for sector in eco_political_data.eco_outline_main_sectors.split('\n') if sector.strip() %}
+                    <li class="main-sector-item px-3 py-2">{{ sector|safe }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="d-flex flex-wrap gap-2">
+            {% if eco_political_data.eco_outline_economic_freedom %}
+            <div class="eco-pol-stat-block flex-fill mb-2">
+                <div class="fw-bold mb-1"><i class="fas fa-unlock-alt"></i> Economic Freedom</div>
+                {{ eco_political_data.eco_outline_economic_freedom|safe }}
+            </div>
+            {% endif %}
+            {% if eco_political_data.eco_outline_business_env %}
+            <div class="eco-pol-stat-block flex-fill mb-2">
+                <div class="fw-bold mb-1"><i class="fas fa-briefcase"></i> Business Env. Rank</div>
+                {{ eco_political_data.eco_outline_business_env|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="trade-card p-3 mb-3">
+        <div class="d-flex align-items-center mb-2">
+            <span class="trade-card-icon me-2"><i class="fas fa-landmark"></i></span>
+            <h5 class="mb-0">Political Overview</h5>
+        </div>
+        {% if eco_political_data.political_outline %}
+        <div class="mb-2">
+            {{ eco_political_data.political_outline|safe }}
+        </div>
+        {% endif %}
+        <div class="d-flex flex-wrap gap-2">
+            {% if eco_political_data.political_press_freedom %}
+            <div class="eco-pol-stat-block flex-fill mb-2">
+                <div class="fw-bold mb-1"><i class="fas fa-newspaper"></i> Press Freedom</div>
+                {{ eco_political_data.political_press_freedom|safe }}
+            </div>
+            {% endif %}
+            {% if eco_political_data.political_freedom %}
+            <div class="eco-pol-stat-block flex-fill mb-2">
+                <div class="fw-bold mb-1"><i class="fas fa-user-shield"></i> Political Freedom</div>
+                {{ eco_political_data.political_freedom|safe }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Full-width tables below the cards -->
+{% if eco_political_data.eco_outline_main_indicators_table %}
+<div class="mt-4">
+    <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Main Economic Indicators</h5>
+    <div class="eco-pol-table table-scroll table-responsive">{{ eco_political_data.eco_outline_main_indicators_table|safe }}</div>
+</div>
+{% endif %}
+
+{% if eco_political_data.eco_outline_breakdown_table %}
+<div class="mt-4">
+    <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Economic Breakdown</h5>
+    <div class="eco-pol-table table-scroll table-responsive">{{ eco_political_data.eco_outline_breakdown_table|safe }}</div>
+</div>
+{% endif %}
+
+{% if eco_political_insights %}
+<div class="eco-pol-insight mt-4 p-3 bg-light rounded">{{ eco_political_insights|plain_text }}</div>
+{% endif %}
+
+<style>
+.trade-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+}
+
+.trade-card-icon {
+    color: #3498db;
+    font-size: 1.5rem;
+}
+
+.main-sectors-list .main-sector-item {
+    background: #e8f4f8;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.eco-pol-stat-block {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.eco-pol-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.eco-pol-insight {
+    border-left: 4px solid #3498db;
+}
+</style>
+{% endblock %}

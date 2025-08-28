@@ -1,0 +1,121 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Operating a Business" %}
+{% set service_icon = "fas fa-briefcase" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if operating_a_business_data.legal_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-gavel"></i></span>
+            <h5 class="mb-0">Legal Forms of Companies & Business Setup Procedures</h5>
+        </div>
+        <div class="santander-html">{{ operating_a_business_data.legal_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if operating_a_business_data.active_population_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-users"></i></span>
+            <h5 class="mb-0">Active Population in Figures</h5>
+        </div>
+        <div class="santander-html">{{ operating_a_business_data.active_population_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if operating_a_business_data.working_conditions_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-clock"></i></span>
+            <h5 class="mb-0">Working Conditions</h5>
+        </div>
+        <div class="santander-html">{{ operating_a_business_data.working_conditions_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if operating_a_business_data.cost_of_labour_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-dollar-sign"></i></span>
+            <h5 class="mb-0">Cost of Labour</h5>
+        </div>
+        <div class="santander-html">{{ operating_a_business_data.cost_of_labour_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if operating_a_business_data.management_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-user-tie"></i></span>
+            <h5 class="mb-0">Management of Human Resources</h5>
+        </div>
+        <div class="santander-html">{{ operating_a_business_data.management_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if not operating_a_business_data or (not operating_a_business_data.legal_section and not operating_a_business_data.active_population_section and not operating_a_business_data.working_conditions_section and not operating_a_business_data.cost_of_labour_section and not operating_a_business_data.management_section) %}
+    <div class="empty-state text-center py-5">
+        <div class="empty-icon mb-3">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <h4>No Business Information Available</h4>
+        <p class="text-muted mb-4">
+            We couldn't find detailed business operating information for <strong>{{ form_data.destination_country_name }}</strong> at this time.
+        </p>
+        <div class="d-flex gap-3 justify-content-center">
+                                    <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-refresh me-2"></i>Try Again
+                        </a>
+            <a href="{{ url_for('main.services_page') }}" class="btn btn-primary">
+                <i class="fas fa-list me-2"></i>Browse Other Services
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if operating_a_business_data.update_date %}
+    <div class="text-end text-muted small mt-4">
+        <i class="fas fa-clock me-1"></i>Last updated: {{ operating_a_business_data.update_date }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.business-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.business-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(44,62,80,0.1);
+}
+
+.business-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.empty-state {
+    color: #6c757d;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #dee2e6;
+}
+</style>
+{% endblock %}

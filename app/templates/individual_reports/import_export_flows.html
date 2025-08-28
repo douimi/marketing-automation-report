@@ -1,0 +1,432 @@
+{% extends "base.html" %}
+
+{% block title %}Import/Export Flows - {{ form_data.product_name }}{% endblock %}
+
+{% block content %}
+<div class="container-xl my-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
+                <span class="country-flag me-2"><i class="fas fa-random fa-2x text-accent"></i></span>
+                <div>
+                    <h1 class="h2 fw-bold mb-1">Import/Export Flows</h1>
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-box me-1"></i> {{ form_data.product_name }}</span>
+                        <span><i class="fas fa-flag me-1"></i> {{ form_data.origin_country_name }} → {{ form_data.destination_country_name }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                </button>
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary px-4 py-2">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Navigation -->
+    <nav class="service-nav mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <span class="fw-bold text-muted">Related Services:</span>
+            <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="btn btn-sm btn-outline-primary">Market Access</a>
+            <a href="{{ url_for('main.service_form', service_type='foreign-trade') }}" class="btn btn-sm btn-outline-primary">Trade Figures</a>
+            <a href="{{ url_for('main.form_page') }}" class="btn btn-sm btn-primary">Complete Report</a>
+        </div>
+    </nav>
+
+    <!-- Import/Export Flows Section -->
+    <section class="report-section mb-4">
+        <div class="section-header"><i class="fas fa-random section-icon"></i>Trade Flow Analysis</div>
+        {% if flows_intro %}
+        <div class="section-intro">{{ flows_intro|plain_text }}</div>
+        {% endif %}
+        <div class="section-content">
+            <!-- Trade Flow Chart -->
+            <div class="mb-5">
+                <div class="chart-container">
+                    <canvas id="flowsChart" height="120"></canvas>
+                </div>
+            </div>
+
+            <!-- Trade Flow Tables -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="flow-card">
+                        <div class="flow-card-header">
+                            <div class="d-flex align-items-center">
+                                <span class="flow-icon me-3">
+                                    <i class="fas fa-arrow-up"></i>
+                                </span>
+                                <div>
+                                    <h5 class="mb-0">Export Flows</h5>
+                                    <small class="text-muted">{{ form_data.origin_country_name }} exports to global markets</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-card-body">
+                            {% if flows_data.export_table_html %}
+                            <div class="table-responsive" id="export-flows-table">{{ flows_data.export_table_html|safe }}</div>
+                            {% else %}
+                            <div class="empty-data text-center py-4">
+                                <i class="fas fa-chart-line text-muted mb-2"></i>
+                                <p class="text-muted mb-0">No export flow data available.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="flow-card">
+                        <div class="flow-card-header">
+                            <div class="d-flex align-items-center">
+                                <span class="flow-icon me-3">
+                                    <i class="fas fa-arrow-down"></i>
+                                </span>
+                                <div>
+                                    <h5 class="mb-0">Import Flows</h5>
+                                    <small class="text-muted">{{ form_data.destination_country_name }} imports from global suppliers</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-card-body">
+                            {% if flows_data.import_table_html %}
+                            <div class="table-responsive" id="import-flows-table">{{ flows_data.import_table_html|safe }}</div>
+                            {% else %}
+                            <div class="empty-data text-center py-4">
+                                <i class="fas fa-chart-line text-muted mb-2"></i>
+                                <p class="text-muted mb-0">No import flow data available.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trade Summary -->
+            <div class="mt-5">
+                <h4 class="mb-4">Trade Flow Summary</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Product</div>
+                                <div class="summary-value">{{ form_data.product_name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="summary-card">
+                            <div class="summary-icon export">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Export Origin</div>
+                                <div class="summary-value">{{ form_data.origin_country_name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="summary-card">
+                            <div class="summary-icon import">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Import Destination</div>
+                                <div class="summary-value">{{ form_data.destination_country_name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if flows_insights %}
+        <div class="section-insights">{{ flows_insights|plain_text }}</div>
+        {% endif %}
+    </section>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="card bg-light">
+            <div class="card-body py-4">
+                <h4 class="mb-3">Need Market Access Information?</h4>
+                <p class="text-muted mb-4">Understand tariffs, regulations, and entry requirements for your product.</p>
+                <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-door-open me-2"></i>Check Market Access
+                </a>
+                <a href="{{ url_for('main.form_page') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-chart-line me-2"></i>Get Complete Report
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Helper to parse flows table for time series data
+function parseFlowsTimeSeries(tableId) {
+    const table = document.getElementById(tableId)?.querySelector('table');
+    if (!table) return {partners: [], years: [], data: {}};
+    let years = [];
+    let partners = [];
+    let data = {};
+    // Try to get years from <thead>
+    const thead = table.querySelector('thead');
+    if (thead) {
+        const ths = thead.querySelectorAll('th');
+        for (let i = 1; i < ths.length; ++i) {
+            let year = ths[i].innerText.trim();
+            if (/^\d{4}$/.test(year)) years.push(year);
+        }
+    }
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    // If no <thead>, check if first row is header
+    let startIdx = 0;
+    if (years.length === 0 && rows.length > 0) {
+        const firstRowCells = Array.from(rows[0].querySelectorAll('td, th'));
+        if (firstRowCells.length > 1 && firstRowCells[0].innerText.trim().toLowerCase() === 'country') {
+            for (let i = 1; i < firstRowCells.length; ++i) {
+                let year = firstRowCells[i].innerText.trim();
+                if (/^\d{4}$/.test(year)) years.push(year);
+            }
+            startIdx = 1; // skip this row for data
+        }
+    }
+    for (let r = startIdx; r < rows.length; ++r) {
+        const cells = rows[r].querySelectorAll('td, th');
+        if (cells.length >= 2) {
+            let partner = cells[0].innerText.trim();
+            if (partner.toLowerCase() === 'country') continue;
+            partners.push(partner);
+            data[partner] = [];
+            for (let i = 1; i < cells.length && i <= years.length; ++i) {
+                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
+                data[partner].push(!isNaN(num) ? num : null);
+            }
+        }
+    }
+    return {partners, years, data};
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const exportSeries = parseFlowsTimeSeries('export-flows-table');
+    const importSeries = parseFlowsTimeSeries('import-flows-table');
+    // Use the same years for both charts (union)
+    const allYears = Array.from(new Set([...(exportSeries.years || []), ...(importSeries.years || [])])).sort();
+    // Prepare datasets for each partner (export and import)
+    const datasets = [];
+    // Export partners
+    exportSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Export: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = exportSeries.years.indexOf(year);
+                return yearIdx !== -1 ? exportSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(52, 152, 219, 1)',
+            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+    // Import partners
+    importSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Import: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = importSeries.years.indexOf(year);
+                return yearIdx !== -1 ? importSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(46, 204, 113, 1)',
+            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+            borderDash: [5, 5],
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+    const ctx = document.getElementById('flowsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: allYears,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Import/Export Flows Evolution by Year' }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Year' } },
+                y: { title: { display: true, text: 'Value' }, beginAtZero: true }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.service-nav {
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+}
+
+.report-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.section-icon {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.section-intro {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.section-content {
+    padding: 2rem;
+}
+
+.section-insights {
+    background: #e8f4f8;
+    padding: 1.5rem;
+    border-top: 1px solid #d1ecf1;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.chart-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.flow-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.flow-card-header {
+    background: #f8f9fa;
+    padding: 1.25rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.flow-card-body {
+    padding: 1.25rem;
+}
+
+.flow-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6c757d, #495057);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    margin-right: 1rem;
+}
+
+.summary-icon.export {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.summary-icon.import {
+    background: linear-gradient(135deg, #007bff, #6f42c1);
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.summary-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.empty-data {
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .section-content {
+        padding: 1.5rem;
+    }
+    
+    .section-header {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .flow-card-header,
+    .flow-card-body {
+        padding: 1rem;
+    }
+    
+    .chart-container {
+        padding: 1rem;
+    }
+}
+</style>
+{% endblock %}

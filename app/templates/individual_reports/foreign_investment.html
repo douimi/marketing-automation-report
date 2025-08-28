@@ -1,0 +1,76 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Foreign Investment" %}
+{% set service_icon = "fas fa-globe-americas" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if foreign_investment_data.fdi_figures_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-chart-line"></i></span>
+            <h5 class="mb-0">FDI in Figures</h5>
+        </div>
+        <div class="santander-html">{{ foreign_investment_data.fdi_figures_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if foreign_investment_data.why_invest_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-question-circle"></i></span>
+            <h5 class="mb-0">What to Consider if You Invest</h5>
+        </div>
+        <div class="santander-html">{{ foreign_investment_data.why_invest_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if foreign_investment_data.protection_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-shield-alt"></i></span>
+            <h5 class="mb-0">Protection of Foreign Investment</h5>
+        </div>
+        <div class="santander-html">{{ foreign_investment_data.protection_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if foreign_investment_data.administrative_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-tasks"></i></span>
+            <h5 class="mb-0">Administrative Procedures</h5>
+        </div>
+        <div class="santander-html">{{ foreign_investment_data.administrative_section|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.business-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.business-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(44,62,80,0.1);
+}
+
+.business-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+</style>
+{% endblock %}

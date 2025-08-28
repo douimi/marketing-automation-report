@@ -155,6 +155,7 @@ def scrape_santander_economic_political_outline(driver, formatted_country_name):
 
         # Economic Outline
         eco_outline = soup.find('div', id='economique')
+        
         eco_outline_overview = ""
         eco_outline_main_indicators_table = ""
         eco_outline_main_sectors = ""
@@ -204,7 +205,6 @@ def scrape_santander_economic_political_outline(driver, formatted_country_name):
                     eco_outline_business_env = str(business_env_dl)
 
         # Political Outline
-        # Find the div after <a id="political">
         political_anchor = soup.find('a', id='political')
         political_outline = ""
         political_press_freedom = ""
@@ -228,6 +228,9 @@ def scrape_santander_economic_political_outline(driver, formatted_country_name):
                     polfree_dl = polfree_h3.find_next_sibling('dl')
                     if polfree_dl:
                         political_freedom = str(polfree_dl)
+
+        # Success message
+        print(f"Successfully scraped Economic and Political Outline data for {formatted_country_name}")
 
         return {
             'eco_outline_overview': eco_outline_overview,

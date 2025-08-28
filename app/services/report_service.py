@@ -39,7 +39,7 @@ class ReportGenerationService:
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
+        #chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--window-size=1920,1080")
@@ -85,7 +85,7 @@ class ReportGenerationService:
             print(f"An error occurred during Santander report generation: {e}")
             return f"Error during Santander report generation for {destination_country_name}: {str(e)}"
 
-    def generate_santander_economic_political_outline(self, destination_country_code, countries_config):
+    def generate_santander_economic_political_outline(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Economic and Political Outline section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -98,7 +98,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
-            # Do NOT login again, just go directly to the URL and scrape
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Economic and Political Outline for {formatted_country_name}...")
             scraped_data = scrape_santander_economic_political_outline(self.driver, formatted_country_name)
             return scraped_data
@@ -106,7 +111,7 @@ class ReportGenerationService:
             print(f"An error occurred during Economic and Political Outline scraping: {e}")
             return {"error": f"Error during Economic and Political Outline scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_foreign_trade_in_figures(self, destination_country_code, countries_config):
+    def generate_santander_foreign_trade_in_figures(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Foreign Trade in Figures section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -119,7 +124,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
-            # Do NOT login again, just go directly to the URL and scrape
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Foreign Trade in Figures for {formatted_country_name}...")
             scraped_data = scrape_santander_foreign_trade_in_figures(self.driver, formatted_country_name)
             return scraped_data
@@ -127,12 +137,18 @@ class ReportGenerationService:
             print(f"An error occurred during Foreign Trade in Figures scraping: {e}")
             return {"error": f"Error during Foreign Trade in Figures scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_import_export_flows(self, product_hs6, origin_code, destination_code):
+    def generate_santander_import_export_flows(self, product_hs6, origin_code, destination_code, login_required=True):
         """Scrapes the Import/Export Flows tables from SantanderTrade."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
             return {"error": "WebDriver not initialized."}
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for Import/Export Flows...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Import/Export Flows for product={product_hs6}, origin={origin_code}, destination={destination_code}...")
             flows_data = scrape_santander_import_export_flows(self.driver, product_hs6, origin_code, destination_code)
             return flows_data
@@ -473,12 +489,18 @@ class ReportGenerationService:
             current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
             return ""
 
-    def generate_santander_trade_shows(self, sector_code, destination_country_iso3n):
+    def generate_santander_trade_shows(self, sector_code, destination_country_iso3n, login_required=True):
         """Scrapes the Trade Shows section from SantanderTrade for the given sector and country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
             return []
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for Trade Shows...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Trade Shows for sector={sector_code}, country={destination_country_iso3n}...")
             shows = scrape_santander_trade_shows(self.driver, sector_code, destination_country_iso3n)
             return shows
@@ -486,7 +508,7 @@ class ReportGenerationService:
             print(f"An error occurred during Trade Shows scraping: {e}")
             return []
 
-    def generate_santander_operating_a_business(self, destination_country_code, countries_config):
+    def generate_santander_operating_a_business(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Operating a Business section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -499,6 +521,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Operating a Business for {formatted_country_name}...")
             scraped_data = scrape_santander_operating_a_business(self.driver, formatted_country_name)
             return scraped_data
@@ -506,7 +534,7 @@ class ReportGenerationService:
             print(f"An error occurred during Operating a Business scraping: {e}")
             return {"error": f"Error during Operating a Business scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_tax_system(self, destination_country_code, countries_config):
+    def generate_santander_tax_system(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Tax System section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -519,6 +547,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Tax System for {formatted_country_name}...")
             scraped_data = scrape_santander_tax_system(self.driver, formatted_country_name)
             return scraped_data
@@ -526,7 +560,7 @@ class ReportGenerationService:
             print(f"An error occurred during Tax System scraping: {e}")
             return {"error": f"Error during Tax System scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_legal_environment(self, destination_country_code, countries_config):
+    def generate_santander_legal_environment(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Legal Environment section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -539,6 +573,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Legal Environment for {formatted_country_name}...")
             scraped_data = scrape_santander_legal_environment(self.driver, formatted_country_name)
             return scraped_data
@@ -546,7 +586,7 @@ class ReportGenerationService:
             print(f"An error occurred during Legal Environment scraping: {e}")
             return {"error": f"Error during Legal Environment scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_foreign_investment(self, destination_country_code, countries_config):
+    def generate_santander_foreign_investment(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Foreign Investment section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -559,6 +599,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Foreign Investment for {formatted_country_name}...")
             scraped_data = scrape_santander_foreign_investment(self.driver, formatted_country_name)
             return scraped_data
@@ -566,7 +612,7 @@ class ReportGenerationService:
             print(f"An error occurred during Foreign Investment scraping: {e}")
             return {"error": f"Error during Foreign Investment scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_business_practices(self, destination_country_code, countries_config):
+    def generate_santander_business_practices(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Business Practices section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -579,6 +625,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Business Practices for {formatted_country_name}...")
             scraped_data = scrape_santander_business_practices(self.driver, formatted_country_name)
             return scraped_data
@@ -586,7 +638,7 @@ class ReportGenerationService:
             print(f"An error occurred during Business Practices scraping: {e}")
             return {"error": f"Error during Business Practices scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_entry_requirements(self, destination_country_code, countries_config):
+    def generate_santander_entry_requirements(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Entry Requirements section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -599,6 +651,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Entry Requirements for {formatted_country_name}...")
             scraped_data = scrape_santander_entry_requirements(self.driver, formatted_country_name)
             return scraped_data
@@ -606,7 +664,7 @@ class ReportGenerationService:
             print(f"An error occurred during Entry Requirements scraping: {e}")
             return {"error": f"Error during Entry Requirements scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_practical_information(self, destination_country_code, countries_config):
+    def generate_santander_practical_information(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Practical Information section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -619,6 +677,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Practical Information for {formatted_country_name}...")
             scraped_data = scrape_santander_practical_information(self.driver, formatted_country_name)
             return scraped_data
@@ -626,7 +690,7 @@ class ReportGenerationService:
             print(f"An error occurred during Practical Information scraping: {e}")
             return {"error": f"Error during Practical Information scraping for {destination_country_name}: {str(e)}"}
 
-    def generate_santander_living_in_country(self, destination_country_code, countries_config):
+    def generate_santander_living_in_country(self, destination_country_code, countries_config, login_required=True):
         """Scrapes the Living in the Country section for the given country."""
         if not self.driver:
             print("WebDriver not initialized. Cannot generate report.")
@@ -639,6 +703,12 @@ class ReportGenerationService:
         formatted_country_name = format_country_name_for_url(destination_country_name)
 
         try:
+            # Login if required (for individual services)
+            if login_required:
+                print(f"Attempting to log in to Santander for {destination_country_name}...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
             print(f"Scraping Living in the Country for {formatted_country_name}...")
             scraped_data = scrape_santander_living_in_country(self.driver, formatted_country_name)
             return scraped_data

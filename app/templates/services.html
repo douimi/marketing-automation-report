@@ -1,0 +1,472 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Market Research Reports{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">Our Market Research Services</h1>
+        <p class="lead text-muted">Choose from our comprehensive market analysis services tailored to your business needs</p>
+    </div>
+
+    <!-- Complete Report Service -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card service-card featured-service shadow-lg">
+                <div class="card-header bg-gradient-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-chart-line fa-2x me-3"></i>
+                        <div>
+                            <h3 class="mb-1">Complete Market Analysis Report</h3>
+                            <p class="mb-0 opacity-75">Comprehensive analysis covering all aspects of your target market</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <p class="card-text mb-3">Get a full 360-degree view of your target market with our comprehensive report that includes all sections: country profile, economic outlook, business environment, trade data, and market access conditions.</p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <span>14 comprehensive sections</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <span>AI-powered insights</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <span>Export to PDF/Word</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <span>Real-time data scraping</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="service-price mb-3">
+                                <span class="price-badge">Premium Service</span>
+                            </div>
+                            <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Generate Complete Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Individual Services Grid -->
+    <div class="mb-4">
+        <h2 class="text-center mb-4">Individual Section Services</h2>
+        <p class="text-center text-muted mb-5">Need specific insights? Choose individual sections tailored to your requirements.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- General Presentation -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h5 class="card-title">General Presentation</h5>
+                    <p class="card-text">Country overview with key demographics, economic indicators, and general market characteristics.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Demographics</span>
+                        <span class="badge bg-light text-dark">Basic Stats</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Economic and Political Outline -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h5 class="card-title">Economic & Political Outline</h5>
+                    <p class="card-text">In-depth analysis of economic trends, political stability, and government policies affecting business.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Economic Data</span>
+                        <span class="badge bg-light text-dark">Political Risk</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='economic-political') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operating a Business -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h5 class="card-title">Operating a Business</h5>
+                    <p class="card-text">Business setup procedures, legal forms, labor costs, and HR management requirements.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Legal Setup</span>
+                        <span class="badge bg-light text-dark">HR Costs</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tax System -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h5 class="card-title">Tax System</h5>
+                    <p class="card-text">Comprehensive tax information including corporate, individual, and consumption taxes.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Corporate Tax</span>
+                        <span class="badge bg-light text-dark">VAT/GST</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='tax-system') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legal Environment -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h5 class="card-title">Legal Environment</h5>
+                    <p class="card-text">Legal framework, contract law, intellectual property protection, and dispute resolution.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Contract Law</span>
+                        <span class="badge bg-light text-dark">IP Protection</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='legal-environment') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Foreign Investment -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h5 class="card-title">Foreign Investment</h5>
+                    <p class="card-text">FDI regulations, investment protection, opportunities, and administrative procedures.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">FDI Data</span>
+                        <span class="badge bg-light text-dark">Investment Laws</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='foreign-investment') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Business Practices -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h5 class="card-title">Business Practices</h5>
+                    <p class="card-text">Business culture, etiquette, working hours, and local business customs.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Culture</span>
+                        <span class="badge bg-light text-dark">Etiquette</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='business-practices') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entry Requirements -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h5 class="card-title">Entry Requirements</h5>
+                    <p class="card-text">Visa requirements, customs procedures, health precautions, and safety conditions.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Visas</span>
+                        <span class="badge bg-light text-dark">Health & Safety</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='entry-requirements') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practical Information -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-info"></i>
+                    </div>
+                    <h5 class="card-title">Practical Information</h5>
+                    <p class="card-text">Transportation, dining, climate, electrical standards, and communication systems.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Logistics</span>
+                        <span class="badge bg-light text-dark">Daily Life</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='practical-information') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Living in the Country -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h5 class="card-title">Living in the Country</h5>
+                    <p class="card-text">Expatriate communities, housing, education, healthcare, and quality of life indicators.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Expat Life</span>
+                        <span class="badge bg-light text-dark">Quality of Life</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='living-in-country') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Foreign Trade in Figures -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h5 class="card-title">Foreign Trade in Figures</h5>
+                    <p class="card-text">Trade statistics, main partners, export/import data, and monetary indicators.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Trade Stats</span>
+                        <span class="badge bg-light text-dark">Partners</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='foreign-trade') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import/Export Flows -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h5 class="card-title">Import/Export Flows</h5>
+                    <p class="card-text">Product-specific trade flows between origin and destination countries with trend analysis.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Product Trade</span>
+                        <span class="badge bg-light text-dark">Trends</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trade Shows -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h5 class="card-title">Trade Shows</h5>
+                    <p class="card-text">Upcoming trade shows and exhibitions in your target market and industry sector.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Events</span>
+                        <span class="badge bg-light text-dark">Networking</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Access Conditions -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card service-card h-100">
+                <div class="card-body">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h5 class="card-title">Market Access Conditions</h5>
+                    <p class="card-text">Tariffs, trade remedies, and regulatory requirements for specific products and markets.</p>
+                    <div class="service-tags mb-3">
+                        <span class="badge bg-light text-dark">Tariffs</span>
+                        <span class="badge bg-light text-dark">Regulations</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-play me-2"></i>Generate Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="card bg-light">
+            <div class="card-body py-5">
+                <h3 class="mb-3">Need Help Choosing?</h3>
+                <p class="text-muted mb-4">Not sure which service fits your needs? Our complete report includes all sections for comprehensive market intelligence.</p>
+                <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-chart-line me-2"></i>Get Complete Report
+                </a>
+                <a href="mailto:support@indegate.com" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-envelope me-2"></i>Contact Support
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+}
+
+.service-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.featured-service {
+    border: 2px solid #3498db;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.price-badge {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.service-tags .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-footer {
+    background: transparent;
+    border-top: 1px solid #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .service-card {
+        margin-bottom: 1.5rem;
+    }
+}
+</style>
+{% endblock %}

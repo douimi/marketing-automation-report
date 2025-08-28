@@ -19,7 +19,13 @@ reports_cache = {}
 @main_bp.route('/')
 @login_required
 def home():
-    return redirect(url_for('main.form_page'))
+    return redirect(url_for('main.services_page'))
+
+@main_bp.route('/services')
+@login_required
+def services_page():
+    """Display the services page with all available services."""
+    return render_template('services.html')
 
 @main_bp.route('/form', methods=['GET'])
 @login_required
@@ -28,6 +34,320 @@ def form_page():
     products = current_app.config.get('PRODUCTS', [])
     sectors = current_app.config.get('SECTORS', [])
     return render_template('form.html', countries=countries, products=products, sectors=sectors)
+
+@main_bp.route('/service/<service_type>', methods=['GET'])
+@login_required
+def service_form(service_type):
+    """Display form for individual service generation."""
+    # Define service configurations
+    service_config = {
+        'general-presentation': {
+            'title': 'General Presentation',
+            'description': 'Country overview with key demographics, economic indicators, and general market characteristics.',
+            'icon': 'fas fa-info-circle',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'economic-political': {
+            'title': 'Economic and Political Outline',
+            'description': 'In-depth analysis of economic trends, political stability, and government policies.',
+            'icon': 'fas fa-balance-scale',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'operating-business': {
+            'title': 'Operating a Business',
+            'description': 'Business setup procedures, legal forms, labor costs, and HR management requirements.',
+            'icon': 'fas fa-briefcase',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'tax-system': {
+            'title': 'Tax System',
+            'description': 'Comprehensive tax information including corporate, individual, and consumption taxes.',
+            'icon': 'fas fa-file-invoice-dollar',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'legal-environment': {
+            'title': 'Legal Environment',
+            'description': 'Legal framework, contract law, intellectual property protection, and dispute resolution.',
+            'icon': 'fas fa-gavel',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'foreign-investment': {
+            'title': 'Foreign Investment',
+            'description': 'FDI regulations, investment protection, opportunities, and administrative procedures.',
+            'icon': 'fas fa-globe-americas',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'business-practices': {
+            'title': 'Business Practices',
+            'description': 'Business culture, etiquette, working hours, and local business customs.',
+            'icon': 'fas fa-handshake',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'entry-requirements': {
+            'title': 'Entry Requirements',
+            'description': 'Visa requirements, customs procedures, health precautions, and safety conditions.',
+            'icon': 'fas fa-id-card',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'practical-information': {
+            'title': 'Practical Information',
+            'description': 'Transportation, dining, climate, electrical standards, and communication systems.',
+            'icon': 'fas fa-info',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'living-in-country': {
+            'title': 'Living in the Country',
+            'description': 'Expatriate communities, housing, education, healthcare, and quality of life indicators.',
+            'icon': 'fas fa-home',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'foreign-trade': {
+            'title': 'Foreign Trade in Figures',
+            'description': 'Trade statistics, main partners, export/import data, and monetary indicators.',
+            'icon': 'fas fa-exchange-alt',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'import-export-flows': {
+            'title': 'Import/Export Flows',
+            'description': 'Product-specific trade flows between origin and destination countries with trend analysis.',
+            'icon': 'fas fa-random',
+            'requires': ['origin_country', 'destination_country', 'product'],
+            'form_template': 'service_form_full.html'
+        },
+        'trade-shows': {
+            'title': 'Trade Shows',
+            'description': 'Upcoming trade shows and exhibitions in your target market and industry sector.',
+            'icon': 'fas fa-calendar-alt',
+            'requires': ['destination_country', 'sector'],
+            'form_template': 'service_form_country_sector.html'
+        },
+        'market-access': {
+            'title': 'Market Access Conditions',
+            'description': 'Tariffs, trade remedies, and regulatory requirements for specific products and markets.',
+            'icon': 'fas fa-door-open',
+            'requires': ['origin_country', 'destination_country', 'product'],
+            'form_template': 'service_form_full.html'
+        }
+    }
+    
+    if service_type not in service_config:
+        flash('Service not found.', 'error')
+        return redirect(url_for('main.services_page'))
+    
+    config = service_config[service_type]
+    countries = current_app.config.get('COUNTRIES', [])
+    products = current_app.config.get('PRODUCTS', [])
+    sectors = current_app.config.get('SECTORS', [])
+    
+    return render_template(config['form_template'], 
+                         service=config, 
+                         service_type=service_type,
+                         countries=countries, 
+                         products=products, 
+                         sectors=sectors)
+
+@main_bp.route('/start_individual_service', methods=['POST'])
+@login_required
+def start_individual_service():
+    """Initialize individual service generation and return loading page."""
+    try:
+        service_type = request.form.get('service_type')
+        
+        # Build form_data based on service requirements
+        form_data = {
+            'service_type': service_type
+        }
+        
+        # Add required fields based on service type
+        if 'origin_country' in request.form:
+            form_data['origin_country_code'] = request.form.get('origin_country')
+        
+        if 'destination_country' in request.form:
+            form_data['destination_country_code'] = request.form.get('destination_country')
+        
+        if 'hs6_product_code' in request.form:
+            form_data['hs6_product_code'] = request.form.get('hs6_product_code')
+        
+        if 'sector' in request.form:
+            form_data['sector'] = request.form.get('sector')
+        
+        # Get config data
+        countries_config = current_app.config.get('COUNTRIES', [])
+        products_config = current_app.config.get('PRODUCTS', [])
+        sectors_config = current_app.config.get('SECTORS', [])
+        
+        # Enrich form_data with names
+        if 'origin_country_code' in form_data:
+            form_data['origin_country_name'] = get_country_name_from_code(form_data['origin_country_code'], countries_config)
+        
+        if 'destination_country_code' in form_data:
+            form_data['destination_country_name'] = get_country_name_from_code(form_data['destination_country_code'], countries_config)
+        
+        if 'hs6_product_code' in form_data:
+            hs6_code = form_data.get('hs6_product_code')
+            product_name = None
+            for product in products_config:
+                if product.get('hs6') == hs6_code:
+                    product_name = product.get('description')
+                    break
+            form_data['product_name'] = product_name or hs6_code or ''
+        
+        if 'sector' in form_data:
+            selected_sector_name = form_data.get('sector')
+            sector_code = None
+            for sector in sectors_config:
+                if sector.get('name') == selected_sector_name:
+                    sector_code = sector.get('code')
+                    break
+            form_data['sector_code'] = sector_code or ''
+        
+        # Add additional country data if needed
+        if 'destination_country_code' in form_data:
+            for country in countries_config:
+                if country.get('code') == form_data['destination_country_code']:
+                    form_data['destination_country_iso3n'] = country.get('iso_numeric', '')
+                    form_data['destination_country_iso2'] = country.get('ISO2', '')
+                    break
+        
+        # Set per-report status in reports_cache
+        report_id = str(uuid.uuid4())
+        session['report_id'] = report_id
+        session['report_form_data'] = form_data
+        session.modified = True
+        
+        global reports_cache
+        reports_cache[report_id] = {
+            'status': 'processing',
+            'error_message': None,
+            'service_type': service_type
+        }
+        
+        # Create a copy of the application context for the background thread
+        @copy_current_request_context
+        def generate_individual_service_with_context():
+            import time as _time
+            t0 = _time.time()
+            try:
+                report_service = None
+                countries_config = current_app.config.get('COUNTRIES', [])
+                print(f'[TIMING] Start individual service generation ({service_type}): {round(_time.time() - t0, 2)}s')
+                
+                report_service = ReportGenerationService()
+                if not report_service.driver:
+                    reports_cache[report_id]['status'] = 'error'
+                    reports_cache[report_id]['error_message'] = 'Failed to initialize Selenium WebDriver.'
+                    return
+                
+                # Generate specific service data
+                service_data = {}
+                
+                # Add default sector for services that don't require it but OpenAI might need it
+                if 'sector' not in form_data:
+                    form_data['sector'] = 'General Business'
+                
+                if service_type == 'general-presentation':
+                    raw_data = report_service.generate_santander_report_data(form_data['destination_country_code'], countries_config)
+                    from ..services.data_processor import MarketDataProcessor
+                    data_processor = MarketDataProcessor()
+                    service_data = {
+                        'market_data': data_processor.parse_raw_data(raw_data),
+                        'openai_intro': report_service.generate_openai_intro(raw_data, form_data),
+                        'openai_conclusion': report_service.generate_openai_conclusion(raw_data, form_data)
+                    }
+                elif service_type == 'economic-political':
+                    service_data['eco_political_data'] = report_service.generate_santander_economic_political_outline(form_data['destination_country_code'], countries_config, login_required=True)
+                    service_data['eco_political_intro'] = report_service.generate_openai_eco_political_intro(service_data['eco_political_data'], form_data)
+                    service_data['eco_political_insights'] = report_service.generate_openai_eco_political_insights(service_data['eco_political_data'], form_data)
+                elif service_type == 'operating-business':
+                    service_data['operating_a_business_data'] = report_service.generate_santander_operating_a_business(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'tax-system':
+                    service_data['tax_system_data'] = report_service.generate_santander_tax_system(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'legal-environment':
+                    service_data['legal_environment_data'] = report_service.generate_santander_legal_environment(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'foreign-investment':
+                    service_data['foreign_investment_data'] = report_service.generate_santander_foreign_investment(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'business-practices':
+                    service_data['business_practices_data'] = report_service.generate_santander_business_practices(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'entry-requirements':
+                    service_data['entry_requirements_data'] = report_service.generate_santander_entry_requirements(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'practical-information':
+                    service_data['practical_information_data'] = report_service.generate_santander_practical_information(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'living-in-country':
+                    service_data['living_in_country_data'] = report_service.generate_santander_living_in_country(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'foreign-trade':
+                    service_data['trade_data'] = report_service.generate_santander_foreign_trade_in_figures(form_data['destination_country_code'], countries_config, login_required=True)
+                elif service_type == 'import-export-flows':
+                    service_data['flows_data'] = report_service.generate_santander_import_export_flows(
+                        form_data['hs6_product_code'],
+                        form_data['origin_country_code'],
+                        form_data['destination_country_code'],
+                        login_required=True
+                    )
+                    service_data['flows_intro'] = report_service.generate_openai_flows_intro(service_data['flows_data'], form_data)
+                    service_data['flows_insights'] = report_service.generate_openai_flows_insights(service_data['flows_data'], form_data)
+                elif service_type == 'trade-shows':
+                    service_data['trade_shows_data'] = report_service.generate_santander_trade_shows(
+                        form_data['sector_code'],
+                        form_data['destination_country_iso2'],
+                        login_required=True
+                    )
+                elif service_type == 'market-access':
+                    reporter_iso3n = get_country_iso_numeric_from_code(form_data['destination_country_code'], countries_config)
+                    partner_iso3n = get_country_iso_numeric_from_code(form_data['origin_country_code'], countries_config)
+                    service_data['macmap_data'] = report_service.generate_macmap_market_access_conditions(
+                        reporter_iso3n,
+                        partner_iso3n,
+                        form_data['hs6_product_code']
+                    )
+                    service_data['macmap_intro'] = report_service.generate_openai_macmap_intro(service_data['macmap_data'], form_data)
+                    service_data['macmap_insights'] = report_service.generate_openai_macmap_insights(service_data['macmap_data'], form_data)
+                
+                # Update the report with service data
+                reports_cache[report_id].update({
+                    'form_data': form_data,
+                    'status': 'complete',
+                    'error_message': None,
+                    **service_data
+                })
+                
+                print(f'[TIMING] Individual service generation completed: {round(_time.time() - t0, 2)}s')
+                current_app.logger.info(f"Individual service generation completed for {service_type}")
+                
+            except Exception as e:
+                current_app.logger.error(f"Individual service generation failed: {e}", exc_info=True)
+                reports_cache[report_id]['status'] = 'error'
+                reports_cache[report_id]['error_message'] = str(e)
+            finally:
+                if report_service:
+                    report_service.close_driver()
+        
+        # Start background task
+        thread = threading.Thread(target=generate_individual_service_with_context)
+        thread.daemon = True
+        thread.start()
+        
+        return jsonify({
+            'status': 'success',
+            'redirect_url': url_for('main.loading_page')
+        })
+        
+    except Exception as e:
+        current_app.logger.error(f"Failed to start individual service generation: {e}", exc_info=True)
+        return jsonify({
+            'status': 'error',
+            'message': 'Failed to start service generation'
+        })
 
 @main_bp.route('/start_report', methods=['POST'])
 @login_required
@@ -379,12 +699,24 @@ def show_report():
     """Display the generated report."""
     if 'report_id' not in session:
         flash('No report data available. Please generate a report first.', 'warning')
-        return redirect(url_for('main.form_page'))
+        return redirect(url_for('main.services_page'))
     report_id = session.get('report_id')
     report = reports_cache.get(report_id)
     if not report:
         flash('No report data available. Please generate a report first.', 'warning')
-        return redirect(url_for('main.form_page'))
+        return redirect(url_for('main.services_page'))
+    
+    # Check if this is an individual service report
+    service_type = report.get('service_type')
+    if service_type:
+        # Render individual service template
+        template_name = f'individual_reports/{service_type.replace("-", "_")}.html'
+        # Create a copy of report data without conflicting keys
+        template_data = dict(report)
+        template_data['datetime'] = datetime
+        return render_template(template_name, **template_data)
+    
+    # Render full report template
     eco_political_data = report.get('eco_political_data') or {}
     trade_data = report.get('trade_data') or {}
     macmap_data = report.get('macmap_data') or {}

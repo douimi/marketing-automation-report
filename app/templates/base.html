@@ -121,8 +121,13 @@
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.services_page') }}">
+                            <i class="fas fa-th-large me-1"></i>Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.form_page') }}">
-                            <i class="fas fa-file-alt me-1"></i>New Report
+                            <i class="fas fa-file-alt me-1"></i>Complete Report
                         </a>
                     </li>
                     {% block nav_actions %}

@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block title %}Trade Shows - {{ form_data.destination_country_name }}{% endblock %}
+
+{% block content %}
+<div class="container-xl my-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
+                <span class="country-flag me-2"><i class="fas fa-calendar-alt fa-2x text-accent"></i></span>
+                <div>
+                    <h1 class="h2 fw-bold mb-1">Trade Shows</h1>
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-flag me-1"></i> {{ form_data.destination_country_name }}</span>
+                        <span><i class="fas fa-industry me-1"></i> {{ form_data.sector }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                </button>
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary px-4 py-2">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Navigation -->
+    <nav class="service-nav mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <span class="fw-bold text-muted">Related Services:</span>
+            <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-sm btn-outline-primary">General Presentation</a>
+            <a href="{{ url_for('main.service_form', service_type='business-practices') }}" class="btn btn-sm btn-outline-primary">Business Practices</a>
+            <a href="{{ url_for('main.form_page') }}" class="btn btn-sm btn-primary">Complete Report</a>
+        </div>
+    </nav>
+
+    <!-- Trade Shows Section -->
+    <section class="report-section mb-4">
+        <div class="section-header"><i class="fas fa-calendar-alt section-icon"></i>Upcoming Trade Shows & Exhibitions</div>
+        <div class="section-content">
+            {% if trade_shows_data and trade_shows_data|length > 0 %}
+                <div class="mb-4">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Found <strong>{{ trade_shows_data|length }}</strong> relevant trade shows in {{ form_data.destination_country_name }} for the {{ form_data.sector }} sector.
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    {% for show in trade_shows_data %}
+                    <div class="col-lg-6">
+                        <div class="trade-show-card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <span class="trade-show-icon me-3">
+                                        <i class="fas fa-calendar"></i>
+                                    </span>
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-0">
+                                            {% if show.url %}
+                                                <a href="{{ show.url }}" target="_blank" rel="noopener" class="text-decoration-none">
+                                                    {{ show.name }}
+                                                    <i class="fas fa-external-link-alt ms-1 small"></i>
+                                                </a>
+                                            {% else %}
+                                                {{ show.name }}
+                                            {% endif %}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="trade-show-details">
+                                    {% if show.location %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                        <strong>Location:</strong> {{ show.location }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if show.date %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock text-success me-2"></i>
+                                        <strong>Date:</strong> {{ show.date }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if show.description %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-info-circle text-info me-2"></i>
+                                        <strong>Description:</strong> {{ show.description }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {% if show.sectors %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-industry text-warning me-2"></i>
+                                        <strong>Sectors:</strong> {{ show.sectors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if show.url %}
+                                <div class="mt-3">
+                                    <a href="{{ show.url }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>Visit Official Website
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Summary Stats -->
+                <div class="mt-5">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <div class="stat-number">{{ trade_shows_data|length }}</div>
+                                <div class="stat-label">Total Events Found</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <div class="stat-number">{{ form_data.sector }}</div>
+                                <div class="stat-label">Target Sector</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <div class="stat-number">{{ form_data.destination_country_name }}</div>
+                                <div class="stat-label">Market Location</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            {% else %}
+                <div class="empty-state text-center py-5">
+                    <div class="empty-icon mb-3">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <h4>No Trade Shows Found</h4>
+                    <p class="text-muted mb-4">
+                        We couldn't find any trade shows for the <strong>{{ form_data.sector }}</strong> sector in <strong>{{ form_data.destination_country_name }}</strong> at this time.
+                    </p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-search me-2"></i>Try Different Search
+                        </a>
+                        <a href="{{ url_for('main.services_page') }}" class="btn btn-primary">
+                            <i class="fas fa-list me-2"></i>Browse Other Services
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="card bg-light">
+            <div class="card-body py-4">
+                <h4 class="mb-3">Planning to Attend?</h4>
+                <p class="text-muted mb-4">Get comprehensive market intelligence to maximize your trade show ROI.</p>
+                <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-chart-line me-2"></i>Get Complete Market Report
+                </a>
+                <a href="{{ url_for('main.service_form', service_type='business-practices') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-handshake me-2"></i>Learn Business Culture
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.service-nav {
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+}
+
+.report-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.section-icon {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.section-content {
+    padding: 2rem;
+}
+
+.trade-show-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.trade-show-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.trade-show-card .card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.25rem;
+}
+
+.trade-show-card .card-body {
+    padding: 1.25rem;
+}
+
+.trade-show-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.trade-show-details .detail-item {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.empty-state {
+    color: #6c757d;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .section-content {
+        padding: 1.5rem;
+    }
+    
+    .section-header {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .trade-show-card .card-body {
+        padding: 1rem;
+    }
+}
+</style>
+{% endblock %}
