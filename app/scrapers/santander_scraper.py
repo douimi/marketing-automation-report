@@ -980,6 +980,315 @@ def scrape_santander_import_export_flows(driver, product_hs6, origin_code, desti
     return results
 
 
+def scrape_santander_reaching_consumers(driver, formatted_country_name):
+    """
+    Navigates to the country's 'reaching-the-consumers' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/reaching-the-consumers"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        # Get navigation anchors section if present
+        anchors_section = ""
+        anchors_p = main.find('p', id='ancres')
+        if anchors_p:
+            anchors_section = str(anchors_p)
+
+        # Consumer Profile section (anchor id: consumer or reaching)
+        consumer_profile_section = get_section_by_anchor('consumer')
+        if not consumer_profile_section:
+            consumer_profile_section = get_section_by_anchor('reaching')
+
+        # Marketing opportunities section (anchor id: marketing)
+        marketing_opportunities_section = get_section_by_anchor('marketing')
+
+        # Extract update date if present
+        update_span = main.find('span', string=lambda t: t and 'Latest Update' in t)
+        update_date = ''
+        if update_span:
+            update_date = update_span.find_next(string=True)
+        else:
+            droits = main.find('p', class_='droits')
+            if droits:
+                update_date = droits.get_text(strip=True)
+
+        return {
+            'anchors_section': anchors_section,
+            'consumer_profile_section': consumer_profile_section,
+            'marketing_opportunities_section': marketing_opportunities_section,
+            'update_date': update_date,
+            'raw_html': str(main)  # For debugging or further parsing
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Reaching the Consumer for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Reaching the Consumer for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_distributing_product(driver, formatted_country_name):
+    """
+    Navigates to the country's 'distributing-a-product' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/distributing-a-product"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        # Get navigation anchors section if present
+        anchors_section = ""
+        anchors_p = main.find('p', id='ancres')
+        if anchors_p:
+            anchors_section = str(anchors_p)
+
+        # Distribution section (anchor id: distribution)
+        distribution_section = get_section_by_anchor('distribution')
+
+        # Distance selling section (anchor id: distance_selling)
+        distance_selling_section = get_section_by_anchor('distance_selling')
+
+        # Extract update date if present
+        update_span = main.find('span', string=lambda t: t and 'Latest Update' in t)
+        update_date = ''
+        if update_span:
+            update_date = update_span.find_next(string=True)
+        else:
+            droits = main.find('p', class_='droits')
+            if droits:
+                update_date = droits.get_text(strip=True)
+
+        return {
+            'anchors_section': anchors_section,
+            'distribution_section': distribution_section,
+            'distance_selling_section': distance_selling_section,
+            'update_date': update_date,
+            'raw_html': str(main)  # For debugging or further parsing
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Distributing a Product for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Distributing a Product for {formatted_country_name}: {str(e)}'}
+
+
+def scrape_santander_identify_suppliers(driver, formatted_country_name):
+    """
+    Navigates to the country's 'identify-suppliers' page and scrapes all major sections as structured data.
+    Returns a dict with all fields needed for the report.
+    """
+    target_url = f"https://santandertrade.com/en/portal/analyse-markets/{formatted_country_name}/indentify-suppliers"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        content_div_xpath = "//*[@id='contenu-contenu']"
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, content_div_xpath)))
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+
+        def get_section_by_anchor(anchor_id):
+            anchor = main.find('a', id=anchor_id)
+            if not anchor:
+                return ''
+            html_parts = []
+            sib = anchor.find_next_sibling()
+            while sib and not (sib.name == 'a' and sib.has_attr('id')):
+                html_parts.append(str(sib))
+                sib = sib.find_next_sibling()
+            section_html = ''.join(html_parts)
+            section_soup = BeautifulSoup(section_html, 'html.parser')
+            # Remove <p class="retour"> and <a href="#top"> and <a href="#haut">
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for a in section_soup.find_all('a', href='#top'):
+                a.decompose()
+            for a in section_soup.find_all('a', href='#haut'):
+                a.decompose()
+            # Remove feedback and footer elements
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            for span in section_soup.find_all('span'):
+                if span.string and ('All Rights Reserved' in span.string or 'Latest Update' in span.string):
+                    span.decompose()
+            return str(section_soup)
+
+        # Get the main module section - this contains all the supplier identification data
+        main_module_section = ""
+        main_module = main.find('a', id='atlas__doing-business__1-acheter_industrie')
+        if main_module:
+            # Get all content following this anchor until the end
+            content_parts = []
+            current = main_module.find_next_sibling()
+            while current:
+                # Stop if we hit another major anchor or section
+                if current.name == 'a' and current.has_attr('id') and 'atlas__' in current.get('id', ''):
+                    break
+                content_parts.append(str(current))
+                current = current.find_next_sibling()
+            
+            main_module_section = ''.join(content_parts)
+            # Clean up the section
+            section_soup = BeautifulSoup(main_module_section, 'html.parser')
+            # Remove scripts, feedback forms, and footer elements
+            for script in section_soup.find_all('script'):
+                script.decompose()
+            for retour in section_soup.find_all('p', class_='retour'):
+                retour.decompose()
+            for remarque in section_soup.find_all('span', class_='remarque-atlas'):
+                parent = remarque.find_parent('p', class_='contact-atlas')
+                if parent:
+                    parent.decompose()
+                else:
+                    remarque.decompose()
+            for droits in section_soup.find_all('p', class_='droits'):
+                droits.decompose()
+            main_module_section = str(section_soup)
+
+        # Extract specific subsections from the main content
+        production_types_section = ""
+        marketplaces_section = ""
+        trade_shows_section = ""
+        manufacturers_section = ""
+
+        # Parse the main module to extract subsections
+        if main_module_section:
+            section_soup = BeautifulSoup(main_module_section, 'html.parser')
+            
+            # Find sections by their dt/dd structure or headings
+            for dl in section_soup.find_all('dl', class_='informations'):
+                for dt in dl.find_all('dt'):
+                    dt_text = dt.get_text().lower()
+                    if 'type of production' in dt_text:
+                        # Get this dt and its dd
+                        dd = dt.find_next_sibling('dd')
+                        if dd:
+                            production_types_section = str(dt) + str(dd)
+                    elif 'marketplaces' in dt_text:
+                        dd = dt.find_next_sibling('dd')
+                        if dd:
+                            marketplaces_section = str(dt) + str(dd)
+                    elif 'trade shows' in dt_text or 'upcoming' in dt_text:
+                        dd = dt.find_next_sibling('dd')
+                        if dd:
+                            trade_shows_section += str(dt) + str(dd)
+            
+            # Find manufacturers section by h2 heading
+            for h2 in section_soup.find_all('h2'):
+                if 'manufacturer' in h2.get_text().lower():
+                    # Get content after this heading
+                    content_parts = [str(h2)]
+                    current = h2.find_next_sibling()
+                    while current and current.name != 'h2':
+                        content_parts.append(str(current))
+                        current = current.find_next_sibling()
+                    manufacturers_section = ''.join(content_parts)
+
+        # Extract update date if present
+        update_span = main.find('span', string=lambda t: t and 'Latest Update' in t)
+        update_date = ''
+        if update_span:
+            update_date = update_span.find_next(string=True)
+        else:
+            droits = main.find('p', class_='droits')
+            if droits:
+                update_date = droits.get_text(strip=True)
+
+        return {
+            'main_module_section': main_module_section,
+            'production_types_section': production_types_section,
+            'marketplaces_section': marketplaces_section,
+            'trade_shows_section': trade_shows_section,
+            'manufacturers_section': manufacturers_section,
+            'update_date': update_date,
+            'raw_html': str(main)  # For debugging or further parsing
+        }
+    except Exception as e:
+        print(f"Error scraping Santander Identify Suppliers for {formatted_country_name}: {e}")
+        return {'error': f'Error scraping Identify Suppliers for {formatted_country_name}: {str(e)}'}
+
+
 def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n):
     """
     Scrapes the Trade Shows section from SantanderTrade for the given sector and country ISO3N code.

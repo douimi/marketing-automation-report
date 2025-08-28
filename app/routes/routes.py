@@ -169,6 +169,27 @@ def service_form(service_type):
             'requires': ['destination_country'],
             'form_template': 'service_form_country_only.html'
         },
+        'reaching-consumers': {
+            'title': 'Reaching the Consumer',
+            'description': 'Consumer profile, purchasing behavior, marketing opportunities, and advertising regulations.',
+            'icon': 'fas fa-users',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'distributing-product': {
+            'title': 'Distributing a Product',
+            'description': 'Distribution channels, retail sector evolution, e-commerce trends, and distance selling opportunities.',
+            'icon': 'fas fa-truck',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
+        'identify-suppliers': {
+            'title': 'Identify a Supplier',
+            'description': 'Production types, professional associations, marketplaces, trade shows, and manufacturer directories.',
+            'icon': 'fas fa-search',
+            'requires': ['destination_country'],
+            'form_template': 'service_form_country_only.html'
+        },
         'import-export-flows': {
             'title': 'Import/Export Flows',
             'description': 'Product-specific trade flows between origin and destination countries with trend analysis.',
@@ -330,6 +351,12 @@ def start_individual_service():
                     service_data['living_in_country_data'] = report_service.generate_santander_living_in_country(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'foreign-trade':
                     service_data['trade_data'] = report_service.generate_santander_foreign_trade_in_figures(form_data['destination_country_code'], None, login_required=True)
+                elif service_type == 'reaching-consumers':
+                    service_data['consumer_data'] = report_service.generate_santander_reaching_consumers(form_data['destination_country_code'], None, login_required=True)
+                elif service_type == 'distributing-product':
+                    service_data['distribution_data'] = report_service.generate_santander_distributing_product(form_data['destination_country_code'], None, login_required=True)
+                elif service_type == 'identify-suppliers':
+                    service_data['supplier_data'] = report_service.generate_santander_identify_suppliers(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'import-export-flows':
                     service_data['flows_data'] = report_service.generate_santander_import_export_flows(
                         form_data['hs6_product_code'],

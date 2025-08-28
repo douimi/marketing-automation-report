@@ -38,6 +38,14 @@
                         <i class="fas fa-exchange-alt me-2"></i>
                         <span>Foreign Trade in Figures</span>
                     </a>
+                    <a href="{{ url_for('main.service_form', service_type='reaching-consumers') }}" class="service-item">
+                        <i class="fas fa-users me-2"></i>
+                        <span>Reaching the Consumer</span>
+                    </a>
+                    <a href="{{ url_for('main.service_form', service_type='distributing-product') }}" class="service-item">
+                        <i class="fas fa-truck me-2"></i>
+                        <span>Distributing a Product</span>
+                    </a>
                     {% else %}
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
                         <i class="fas fa-balance-scale me-2"></i>
@@ -47,6 +55,16 @@
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
                         <i class="fas fa-exchange-alt me-2"></i>
                         <span>Foreign Trade in Figures</span>
+                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    </div>
+                    <div class="service-item locked-service" onclick="showLoginPrompt()">
+                        <i class="fas fa-users me-2"></i>
+                        <span>Reaching the Consumer</span>
+                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    </div>
+                    <div class="service-item locked-service" onclick="showLoginPrompt()">
+                        <i class="fas fa-truck me-2"></i>
+                        <span>Distributing a Product</span>
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     {% endif %}
@@ -73,6 +91,10 @@
                         <i class="fas fa-calendar-alt me-2"></i>
                         <span>Trade Shows</span>
                     </a>
+                    <a href="{{ url_for('main.service_form', service_type='identify-suppliers') }}" class="service-item">
+                        <i class="fas fa-search me-2"></i>
+                        <span>Identify a Supplier</span>
+                    </a>
                     <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="service-item">
                         <i class="fas fa-door-open me-2"></i>
                         <span>Market Access Conditions</span>
@@ -86,6 +108,11 @@
                     <div class="service-item locked-service" onclick="showLoginPrompt()">
                         <i class="fas fa-calendar-alt me-2"></i>
                         <span>Trade Shows</span>
+                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    </div>
+                    <div class="service-item locked-service" onclick="showLoginPrompt()">
+                        <i class="fas fa-search me-2"></i>
+                        <span>Identify a Supplier</span>
                         <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
                     <div class="service-item locked-service" onclick="showLoginPrompt()">

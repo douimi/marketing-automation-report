@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tempfile
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -745,6 +745,90 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Living in the Country scraping: {e}")
             return {"error": f"Error during Living in the Country scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_reaching_consumers(self, destination_country_code, countries_config, login_required=True):
+        """Generates the Reaching the Consumer data by scraping Santander Trade."""
+        # Get country name from code
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Country not found for code: {destination_country_code}"}
+        
+        # Format the country name for URL
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+        
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Reaching the Consumer for {formatted_country_name}...")
+            scraped_data = scrape_santander_reaching_consumers(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Reaching the Consumer scraping: {e}")
+            return {"error": f"Error during Reaching the Consumer scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_distributing_product(self, destination_country_code, countries_config, login_required=True):
+        """Generates the Distributing a Product data by scraping Santander Trade."""
+        # Get country name from code
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Country not found for code: {destination_country_code}"}
+        
+        # Format the country name for URL
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+        
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Distributing a Product for {formatted_country_name}...")
+            scraped_data = scrape_santander_distributing_product(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Distributing a Product scraping: {e}")
+            return {"error": f"Error during Distributing a Product scraping for {destination_country_name}: {str(e)}"}
+
+    def generate_santander_identify_suppliers(self, destination_country_code, countries_config, login_required=True):
+        """Generates the Identify Suppliers data by scraping Santander Trade."""
+        # Get country name from code
+        destination_country_name = get_country_name_from_code(destination_country_code, countries_config)
+        if not destination_country_name:
+            return {"error": f"Country not found for code: {destination_country_code}"}
+        
+        # Format the country name for URL
+        formatted_country_name = format_country_name_for_url(destination_country_name)
+        
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Identify Suppliers for {formatted_country_name}...")
+            scraped_data = scrape_santander_identify_suppliers(self.driver, formatted_country_name)
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Identify Suppliers scraping: {e}")
+            return {"error": f"Error during Identify Suppliers scraping for {destination_country_name}: {str(e)}"}
 
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""

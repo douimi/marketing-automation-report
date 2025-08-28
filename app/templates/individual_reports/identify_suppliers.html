@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}Identify a Supplier - {{ form_data.destination_country_name }}{% endblock %}
+
+{% block content %}
+<div class="container-xl my-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
+                <span class="country-flag me-2"><i class="fas fa-search fa-2x text-accent"></i></span>
+                <div>
+                    <h1 class="h2 fw-bold mb-1">Identify a Supplier</h1>
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-flag me-1"></i> {{ form_data.destination_country_name }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                </button>
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary px-4 py-2">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Navigation -->
+    <nav class="service-nav mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <span class="fw-bold text-muted">Related Services:</span>
+            <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-sm btn-outline-primary">General Presentation</a>
+            <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="btn btn-sm btn-outline-primary">Trade Shows</a>
+            <a href="{{ url_for('main.form_page') }}" class="btn btn-sm btn-primary">Complete Report</a>
+        </div>
+    </nav>
+
+    <!-- Error Display -->
+    {% if supplier_data.error %}
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Error:</strong> {{ supplier_data.error }}
+    </div>
+    {% else %}
+
+    <!-- Production Types Section -->
+    {% if supplier_data.production_types_section %}
+    <section class="report-section mb-4">
+        <div class="section-header">
+            <i class="fas fa-industry section-icon"></i>Types of Production
+        </div>
+        <div class="section-content">
+            {{ supplier_data.production_types_section|safe }}
+        </div>
+    </section>
+    {% endif %}
+
+
+
+    <!-- Marketplaces Section -->
+    {% if supplier_data.marketplaces_section %}
+    <section class="report-section mb-4">
+        <div class="section-header">
+            <i class="fas fa-shopping-cart section-icon"></i>Online Marketplaces
+        </div>
+        <div class="section-content">
+            {{ supplier_data.marketplaces_section|safe }}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Trade Shows Section -->
+    {% if supplier_data.trade_shows_section %}
+    <section class="report-section mb-4">
+        <div class="section-header">
+            <i class="fas fa-calendar-alt section-icon"></i>Trade Shows & Events
+        </div>
+        <div class="section-content">
+            {{ supplier_data.trade_shows_section|safe }}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Manufacturers Section -->
+    {% if supplier_data.manufacturers_section %}
+    <section class="report-section mb-4">
+        <div class="section-header">
+            <i class="fas fa-cogs section-icon"></i>Types of Manufacturers
+        </div>
+        <div class="section-content">
+            {{ supplier_data.manufacturers_section|safe }}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Complete Data Section (if individual sections are empty) -->
+    {% if supplier_data.main_module_section and not (supplier_data.production_types_section or supplier_data.marketplaces_section or supplier_data.trade_shows_section or supplier_data.manufacturers_section) %}
+    <section class="report-section mb-4">
+        <div class="section-header">
+            <i class="fas fa-search section-icon"></i>Supplier Identification Information
+        </div>
+        <div class="section-content">
+            {{ supplier_data.main_module_section|safe }}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Data Sources and Update Information -->
+    <div class="card mb-4 border-muted">
+        <div class="card-body">
+            <h6 class="card-title mb-3"><i class="fas fa-info-circle me-2"></i>Data Information</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-2"><strong>Data Source:</strong> Santander Trade Portal</p>
+                    <p class="mb-2"><strong>Service Type:</strong> Supplier Identification Analysis</p>
+                </div>
+                <div class="col-md-6">
+                    {% if supplier_data.update_date %}
+                    <p class="mb-2"><strong>Last Update:</strong> {{ supplier_data.update_date }}</p>
+                    {% endif %}
+                    <p class="mb-0"><strong>Generated:</strong> {{ datetime.now().strftime('%Y-%m-%d %H:%M UTC') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    <!-- Raw Data Debug (only shown in development) -->
+    {% if config.DEBUG and supplier_data.raw_html %}
+    <div class="mt-5">
+        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#rawDataCollapse" aria-expanded="false" aria-controls="rawDataCollapse">
+            <i class="fas fa-code me-1"></i>Show Raw Data (Debug)
+        </button>
+        <div class="collapse mt-3" id="rawDataCollapse">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Raw HTML Data</h6>
+                </div>
+                <div class="card-body">
+                    <pre class="small text-muted">{{ supplier_data.raw_html|e }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Custom styles for this report -->
+<style>
+    .section-header {
+        background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-info) 100%);
+        color: white;
+        padding: 1rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
+    
+    .section-icon {
+        margin-right: 0.75rem;
+        font-size: 1.2rem;
+    }
+    
+    .section-content {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-top: none;
+        border-radius: 0 0 0.5rem 0.5rem;
+        padding: 1.5rem;
+    }
+    
+    .section-content table {
+        width: 100%;
+        margin-bottom: 1rem;
+        border-collapse: collapse;
+    }
+    
+    .section-content table th,
+    .section-content table td {
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+        text-align: left;
+    }
+    
+    .section-content table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    
+    .section-content dl.informations {
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-content dl.informations dt {
+        font-weight: 600;
+        color: var(--bs-primary);
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-content dl.informations dd {
+        margin-left: 0;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .section-content h2 {
+        color: var(--bs-primary);
+        border-bottom: 2px solid var(--bs-primary);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .section-content h2:first-child {
+        margin-top: 0;
+    }
+    
+    .section-content select {
+        width: 100%;
+        max-width: 500px;
+        padding: 0.5rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .section-content .mb-3 {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        margin-bottom: 1rem !important;
+        border-left: 4px solid var(--bs-primary);
+    }
+    
+    .section-content .notes-grey {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    
+    .service-nav {
+        border-left: 4px solid var(--bs-primary);
+    }
+    
+    @media print {
+        .service-nav,
+        .btn,
+        .collapse {
+            display: none !important;
+        }
+        
+        .section-content {
+            border: none;
+            box-shadow: none;
+        }
+        
+        .section-content select {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
