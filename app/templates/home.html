@@ -57,80 +57,166 @@
     </div>
 </section>
 
-<!-- Services Overview Section -->
-<section class="services-overview-section py-5">
+<!-- Why Choose Us Section -->
+<section class="why-choose-us-section py-5">
     <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="why-choose-content">
+                    <h2 class="section-title mb-4">Why Choose Indatex for Your Global Expansion?</h2>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Comprehensive Market Intelligence</h5>
+                                <p>Access detailed market analysis, trade flows, and country-specific insights for over 200 destinations worldwide.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Real-Time Data & Reports</h5>
+                                <p>Get up-to-date information on market conditions, trade regulations, and business opportunities as they develop.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Expert-Verified Information</h5>
+                                <p>Our data is curated and verified by trade experts to ensure accuracy and reliability for your business decisions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Countries Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Trade Reports Generated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Global Businesses Served</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Platform Availability</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <p class="section-subtitle">Trusted by businesses worldwide for international market expansion</p>
+        </div>
+        
         <div class="row g-4">
-            <!-- Markets Service -->
+            <!-- Testimonial 1 -->
             <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-chart-line"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"Indatex's market intelligence helped us identify the perfect entry strategy for Southeast Asia. Their comprehensive reports saved us months of research time."</p>
                     </div>
-                    <h4 class="service-title">Trade Intelligence</h4>
-                    <p class="service-description">Information, tools and resources to help you grow your business abroad.</p>
-                    <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-primary">Explore Trade Intelligence</a>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6 class="author-name">Sarah Chen</h6>
+                            <p class="author-title">Export Director, TechFlow Solutions</p>
+                            <div class="author-location">
+                                <i class="fas fa-map-marker-alt me-1"></i>Singapore
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Business Network Service -->
+
+            <!-- Testimonial 2 -->
             <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-users"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"The trade compliance reports were invaluable for our European expansion. We avoided costly regulatory mistakes and entered new markets with confidence."</p>
                     </div>
-                    <h4 class="service-title">Business Network</h4>
-                    <p class="service-description">An innovative business network platform exclusively dedicated to our global clients.</p>
-                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6 class="author-name">Miguel Rodriguez</h6>
+                            <p class="author-title">International Sales Manager, AgriMax</p>
+                            <div class="author-location">
+                                <i class="fas fa-map-marker-alt me-1"></i>Madrid, Spain
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Trade Management Service -->
+
+            <!-- Testimonial 3 -->
             <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-shipping-fast"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"Outstanding platform! The country-specific business practices guide helped us navigate cultural nuances and establish strong partnerships in Japan."</p>
                     </div>
-                    <h4 class="service-title">Manage Shipments</h4>
-                    <p class="service-description">Optimize customs procedures, costs and trade compliance for your international shipping.</p>
-                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h6 class="author-name">Emma Thompson</h6>
+                            <p class="author-title">CEO, Nordic Innovations</p>
+                            <div class="author-location">
+                                <i class="fas fa-map-marker-alt me-1"></i>Stockholm, Sweden
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Currency Analysis Service -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h4 class="service-title">Currency Analysis</h4>
-                    <p class="service-description">Analyze currency markets, manage exchange rates and minimize risks.</p>
-                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
-                </div>
-            </div>
-            
-            <!-- Establish Overseas Service -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h4 class="service-title">Establish Overseas</h4>
-                    <p class="service-description">Learn how to operate a business abroad and manage international investments.</p>
-                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
-                </div>
-            </div>
-            
-            <!-- Banking Service -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-overview-card h-100">
-                    <div class="service-icon-container">
-                        <i class="fas fa-university"></i>
-                    </div>
-                    <h4 class="service-title">Bank With Us</h4>
-                    <p class="service-description">Make the most of your available capital and find solutions to trade internationally.</p>
-                    <a href="#" class="btn btn-outline-primary">Coming Soon</a>
-                </div>
+        </div>
+
+        <!-- CTA in Testimonials -->
+        <div class="text-center mt-5">
+            <h4 class="mb-3">Ready to Join Our Success Stories?</h4>
+            <div class="cta-buttons">
+                {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-success btn-lg me-3">
+                    <i class="fas fa-gift me-2"></i>Try Free Sample Report
+                </a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus me-2"></i>Join Now
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-chart-line me-2"></i>Explore All Services
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -279,49 +365,175 @@
     min-height: 75vh;
 }
 
-.services-overview-section {
+/* Why Choose Us Section */
+.why-choose-us-section {
     background: #f8f9fa;
 }
 
-.service-overview-card {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.service-overview-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.service-icon-container {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color: white;
-}
-
-.service-title {
-    font-size: 1.3rem;
-    font-weight: 600;
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
     color: #2c3e50;
     margin-bottom: 1rem;
 }
 
-.service-description {
+.section-subtitle {
+    font-size: 1.1rem;
     color: #666;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.feature-content h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+    color: #666;
     line-height: 1.6;
+    margin: 0;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3498db;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    background: #f8f9fa;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-content {
+    flex: 1;
+    margin-bottom: 1.5rem;
+}
+
+.quote-icon {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.author-avatar {
+    font-size: 3rem;
+    color: #3498db;
+}
+
+.author-info {
+    flex: 1;
+}
+
+.author-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+.author-title {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.author-location {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .footer-links-section {
@@ -367,6 +579,54 @@
     
     .hero-image-placeholder {
         display: none;
+    }
+
+    /* Responsive adjustments for new sections */
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .feature-icon {
+        margin: 0 auto;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .author-avatar {
+        font-size: 2.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
