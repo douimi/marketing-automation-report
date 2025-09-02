@@ -190,6 +190,9 @@ document.getElementById('reportForm').addEventListener('submit', function(e) {
     // Submit form directly - centralized loading page will handle loading state
     fetch(this.action, {
         method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
         body: new FormData(this)
     })
     .then(response => {

@@ -29,7 +29,8 @@
                             </div>
                             
                             <div class="search-form-container">
-                                <form id="homeCountryForm">
+                                <form id="homeCountryForm" action="{{ url_for('main.start_individual_service') }}" method="POST">
+                                    <input type="hidden" name="service_type" value="general-presentation">
                                     <div class="input-group search-input-group">
                                         <select class="form-select search-input" id="countrySearch" name="destination_country" required>
                                             <option value="" disabled selected>Enter a target country</option>
@@ -732,49 +733,15 @@ $(document).ready(function() {
     });
 });
 
-// Handle form submission
+// Handle form submission - just validate before submitting normally
 document.getElementById('homeCountryForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
     const selectedCountry = document.getElementById('countrySearch').value;
     if (!selectedCountry) {
+        e.preventDefault();
         alert('Please select a country first.');
-        return;
+        return false;
     }
-    
-    // Create form data for General Presentation service
-    const formData = new FormData();
-    formData.append('service_type', 'general-presentation');
-    formData.append('destination_country', selectedCountry);
-    
-    // Submit to the individual service endpoint
-    fetch("{{ url_for('main.start_individual_service') }}", {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => Promise.reject(err));
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.redirect_url) {
-            window.location.href = data.redirect_url;
-        } else if (data.status === 'error') {
-            alert('Error: ' + (data.message || 'An error occurred'));
-        } else {
-            alert('Unexpected response format. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        let errorMessage = 'An error occurred. Please try again.';
-        if (error && error.message) {
-            errorMessage = 'Error: ' + error.message;
-        }
-        alert(errorMessage);
-    });
+    // If validation passes, let the form submit normally (will redirect to loading page)
 });
 
 // Add current year to footer

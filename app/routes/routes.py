@@ -440,10 +440,16 @@ def start_individual_service():
         thread.daemon = True
         thread.start()
         
-        return jsonify({
-            'status': 'success',
-            'redirect_url': url_for('main.loading_page')
-        })
+        # Handle regular form submission vs AJAX
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            # AJAX request - return JSON for JavaScript to handle redirect
+            return jsonify({
+                'status': 'success',
+                'redirect_url': url_for('main.loading_page')
+            })
+        else:
+            # Regular form submission - redirect directly (homepage)
+            return redirect(url_for('main.loading_page'))
         
     except Exception as e:
         current_app.logger.error(f"Failed to start individual service generation: {e}", exc_info=True)
