@@ -1,576 +1,1036 @@
 {% extends "base.html" %}
 
-{% block title %}Markets - Trade Intelligence Services{% endblock %}
+{% block title %}Trade Intelligence Services{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <!-- Header Section -->
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary mb-3">Market Intelligence Services</h1>
+        <h1 class="display-4 fw-bold text-primary mb-3">Trade Intelligence Services</h1>
         <p class="lead text-muted">Comprehensive trade intelligence and market analysis tools for your business expansion</p>
     </div>
 
-    <!-- Service Categories Grid -->
-    <div class="row g-4 mb-5">
-        <!-- Analyze Market Trends -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100">
-                <div class="category-icon">
-                    <i class="fas fa-chart-line"></i>
+    <!-- Service Sections -->
+    <div class="row g-4">
+        <!-- Market Intelligence Section -->
+        <div class="col-12" id="market-intelligence">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="section-title">Market Intelligence</h2>
                 </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#analyzeMarketTrends" aria-expanded="false" aria-controls="analyzeMarketTrends">
-                    <h3 class="category-title">Analyze Market Trends</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Collect market information and select the most promising target countries for your products and services.</p>
-                
-                <div class="collapse" id="analyzeMarketTrends">
-                    <div class="services-list">
-                    <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="service-item">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <span>General Presentation</span>
-                        {% if not current_user.is_authenticated %}
-                        <span class="badge bg-success ms-auto">FREE</span>
+                <div class="row g-3">
+                    <!-- General Presentation (FREE) -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-info-circle service-icon"></i>
+                                <h5>General Information</h5>
+                                <p>Country overview with key demographics, economic indicators, and general market characteristics</p>
+                                {% if not current_user.is_authenticated %}
+                                <span class="badge bg-success">FREE</span>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Economic and Political Outline -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='economic-political') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-balance-scale service-icon"></i>
+                                <h5>Country Information</h5>
+                                <p>In-depth analysis of economic trends, political stability, and government policies</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-balance-scale service-icon"></i>
+                            <h5>Country Information</h5>
+                            <p>In-depth analysis of economic trends, political stability, and government policies</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
                         {% endif %}
-                    </a>
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.service_form', service_type='economic-political') }}" class="service-item">
-                        <i class="fas fa-balance-scale me-2"></i>
-                        <span>Economic & Political Outline</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='foreign-trade') }}" class="service-item">
-                        <i class="fas fa-exchange-alt me-2"></i>
-                        <span>Foreign Trade in Figures</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='reaching-consumers') }}" class="service-item">
-                        <i class="fas fa-users me-2"></i>
-                        <span>Reaching the Consumer</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='distributing-product') }}" class="service-item">
-                        <i class="fas fa-truck me-2"></i>
-                        <span>Distributing a Product</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-balance-scale me-2"></i>
-                        <span>Economic & Political Outline</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-exchange-alt me-2"></i>
-                        <span>Foreign Trade in Figures</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Foreign Trade in Figures -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='foreign-trade') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-chart-bar service-icon"></i>
+                                <h5>Industry Information</h5>
+                                <p>Trade statistics, main partners, export/import data, and monetary indicators</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-chart-bar service-icon"></i>
+                            <h5>Industry Information</h5>
+                            <p>Trade statistics, main partners, export/import data, and monetary indicators</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-users me-2"></i>
-                        <span>Reaching the Consumer</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    
+                    <!-- Best Country for Trade (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Best Country for Trade')">
+                            <i class="fas fa-globe service-icon"></i>
+                            <h5>Best Country for Trade</h5>
+                            <p>Identify optimal countries for your trade expansion</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-truck me-2"></i>
-                        <span>Distributing a Product</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    
+                    <!-- Import/Export Flows -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-exchange-alt service-icon"></i>
+                                <h5>Trade Flows</h5>
+                                <p>Product-specific trade flows between origin and destination countries with trend analysis</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-exchange-alt service-icon"></i>
+                            <h5>Trade Flows</h5>
+                            <p>Product-specific trade flows between origin and destination countries with trend analysis</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+                    
+                    <!-- Complete Market Report -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.form_page') }}" class="service-link">
+                            <div class="service-card featured-card">
+                                <i class="fas fa-file-alt service-icon"></i>
+                                <h5>Market Report</h5>
+                                <p>Complete market intelligence report with all sections combined</p>
+                                <span class="badge bg-warning">Premium</span>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-file-alt service-icon"></i>
+                            <h5>Market Report</h5>
+                            <p>Complete market intelligence report with all sections combined</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Market Access Conditions -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-door-open service-icon"></i>
+                                <h5>Market Access Conditions</h5>
+                                <p>Tariffs, trade remedies, and regulatory requirements for specific products and markets</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-door-open service-icon"></i>
+                            <h5>Market Access Conditions</h5>
+                            <p>Tariffs, trade remedies, and regulatory requirements for specific products and markets</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Customized Market Research (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Customized Market Research')">
+                            <i class="fas fa-search service-icon"></i>
+                            <h5>Customized Market Research</h5>
+                            <p>Tailored research solutions for your specific needs</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Additional Information')">
+                            <i class="fas fa-plus-circle service-icon"></i>
+                            <h5>Additional Information</h5>
+                            <p>Supplementary data and specialized insights</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Reach Business Counterparts -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100">
-                <div class="category-icon">
-                    <i class="fas fa-users"></i>
+        <!-- B2B Partners Section -->
+        <div class="col-12" id="b2b-partners">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h2 class="section-title">B2B Partners</h2>
                 </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#reachBusinessCounterparts" aria-expanded="false" aria-controls="reachBusinessCounterparts">
-                    <h3 class="category-title">Reach Business Counterparts</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Identify new business opportunities using databases of importers and exporters worldwide.</p>
-                
-                <div class="collapse" id="reachBusinessCounterparts">
-                    <div class="services-list">
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="service-item">
-                        <i class="fas fa-random me-2"></i>
-                        <span>Import/Export Flows</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="service-item">
-                        <i class="fas fa-calendar-alt me-2"></i>
-                        <span>Trade Shows</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='identify-suppliers') }}" class="service-item">
-                        <i class="fas fa-search me-2"></i>
-                        <span>Identify a Supplier</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="service-item">
-                        <i class="fas fa-door-open me-2"></i>
-                        <span>Market Access Conditions</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='business-directories') }}" class="service-item">
-                        <i class="fas fa-building me-2"></i>
-                        <span>Business Directories</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-random me-2"></i>
-                        <span>Import/Export Flows</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                <div class="row g-3">
+                    <!-- Identify a Supplier -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='identify-suppliers') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-search service-icon"></i>
+                                <h5>Find Counterparts</h5>
+                                <p>Production types, professional associations, marketplaces, trade shows, and manufacturer directories</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-search service-icon"></i>
+                            <h5>Find Counterparts</h5>
+                            <p>Production types, professional associations, marketplaces, trade shows, and manufacturer directories</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-calendar-alt me-2"></i>
-                        <span>Trade Shows</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Business Directories -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='business-directories') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-building service-icon"></i>
+                                <h5>Business Directories</h5>
+                                <p>Find industry-specific business directories and commercial partners in your target country</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-building service-icon"></i>
+                            <h5>Business Directories</h5>
+                            <p>Find industry-specific business directories and commercial partners in your target country</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-search me-2"></i>
-                        <span>Identify a Supplier</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Trade Shows -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-calendar-alt service-icon"></i>
+                                <h5>Trade Shows</h5>
+                                <p>Upcoming trade shows and exhibitions in your target market and industry sector</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-calendar-alt service-icon"></i>
+                            <h5>Trade Shows</h5>
+                            <p>Upcoming trade shows and exhibitions in your target market and industry sector</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-door-open me-2"></i>
-                        <span>Market Access Conditions</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Online Marketplaces (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Online Marketplaces')">
+                            <i class="fas fa-shopping-cart service-icon"></i>
+                            <h5>Online Marketplaces</h5>
+                            <p>Discover relevant online trading platforms</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-building me-2"></i>
-                        <span>Business Directories</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    
+                    <!-- Professional Associations (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Professional Associations')">
+                            <i class="fas fa-certificate service-icon"></i>
+                            <h5>Professional Associations</h5>
+                            <p>Connect with industry associations and chambers</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    {% endif %}
+                    
+                    <!-- Blacklisted Companies (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Blacklisted Companies')">
+                            <i class="fas fa-ban service-icon"></i>
+                            <h5>Blacklisted Companies and Vessels</h5>
+                            <p>Check sanctions and blacklist databases</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Financial Reports (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Financial Reports')">
+                            <i class="fas fa-chart-bar service-icon"></i>
+                            <h5>Financial Reports</h5>
+                            <p>Access company financial information and credit reports</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Manage Business Operations -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100">
-                <div class="category-icon">
-                    <i class="fas fa-cogs"></i>
+        <!-- Logistics Section -->
+        <div class="col-12" id="logistics">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h2 class="section-title">Logistics</h2>
                 </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#manageBusinessOperations" aria-expanded="false" aria-controls="manageBusinessOperations">
-                    <h3 class="category-title">Manage Business Operations</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Optimize business procedures, compliance and operational costs for your international operations.</p>
-                
-                <div class="collapse" id="manageBusinessOperations">
-                    <div class="services-list">
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="service-item">
-                        <i class="fas fa-briefcase me-2"></i>
-                        <span>Operating a Business</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='tax-system') }}" class="service-item">
-                        <i class="fas fa-file-invoice-dollar me-2"></i>
-                        <span>Tax System</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='legal-environment') }}" class="service-item">
-                        <i class="fas fa-gavel me-2"></i>
-                        <span>Legal Environment</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='trade-compliance') }}" class="service-item">
-                        <i class="fas fa-gavel me-2"></i>
-                        <span>International Trade Compliance</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-briefcase me-2"></i>
-                        <span>Operating a Business</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                <div class="row g-3">
+                    <!-- International Trade Compliance -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='trade-compliance') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-gavel service-icon"></i>
+                                <h5>Trade Compliance</h5>
+                                <p>International conventions, trade regulations, customs procedures, and compliance requirements</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-gavel service-icon"></i>
+                            <h5>Trade Compliance</h5>
+                            <p>International conventions, trade regulations, customs procedures, and compliance requirements</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-file-invoice-dollar me-2"></i>
-                        <span>Tax System</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Shipping Documents (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Shipping Documents')">
+                            <i class="fas fa-file-invoice service-icon"></i>
+                            <h5>Shipping Documents</h5>
+                            <p>Generate and manage shipping documentation</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-gavel me-2"></i>
-                        <span>Legal Environment</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    
+                    <!-- Import Controls (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Import Controls')">
+                            <i class="fas fa-arrow-down service-icon"></i>
+                            <h5>Import Controls</h5>
+                            <p>Navigate import regulations and requirements</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-gavel me-2"></i>
-                        <span>International Trade Compliance</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    
+                    <!-- Export Controls (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Export Controls')">
+                            <i class="fas fa-arrow-up service-icon"></i>
+                            <h5>Export Controls</h5>
+                            <p>Understand export regulations and compliance</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
-                    {% endif %}
+                    
+                    <!-- Customs Duties (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Customs Duties')">
+                            <i class="fas fa-calculator service-icon"></i>
+                            <h5>Customs Duties</h5>
+                            <p>Calculate customs duties and tariffs</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <!-- HS Customs Classification (Placeholder) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('HS Customs Classification')">
+                            <i class="fas fa-tags service-icon"></i>
+                            <h5>HS Customs Classification</h5>
+                            <p>Find correct HS codes for your products</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Foreign Investment Analysis -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100">
-                <div class="category-icon">
-                    <i class="fas fa-globe-americas"></i>
+        <!-- Business Operations Section -->
+        <div class="col-12" id="business-operations">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2 class="section-title">Business Operations</h2>
                 </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#foreignInvestmentAnalysis" aria-expanded="false" aria-controls="foreignInvestmentAnalysis">
-                    <h3 class="category-title">Foreign Investment Analysis</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Learn how to operate a business abroad and manage international investments effectively.</p>
-                
-                <div class="collapse" id="foreignInvestmentAnalysis">
-                    <div class="services-list">
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.service_form', service_type='foreign-investment') }}" class="service-item">
-                        <i class="fas fa-globe-americas me-2"></i>
-                        <span>Foreign Investment</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='business-practices') }}" class="service-item">
-                        <i class="fas fa-handshake me-2"></i>
-                        <span>Business Practices</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='living-in-country') }}" class="service-item">
-                        <i class="fas fa-home me-2"></i>
-                        <span>Living in the Country</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-globe-americas me-2"></i>
-                        <span>Foreign Investment</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                <div class="row g-3">
+                    <!-- Operating a Business -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-briefcase service-icon"></i>
+                                <h5>Operating a Business</h5>
+                                <p>Business setup procedures, legal forms, labor costs, and HR management requirements</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-briefcase service-icon"></i>
+                            <h5>Operating a Business</h5>
+                            <p>Business setup procedures, legal forms, labor costs, and HR management requirements</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-handshake me-2"></i>
-                        <span>Business Practices</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Tax System -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='tax-system') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-file-invoice-dollar service-icon"></i>
+                                <h5>Tax System</h5>
+                                <p>Comprehensive tax information including corporate, individual, and consumption taxes</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-file-invoice-dollar service-icon"></i>
+                            <h5>Tax System</h5>
+                            <p>Comprehensive tax information including corporate, individual, and consumption taxes</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-home me-2"></i>
-                        <span>Living in the Country</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+
+                    <!-- Legal Environment -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='legal-environment') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-gavel service-icon"></i>
+                                <h5>Legal Environment</h5>
+                                <p>Legal framework, contract law, intellectual property protection, and dispute resolution</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-gavel service-icon"></i>
+                            <h5>Legal Environment</h5>
+                            <p>Legal framework, contract law, intellectual property protection, and dispute resolution</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+
+                    <!-- Foreign Investment -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='foreign-investment') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-globe-americas service-icon"></i>
+                                <h5>Foreign Investment</h5>
+                                <p>FDI regulations, investment protection, opportunities, and administrative procedures</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-globe-americas service-icon"></i>
+                            <h5>Foreign Investment</h5>
+                            <p>FDI regulations, investment protection, opportunities, and administrative procedures</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Business Practices -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='business-practices') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-handshake service-icon"></i>
+                                <h5>Business Practices</h5>
+                                <p>Business culture, etiquette, working hours, and local business customs</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-handshake service-icon"></i>
+                            <h5>Business Practices</h5>
+                            <p>Business culture, etiquette, working hours, and local business customs</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Living in the Country -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='living-in-country') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-home service-icon"></i>
+                                <h5>Living in the Country</h5>
+                                <p>Expatriate communities, housing, education, healthcare, and quality of life indicators</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-home service-icon"></i>
+                            <h5>Living in the Country</h5>
+                            <p>Expatriate communities, housing, education, healthcare, and quality of life indicators</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Entry Requirements & Logistics -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100">
-                <div class="category-icon">
-                    <i class="fas fa-passport"></i>
-                </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#entryRequirementsLogistics" aria-expanded="false" aria-controls="entryRequirementsLogistics">
-                    <h3 class="category-title">Entry Requirements & Logistics</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Manage entry procedures, logistics and compliance for your international business travel.</p>
-                
-                <div class="collapse" id="entryRequirementsLogistics">
-                    <div class="services-list">
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.service_form', service_type='entry-requirements') }}" class="service-item">
-                        <i class="fas fa-id-card me-2"></i>
-                        <span>Entry Requirements</span>
-                    </a>
-                    <a href="{{ url_for('main.service_form', service_type='practical-information') }}" class="service-item">
-                        <i class="fas fa-info me-2"></i>
-                        <span>Practical Information</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-id-card me-2"></i>
-                        <span>Entry Requirements</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+        <!-- Travel & Entry Section -->
+        <div class="col-12" id="travel-entry">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-passport"></i>
                     </div>
-                    <div class="service-item locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-info me-2"></i>
-                        <span>Practical Information</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+                    <h2 class="section-title">Travel & Entry</h2>
+                </div>
+                <div class="row g-3">
+                    <!-- Entry Requirements -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='entry-requirements') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-id-card service-icon"></i>
+                                <h5>Entry Requirements</h5>
+                                <p>Visa requirements, customs procedures, health precautions, and safety conditions</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-id-card service-icon"></i>
+                            <h5>Entry Requirements</h5>
+                            <p>Visa requirements, customs procedures, health precautions, and safety conditions</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
+
+                    <!-- Practical Information -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='practical-information') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-info service-icon"></i>
+                                <h5>Practical Information</h5>
+                                <p>Transportation, dining, climate, electrical standards, and communication systems</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-info service-icon"></i>
+                            <h5>Practical Information</h5>
+                            <p>Transportation, dining, climate, electrical standards, and communication systems</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Complete Market Report -->
-        <div class="col-lg-4 col-md-6">
-            <div class="service-category-card h-100 featured-category">
-                <div class="category-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <div class="category-header" data-bs-toggle="collapse" data-bs-target="#completeMarketReport" aria-expanded="false" aria-controls="completeMarketReport">
-                    <h3 class="category-title">Complete Market Report</h3>
-                    <i class="fas fa-chevron-down collapse-icon"></i>
-                </div>
-                <p class="category-description">Get comprehensive market intelligence with all sections combined in a single detailed report.</p>
-                
-                <div class="collapse" id="completeMarketReport">
-                    <div class="services-list">
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.form_page') }}" class="service-item featured-service-item">
-                        <i class="fas fa-rocket me-2"></i>
-                        <span>Generate Complete Report</span>
-                    </a>
-                    {% else %}
-                    <div class="service-item locked-service featured-locked-service" onclick="showLoginPrompt()">
-                        <i class="fas fa-rocket me-2"></i>
-                        <span>Generate Complete Report</span>
-                        <i class="fas fa-lock ms-auto text-warning"></i>
+        <!-- Marketing & Sales Section -->
+        <div class="col-12" id="marketing-sales">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-bullhorn"></i>
                     </div>
-                    {% endif %}
+                    <h2 class="section-title">Marketing & Sales</h2>
+                </div>
+                <div class="row g-3">
+                    <!-- Reaching the Consumer -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='reaching-consumers') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-users service-icon"></i>
+                                <h5>Reaching the Consumer</h5>
+                                <p>Consumer profile, purchasing behavior, marketing opportunities, and advertising regulations</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-users service-icon"></i>
+                            <h5>Reaching the Consumer</h5>
+                            <p>Consumer profile, purchasing behavior, marketing opportunities, and advertising regulations</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Distributing a Product -->
+                    <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='distributing-product') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-truck service-icon"></i>
+                                <h5>Distributing a Product</h5>
+                                <p>Distribution channels, retail sector evolution, e-commerce trends, and distance selling opportunities</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-truck service-icon"></i>
+                            <h5>Distributing a Product</h5>
+                            <p>Distribution channels, retail sector evolution, e-commerce trends, and distance selling opportunities</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="feature-badge">
-                    <span>Premium Service</span>
+            </div>
+        </div>
+
+        <!-- Market Tools Section -->
+        <div class="col-12" id="market-tools">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h2 class="section-title">Market Tools</h2>
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Export Price Calculator')">
+                            <i class="fas fa-calculator service-icon"></i>
+                            <h5>Export Price Calculator</h5>
+                            <p>Calculate optimal export pricing strategies</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Landed Cost Calculator')">
+                            <i class="fas fa-shipping-fast service-icon"></i>
+                            <h5>Landed Cost Calculator</h5>
+                            <p>Calculate total landed costs including duties</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Measurement Converter')">
+                            <i class="fas fa-ruler service-icon"></i>
+                            <h5>Measurement Converter</h5>
+                            <p>Convert between different measurement units</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Currency Converter')">
+                            <i class="fas fa-dollar-sign service-icon"></i>
+                            <h5>Currency Converter</h5>
+                            <p>Real-time currency conversion and rates</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indatex Academy Section -->
+        <div class="col-12" id="academy">
+            <div class="service-section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="section-title">Indatex Academy</h2>
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Santander Trade')">
+                            <i class="fas fa-university service-icon"></i>
+                            <h5>Santander Trade</h5>
+                            <p>Access Santander Trade educational resources</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Payment Means')">
+                            <i class="fas fa-credit-card service-icon"></i>
+                            <h5>Payment Means</h5>
+                            <p>Learn about international payment methods</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Financing Operations')">
+                            <i class="fas fa-money-bill service-icon"></i>
+                            <h5>Financing Operations</h5>
+                            <p>Explore trade financing options and solutions</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Risk Management')">
+                            <i class="fas fa-shield-alt service-icon"></i>
+                            <h5>Risk Management</h5>
+                            <p>Understand and mitigate international trade risks</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Incoterms®')">
+                            <i class="fas fa-handshake service-icon"></i>
+                            <h5>Incoterms®</h5>
+                            <p>Master international commercial terms</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Export/Import Factsheets')">
+                            <i class="fas fa-file-alt service-icon"></i>
+                            <h5>Indatex Export/Import Factsheets</h5>
+                            <p>Quick reference guides for trade operations</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Trade Show Preparation')">
+                            <i class="fas fa-calendar-alt service-icon"></i>
+                            <h5>Preparing for a Professional Trade Show</h5>
+                            <p>Maximize your trade show participation</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Business Trips')">
+                            <i class="fas fa-plane service-icon"></i>
+                            <h5>Business Trips</h5>
+                            <p>Plan effective international business travel</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Trademark Protection')">
+                            <i class="fas fa-trademark service-icon"></i>
+                            <h5>Trademark Protection</h5>
+                            <p>Protect your brand in international markets</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Patent Protection')">
+                            <i class="fas fa-lightbulb service-icon"></i>
+                            <h5>Patent Protection</h5>
+                            <p>Secure intellectual property rights globally</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Emerging Markets')">
+                            <i class="fas fa-globe-americas service-icon"></i>
+                            <h5>Exporting to Emerging Markets</h5>
+                            <p>Navigate opportunities in emerging economies</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-card placeholder-card" onclick="showComingSoon('Marketing Overseas')">
+                            <i class="fas fa-bullhorn service-icon"></i>
+                            <h5>Marketing and Selling Overseas</h5>
+                            <p>Develop effective international marketing strategies</p>
+                            <span class="badge bg-secondary">Coming Soon</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Call to Action -->
     <div class="text-center mt-5">
-        <div class="card bg-light">
+        <div class="cta-card">
             <div class="card-body py-5">
-                <h3 class="mb-3">Need Help Choosing?</h3>
-                <p class="text-muted mb-4">Not sure which service fits your needs? Our complete report includes all sections for comprehensive market intelligence.</p>
-                <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
-                    <i class="fas fa-chart-line me-2"></i>Get Complete Report
-                </a>
-                <a href="mailto:support@indegate.com" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-envelope me-2"></i>Contact Support
-                </a>
+                <h3 class="mb-3">Ready to Expand Your Business Globally?</h3>
+                <p class="text-muted mb-4">Get started with our comprehensive trade intelligence services and unlock new market opportunities.</p>
+                <div class="cta-buttons">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-chart-line me-2"></i>Generate Complete Report
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-success btn-lg me-3">
+                        <i class="fas fa-gift me-2"></i>Try Free Sample
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-user-plus me-2"></i>Join Now
+                    </a>
+                    {% endif %}
+                    <a href="mailto:support@indegate.com" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Contact Support
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-/* Service Category Cards */
-.service-category-card {
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Scroll offset for fixed header */
+.col-12[id] {
+    scroll-margin-top: 100px;
+}
+
+/* Service Section Cards */
+.service-section-card {
     background: white;
-    border: none;
     border-radius: 20px;
     padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.service-category-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-}
-
-.service-category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 20px 20px 0 0;
-}
-
-.featured-category {
-    border: 2px solid #3498db;
-    background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(44, 62, 80, 0.05));
-}
-
-.featured-category::before {
-    height: 6px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-}
-
-.category-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color: white;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-}
-
-.featured-category .category-icon {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-}
-
-.category-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.category-description {
-    color: #666;
-    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     margin-bottom: 2rem;
-    line-height: 1.6;
-    font-size: 1rem;
-}
-
-.services-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.service-item {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem 1rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #2c3e50;
-    font-weight: 500;
-    transition: all 0.3s ease;
     border: 1px solid #e9ecef;
 }
 
-.service-item:hover {
-    background: #3498db;
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.section-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
     color: white;
-    transform: translateX(5px);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* Service Cards */
+.service-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.service-link {
     text-decoration: none;
-    border-color: #3498db;
-    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.2);
+    color: inherit;
+    display: block;
+    height: 100%;
 }
 
-.featured-service-item {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
+.service-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.service-icon {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.service-card h5 {
     font-weight: 600;
-    border: none;
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
 }
 
-.featured-service-item:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
-    color: white;
-    transform: translateX(5px) scale(1.02);
+.service-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    flex: 1;
+    margin-bottom: 1rem;
 }
 
-.locked-service {
+/* Featured Cards */
+.featured-card {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(44, 62, 80, 0.1));
+    border: 2px solid #3498db;
+}
+
+.featured-card .service-icon {
+    color: #e74c3c;
+}
+
+/* Placeholder Cards */
+.placeholder-card {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.placeholder-card:hover {
+    opacity: 1;
+    background: #f1f3f4;
+}
+
+/* Locked Cards */
+.locked-card {
     opacity: 0.7;
     cursor: pointer;
     position: relative;
 }
 
-.locked-service:hover {
-    background: #f8f9fa !important;
-    color: #666 !important;
-    transform: none !important;
-    border-color: #e9ecef !important;
+.locked-card:hover {
+    background: #f1f3f4;
+    transform: translateY(-2px);
 }
 
-.featured-locked-service {
-    background: linear-gradient(135deg, rgba(231, 76, 60, 0.6), rgba(192, 57, 43, 0.6)) !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.featured-locked-service:hover {
-    background: linear-gradient(135deg, rgba(231, 76, 60, 0.7), rgba(192, 57, 43, 0.7)) !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.feature-badge {
+.lock-icon {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    color: #ffc107;
+    font-size: 1rem;
 }
 
-/* Responsive adjustments */
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+}
+
+/* Call to Action */
+.cta-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .display-4 {
-        font-size: 2rem;
-    }
-    
-    .service-category-card {
+    .service-section-card {
         padding: 1.5rem;
-        margin-bottom: 2rem;
     }
     
-    .category-icon {
-        width: 60px;
-        height: 60px;
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .section-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title {
         font-size: 1.5rem;
     }
     
-    .category-title {
-        font-size: 1.2rem;
+    .service-card {
+        padding: 1.2rem;
     }
     
-    .service-item {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
+    .service-card h5 {
+        font-size: 1rem;
+    }
+    
+    .service-card p {
+        font-size: 0.85rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
 @media (max-width: 576px) {
-    .service-category-card {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .service-section-card {
         padding: 1rem;
     }
     
-    .category-description {
-        font-size: 0.9rem;
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
     }
-}
-
-/* Collapsible header styles */
-.category-header {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
-
-.category-header:hover {
-    opacity: 0.8;
-}
-
-.category-header .category-title {
-    margin: 0;
-    flex: 1;
-}
-
-.collapse-icon {
-    transition: transform 0.3s ease;
-    color: var(--bs-primary);
-    font-size: 0.9rem;
-}
-
-.category-header[aria-expanded="true"] .collapse-icon {
-    transform: rotate(180deg);
-}
-
-.collapse {
-    transition: all 0.3s ease-in-out;
-}
-
-.collapsing {
-    overflow: hidden;
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
 }
 </style>
 
 <script>
 function showLoginPrompt() {
-    if (confirm('This service requires login. Would you like to login now?')) {
+    if (confirm('This service requires login. Would you like to sign in now?')) {
         window.location.href = "{{ url_for('auth.login') }}";
+    }
+}
+
+function showComingSoon(feature) {
+    if (typeof showToast === 'function') {
+        showToast(`${feature} is coming soon! Stay tuned for updates.`, 'info');
+    } else {
+        alert(`${feature} is coming soon! Stay tuned for updates.`);
     }
 }
 </script>

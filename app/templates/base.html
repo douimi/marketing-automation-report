@@ -200,6 +200,40 @@
             margin: 0;
             border: none;
         }
+
+        /* Services dropdown styles */
+        .services-dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 0.5rem 0;
+            min-width: 250px;
+            margin-top: 10px;
+        }
+
+        .services-dropdown-menu .dropdown-item {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+        }
+
+        .services-dropdown-menu .dropdown-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+            color: #3498db;
+        }
+
+        .services-dropdown-menu .dropdown-header {
+            padding: 0.5rem 1rem !important;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #f8f9fa;
+            margin: 0.25rem 0;
+        }
     </style>
 </head>
 <body>
@@ -215,14 +249,46 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <!-- Always visible navigation items -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.services_page') }}">
-                            <i class="fas fa-chart-line me-1"></i>Markets
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-chart-line me-1"></i>Trade Intelligence
                         </a>
+                        <ul class="dropdown-menu services-dropdown-menu" aria-labelledby="servicesDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}">
+                                <i class="fas fa-chart-line me-2"></i>All Services
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-header">Quick Access</li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#market-intelligence">
+                                <i class="fas fa-chart-line me-2"></i>Market Intelligence
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#b2b-partners">
+                                <i class="fas fa-handshake me-2"></i>B2B Partners
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#business-operations">
+                                <i class="fas fa-briefcase me-2"></i>Business Operations
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#travel-entry">
+                                <i class="fas fa-passport me-2"></i>Travel & Entry
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#marketing-sales">
+                                <i class="fas fa-bullhorn me-2"></i>Marketing & Sales
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#logistics">
+                                <i class="fas fa-truck me-2"></i>Logistics
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#market-tools">
+                                <i class="fas fa-tools me-2"></i>Market Tools
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#academy">
+                                <i class="fas fa-graduation-cap me-2"></i>Indatex Academy
+                            </a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showComingSoon('Club')">
-                            <i class="fas fa-users me-1"></i>Club
+                        <a class="nav-link" href="#" onclick="showComingSoon('Business Network')">
+                            <i class="fas fa-users me-1"></i>Business Network
                         </a>
                     </li>
                     
@@ -294,12 +360,12 @@
                     <!-- Non-authenticated user items -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                            <i class="fas fa-sign-in-alt me-1"></i>Sign In
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.register') }}">
-                            <i class="fas fa-user-plus me-1"></i>Register
+                            <i class="fas fa-user-plus me-1"></i>Join Now
                         </a>
                     </li>
                     {% endif %}
