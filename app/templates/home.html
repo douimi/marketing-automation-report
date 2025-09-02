@@ -33,16 +33,6 @@
                                     <div class="input-group search-input-group">
                                         <select class="form-select search-input" id="countrySearch" name="destination_country" required>
                                             <option value="" disabled selected>Enter a target country</option>
-                                            <option value="US">United States</option>
-                                            <option value="GB">United Kingdom</option>
-                                            <option value="FR">France</option>
-                                            <option value="DE">Germany</option>
-                                            <option value="JP">Japan</option>
-                                            <option value="CN">China</option>
-                                            <option value="IN">India</option>
-                                            <option value="BR">Brazil</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="AU">Australia</option>
                                         </select>
                                         <button class="btn btn-cta" type="submit">
                                             <i class="fas fa-play me-2"></i>Get Free Report
@@ -640,10 +630,108 @@
     }
 }
 
+/* Select2 custom styling for home page */
+.search-form-container .select2-container {
+    width: 100% !important;
+}
 
+.search-form-container .select2-container .select2-selection--single {
+    height: auto !important;
+    padding: 1rem 1.5rem !important;
+    border: none !important;
+    border-radius: 50px 0 0 50px !important;
+    font-size: 1rem !important;
+    background: white !important;
+}
+
+.search-form-container .select2-container .select2-selection--single .select2-selection__rendered {
+    padding: 0 !important;
+    color: #666 !important;
+}
+
+.search-form-container .select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.search-form-container .select2-dropdown {
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    background: white !important;
+}
+
+.search-form-container .select2-results__option {
+    color: #333 !important;
+    background: white !important;
+    padding: 10px 15px !important;
+}
+
+.search-form-container .select2-results__option--highlighted {
+    background: #3498db !important;
+    color: white !important;
+}
+
+.search-form-container .select2-results__option--selected {
+    background: #2c3e50 !important;
+    color: white !important;
+}
+
+/* Ensure dropdown text is always visible */
+.search-form-container .select2-results {
+    background: white !important;
+}
+
+.search-form-container .select2-results__options {
+    background: white !important;
+}
+
+@media (max-width: 768px) {
+    .search-form-container .select2-container .select2-selection--single {
+        border-radius: 10px !important;
+        margin-bottom: 0.5rem;
+    }
+}
 </style>
 
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    
+    $('#countrySearch').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Enter a target country',
+        allowClear: true,
+        dropdownParent: $('.search-form-container')
+    });
+});
+
 // Handle form submission
 document.getElementById('homeCountryForm').addEventListener('submit', function(e) {
     e.preventDefault();
