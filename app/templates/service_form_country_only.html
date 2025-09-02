@@ -130,20 +130,7 @@ $(document).ready(function() {
 document.getElementById('serviceForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Show loading overlay
-    const loadingOverlay = document.createElement('div');
-    loadingOverlay.className = 'loading-overlay';
-    loadingOverlay.innerHTML = `
-        <div class="d-flex flex-column align-items-center">
-            <div class="spinner-border text-light mb-3" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="text-light">Generating {{ service.title }} report...</div>
-        </div>
-    `;
-    document.body.appendChild(loadingOverlay);
-    
-    // Submit form
+    // Submit form directly - centralized loading page will handle loading state
     fetch(this.action, {
         method: 'POST',
         body: new FormData(this)
@@ -160,16 +147,13 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
             window.location.href = data.redirect_url;
         } else if (data.status === 'error') {
             alert('Error: ' + (data.message || 'An error occurred'));
-            loadingOverlay.remove();
         } else {
             alert('Unexpected response format. Please try again.');
-            loadingOverlay.remove();
         }
     })
     .catch(error => {
         console.error('Error:', error);
         alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
-        loadingOverlay.remove();
     });
 });
 </script>

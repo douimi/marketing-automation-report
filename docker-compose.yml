@@ -25,7 +25,7 @@ services:
         limits:
           memory: 2G
         reservations:
-          memory: 512M
+          memory: 1G
 
   redis:
     image: redis:7-alpine
