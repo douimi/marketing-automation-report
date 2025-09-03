@@ -74,6 +74,18 @@ def services_page():
     """Display the services page with all available services."""
     return render_template('services.html')
 
+@main_bp.route('/financing-operations')
+@login_required
+def financing_operations():
+    """Display the financing operations page."""
+    return render_template('financing_operations.html')
+
+@main_bp.route('/payment-means')
+@login_required
+def payment_means():
+    """Display the payment means page."""
+    return render_template('payment_means.html')
+
 @main_bp.route('/industry-information')
 @login_required
 def industry_information():

@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Financing Operations - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-primary mb-3">
+                    <i class="fas fa-credit-card me-3"></i>Financing Operations
+                </h1>
+                <p class="lead text-muted">Comprehensive guide to export and import financing solutions</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    
+                    <!-- Export Financing Section -->
+                    <div id="export_financing" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-shipping-fast me-2"></i>Export Financing/Advances
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">It is a Credit operation through which the bank advances a determined amount, Euros or any currency with official quotation, to a Spanish exporter, so that they can collect the amount of sales with deferred payment made to a foreign importer.</p>
+                        
+                        <p class="mb-3">In this process, the participation of three figures stands out:</p>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-university text-primary me-2"></i>Financial Institution</li>
+                            <li class="list-group-item"><i class="fas fa-user-tie text-primary me-2"></i>Spanish Exporter</li>
+                            <li class="list-group-item"><i class="fas fa-globe text-primary me-2"></i>Foreign Importer</li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Important:</strong> Financing must always be linked to an export operation.
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Export Financing Process</strong></p>
+                                <p class="text-muted small">Financing operation diagram</p>
+                            </div>
+                        </div>
+                        
+                        <ol class="mb-4">
+                            <li class="mb-2">Existence of a commercial purchase-sale agreement between the Spanish Exporter and the foreign Importer.</li>
+                            <li class="mb-2">The Spanish exporter delivers the goods to the foreign Importer, committing to payment at a future date.</li>
+                            <li class="mb-2">The Financial Institution advances to the Exporter, in Euros or Foreign Currency, the amount of the operation.</li>
+                            <li class="mb-2">Upon maturity, the Importer pays the purchase amount.</li>
+                            <li class="mb-2">The Exporter repays the Advance with the reimbursement from the Importer.</li>
+                        </ol>
+                        
+                        <h3 class="h4 text-secondary mb-3">Characteristics of Export Financing/Advances</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Contract Term</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2">The term will normally coincide with the payment deferral granted to the importer or service recipient. In case the terms do not coincide, we would speak of two alternatives:</p>
+                                        <p><strong>- Pre-financing</strong>: The Bank finances the Exporter for the manufacturing of the goods.</p>
+                                        <p><strong>- Post-financing (Advance)</strong>: The Bank advances, totally or partially, the amount of the operation once the goods have been shipped. Generally, the terms in this type of operations do not usually exceed 90 days.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="fas fa-euro-sign me-2"></i>Amount</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The maximum amount that can be financed coincides with the value of the goods plus expenses (transport, insurance, etc.) that although initially borne by the Exporter, will be reimbursed by the Importer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="fas fa-coins me-2"></i>Currency</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The currency of the Financing/Advance can be in any currency with official quotation. The currency does not have to coincide with the currency in which the export operation is denominated, although it is advisable that they coincide to avoid exchange rate risk.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="fas fa-percentage me-2"></i>Interest Rate</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The reference interest rate will depend on the currency in which the operation is financed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Exchange Rate Risk</h5>
+                            <p class="mb-0">When the currency of the Financing/Advance and that of the reimbursement do not coincide, an exchange rate risk is generated before which the Exporter can act in two ways: assume it or cover it by contracting an Exchange Rate Insurance or a Currency Option.</p>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Forfaiting: Financing & Credit Insurance</h3>
+                        <p class="mb-3">Through forfaiting, a non-recourse financing product, financial institutions offer their exporting clients the possibility of selling without recourse the commercial credits resulting from their exports. In cases where the importer declares insolvency, the banking entity will not be able to claim the amount from the exporter.</p>
+                        
+                        <div class="card border-success mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Facilities Offered by Banking Entities through Forfaiting</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Ensure collection guarantee.</li>
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Exchange rate and interest rate risk disappear as funds are advanced.</li>
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Political and commercial risks of the operation are eliminated.</li>
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Provides liquidity.</li>
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Allows operations to be taken off balance sheet</li>
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Allows selling more or at higher prices by offering longer payment terms.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">In general terms, this type of operation involves high amounts as well as deferred payments over time, so that the seller's financial institution requests that the banking entity resident in the importer's country guarantee the operation. This condition will be materialized through additional guarantees or by endorsing the instruments used as means of payment for the export.</p>
+                        
+                        <p class="mb-5">In forfaiting operations, line concessions are not used, but rather the financial institutions that grant forfaiting operations analyze and grant this type of financing, operation by operation.</p>
+                    </div>
+                    
+                    <!-- Import Financing Section -->
+                    <div id="import_financing" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-truck me-2"></i>Import Financing
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-3">It is a Credit operation, through which the bank finances the period necessary for the marketing and collection of the imported product. Consequently, the Importer requests financing for:</p>
+                        
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-money-bill-wave text-primary me-2"></i>Lacking funds to pay cash.</li>
+                            <li class="list-group-item"><i class="fas fa-chart-line text-primary me-2"></i>Obtaining better purchase prices.</li>
+                        </ul>
+                        
+                        <p class="mb-3">It is an operation similar to a domestic Credit, differing in that payments are destined exclusively for import payments.</p>
+                        <p class="mb-3">In this process, the participation of three figures stands out:</p>
+                        
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-university text-primary me-2"></i>Financial Institution</li>
+                            <li class="list-group-item"><i class="fas fa-user-tie text-primary me-2"></i>Spanish Importer</li>
+                            <li class="list-group-item"><i class="fas fa-globe text-primary me-2"></i>Foreign Exporter</li>
+                        </ul>
+                        
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Important:</strong> Financing must always be linked to the payment of an import.
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Import Financing Process</strong></p>
+                                <p class="text-muted small">Financing operation diagram</p>
+                            </div>
+                        </div>
+                        
+                        <ol class="mb-4">
+                            <li class="mb-2">Existence of a commercial purchase/sale agreement between the Spanish Importer and the foreign Exporter.</li>
+                            <li class="mb-2">The foreign Exporter delivers the goods to the Spanish Importer.</li>
+                            <li class="mb-2">The Spanish Importer requests Financing from their Bank so that it pays the Foreign Exporter.</li>
+                            <li class="mb-2">The Spanish Importer's Bank pays the foreign Exporter.</li>
+                            <li class="mb-2">Upon maturity, the Spanish Importer repays the financing with the proceeds from their sales.</li>
+                        </ol>
+                        
+                        <h3 class="h4 text-secondary mb-3">Characteristics of Import Financing</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Contract Term</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The term will coincide with the period necessary for the marketing and collection of the imported product. Generally, the terms in this type of operations do not usually exceed 90 days, although it will depend on the imported product.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="fas fa-euro-sign me-2"></i>Amount</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Up to 100% of the operation, even more if the purchase is Incoterm F.O.B.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="fas fa-coins me-2"></i>Currency</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The currency of Import Financing can be in any currency with official quotation. The currency does not have to coincide with the currency in which the import/export operation is denominated, although it is advisable that they coincide.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="fas fa-percentage me-2"></i>Interest Rate</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The reference interest rate will depend on the currency in which the operation is financed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning mb-5">
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Exchange Rate Risk</h5>
+                            <p class="mb-0">When the currency of Import Financing and the one from which the Importer will obtain funds from the proceeds of their sales do not coincide, an exchange rate risk is generated before which the Importer can act in two ways: assume it or cover it by contracting an Exchange Rate Insurance or a Currency Option.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Guarantees Section -->
+                    <div id="guarantees" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-handshake me-2"></i>Guarantees
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">By guarantee is understood any form of guarantee by which a person undertakes to pay for a third party in case they do not fulfill the obligations they have contracted with the beneficiary.</p>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participants</h3>
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Participants in Guarantees</strong></p>
+                                <p class="text-muted small">Participants diagram</p>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Modalities</h3>
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Guarantee Modalities</strong></p>
+                                <p class="text-muted small">Different types of available guarantees</p>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Data that an international guarantee must include</h3>
+                        
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>Required Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-user text-primary me-2"></i>Name and address of the guarantor.</li>
+                                    <li class="list-group-item"><i class="fas fa-user-tie text-primary me-2"></i>Name and address of the principal or applicant.</li>
+                                    <li class="list-group-item"><i class="fas fa-users text-primary me-2"></i>Name and address of the beneficiary.</li>
+                                    <li class="list-group-item"><i class="fas fa-file-contract text-primary me-2"></i>Reason for which the guarantee is issued.</li>
+                                    <li class="list-group-item"><i class="fas fa-euro-sign text-primary me-2"></i>Currency and guaranteed amount.</li>
+                                    <li class="list-group-item"><i class="fas fa-calendar text-primary me-2"></i>Maturity or term for which the guarantee is issued.</li>
+                                    <li class="list-group-item"><i class="fas fa-gavel text-primary me-2"></i>Conditions and terms under which the execution of the guarantee should be requested.</li>
+                                    <li class="list-group-item"><i class="fas fa-balance-scale text-primary me-2"></i>The legislation applicable to the guarantee(*).</li>
+                                    <li class="list-group-item"><i class="fas fa-info-circle text-primary me-2"></i>Other data that may be considered specifically of interest.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mt-4">
+                            <h6 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>Recommendation</h6>
+                            <p class="mb-0">(*) It is advisable to subject on-demand guarantees or, where appropriate, counter-guarantees in favor of a local bank, or standby letters of credit to the rules of the International Chamber of Commerce (URDG 758, UCP 600, ISP 98, as appropriate) as they contribute to defining more securely the rules of the game between issuers and users of this type of guarantees.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

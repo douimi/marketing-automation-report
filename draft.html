@@ -1,1052 +1,241 @@
-<div id="contenu-contenu" class="theme_santander_">
+<div id="contenu" class="contenu">
+    <!-- conversion pdf-->
+    <a href="#" target="_blank" class="lien-pdf-impression" aria-label=" (Opens a new tab)"></a>
+    <div id="contenu-contenu" class="theme_santander_guia-comercio-exterior-medios-de-pago">
     <!-- InstanceBeginEditable name="Contenu" -->
-    <h1>
-    Business directories
-    </h1>
-    <div class="salon-dispo_v2">
-    <span class="salons-dispos">
-    <strong>1,875</strong> Business directories
-    </span>
-    </div>
-    <a name="form_service" id="form_service"></a>
-    <div id="message_veille" class="message-attente" style="display: none;"> 
-    <img src="/commun/images/gif-anime_80px.gif" alt="alt_image-attente" title="">
-    <span class="spinner-message-attente"></span>
-    <p>Please wait</p> 
-    </div>
-    <p class="" style="clear: both;">Search our business directories for commercial partners. The directories provide general or specific information according to the industries and countries selected.</p>
-    <p class="" style="clear: both;">To make a search, select an industry and/or a country.</p>
-    <script type="text/javascript" language="javascript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    function verifier_formulaire()
-    {
-    if( ( $('pays_recherche').value != '' ) && ( $('code_secteur').value == '' ) )
-    $('code_secteur').value = 'all';
-    else
-    {
-    if( ( $('code_secteur').value == '' ) && ( $('pays_recherche').value == '' ) )
-    {
-    gestion_erreurs__formulaire( true );
-    return false;
-    }
-    }
-    if (typeof datalayer__gestion_submit === "function") 
-    datalayer__gestion_submit();
-    gestion_erreurs__formulaire( false );
-    Element.show('message_veille');
-    return true;
-    }
-    function gestion_erreurs__formulaire( type )
-    {
-    if( type )
-    {
-    Element.show('message_erreur__principal');
-    jQuery('#dt_pays_recherche').addClass('champ_en_erreur');
-    jQuery('#dd_pays_recherche').addClass('champ_en_erreur');
-    jQuery('#dt_code_secteur').addClass('champ_en_erreur');
-    jQuery('#dd_code_secteur').addClass('champ_en_erreur');
-    }
-    else
-    {
-    Element.hide('message_erreur__principal');
-    jQuery('#dt_pays_recherche').removeClass('champ_en_erreur');
-    jQuery('#dd_pays_recherche').removeClass('champ_en_erreur');
-    jQuery('#dt_code_secteur').removeClass('champ_en_erreur');
-    jQuery('#dd_code_secteur').removeClass('champ_en_erreur');
-    }
-    }
-    function gestion_erreurs__onchange( champ )
-    {
-    if( jQuery('#'+champ).val() != '' )
-    gestion_erreurs__formulaire( false );
-    else
-    {
-    if( ( jQuery('#pays_recherche').val() == '' ) && ( jQuery('#code_secteur').val() == '' ) )
-    {
-    jQuery('#dt_pays_recherche').addClass('champ_en_erreur');
-    jQuery('#dd_pays_recherche').addClass('champ_en_erreur');
-    jQuery('#dt_code_secteur').addClass('champ_en_erreur');
-    jQuery('#dd_code_secteur').addClass('champ_en_erreur');
-    }
-    }
-    }
-    --></script>
-    <form id="form_business_directory" action="#result" method="get" name="form_business_directory" class="recherche_explication">
-    <input type="hidden" value="valider" name="todo">
-    <input type="hidden" name="csrf" value="66e99747bd6e9b668ccb13fbaf9000de">
-    <p id="message_erreur__principal" class="message_erreur message-erreur-principal" style="display: none;">Please select an industry and/or a country</p>
-    <div>
-    <dl class="informations-3">
-    <dt id="dt_code_secteur"><label for="code_secteur">Industry</label></dt>
-    <dd id="dd_code_secteur">
-    <select id="code_secteur" name="code_secteur">
-    <option value="">Choose an industry</option>
-    <option value="1">Administration, Institutions, Justice, Social services</option>
-    <option value="18">Aeronautics, Aerospace</option>
-    <option value="2">Agriculture, Horticulture, Livestock, Fishing, Forestry</option>
-    <option value="3">Arts, Culture, Handcraft, Museums, Entertainment</option>
-    <option value="4">Audiovisual, Cinema, Photography, Multimedia</option>
-    <option value="17">Automotive, Lorries, Cycles, Motorcycles</option>
-    <option value="5">Banking, Finance, Investment, Insurance</option>
-    <option value="30">Business services: Services, Outsourcing</option>
-    <option value="14">Chemicals, Cosmetics, Pharma, Plastics, Fertilisers</option>
-    <option value="8">Communication, Marketing, Advertising, Incentive</option>
-    <option value="6">Construction, Real Estate, Architecture, Urbanism</option>
-    <option value="16">Defense, Armaments, Security</option>
-    <option value="9">Education, Training, Apprenticeship</option>
-    <option value="21">Electricity and electronics: Equipment and components</option>
-    <option value="19">Energy, Oil, Gas, Hydrogen, Electricity, Renewables</option>
-    <option value="10">Environment, Ecology, Water, Recycling, Waste</option>
-    <option value="12">Fresh &amp; Processed Food, Beverages, Cereals, Tobacco</option>
-    <option value="11">Furniture, Decoration, DIY, Garden</option>
-    <option value="28">Health, Hospital, Pharmacies, Dental, Veterinary</option>
-    <option value="25">Industrial subcontracting, Maintenance, Design, IP</option>
-    <option value="27">IT, Hardware, Software, Telecommunications, Internet</option>
-    <option value="23">Materials, Metals, Metallurgy, Mining, Quarries</option>
-    <option value="15">Mechanical, Railway, Naval, Machinery, Agricultural machinery</option>
-    <option value="22">Packaging, Conditioning</option>
-    <option value="31">Personal Services, Family, Pets</option>
-    <option value="26">Press, Information, Events, Bookstores, Libraries</option>
-    <option value="20">Printing, Publishing, Graphic Art, Stamps, Cards</option>
-    <option value="29">Science, Humanities, Research, Technology</option>
-    <option value="32">Sports, Leisure, Hunting, Hobbies, Toys</option>
-    <option value="24">Textile, Clothing, Footwear, Accessories, Jewellery</option>
-    <option value="34">Tourism, Travel, Hosting, Bars, Restaurants, Parks</option>
-    <option value="7">Trade, Distribution, Retail, Import/Export</option>
-    <option value="33">Transport, Logistics, Handling, Parcel Shipping</option>
-    <option value="13">Wood, Paper, Cardboard</option>
-    <option value="all">All Industries</option>
-    </select>
-    </dd>
-    <script type="text/javascript" language="javascript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    champ_ecrire_valeur( $( "code_secteur" ), lib_general__convertir_unicode_vers_js( "19" ) );
-    --></script>
-    <dt id="dt_pays_recherche"><label for="pays_recherche">Geographical area</label></dt>
-    <dd id="dd_pays_recherche">
-    <select id="pays_recherche" name="pays_recherche">
-    <option value="">Select a geographical area</option>
-    <option value="">-----------------------------</option>
-    <option value="240">World</option><option value="242">Africa</option><option value="269">America</option><option value="246">Asia</option><option value="247">Europe</option><option value="249">Middle East</option><option value="248">Oceania</option>
-    <option value="">-----------------------------</option>
-    <option value="96">Afghanistan</option><option value="85">Albania</option><option value="73">Algeria</option><option value="97">Andorra</option><option value="98">Angola</option><option value="3">Argentina</option><option value="86">Armenia</option><option value="4">Australia</option><option value="5">Austria</option><option value="55">Azerbaijan</option><option value="99">Bahamas</option><option value="100">Bahrain</option><option value="101">Bangladesh</option><option value="6">Belgium</option><option value="102">Belize</option><option value="103">Benin</option><option value="104">Bhutan</option><option value="105">Bolivia</option><option value="106">Bosnia and Herzegovina</option><option value="107">Botswana</option><option value="7">Brazil</option><option value="108">Brunei Darussalam</option><option value="8">Bulgaria</option><option value="109">Burkina Faso</option><option value="83">Burundi</option><option value="110">Cambodia</option><option value="74">Cameroon</option><option value="9">Canada</option><option value="111">Cape Verde</option><option value="113">Chad</option><option value="10">Chile</option><option value="11">China</option><option value="12">Colombia</option><option value="114">Comoros</option><option value="166">Congo</option><option value="115">Costa Rica</option><option value="14">Croatia</option><option value="87">Cyprus</option><option value="42">Czech Republic</option><option value="15">Denmark</option><option value="116">Djibouti</option><option value="117">Dominican Republic</option><option value="118">Ecuador</option><option value="16">Egypt</option><option value="119">El Salvador</option><option value="120">Equatorial Guinea</option><option value="121">Eritrea</option><option value="58">Estonia</option><option value="174">Eswatini</option><option value="122">Ethiopia</option><option value="148">Federated States of Micronesia</option><option value="123">Fiji Islands</option><option value="19">Finland</option><option value="20">France</option><option value="124">Gabon</option><option value="125">Gambia</option><option value="88">Georgia</option><option value="54">Germany</option><option value="126">Ghana</option><option value="21">Greece</option><option value="127">Grenada</option><option value="22">Guatemala</option><option value="281">Guernsey</option><option value="128">Guinea</option><option value="129">Guinea-Bissau</option><option value="130">Guyana</option><option value="131">Haiti</option><option value="132">Honduras</option><option value="23">Hong Kong SAR, China</option><option value="24">Hungary</option><option value="28">Iceland</option><option value="25">India</option><option value="26">Indonesia</option><option value="27">Ireland</option><option value="29">Israel</option><option value="30">Italy</option><option value="134">Jamaica</option><option value="31">Japan</option><option value="32">Jordan</option><option value="60">Kazakhstan</option><option value="135">Kenya</option><option value="77">Kuwait</option><option value="136">Kyrgyzstan</option><option value="137">Laos</option><option value="61">Latvia</option><option value="138">Lesotho</option><option value="140">Liechtenstein</option><option value="62">Lithuania</option><option value="79">Luxembourg</option><option value="141">Macao SAR, China</option><option value="142">Madagascar</option><option value="143">Malawi</option><option value="33">Malaysia</option><option value="144">Maldives</option><option value="145">Mali</option><option value="91">Malta</option><option value="146">Marshall Islands</option><option value="94">Mauritania</option><option value="147">Mauritius</option><option value="35">Mexico</option><option value="93">Moldova</option><option value="149">Monaco</option><option value="150">Mongolia</option><option value="151">Montenegro</option><option value="34">Morocco</option><option value="152">Mozambique</option><option value="154">Namibia</option><option value="155">Nepal</option><option value="37">Netherlands</option><option value="63">New Zealand</option><option value="156">Nicaragua</option><option value="157">Niger</option><option value="158">Nigeria</option><option value="90">North Macedonia</option><option value="64">Norway</option><option value="160">Oman</option><option value="66">Pakistan</option><option value="161">Palau</option><option value="36">Panama</option><option value="163">Papua New Guinea</option><option value="164">Paraguay</option><option value="38">Peru</option><option value="39">Philippines (the)</option><option value="40">Poland</option><option value="41">Portugal</option><option value="237">Puerto Rico</option><option value="165">Qatar</option><option value="43">Romania</option><option value="82">Rwanda</option><option value="167">San Marino</option><option value="2">Saudi Arabia</option><option value="80">Senegal</option><option value="95">Serbia</option><option value="168">Seychelles</option><option value="169">Sierra Leone</option><option value="46">Singapore</option><option value="67">Slovakia</option><option value="68">Slovenia</option><option value="1">South Africa</option><option value="13">South Korea</option><option value="17">Spain</option><option value="171">Sri Lanka</option><option value="173">Suriname</option><option value="47">Sweden</option><option value="48">Switzerland</option><option value="49">Taiwan, China</option><option value="175">Tajikistan</option><option value="176">Tanzania</option><option value="50">Thailand</option><option value="178">Togo</option><option value="179">Tonga</option><option value="180">Trinidad and Tobago</option><option value="51">Tunisia</option><option value="52">Türkiye</option><option value="181">Turkmenistan</option><option value="182">Uganda</option><option value="57">United Arab Emirates</option><option value="44">United Kingdom</option><option value="18">United States</option><option value="53">Uruguay</option><option value="65">Uzbekistan</option><option value="183">Vanuatu</option><option value="71">Venezuela</option><option value="72">Vietnam</option><option value="185">Zambia</option>
-    </select>
-    </dd>
-    <script type="text/javascript" language="javascript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    champ_ecrire_valeur( $( "pays_recherche" ), lib_general__convertir_unicode_vers_js( "86" ) );</script>
-    <dt>&nbsp;</dt>
-    <dd>
-    <input id_tracking="g-s-annuaires-rechercher" id="bouton" class="bouton-off" type="submit" value="Search">
-    </dd>
-    </dl>
-    </div>
-    <div class="clean"></div>
-    </form>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    var datalayer__form_name = 'form_business_directory';</script>
-    <a name="result" class="espace-ancre"></a>
-    <div class="clean"></div>
-    <div id="zone_de_resultats" zone_inclusion="zone_de_resultats">
-    <div>
-    <div class="bloc-spot">
-    <div class="titre-resultat-l">
-    <h2 class="no-bg-bd">68 online business directories - Armenia</h2>
-    </div>
-    <div class="ancre-resultat-r bloc_navigation_non_imprimable">
-    <a id_tracking="g-s-annuaires-titre-ancre-retour" name="haut" href="#haut">Back to your search</a>
-    </div>
-    <div class="clean"></div>
+    <h1>Medios de Pago Internacionales</h1>
+    <div id="billetes">
+    <p>Cada transacción comercial puede ser susceptible de un medio de cobro diferente en función de la cuantía de la operación, el plazo de cobro, el tipo de cliente, el grado de relación existente entre comprador y vendedor, el país en el que está el comprador, las costumbres de pago en el sector o en el país, etc. Ninguna empresa que exporte regularmente y a varios países, utiliza siempre el mismo medio de cobro. Por ello, es importante tener una buena panorámica de todos ellos y de sus diferentes matices.</p>
+    <p>La elección del medio de pago deberá tener en cuenta los siguientes aspectos:</p>
     <ul>
-    <li><a id_tracking="g-s-annuaires-titre-ancre-resultats" name="title_1" href="#title_1">25 directories "Energy, Oil, Gas, Hydrogen, Electricity, Renewables"</a></li>
-    <li><a id_tracking="g-s-annuaires-titre-ancre-resultats-generalistes" name="title_2" href="#title_2">43 general directories</a></li>
+    <li>Agilidad buscada, mayormente opuesto a la seguridad.</li>
+    <li>Seguridad, a su vez opuestos al coste (cuanto más seguro, más caro).</li>
+    <li>Poder negociador de las partes (si queremos vender, a veces tenemos que aceptar algún riesgo indeseado, si el comprador no está dispuesto a asumir el mayor coste que exigiría nuestra seguridad)</li>
+    <li>Características del país del comprador, pues hay países (con dificultades de pagos internacionales) en los que puede ser recomendable tomar precauciones adicionales, al margen de la solvencia de nuestro cliente.</li>
+    <li>Financiación. No todos los medios de cobro facilitan de la misma forma la financiación de la operación comercial; y, no pocas veces, ésta es imprescindible para que se lleve a cabo.</li></ul>
+    <p class="notes">Para saber que medios de pago internacionales están disponibles localmente, contacte a su sucursal Santander para obtener más información.</p>
+    <h2>Billetes</h2>
+    <p>En el ámbito de las Operaciones Comerciales Internacionales, apenas se utilizan los Billetes de Bancos Extranjeros como Medio de Pago. Ello es debido a los inconvenientes propios de Riesgos y Costes.</p>
+    <ul>
+    <li><strong>Riesgos</strong> :
+    De falsificaciones, robos, extravíos y cambio</li>
+    <li><strong>Costes</strong> : Como consecuencia de la manipulación, transporte, seguros, etc. los cambios resultan más caros</li></ul>
+    <p>Además hay que añadir las posibles restricciones que puedan presentar la normativa de Control de Cambio en algunos países.</p>
+    </div>
+    <div id="cheques">
+    <h2>Cheque Personal</h2>
+    <h3>Descripción</h3>
+    <p>Lo emite el titular de una cuenta corriente en una entidad de crédito contra los fondos que tiene depositados en la misma, y puede ser tanto nominativo como al portador.<br>
+    <br>
+    El exportador no tiene seguridad de cobro de la mercancía a pesar de haber recibido el cheque, dado que ésta dependerá de la legalidad de la firma del librador y en la existencia o no de saldo en la cuenta. <br>
+    <br>
+    El cobro del cheque personal está supeditado a las leyes del país del importador, ya que no en todos los países permiten el pago al exterior mediante este instrumento. <br>
+    <br>
+    El cheque personal es utilizado como Medio de Pago Internacional cuando existe gran confianza entre el Exportador y el Importador.
+    <br>
+    </p>
+    <h3>Sujetos Participantes</h3>
+    <ul>
+    <li><strong>Librador</strong>: Persona que emite el cheque.</li>
+    <li><strong>Librado</strong>: Persona física o jurídica depositaria de los fondos propiedad del librador (suele ser una entidad financiera).</li>
+    <li><strong>Tenedor</strong>: Persona que cobra el cheque.</li>
     </ul>
+    <h3>Operativa</h3>
+    <div align="center"><img src="/ressources/images/figura1.gif" alt="" title=""></div><br>
+    <ol>
+    <li>El Exportador (Vendedor) envía las mercancías y los documentos al importador (Comprador)</li>
+    <li>El Importador (Comprador) remite al Exportador (Vendedor), llegado el plazo acordado, un cheque en divisas</li>
+    <li>Una vez que el Exportador tenga el Cheque procederá a depositarlo en su banco para que gestione el cobro</li>
+    <li>El Banco del Exportador gestionará su cobro a través del Banco Pagador</li>
+    <li>El Banco Pagador procederá, en su caso, a adeudarlo en la cuenta del Importador</li>
+    <li>El Banco Pagador lo abonará al Banco del Exportador </li>
+    <li>El importe será abonado al Exportador</li> </ol>
+    <h2>Cheque Bancario</h2>
+    <h3>Descripción</h3>
+    <p>Es un documento emitido por un Banco, a petición de un Importador de ese país, contra él mismo o a cargo de otra entidad bancaria, normalmente ubicada en país diferente, y a favor del exportador de la operación que originó el pago que se pretende cancelar.<br>
+    <br>
+    Aunque no existe ninguna restricción legal, no es aconsejable emitirlos al portador.
+    Tiene una gran diferencia con el cheque personal: mientras el personal es emitido por una persona contra su cuenta corriente, el cheque bancario es emitido por el Banco Emisor contra la cuenta corriente que tiene en el Banco Librado.<br>
+    <br>
+    Este sistema de cobro, siempre que se realice de forma posterior al envío de las mercancías o prestación del servicio, implica gran confianza entre el Exportador y el Importador.<br>
+    <br>
+    De cara al exportador, el descuento bancario se hace con mayor prontitud y fluidez que en el cheque personal, sobre todo si se trata de un Banco de reconocida solvencia y de un país sin dificultades.</p><br>
+    <h3>Sujetos participantes</h3>
+    <ul>
+    <li><strong>Librador</strong>: Es el banco encargado de emitir el cheque con cargo a sus propios fondos</li>
+    <li><strong>Librado</strong>: Es el banco corresponsal del Banco Emisor (no siempre existe un librado o Banco pagador)</li>
+    <li><strong>Importador</strong>: Es la persona física o jurídica que solicita la emisión del cheque</li>
+    <li><strong>Tenedor</strong>: Es el exportador de la mercancía que cobrará el cheque</li>
+    </ul>
+    <h3>Operativa</h3>
+    <div align="center"><img src="/ressources/images/figura2.gif" alt="" title=""></div><br>
+    <ol>
+    <li>El Exportador (Vendedor) envía las mercancías y los documentos al importador (Comprador)</li>
+    <li>El Importador (Comprador) hace una solicitud de Cheque Bancario a su Banco</li>
+    <li>El Banco Emisor adeuda en la cuenta de su Cliente y le envía el Cheque</li>
+    <li>El Importador envía el Cheque al Exportador</li>
+    <li>El Exportador envía el Cheque al Banco Pagador para que éste lo gestione</li>
+    <li>El Banco Pagador abona el Cheque al Exportador</li>
+    <li>Al mismo tiempo el Banco Pagador adeuda en la cuenta del Banco Emisor el importe de la operación</li></ol>
     </div>
-    <div class="filtres-search filtres-pm4 bloc_navigation_non_imprimable">
-    <a id_tracking="g-s-annuaires-filtres-affiner" class="lien-filtres-counterparts add-truncate-active" data-toggle="collapse" data-bs-toggle="collapse" href="#filtres" role="button" aria-expanded="false" aria-controls="filtres">
-    <i class="fa fa-filter" aria-hidden="true">&nbsp;</i>Refine your results
-    </a>
-    <div id="filtres" class="filter-counterparts collapse-truncate collapse">
-    <form id="filtres-form" method="post">
-    <input name="pays_recherche" type="hidden" value="86">
-    <input name="code_secteur" type="hidden" value="19">
-    <input name="todo" type="hidden" value="valider">
-    <div class="bloc_filtre">
-    <dl class="villes bloc_navigation_non_imprimable">
-    <p><strong><i class="fa fa-industry" aria-hidden="true"></i> Sub-sectors</strong></p>
+    <div id="ordenes_de_pago">
+    <h2>Ordenes de Pago</h2>
+    <h3>Descripción</h3>
+    <p>Es el medio de pago mediante el cual el ordenante (importador) pide a su banco que abone en la cuenta del beneficiario (exportador) a través de un segundo banco (banco corresponsal) una suma determinada de dinero. La transferencia deberá indicar el concepto por el que se efectúa el pago.<br>
+    <br><br>
+    Las ventajas que la utilización de este medio de pago aporta respecto a los cheques consisten en evitar las pérdidas, falsificación de firmas, etc.</p>
+    <p>Este medio de cobro/pago se aplica en la compraventa internacional de mercancías, cuando existe una gran confianza entre el Exportador y el Importador ya que el exportador continua remitiendo la mercancía y documentos a la espera de que el importador cumpla sus obligaciones.</p>
+    <h3>Sujetos Participantes</h3>
+    <ul>
+    <li><strong>Ordenante</strong>: Persona física o jurídica que solicita al banco emisor que emita la orden de pago.</li>
+    <li><strong>Banco emisor</strong>: Es el banco que emite la orden de pago.</li>
+    <li><strong>Banco pagador</strong>: Es el banco que realiza el pago, suele ser un corresponsal del banco emisor.</li>
+    <li><strong>Beneficiario</strong>: Persona física o jurídica. </li>
+    </ul>
+    <h3>Operativa</h3>
+    <div align="center"><img src="/ressources/images/figura3.gif" alt="" title=""></div><br>
+    <ol>
+    <li>El Exportador envía al Importador las mercancías y los documentos acreditativos de la propiedad de las mismas.</li>
+    <li>El Importador ordena a su Banco que emita la Transferencia.</li>
+    <li>El Banco Emisor procede a realizar el adeudo en la cuenta de su cliente.</li>
+    <li>El Banco Emisor envía las instrucciones de la Transferencia al Banco Pagador, a la vez que abona el importe.</li>
+    <li>El Banco Pagador paga la cantidad al Exportador.</li></ol>
+    </div>
+    <div id="remesas">
+    <h2>Remesas</h2>
+    <h3>Descripción</h3>
+    <p>Se trata de una operación bancaria por la cual el exportador encarga a un banco la gestión del cobro de unos documentos financieros (letras de cambio, pagarés, cheques...) y/o no financieros (facturas, documentos de embarque, control fitosanitario...), contra la aceptación o pago al contado del importador. En función de que los documentos sean financieros o/y no financieros, la remesa será simple o documentaria.<br>
+    <br>
+    El marco legal viene recogido por la Cámara de Comercio Internacional en las <a href="http://www.iccwbo.org/" target="_blank" aria-label="REGLAS UNIFORMES (Opens a new tab)">REGLAS UNIFORMES</a> relativas a LAS COBRANZAS.</p>
+    <h3>Sujetos Participantes</h3>
+    <ul>
+    <li><strong>Ordenante</strong>: Es el exportador quién va a tomar la iniciativa en la operación y va a ceder los documentos financieros y no financieros a su banco para que gestione el cobro de los mismo siendo una vez cobrados el beneficiario de los fondos.</li>
+    <li><strong>Banco remitente</strong>: Es el banco del exportador, a quién este confía la gestión del cobro de la remesa. Remite los documentos un banco que indique el exportador.</li>
+    <li><strong>Banco cobrador</strong>: Debe ser distinto del banco remitente. Recibe los documentos de este y se los presenta al importador para su aceptación o pago. Si presenta los documentos al importador (librado) actúa como banco presentador.<br>
+    </li>
+    <li><strong>Librado</strong>: Es el importador a quien se presenta los documentos para que los acepte o pague.<br>
+    </li>
+    </ul>
+    <h3>Operativa</h3>
+    <div align="center"><img src="/ressources/images/figura4.gif" alt="" title=""></div><br>
+    <ol>
+    <li>El Exportador envía la mercancía a la aduana del país de destino.</li>
+    <li>El Exportador envía al Banco Remitente los Documentos, tanto financieros como comerciales.</li>
+    <li>El Banco Remitente, envía los Documentos al Banco Cobrador.</li>
+    <li>El Banco Cobrador lo comunica al Importador. </li>
+    <li>El Importador procede al pago o a la aceptación de un efecto, a cambio de la obtención de los Documentos.</li>
+    <li>El Banco Cobrador procede a reembolsar el importe al Banco Remitente. </li>
+    <li>El Banco Remitente abona al Exportador.</li>
+    </ol>
+    <h2>Remesa Simple</h2>
+    <p>En la remesa simple, el exportador enviará directamente al importador la mercancía y los documentos comerciales y, a parte, a través de una entidad financiera enviará los documentos financieros, generalmente para su aceptación o pago. El cedente debe pasar instrucciones precisas y completas, relativas al protesto en caso de impago o cualquier otra tramitación legal que los sustituya, así como por cuenta de quien son las comisiones y gastos.</p>
+    <p> Desde un punto de vista de riesgos, este medio de pago exige para el exportador asumir prácticamente todos los riesgos, ya que pierde el dominio obre la mercancía al remitir directamente los documentos comerciales al importador y asume la posibilidad de que éste rechace la aceptación o pago así como las posibles dificultades derivadas del riesgo/país.
+    </p>
+    <img src="/ressources/images/remesa-simple.jpg" alt="" title="">
+    <ol>
+    <li>Firma del contrato, aceptación del pedido, etc.</li>
+    <li>El exportador envía la mercancía y los documentos comerciales al importador,
+    asumiendo desde este momento todos los riesgos.</li>
+    <li>El propio vendedor solicita a su banco que remita al importador la letra de cambio.</li>
+    <li>El banco exportador envía la remesa al banco presentador.</li>
+    <li>El importador/librado recibirá la letra de cambio a través del banco presentador.</li>
+    <li>El comprador efectúa el pago.</li>
+    <li>Se procederá al reembolso y pago al exportador.</li></ol>
+    <h2>Remesa Documentaria</h2>
+    <p>Es aquella en la que el Exportador entrega a su Banco diversos documentos mercantiles (facturas, documentos de embarque, control fitosanitario...) acompañado o no de un documento de giro (Letra, Pagaré, Recibo,...) con instrucciones de que los entregue al importador extranjero, a través de su Banco, contra la aceptación o pago del documento de giro.</p>
     <p>
-    <a href="#" id_tracking="g-s-annuaires-filtres-select-1-all" role="button">Select all</a> &nbsp;&nbsp;/&nbsp;&nbsp; <a href="#" id_tracking="g-s-annuaires-filtres-clear-1-all" role="button">Clear all</a>
+    Es importante considerar que el exportador podrá encontrarse con que el comprador rechace las mercancías, por lo que aun disponiendo de la posesión de las mismas, se encontrará con ellas situadas en un país distante y, consecuentemente, con gastos añadidos por almacenaje, coste de transporte en caso de reimportación, e incluso pérdida o sanciones por demoras en el despacho.
     </p>
-    <div class="cont-filter"> 
-    <div>
-    <input id="filtre_ss_11.08" type="checkbox" name="filtre_secteurs[]" value="11.08" class="checkClass">
-    <label for="filtre_ss_11.08"><span class="addtruncate">Energy</span> (9)</label>
-    </div><div>
-    <input id="filtre_ss_11.08.04" type="checkbox" name="filtre_secteurs[]" value="11.08.04" class="checkClass">
-    <label for="filtre_ss_11.08.04"><span class="addtruncate">Renewable energy</span> (16)</label>
+    <img src="/ressources/images/remesa-documentario.jpg" alt="" title="">
+    <ol>
+    <li>Firma del contrato, aceptación del pedido, etc.</li>
+    <li>El exportador procede al envío de la mercancía.</li>
+    <li>La documentación acreditativa del envío es recibida por el exportador.</li>
+    <li>A continuación el vendedor acude a su banco con instrucciones para la entrega al comprador de los documentos comerciales contra la aceptación de la letra.</li>
+    <li>El banco del exportador efectúa la gestión a través del banco presentador, llegando así hasta el importador.</li>
+    <li>Tras la comprobación de la documentación, el importador/librado acepta la letra.</li>
+    <li>El banco presentador le entrega los documentos comerciales y procede a la devolución de la letra aceptada al exportador, por medio de su banco.</li>
+    <li>El importador efectuará la retirada de la mercancía con los documentos obtenidos.</li></ol>
+    </div>
+    <div id="creditos_documentarios">
+    <h2>Créditos Documentarios</h2>
+    <h3>Descripción</h3>
+    <p>Se define como todo acuerdo, cualquiera que sea su denominación o descripción, por el que un banco (Banco Emisor) obrando a petición y de conformidad con las instrucciones de un Cliente Ordenante) o en su propio nombre:</p>
+    <ul>
+    <li>Se obliga a hacer un pago a un tercero (Beneficiario) o a su orden, o a aceptar y pagar letras de cambio (instrumentos de giro) librados por el Beneficiario,</li>
+    <li>Autoriza a otro banco para que efectúe el pago o para que acepte y pague tales letras de cambio (instrumentos de giro) </li>
+    <li>Autoriza a otro banco para que negocie, contra la entrega de los documentos exigidos, siempre y cuando se cumplan los términos y las condiciones del Crédito. </li>
+    <li>En consecuencia, el Crédito Documentario es el medio de pago más seguro tanto para el Exportador que sabe de antemano que si cumple con el condicionado cobra, como para el importador que sabe que sólo pagará si le presentan correctamente los documentos solicitados por él.</li></ul>
+    <p>El marco legal viene recogido por La Cámara de Comercio Internacional y está constituido por las <a href="http://www.iccwbo.org/" target="_blank" aria-label="REGLAS Y USOS UNIFORMES RELATIVOS A LOS CREDITOS DOCUMENTARIOS (Opens a new tab)">REGLAS Y USOS UNIFORMES RELATIVOS A LOS CREDITOS DOCUMENTARIOS</a>.</p>
+    <h3>Sujetos Participantes</h3>
+    <p>Las partes intervinientes en un Crédito Documentario (o Carta de Crédito) son:</p>
+    <ul>
+    <li>El Importador u ordenante.</li>
+    <li>El Exportador o beneficiario.</li>
+    <li>El Banco Emisor.</li>
+    <li>El Banco Avisador.</li></ul>
+    <h3>Operativa</h3>
+    <div align="center"><img src="/ressources/images/figura5.gif" alt="" title=""></div><br>
+    <ol>
+    <li>Mediante un documento, el Importador solicita al Banco Emisor la apertura del Crédito Documentario.</li>
+    <li>El Banco, tras el correspondiente estudio de riesgos, emite el Crédito Documentario al Beneficiario. </li>
+    <li>El Banco Avisador comunica la apertura del Crédito Documentario al Beneficiario. </li>
+    <li>El Exportador embarca las mercancías y las hace llegar hasta el país de destino. </li>
+    <li>El Beneficiario entrega documentos al Banco Avisador. </li>
+    <li>El Banco Avisador envía los documentos recibidos al Banco Emisor.</li>
+    <li>El Banco Emisor paga al Banco Avisador.</li>
+    <li>El Banco Avisador abona al Beneficiario. </li>
+    <li>El Banco Emisor adeudará en cuenta al importador y le entregará los documentos.</li>
+    <li>El Importador presenta la documentación en la aduana y retira la mercancía.</li>
+    </ol>
+    <h2>Clasificacíon de Créditos documentarios</h2>
+    <h3>Según el compromiso del Banco Emisor</h3>
+    <h4>Créditos Irrevocables</h4>
+    <p>Las UCP 600 señalan que los créditos documentarios son siempre irrevocables (incluso aunque no sea mencionado). Esto quiere decir que los créditos documentarios no pueden ser anulados ni modificados en ningún caso, si no es de conformidad de todas las partes interesadas (no sólo del ordenante y Beneficiario, sino también de los Bancos Emisor y Confirmador.</p>
+    <h4>Créditos Confirmados</h4>
+    <p>El Banco Emisor solicita del Banco Intermediario que añada su Confirmación, es decir, que se subrogue totalmente en las obligaciones que aquel tiene ante el Beneficiario. Con estos Créditos se incrementa la seguridad del Beneficiario al desaparecer, con carácter general el riesgo país.</p>
+    <h4>Créditos No Confirmados</h4>
+    <p>Son aquellos en los que el Banco Intermediario no añade compromiso alguno, limitando su papel al de avisar al beneficiario de las condiciones de utilización del Crédito.</p>
+    <h3>Según el lugar de pago:</h3>
+    <h4>Créditos pagaderos en las Cajas del Banco Emisor</h4>
+    <p>En estos casos se produce una mayor demora en el cobro, pues lo documentos han de ser presentados al Banco Emisor previamente al pago.</p>
+    <h4>Créditos pagaderos en las Cajas del Banco Intermediario</h4>
+    <p>La inmediatez entre la presentación de documentos en orden y el cobro es completa</p>
+    <h4>Créditos pagaderos en las cajas de un tercer Banco (Banco Confirmador)</h4>
+    <p>Esta posibilidad existe en ocasiones cuando la divisa del Crédito es distinta a la de los países del Beneficiario y Emisor y/o existe una desconfianza mutua con el Banco Emisor.</p>
+    <h3>Según la forma de Utilización:</h3>
+    <h4>Pago</h4>
+    <ul>
+    <li><strong>Créditos a la Vista</strong><br>
+    El pago se produce a la presentación de los documentos requeridos y conformes.</li>
+    <li><strong>Créditos a Plazo</strong><br>
+    El pago se produce en un plazo determinado a contar desde una fecha estipulada.</li>
+    </ul>
+    <h2>Aceptación</h2>
+    <p>El Banco se compromete a aceptar los efectos girados a su cargo o a cargo del Ordenante.</p>
+    <h2>Negociación</h2>
+    <p>El Banco se compromete a descontar sin recurso sobre el librador.</p>
+    <h2>Otros tipos de Créditos</h2>
+    <ul>
+    <li><strong>Créditos Transferibles</strong><br>
+    Son aquellos que permiten al beneficiario dar instrucciones al Banco Avisador, para transferir parcial o totalmente el Crédito a favor de un tercero o de terceros, los cuales reciben el nombre de segundos Beneficiarios, normalmente por un importe menor y menor plazo.</li>
+    <li><strong>Créditos No Transferibles</strong><br>
+    Son aquellos que no expresan la facultad de "Transferibles"</li>
+    <li><strong>Créditos Rotativos (Revolving)</strong><br>
+    Son Créditos que, transcurrido un plazo o agotada una cantidad, vuelven a recuperar su valor original para ser reutilizables. Hay dos clases; Acumulativos, permiten disponer en un periodo de lo no utilizado en el precedente y No acumulativos: no permiten disponer, en periodos siguientes, lo no utilizado en el periodo anterior.</li>
+    <li><strong>Créditos Back to Back (Subsidiarios)</strong><br>
+    Son aquellos que se abren a solicitud de un ordenante, que a su vez es Beneficiario de otro Crédito Documentario, el cual aporta como garantía del que él está solicitando.</li>
+    <li><strong>Créditos con Cláusula Roja</strong><br>
+    Son los que autorizan al Banco obligado a efectuar el pago, a realizar anticipos al Beneficiario, con objeto de que este vaya adquiriendo las mercancías o materias primas para la fabricación de aquellas objeto del Crédito Documentario.</li>
+    <li><strong>Créditos con Cláusula Verde</strong><br>
+    Similares a los de Cláusula Roja pero se exigen mayores requisitos para efectuar los anticipos.</li>
+    <li><strong>Créditos Stand-By</strong> <br>
+    Modalidad que sirve para afianzar el pago de una obligación contraída por el ordenante a favor del beneficiario, derivada como consecuencia de reembolsos de créditos, pago de efectos, suministros de mercancías, etc.</li>
+    </ul>
+    <p>Este tipo de Crédito Documentario tiene el carácter de garantía, y se utiliza sobre todo en los EE.UU. en donde los bancos no están autorizados por ley a emitir garantías, en el sentido que en Europa se da a este concepto o acepción.</p>
+    <p>El marco legal viene recogido por la Cámara de Comercio Internacional y está constituido por los USOS INTERNACIONALES relativos a <a href="http://www.iccwbo.org" target="_blank" aria-label="LOS CREDITOS CONTINGENTES (Opens a new tab)">LOS CREDITOS CONTINGENTES</a>.</p>
     </div>
-    </div>
-    </dl>
-    <dl class="villes bloc_navigation_non_imprimable">
-    <div>
-    <p><strong><i class="fa fa-file-text" aria-hidden="true"></i> Type of information</strong></p>
-    <p>
-    <a href="#" id_tracking="g-s-annuaires-filtres-select-2-all" role="button">Select all</a> &nbsp;&nbsp;/&nbsp;&nbsp; <a href="#" id_tracking="g-s-annuaires-filtres-clear-2-all" role="button">Clear all</a>
-    </p>
-    </div>
-    <div class="cont-filter"> 
-    <div>
-    <input id="filtre_ti_Score ESG" type="checkbox" name="filtre_type_infos[]" value="Score ESG" class="checkClass2">
-    <label for="filtre_ti_Score ESG"><span class="addtruncate">ESG rating</span> (19)</label>
-    </div><div>
-    <input id="filtre_ti_Informations financières" type="checkbox" name="filtre_type_infos[]" value="Informations financières" class="checkClass2">
-    <label for="filtre_ti_Informations financières"><span class="addtruncate">Financial</span> (2)</label>
-    </div><div>
-    <input id="filtre_ti_Marketing" type="checkbox" name="filtre_type_infos[]" value="Marketing" class="checkClass2">
-    <label for="filtre_ti_Marketing"><span class="addtruncate">Marketing</span> (47)</label>
-    </div>
-    </div>
-    </dl>
-    </div>
-    <div class="btn_valider bloc_navigation_non_imprimable"><input id_tracking="g-s-annuaires-filtres-valider" class="bouton-off" type="submit" value="Apply"></div>
-    </form>
-    <div class="clean"></div>
-    </div>
-    </div>
-    <div class="clean"></div>
-    <div id="ordre-affichage1" class="ordre-affichage mb-2 mt-2">
-    <span class="pagination-page">Pages</span>
-    <span>
-    <a id_tracking="g-s-annuaires-pagination1-1" class="pagination-lien" id="page_lien__1" href="#result" style="display: none;">1</a>
-    <span class="pagination-on" id="page_texte__1" style="font-weight: bold;">1</span>
-    <span class="numero-vide" id="span_texte__1" style="display: none;">..</span>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    nbr_element_pagination = 2;</script>
-    </span><span>
-    <a id_tracking="g-s-annuaires-pagination1-2" class="pagination-lien" id="page_lien__2" href="#result">2</a>
-    <span class="pagination-on" id="page_texte__2" style="font-weight: bold; display: none;">2</span>
-    <span class="numero-vide" id="span_texte__2" style="display: none;">..</span>
-    </span>
-    </div>
-    <div id="page_actu__1" class="traduction_forcee" style="clear: both;">
-    <div>
-    <h3 class="mb-4 mt-1">25 directories "Energy, Oil, Gas, Hydrogen, Electricity, Renewables"<a name="title_1" id="title_1" class="ancre-service"></a></h3>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.altenergymag.com/company_directory_search.php" target="_blank" class="lien-externe" aria-label="Alt Energy Mag (Opens a new tab)">Alt Energy Mag</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.ecobusinesslinks.com/" target="_blank" class="lien-externe" aria-label="ecobusinesslinks Directory (Opens a new tab)">ecobusinesslinks Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Green directory with businesses woldwide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.ecolabelindex.com/" target="_blank" class="lien-externe" aria-label="Ecolabel Index (Opens a new tab)">Ecolabel Index</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Global directory of ecolabels
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.ecomall.com/" target="_blank" class="lien-externe" aria-label="Ecomall Directory (Opens a new tab)">Ecomall Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Companies and products related to the ecology sector
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.endsdirectory.com/" target="_blank" class="lien-externe" aria-label="Ends Directory (Opens a new tab)">Ends Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Top environmental consultants and suppliers
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.energyinst.org/industry/company-membership/directory" target="_blank" class="lien-externe" aria-label="Energy Institute (Opens a new tab)">Energy Institute</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.energypersonnel.com/EnergyCompanyDirectory.html" target="_blank" class="lien-externe" aria-label="Energy Personnel (Opens a new tab)">Energy Personnel</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.enfsolar.com/" target="_blank" class="lien-externe" aria-label="ENF Solar (Opens a new tab)">ENF Solar</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.environmental-expert.com/" target="_blank" class="lien-externe" aria-label="Environmental-expert (Opens a new tab)">Environmental-expert</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of environmental companies
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.esi.info/" target="_blank" class="lien-externe" aria-label="ESI INFO Directory (Opens a new tab)">ESI INFO Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    List of resources and websites with suppliers and product information
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="http://www.flowmeterdirectory.com/" target="_blank" class="lien-externe" aria-label="Flow Meter Directory (Opens a new tab)">Flow Meter Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Flow meter companies
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="http://www.planetfriendly.net/greenbuilding.html" target="_blank" class="lien-externe" aria-label="Green Building Directory (Opens a new tab)">Green Building Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Green building companies in Canada and worldwide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.industrystock.com/en" target="_blank" class="lien-externe" aria-label="Industry Stock Directory (Opens a new tab)">Industry Stock Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Industrial suppliers worldwide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.keyfactsenergy.com/directory/list/" target="_blank" class="lien-externe" aria-label="Key Facts Energy (Opens a new tab)">Key Facts Energy</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.iqsdirectory.com/plastic-molding-manufacturers/" target="_blank" class="lien-externe" aria-label="Plastic Molding Companies Directory (Opens a new tab)">Plastic Molding Companies Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Leading industrial manufacturers, suppliers and distributors by industry
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.processregister.com/" target="_blank" class="lien-externe" aria-label="Process Register (Opens a new tab)">Process Register</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Online industrial buyer's guide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.renewableenergyjobs.com/content/renewable-energy-and-green-companies-directory" target="_blank" class="lien-externe" aria-label="Renewable Energy Jobs (Opens a new tab)">Renewable Energy Jobs</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy and green companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.renewableenergymagazine.com/directory#" target="_blank" class="lien-externe" aria-label="Renewable Energy Magazine (Opens a new tab)">Renewable Energy Magazine</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Renewable energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.rigzone.com/directory/" target="_blank" class="lien-externe" aria-label="RigZone (Opens a new tab)">RigZone</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Oil and gas industry directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://solarpowerinvestor.com/solar-company-directory/" target="_blank" class="lien-externe" aria-label="Solar Power Investor (Opens a new tab)">Solar Power Investor</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Solar energy companies directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.subsea.org/" target="_blank" class="lien-externe" aria-label="Subsea (Opens a new tab)">Subsea</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Oil and Gas Directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.vacuum-guide.com/" target="_blank" class="lien-externe" aria-label="Vacuum-guide Directory (Opens a new tab)">Vacuum-guide Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Manufacturers, suppliers of vacuum pumps and vacuum systems
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://branddb.wipo.int/branddb/en/" target="_blank" class="lien-externe" aria-label="WIPO Directory (Opens a new tab)">WIPO Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Brand data directory of the WIPO
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="http://www.worldofmanufacturing.com/" target="_blank" class="lien-externe" aria-label="World of Manufacturing Directory (Opens a new tab)">World of Manufacturing Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Manufacturing company advertising
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.worldoils.com/oilsuppliers.php" target="_blank" class="lien-externe" aria-label="WorldOils (Opens a new tab)">WorldOils</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    World Oil &amp; Gas Directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Energy, Oil, Gas, Hydrogen, Electricity, Renewables</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div>
-    <h3 class="mb-4 mt-1">43 general directories<a name="title_2" id="title_2" class="ancre-service"></a></h3>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://am.all.biz/en/" target="_blank" class="lien-externe" aria-label="All.biz - Armenia (Opens a new tab)">All.biz - Armenia</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> Armenia</div>
-    </div>
-    Directory of companies in Armenia
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.armenianbd.com/" target="_blank" class="lien-externe" aria-label="Armenian BD (Opens a new tab)">Armenian BD</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> Armenia</div>
-    </div>
-    Armenia's business directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.dnb.com/business-directory.html#CompanyProfilesPageNumber=1&amp;ContactProfilesPageNumber=1&amp;DAndBMarketplacePageNumber=1&amp;IndustryPageNumber=1&amp;SiteContentPageNumber=1&amp;tab=Company%20Profiles" target="_blank" class="lien-externe" aria-label="Dun &amp; Bradstreet (Opens a new tab)">Dun &amp; Bradstreet</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> Armenia</div>
-    </div>
-    Worldwide directory with financial information on businesses
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Financial</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.spyur.am/en/home" target="_blank" class="lien-externe" aria-label="SPYUR (Opens a new tab)">SPYUR</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> Armenia</div>
-    </div>
-    Armenian business directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Financial</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.europages.com/" target="_blank" class="lien-externe" aria-label="Europages (Opens a new tab)">Europages</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> Europe</div>
-    </div>
-    Directories of companies in 35 European countries
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.azom.com/global-materials-directory.aspx" target="_blank" class="lien-externe" aria-label="Azom (Opens a new tab)">Azom</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of materials suppliers
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.bikudo.com/" target="_blank" class="lien-externe" aria-label="Bikudo Product Directory (Opens a new tab)">Bikudo Product Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Bikudo business ressources
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.bloomberg.com/professional/dataset/global-environmental-social-governance-data/" target="_blank" class="lien-externe" aria-label="Bloomberg (Opens a new tab)">Bloomberg</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Environmental, Social &amp; Governance (ESG Data) dataset (registration is required to access the database).
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://businessemaillists.com/" target="_blank" class="lien-externe" aria-label="Business Emaillists (Opens a new tab)">Business Emaillists</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Consumers and Businesses database
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.business-humanrights.org/en/companies/" target="_blank" class="lien-externe" aria-label="Business Human Rights (Opens a new tab)">Business Human Rights</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Company pages and company dashboards relating to the human rights impact.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.cdp.net/en/scores" target="_blank" class="lien-externe" aria-label="Carbon Disclosure Project (Opens a new tab)">Carbon Disclosure Project</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    List of top companies ESG scores with regard to environmental commitment.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="http://share.find.coop/wiki/wiki?name=Cooperative+Directories" target="_blank" class="lien-externe" aria-label="Cooperative Directory (Opens a new tab)">Cooperative Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    List of cooperatives directories
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.corporateregister.com/" target="_blank" class="lien-externe" aria-label="Corporate Register (Opens a new tab)">Corporate Register</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Global online directory of corporate responsibility (CR) reports.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.csrhub.com/csrhub/" target="_blank" class="lien-externe" aria-label="CSR HUB (Opens a new tab)">CSR HUB</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG ratings database.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.dnb.com/business-directory.html" target="_blank" class="lien-externe" aria-label="D&amp;B (Opens a new tab)">D&amp;B</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Business information about worldwide companies
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.environmental-finance.com/content/guides/guide-index/" target="_blank" class="lien-externe" aria-label="Environmental Finance (Opens a new tab)">Environmental Finance</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG Data guide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://epooch.com/" target="_blank" class="lien-externe" aria-label="Epooch (Opens a new tab)">Epooch</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Shopping directory by product and categories
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.exportbureau.com/" target="_blank" class="lien-externe" aria-label="Export Bureau (Opens a new tab)">Export Bureau</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of export companies in the world
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.ezilon.com/" target="_blank" class="lien-externe" aria-label="Ezilon (Opens a new tab)">Ezilon</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Businesses directory worldwide
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://fortune.com/great-place-to-work-rankings/" target="_blank" class="lien-externe" aria-label="Fortune - Great Place to Work (Opens a new tab)">Fortune - Great Place to Work</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Databases of best companies to work for.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.ftserussell.com/data/sustainability-and-esg-data" target="_blank" class="lien-externe" aria-label="FTSE Russell (Opens a new tab)">FTSE Russell</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG risks and opportunities data tools (registration is required to access the database).
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.go4worldbusiness.com/" target="_blank" class="lien-externe" aria-label="Go4World (Opens a new tab)">Go4World</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Worldwide buyers ans suppliers.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.infobanc.com/" target="_blank" class="lien-externe" aria-label="Infobanc (Opens a new tab)">Infobanc</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Overseas buyers directory.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.infobel.com/fr/world" target="_blank" class="lien-externe" aria-label="Infobel (Opens a new tab)">Infobel</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Global directories
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.wayp.com/" target="_blank" class="lien-externe" aria-label="International White and Yellow Pages (Opens a new tab)">International White and Yellow Pages</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    International directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    </div><div id="page_actu__2" class="traduction_forcee" style="display: none; clear: both;">
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.issgovernance.com/esg/ratings/" target="_blank" class="lien-externe" aria-label="ISS Governance (Opens a new tab)">ISS Governance</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Database with ESG corporate rating for more than 12,000 companies. Subscription needed for access.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.biolinked.com/" target="_blank" class="lien-externe" aria-label="Links Organic (Opens a new tab)">Links Organic</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of the organic industry
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.moodys.com/newsandevents/topics/ESG-Credit-00702C#credit" target="_blank" class="lien-externe" aria-label="Moodys (Opens a new tab)">Moodys</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG Assessments of large cap-companies (registration is required to access the database)
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.msci.com/our-solutions/esg-investing/esg-ratings/esg-ratings-corporate-search-tool" target="_blank" class="lien-externe" aria-label="MSCI (Opens a new tab)">MSCI</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Public ESG Ratings &amp; Climate corporate search tool.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://onlinefmguide.com/" target="_blank" class="lien-externe" aria-label="Online FM Guide Directory (Opens a new tab)">Online FM Guide Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Database dedicated to facility management professionals
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.refinitiv.com/en/sustainable-finance/esg-scores" target="_blank" class="lien-externe" aria-label="Refinitiv (Opens a new tab)">Refinitiv</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG company scores.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.reprisk.com/solutions#the-esg-risk-platform" target="_blank" class="lien-externe" aria-label="Reprisk (Opens a new tab)">Reprisk</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG Risk Platform database (registration is required to access the database).
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.reptrak.com/rankings/" target="_blank" class="lien-externe" aria-label="Reptrak (Opens a new tab)">Reptrak</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Ranking of corporate reputation for the world’s leading companies.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.spglobal.com/ratings/en/products-benefits/public-reports/esg-evaluations" target="_blank" class="lien-externe" aria-label="S&amp;P Global (Opens a new tab)">S&amp;P Global</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG report for a number of companies.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://sciencebasedtargets.org/" target="_blank" class="lien-externe" aria-label="SBTi (Opens a new tab)">SBTi</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Description of climate actions in the private sector.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.sustainablefitch.com/products/esg-ratings/" target="_blank" class="lien-externe" aria-label="Sustainable Fitch (Opens a new tab)">Sustainable Fitch</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    ESG rating reportsand single source for the ESG focused financial community. Subscription needed for access.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.sustainalytics.com/esg-rating" target="_blank" class="lien-externe" aria-label="Sustainanalytics (Opens a new tab)">Sustainanalytics</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Company ESG risk ratings.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.theautomotivedirectory.com/" target="_blank" class="lien-externe" aria-label="The automotive Directory (Opens a new tab)">The automotive Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Automotive directory
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.toptenwholesale.com/" target="_blank" class="lien-externe" aria-label="Top ten wholesale Directory (Opens a new tab)">Top ten wholesale Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Wholesalers, importers, distributors and dropshippers in the US
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="http://www.topwholesalesuppliers.com/" target="_blank" class="lien-externe" aria-label="Top Wholesale Suppliers Directory (Opens a new tab)">Top Wholesale Suppliers Directory</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of wholesale supplier, closeout, liquidation, drop ship, manufacturer, import and export companies
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://trade.nosis.com/en" target="_blank" class="lien-externe" aria-label="Trade Nosis (Opens a new tab)">Trade Nosis</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    Directory of wholesalers, manufacturers and retailers in the world
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://www.trademama.com/" target="_blank" class="lien-externe" aria-label="TradeMama.com (Opens a new tab)">TradeMama.com</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    International wholesalers and manufacturers trade directory: apparel, appliances, automotive, construction, computers, electronics, food, furniture, health, jewelry, lighting, luggage, office, sporting goods, tools, toys, etc
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>Marketing</span></div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-annuaires-lien-annuaire" href="https://worldsmostethicalcompanies.com/honorees/" target="_blank" class="lien-externe" aria-label="World's Most Ethical Companies (Opens a new tab)">World's Most Ethical Companies</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    List of companies recognized for their unwavering commitment to business integrity.
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> All Industries</div>
-    <div class="tag-style mt-2"><span>ESG rating</span></div>
-    </div>
-    </div>
-    <div id="ordre-affichage2" class="ordre-affichage">
-    <span class="pagination-page">Pages</span>
-    <span>
-    <a id_tracking="g-s-annuaires-pagination2-1" class="pagination-lien" id="page_lien2__1" href="#result" style="display: none;">1</a>
-    <span class="pagination-on" id="page_texte2__1" style="font-weight: bold;">1</span>
-    <span class="numero-vide" id="span_texte2__1" style="display: none;">..</span>
-    </span><span>
-    <a id_tracking="g-s-annuaires-pagination2-2" class="pagination-lien" id="page_lien2__2" href="#result">2</a>
-    <span class="pagination-on" id="page_texte2__2" style="font-weight: bold; display: none;">2</span>
-    <span class="numero-vide" id="span_texte2__2" style="display: none;">..</span>
-    </span>
-    </div>
-    <div class="clean"></div>
-    <p class="retour">
-    <a target="_self" href="#top"><img title="Return to top" alt="Return to top" src="/ressources/images/ancre.gif"></a>
-    </p>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    page__cacher_pages();
-    if( $('page_actu__1') )
-    page_montrer_page( 1 );</script>
-    </div>
-    </div>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    function addTooltip()
-    {
-    jQuery(".truncate").each(function() {
-    var thisTxt = jQuery(this).text();
-    var cloneEle = document.createElement("div");
-    cloneEle = jQuery(cloneEle);
-    cloneEle.addClass("ele-clone");
-    cloneEle.html(thisTxt);
-    jQuery("body").append(cloneEle);
-    if (jQuery(this).width() <= cloneEle.width()) {
-    jQuery(this).attr("title", thisTxt);
-    jQuery(this).tooltip({
-    template: '<div class="tooltip truncate-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-    });
-    } else {
-    jQuery(this).removeAttr("title");
-    }
-    cloneEle.remove();
-    });
-    }
-    jQuery(document).ready(function() {
-    addTooltip();
-    });
-    function addTooltipClass() {
-    jQuery(".addtruncate").addClass("truncate");
-    addTooltip()
-    };
-    jQuery(".add-truncate-active").on("click", function() {
-    if (jQuery(".collapse-truncate").is(":visible")){
-    jQuery(".addtruncate").removeClass("truncate");
-    } else {
-    setTimeout(addTooltipClass, 500);
-    }
-    });</script>
     <!-- InstanceEndEditable -->
+    </div>
+    <div class="clean"></div>
     </div>

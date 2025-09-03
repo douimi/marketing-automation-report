@@ -1,0 +1,717 @@
+{% extends "base.html" %}
+
+{% block title %}International Payment Methods - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-primary mb-3">
+                    <i class="fas fa-credit-card me-3"></i>International Payment Methods
+                </h1>
+                <p class="lead text-muted">Comprehensive guide to international payment instruments and methods</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    
+                    <!-- Introduction Section -->
+                    <div class="mb-5">
+                        <p class="lead mb-4">Each commercial transaction may be subject to a different payment method depending on the amount of the operation, the collection period, the type of customer, the degree of relationship between buyer and seller, the country where the buyer is located, payment customs in the sector or country, etc.</p>
+                        
+                        <p class="mb-4">No company that exports regularly and to several countries always uses the same payment method. Therefore, it is important to have a good overview of all of them and their different nuances.</p>
+                        
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Payment Method Selection Criteria</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-bolt text-info me-2"></i><strong>Speed:</strong> Often opposed to security - faster methods may be less secure.</li>
+                                    <li class="list-group-item"><i class="fas fa-shield-alt text-info me-2"></i><strong>Security:</strong> Opposed to cost - the more secure, the more expensive.</li>
+                                    <li class="list-group-item"><i class="fas fa-handshake text-info me-2"></i><strong>Negotiating power:</strong> If we want to sell, sometimes we have to accept some unwanted risk if the buyer is not willing to assume the higher cost required for our security.</li>
+                                    <li class="list-group-item"><i class="fas fa-globe text-info me-2"></i><strong>Buyer's country characteristics:</strong> Some countries with international payment difficulties may require additional precautions, regardless of our client's solvency.</li>
+                                    <li class="list-group-item"><i class="fas fa-dollar-sign text-info me-2"></i><strong>Financing:</strong> Not all payment methods facilitate commercial operation financing equally, and often this is essential for the transaction to take place.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> To learn about locally available international payment methods, contact your Santander branch for more information.
+                        </div>
+                    </div>
+
+                    <!-- Cash/Banknotes Section -->
+                    <div id="banknotes" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-money-bill-wave me-2"></i>Foreign Banknotes
+                        </h2>
+                        
+                        <p class="mb-4">In the realm of International Commercial Operations, Foreign Bank Notes are barely used as a Payment Method due to the inherent disadvantages of Risks and Costs.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Risks</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Counterfeiting, theft, loss, and exchange rate risks</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="fas fa-coins me-2"></i>Costs</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Due to handling, transport, insurance, etc., exchanges become more expensive</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">Additionally, possible restrictions that may be present in Exchange Control regulations in some countries must be added.</p>
+                    </div>
+
+                    <!-- Personal Check Section -->
+                    <div id="personal_checks" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-file-invoice me-2"></i>Personal Check
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">Issued by the holder of a current account in a credit institution against the funds deposited in it, and can be either nominative or bearer.</p>
+                        
+                        <div class="alert alert-warning mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Security Considerations</h5>
+                            <p class="mb-2">The exporter has no security for collecting the goods despite having received the check, as this depends on:</p>
+                            <ul class="mb-0">
+                                <li>The legality of the drawer's signature</li>
+                                <li>The existence or absence of balance in the account</li>
+                            </ul>
+                        </div>
+                        
+                        <p class="mb-4">Collection of the personal check is subject to the laws of the importer's country, since not all countries allow payment abroad through this instrument. The personal check is used as an International Payment Method when there is great trust between the Exporter and the Importer.</p>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participating Parties</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card text-center border-primary">
+                                    <div class="card-body">
+                                        <i class="fas fa-user-edit fa-2x text-primary mb-2"></i>
+                                        <h6 class="card-title">Drawer</h6>
+                                        <p class="card-text small">Person who issues the check</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card text-center border-success">
+                                    <div class="card-body">
+                                        <i class="fas fa-university fa-2x text-success mb-2"></i>
+                                        <h6 class="card-title">Drawee</h6>
+                                        <p class="card-text small">Physical or legal person who is the depositary of the drawer's funds (usually a financial institution)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card text-center border-info">
+                                    <div class="card-body">
+                                        <i class="fas fa-hand-holding-usd fa-2x text-info mb-2"></i>
+                                        <h6 class="card-title">Holder</h6>
+                                        <p class="card-text small">Person who collects the check</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <div class="alert alert-light border mb-4">
+                            <p class="mb-2 text-center"><strong>Personal Check Process</strong></p>
+                            <p class="text-muted small text-center">Operation flow diagram</p>
+                        </div>
+                        
+                        <ol class="mb-4">
+                            <li class="mb-2">The Exporter (Seller) sends goods and documents to the importer (Buyer)</li>
+                            <li class="mb-2">The Importer (Buyer) sends the Exporter (Seller) a check in foreign currency when the agreed term arrives</li>
+                            <li class="mb-2">Once the Exporter has the Check, they will proceed to deposit it in their bank for collection management</li>
+                            <li class="mb-2">The Exporter's Bank will manage its collection through the Paying Bank</li>
+                            <li class="mb-2">The Paying Bank will proceed, if applicable, to debit it from the Importer's account</li>
+                            <li class="mb-2">The Paying Bank will credit it to the Exporter's Bank</li>
+                            <li class="mb-2">The amount will be credited to the Exporter</li>
+                        </ol>
+                    </div>
+
+                    <!-- Bank Check Section -->
+                    <div id="bank_checks" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-university me-2"></i>Bank Check
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">It is a document issued by a Bank, at the request of an Importer from that country, against itself or against another banking entity, normally located in a different country, and in favor of the exporter of the operation that originated the payment to be settled.</p>
+                        
+                        <div class="card border-success mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Key Differences from Personal Check</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2">While a personal check is issued by a person against their current account, a bank check is issued by the Issuing Bank against the current account it has with the Drawee Bank.</p>
+                                <p class="mb-0">For the exporter, bank discount is done with greater promptness and fluidity than with personal checks, especially if it involves a Bank of recognized solvency from a country without difficulties.</p>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">Although there is no legal restriction, it is not advisable to issue them to bearer. This payment system, provided it is done after sending goods or providing services, implies great trust between the Exporter and the Importer.</p>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participating Parties</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>Drawer</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The bank responsible for issuing the check against its own funds</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-handshake me-2"></i>Drawee</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The correspondent bank of the Issuing Bank (not always exists)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-user-tie me-2"></i>Importer</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The physical or legal person who requests the check issuance</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-receipt me-2"></i>Holder</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The exporter of goods who will collect the check</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <ol class="mb-4">
+                            <li class="mb-2">The Exporter (Seller) sends goods and documents to the importer (Buyer)</li>
+                            <li class="mb-2">The Importer (Buyer) makes a Bank Check request to their Bank</li>
+                            <li class="mb-2">The Issuing Bank debits their Client's account and sends them the Check</li>
+                            <li class="mb-2">The Importer sends the Check to the Exporter</li>
+                            <li class="mb-2">The Exporter sends the Check to the Paying Bank for management</li>
+                            <li class="mb-2">The Paying Bank credits the Check to the Exporter</li>
+                            <li class="mb-2">Simultaneously, the Paying Bank debits the operation amount from the Issuing Bank's account</li>
+                        </ol>
+                    </div>
+
+                    <!-- Payment Orders Section -->
+                    <div id="payment_orders" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-money-check-alt me-2"></i>Payment Orders
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">It is the payment method by which the payer (importer) asks their bank to credit the beneficiary's account (exporter) through a second bank (correspondent bank) with a determined amount of money. The transfer must indicate the concept for which the payment is made.</p>
+                        
+                        <div class="card border-success mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Advantages over Checks</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">The advantages of using this payment method compared to checks consist of avoiding losses, signature falsification, etc.</p>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">This payment/collection method is applied in international merchandise sales when there is great trust between the Exporter and the Importer, as the exporter continues to send goods and documents while waiting for the importer to fulfill their obligations.</p>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participating Parties</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user me-2"></i>Payer</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Physical or legal person who requests the issuing bank to issue the payment order</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>Issuing Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The bank that issues the payment order</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-building me-2"></i>Paying Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The bank that makes the payment, usually a correspondent of the issuing bank</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-hand-holding-usd me-2"></i>Beneficiary</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Physical or legal person who receives the payment</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <ol class="mb-4">
+                            <li class="mb-2">The Exporter sends the Importer the goods and documents proving ownership</li>
+                            <li class="mb-2">The Importer orders their Bank to issue the Transfer</li>
+                            <li class="mb-2">The Issuing Bank proceeds to debit their client's account</li>
+                            <li class="mb-2">The Issuing Bank sends the Transfer instructions to the Paying Bank, while crediting the amount</li>
+                            <li class="mb-2">The Paying Bank pays the amount to the Exporter</li>
+                        </ol>
+                    </div>
+
+                    <!-- Remittances Section -->
+                    <div id="remittances" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-file-export me-2"></i>Remittances
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">It is a banking operation by which the exporter entrusts a bank with the management of collecting financial documents (bills of exchange, promissory notes, checks...) and/or non-financial documents (invoices, shipping documents, phytosanitary control...), against acceptance or cash payment by the importer. Depending on whether the documents are financial or/and non-financial, the remittance will be simple or documentary.</p>
+                        
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Legal Framework:</strong> The legal framework is covered by the International Chamber of Commerce in the <a href="http://www.iccwbo.org/" target="_blank" class="alert-link">UNIFORM RULES</a> relating to COLLECTIONS.
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participating Parties</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user-tie me-2"></i>Principal</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The exporter who takes the initiative in the operation and transfers financial and non-financial documents to their bank for collection management</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>Remitting Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The exporter's bank, to whom they entrust remittance collection management</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-building me-2"></i>Collecting Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Must be different from the remitting bank. Receives documents and presents them to the importer for acceptance or payment</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user me-2"></i>Drawee</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The importer to whom documents are presented for acceptance or payment</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <ol class="mb-4">
+                            <li class="mb-2">The Exporter sends goods to the destination country's customs</li>
+                            <li class="mb-2">The Exporter sends the Remitting Bank both financial and commercial documents</li>
+                            <li class="mb-2">The Remitting Bank sends the documents to the Collecting Bank</li>
+                            <li class="mb-2">The Collecting Bank notifies the Importer</li>
+                            <li class="mb-2">The Importer proceeds to payment or acceptance of an instrument in exchange for obtaining the documents</li>
+                            <li class="mb-2">The Collecting Bank proceeds to reimburse the amount to the Remitting Bank</li>
+                            <li class="mb-2">The Remitting Bank credits the Exporter</li>
+                        </ol>
+                        
+                        <!-- Simple Remittance Subsection -->
+                        <h3 class="h4 text-secondary mb-3">Simple Remittance</h3>
+                        <p class="mb-4">In simple remittance, the exporter will directly send goods and commercial documents to the importer and, separately, through a financial institution will send financial documents, generally for acceptance or payment. The principal must provide precise and complete instructions regarding protest in case of non-payment or any other legal procedure that replaces it, as well as who bears commissions and expenses.</p>
+                        
+                        <div class="alert alert-warning mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Risk Considerations</h5>
+                            <p class="mb-0">From a risk perspective, this payment method requires the exporter to assume practically all risks, as they lose control over goods by directly sending commercial documents to the importer and assume the possibility that they reject acceptance or payment as well as possible difficulties derived from country risk.</p>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Simple Remittance Process</strong></p>
+                                <p class="text-muted small">Process flow diagram</p>
+                            </div>
+                        </div>
+                        
+                        <ol class="mb-4">
+                            <li class="mb-2">Contract signing, order acceptance, etc.</li>
+                            <li class="mb-2">The exporter sends goods and commercial documents to the importer, assuming all risks from this moment</li>
+                            <li class="mb-2">The seller themselves requests their bank to send the bill of exchange to the importer</li>
+                            <li class="mb-2">The exporter bank sends the remittance to the presenting bank</li>
+                            <li class="mb-2">The importer/drawee will receive the bill of exchange through the presenting bank</li>
+                            <li class="mb-2">The buyer makes the payment</li>
+                            <li class="mb-2">Reimbursement and payment to the exporter will proceed</li>
+                        </ol>
+                        
+                        <!-- Documentary Remittance Subsection -->
+                        <h3 class="h4 text-secondary mb-3">Documentary Remittance</h3>
+                        <p class="mb-4">It is one in which the Exporter delivers to their Bank various commercial documents (invoices, shipping documents, phytosanitary control...) accompanied or not by a draft document (Bill, Promissory Note, Receipt,...) with instructions to deliver them to the foreign importer, through their Bank, against acceptance or payment of the draft document.</p>
+                        
+                        <div class="alert alert-info mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Important Consideration</h5>
+                            <p class="mb-0">It is important to consider that the exporter may find that the buyer rejects the goods, so even having possession of them, they will find themselves with goods located in a distant country and, consequently, with additional expenses for storage, transport costs in case of re-importation, and even loss or penalties for delays in clearance.</p>
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Documentary Remittance Process</strong></p>
+                                <p class="text-muted small">Process flow diagram</p>
+                            </div>
+                        </div>
+                        
+                        <ol class="mb-4">
+                            <li class="mb-2">Contract signing, order acceptance, etc.</li>
+                            <li class="mb-2">The exporter proceeds to ship the goods</li>
+                            <li class="mb-2">Documentation proving the shipment is received by the exporter</li>
+                            <li class="mb-2">Then the seller goes to their bank with instructions for delivering commercial documents to the buyer against acceptance of the bill</li>
+                            <li class="mb-2">The exporter's bank manages through the presenting bank, thus reaching the importer</li>
+                            <li class="mb-2">After checking the documentation, the importer/drawee accepts the bill</li>
+                            <li class="mb-2">The presenting bank delivers the commercial documents and proceeds to return the accepted bill to the exporter through their bank</li>
+                            <li class="mb-2">The importer will proceed to withdraw goods with the obtained documents</li>
+                        </ol>
+                    </div>
+
+                    <!-- Documentary Credits Section -->
+                    <div id="documentary_credits" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-file-contract me-2"></i>Documentary Credits
+                        </h2>
+                        
+                        <h3 class="h4 text-secondary mb-3">Description</h3>
+                        <p class="mb-4">Defined as any agreement, whatever its denomination or description, by which a bank (Issuing Bank) acting at the request and in accordance with the instructions of a Customer (Applicant) or in its own name:</p>
+                        
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-check text-primary me-2"></i>Undertakes to make a payment to a third party (Beneficiary) or to their order, or to accept and pay bills of exchange (draft instruments) drawn by the Beneficiary</li>
+                            <li class="list-group-item"><i class="fas fa-check text-primary me-2"></i>Authorizes another bank to make the payment or to accept and pay such bills of exchange (draft instruments)</li>
+                            <li class="list-group-item"><i class="fas fa-check text-primary me-2"></i>Authorizes another bank to negotiate, against delivery of required documents, provided that the terms and conditions of the Credit are complied with</li>
+                            <li class="list-group-item"><i class="fas fa-shield-alt text-success me-2"></i><strong>Consequently, the Documentary Credit is the safest payment method both for the Exporter who knows in advance that if they comply with the conditions they will be paid, and for the importer who knows they will only pay if the requested documents are correctly presented to them.</strong></li>
+                        </ul>
+                        
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Legal Framework:</strong> The legal framework is covered by the International Chamber of Commerce and consists of the <a href="http://www.iccwbo.org/" target="_blank" class="alert-link">UNIFORM CUSTOMS AND PRACTICE FOR DOCUMENTARY CREDITS</a>.
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Participating Parties</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user me-2"></i>Importer/Applicant</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The party requesting the documentary credit opening</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-hand-holding-usd me-2"></i>Exporter/Beneficiary</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The party who will receive payment upon document presentation</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>Issuing Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The bank that issues the documentary credit</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-bell me-2"></i>Advising Bank</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The bank that notifies the beneficiary of the credit opening</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Operation Process</h3>
+                        <ol class="mb-4">
+                            <li class="mb-2">Through a document, the Importer requests the Issuing Bank to open the Documentary Credit</li>
+                            <li class="mb-2">The Bank, after the corresponding risk study, issues the Documentary Credit to the Beneficiary</li>
+                            <li class="mb-2">The Advising Bank communicates the Documentary Credit opening to the Beneficiary</li>
+                            <li class="mb-2">The Exporter ships the goods and has them arrive at the destination country</li>
+                            <li class="mb-2">The Beneficiary delivers documents to the Advising Bank</li>
+                            <li class="mb-2">The Advising Bank sends the received documents to the Issuing Bank</li>
+                            <li class="mb-2">The Issuing Bank pays the Advising Bank</li>
+                            <li class="mb-2">The Advising Bank credits the Beneficiary</li>
+                            <li class="mb-2">The Issuing Bank will debit the importer's account and deliver the documents</li>
+                            <li class="mb-2">The Importer presents the documentation at customs and withdraws the goods</li>
+                        </ol>
+                        
+                        <!-- Documentary Credits Classification -->
+                        <h3 class="h4 text-secondary mb-3">Classification of Documentary Credits</h3>
+                        
+                        <h4 class="h5 text-secondary mb-3">According to the Issuing Bank's Commitment</h4>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-lock me-2"></i>Irrevocable Credits</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">UCP 600 states that documentary credits are always irrevocable (even if not mentioned). This means documentary credits cannot be canceled or modified in any case, except with agreement from all interested parties.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Confirmed Credits</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The Issuing Bank requests the Intermediary Bank to add its Confirmation, totally subrogating the obligations that the former has to the Beneficiary. This increases beneficiary security by generally eliminating country risk.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-warning mb-4">
+                            <div class="card-header bg-warning text-dark">
+                                <h6 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Unconfirmed Credits</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">Those in which the Intermediary Bank adds no commitment, limiting its role to advising the beneficiary of the Credit's terms of use.</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">According to Place of Payment</h4>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">Issuing Bank Payment</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Greater delay in collection as documents must be presented to the Issuing Bank prior to payment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0">Intermediary Bank Payment</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Complete immediacy between document presentation in order and collection.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0">Third Bank Payment</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This possibility exists when the Credit currency differs from beneficiary and issuer countries and/or there is mutual distrust with the Issuing Bank.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">According to Form of Utilization</h4>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-eye me-2"></i>Sight Credits</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Payment occurs upon presentation of required and conforming documents.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-calendar me-2"></i>Term Credits</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Payment occurs within a determined period from a stipulated date.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Other Types of Credits</h4>
+                        
+                        <div class="accordion" id="creditTypesAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="acceptanceHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acceptanceCollapse">
+                                        <i class="fas fa-handshake me-2"></i>Acceptance
+                                    </button>
+                                </h2>
+                                <div id="acceptanceCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        The Bank undertakes to accept drafts drawn on its charge or on the Applicant's charge.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="negotiationHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#negotiationCollapse">
+                                        <i class="fas fa-comments-dollar me-2"></i>Negotiation
+                                    </button>
+                                </h2>
+                                <div id="negotiationCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        The Bank undertakes to discount without recourse on the drawer.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="transferableHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#transferableCollapse">
+                                        <i class="fas fa-exchange-alt me-2"></i>Transferable Credits
+                                    </button>
+                                </h2>
+                                <div id="transferableCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        Those that allow the beneficiary to give instructions to the Advising Bank to transfer partially or totally the Credit in favor of a third party or third parties, called second Beneficiaries, normally for a lesser amount and shorter term.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="revolvingHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#revolvingCollapse">
+                                        <i class="fas fa-redo me-2"></i>Revolving Credits
+                                    </button>
+                                </h2>
+                                <div id="revolvingCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        Credits that, after a period has passed or an amount exhausted, recover their original value to be reusable. There are two types: Cumulative (allow disposal in one period of what was not used in the preceding) and Non-cumulative (do not allow disposal in following periods of what was not used in the previous period).
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="backToBackHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#backToBackCollapse">
+                                        <i class="fas fa-link me-2"></i>Back to Back Credits (Subsidiary)
+                                    </button>
+                                </h2>
+                                <div id="backToBackCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        Those opened at the request of an applicant, who is in turn Beneficiary of another Documentary Credit, which they provide as guarantee for the one they are requesting.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="redClauseHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#redClauseCollapse">
+                                        <i class="fas fa-circle text-danger me-2"></i>Red Clause Credits
+                                    </button>
+                                </h2>
+                                <div id="redClauseCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        Those that authorize the obligated Bank to make advances to the Beneficiary, so they can acquire goods or raw materials for manufacturing those that are the object of the Documentary Credit.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="greenClauseHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#greenClauseCollapse">
+                                        <i class="fas fa-circle text-success me-2"></i>Green Clause Credits
+                                    </button>
+                                </h2>
+                                <div id="greenClauseCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        Similar to Red Clause but require greater requirements to make advances.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="standByHeading">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#standByCollapse">
+                                        <i class="fas fa-shield-alt me-2"></i>Stand-By Credits
+                                    </button>
+                                </h2>
+                                <div id="standByCollapse" class="accordion-collapse collapse" data-bs-parent="#creditTypesAccordion">
+                                    <div class="accordion-body">
+                                        <p class="mb-2">Modality that serves to guarantee payment of an obligation contracted by the applicant in favor of the beneficiary, derived as a consequence of credit reimbursements, bill payments, goods supplies, etc.</p>
+                                        <p class="mb-2">This type of Documentary Credit has the character of guarantee and is used especially in the USA where banks are not authorized by law to issue guarantees in the sense given to this concept in Europe.</p>
+                                        <p class="mb-0">The legal framework is covered by the International Chamber of Commerce and consists of INTERNATIONAL PRACTICES relating to <a href="http://www.iccwbo.org" target="_blank" class="text-primary">STANDBY CREDITS</a>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
