@@ -1270,12 +1270,12 @@ function exportReportToWord(filename = 'report.doc') {
     // Clone the report content
     const content = document.querySelector('.container-xl').cloneNode(true);
     // Add the logo at the top
-    const logo = document.createElement('img');
-    logo.src = 'https://www.indegate.com/storage/2020/02/blue-and-white-indegate.png';
-    logo.alt = 'Indegate Logo';
-    logo.style.height = '40px';
-    logo.style.width = 'auto';
-    logo.style.display = 'block';
+    const logo = document.createElement('div');
+    logo.textContent = 'Indatex';
+    logo.style.fontSize = '2rem';
+    logo.style.fontWeight = '700';
+    logo.style.color = '#2c3e50';
+    logo.style.textAlign = 'center';
     logo.style.margin = '0 auto 24px auto';
     content.insertBefore(logo, content.firstChild);
     // Prepare HTML for Word

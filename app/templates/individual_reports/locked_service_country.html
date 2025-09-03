@@ -1,0 +1,169 @@
+{% extends "individual_reports/base_country_report.html" %}
+
+{% block report_content %}
+<!-- Locked Service Content -->
+<div class="locked-service-content text-center py-5">
+    <div class="locked-icon mb-4">
+        <i class="fas fa-lock fa-5x text-muted"></i>
+    </div>
+    <h3 class="mb-3">{{ service_title }} - Access Required</h3>
+    <p class="text-muted mb-4">This service requires a user account to access. Please log in to view detailed information about {{ service_title }} for {{ form_data.destination_country_name }}.</p>
+    
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt me-2"></i>Log In
+        </a>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary">
+            <i class="fas fa-user-plus me-2"></i>Register
+        </a>
+    </div>
+    
+    <div class="mt-4">
+        <small class="text-muted">
+            <i class="fas fa-info-circle me-1"></i>
+            Registration is free and gives you access to all country services and reports.
+        </small>
+    </div>
+</div>
+
+<!-- What You'll Get Preview -->
+<div class="service-preview mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning bg-opacity-10">
+            <h5 class="mb-0"><i class="fas fa-eye me-2"></i>What You'll Get Access To</h5>
+        </div>
+        <div class="card-body">
+            {% if service_title == "Reaching the Consumer" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Consumer profile and demographics</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Purchasing behavior analysis</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Marketing opportunities and channels</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Advertising regulations and guidelines</li>
+            </ul>
+            {% elif service_title == "Distributing a Product" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Distribution channels and networks</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Retail sector evolution trends</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-commerce market analysis</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Distance selling opportunities</li>
+            </ul>
+            {% elif service_title == "Operating a Business" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Business setup procedures</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Legal forms and requirements</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Labor costs and HR management</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Regulatory compliance guidelines</li>
+            </ul>
+            {% elif service_title == "Tax System" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Corporate tax rates and structure</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Individual income tax information</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Consumption and VAT details</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Tax optimization strategies</li>
+            </ul>
+            {% elif service_title == "Legal Environment" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Legal framework overview</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Contract law and enforcement</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Intellectual property protection</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Dispute resolution mechanisms</li>
+            </ul>
+            {% elif service_title == "Foreign Investment" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>FDI regulations and policies</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Investment protection measures</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Investment opportunities analysis</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Administrative procedures</li>
+            </ul>
+            {% elif service_title == "Business Practices" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Business culture insights</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Professional etiquette guidelines</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Working hours and schedules</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Local business customs</li>
+            </ul>
+            {% elif service_title == "Entry Requirements" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Visa requirements and procedures</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Customs and immigration rules</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Health precautions and requirements</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Safety conditions and recommendations</li>
+            </ul>
+            {% elif service_title == "Practical Information" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Transportation systems and options</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Dining and accommodation guides</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Climate and weather information</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Communication and electrical standards</li>
+            </ul>
+            {% elif service_title == "Living in the Country" %}
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Expatriate community information</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Housing and accommodation options</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Education and healthcare systems</li>
+                <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Quality of life indicators</li>
+            </ul>
+            {% else %}
+            <p class="mb-0">Comprehensive information and analysis for {{ service_title }} in {{ form_data.destination_country_name }}.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .locked-service-content {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 0.5rem;
+        border: 2px dashed #dee2e6;
+    }
+    
+    .locked-icon {
+        opacity: 0.7;
+    }
+    
+    .service-preview .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+    
+    .service-preview ul li {
+        padding: 0.25rem 0;
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Show toast message when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Create toast element
+    const toastHtml = `
+        <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-lock me-2"></i>Log in to see the service
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    // Add toast to body
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    // Show toast
+    const toastElement = document.querySelector('.toast');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 4000
+    });
+    toast.show();
+    
+    // Remove toast element after it's hidden
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+});
+</script>
+{% endblock %}

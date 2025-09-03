@@ -1,0 +1,65 @@
+{% extends "individual_reports/base_country_report.html" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if tax_system_data.corporate_taxes_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-building"></i></span>
+            <h5 class="mb-0">Corporate Taxes</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.corporate_taxes_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.accounting_rules_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-book"></i></span>
+            <h5 class="mb-0">Accounting Rules</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.accounting_rules_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.consumption_taxes_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-shopping-cart"></i></span>
+            <h5 class="mb-0">Consumption Taxes</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.consumption_taxes_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.individual_taxes_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-user"></i></span>
+            <h5 class="mb-0">Individual Taxes</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.individual_taxes_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.double_taxation_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-globe"></i></span>
+            <h5 class="mb-0">Double Taxation Treaties</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.double_taxation_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.sources_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-info-circle"></i></span>
+            <h5 class="mb-0">Sources of Fiscal Information</h5>
+        </div>
+        <div class="santander-html">{{ tax_system_data.sources_section|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

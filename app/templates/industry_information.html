@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Industry Information - Trade Intelligence Services{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Back to Services -->
+    <div class="mb-4">
+        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Services
+        </a>
+    </div>
+
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <div class="service-icon-large mb-3">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <h1 class="display-4 fw-bold text-primary mb-3">Industry Information</h1>
+        <p class="lead text-muted">Comprehensive industry analysis and trade intelligence services</p>
+    </div>
+
+    <!-- Service Cards -->
+    <div class="row g-4">
+        <!-- Best Country for Trade -->
+        <div class="col-lg-4 col-md-6">
+            <div class="service-card placeholder-card" onclick="showComingSoon('Best Country for Trade')">
+                <i class="fas fa-globe service-icon"></i>
+                <h5>Best Country for Trade</h5>
+                <p>Identify optimal countries for your trade expansion based on market potential and accessibility</p>
+                <span class="badge bg-secondary">Coming Soon</span>
+            </div>
+        </div>
+        
+        <!-- Trade Flows -->
+        <div class="col-lg-4 col-md-6">
+            <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="service-link">
+                <div class="service-card">
+                    <i class="fas fa-exchange-alt service-icon"></i>
+                    <h5>Trade Flows</h5>
+                    <p>Product-specific trade flows between origin and destination countries with trend analysis</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Market Report -->
+        <div class="col-lg-4 col-md-6">
+            <a href="{{ url_for('main.form_page') }}" class="service-link">
+                <div class="service-card featured-card">
+                    <i class="fas fa-file-alt service-icon"></i>
+                    <h5>Market Report</h5>
+                    <p>Complete market intelligence report with all sections combined</p>
+                    <span class="badge bg-warning">Premium</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="cta-card">
+            <div class="card-body py-5">
+                <h3 class="mb-3">Need More Market Intelligence?</h3>
+                <p class="text-muted mb-4">Explore our complete range of trade intelligence services to make informed business decisions.</p>
+                <div class="cta-buttons">
+                    <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-chart-line me-2"></i>Generate Complete Report
+                    </a>
+                    <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-list me-2"></i>View All Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.service-icon-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+/* Service Cards */
+.service-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.service-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.service-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.service-icon {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.service-card h5 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+/* Featured Cards */
+.featured-card {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(44, 62, 80, 0.1));
+    border: 2px solid #3498db;
+}
+
+.featured-card .service-icon {
+    color: #e74c3c;
+}
+
+/* Placeholder Cards */
+.placeholder-card {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.placeholder-card:hover {
+    opacity: 1;
+    background: #f1f3f4;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+}
+
+/* Call to Action */
+.cta-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .service-card h5 {
+        font-size: 1rem;
+    }
+    
+    .service-card p {
+        font-size: 0.85rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .service-icon-large {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<script>
+function showComingSoon(feature) {
+    if (typeof showToast === 'function') {
+        showToast(`${feature} is coming soon! Stay tuned for updates.`, 'info');
+    } else {
+        alert(`${feature} is coming soon! Stay tuned for updates.`);
+    }
+}
+</script>
+{% endblock %}

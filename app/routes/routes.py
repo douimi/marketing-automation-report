@@ -74,6 +74,245 @@ def services_page():
     """Display the services page with all available services."""
     return render_template('services.html')
 
+@main_bp.route('/industry-information')
+@login_required
+def industry_information():
+    """Display the Industry Information page with sub-services."""
+    return render_template('industry_information.html')
+
+@main_bp.route('/country-information')
+def country_information():
+    """Display the Country Information selection page."""
+    return render_template('country_information.html')
+
+@main_bp.route('/start_country_information', methods=['POST'])
+def start_country_information():
+    """Initialize country information (general presentation) and redirect to results."""
+    try:
+        destination_country_code = request.form.get('destination_country')
+        
+        if not destination_country_code:
+            return jsonify({
+                'status': 'error',
+                'message': 'Please select a country.'
+            }), 400
+        
+        # Build form_data for general presentation
+        form_data = {
+            'service_type': 'general-presentation',
+            'destination_country_code': destination_country_code
+        }
+        
+        # Get config service for country name lookup
+        config_service = current_app.config.get('CONFIG_SERVICE')
+        country = config_service.find_country_by_code(destination_country_code)
+        form_data['destination_country_name'] = country.get('name') if country else None
+        
+        # Generate report ID and store form data
+        report_id = str(uuid.uuid4())
+        session['report_id'] = report_id
+        session['report_form_data'] = form_data
+        session['country_context'] = True  # Flag to indicate this is country information context
+        session.modified = True
+        
+        global reports_cache
+        reports_cache[report_id] = {
+            'status': 'processing',
+            'error_message': None,
+            'service_type': 'general-presentation'
+        }
+        
+        # Create a copy of the application context for the background thread
+        @copy_current_request_context
+        def generate_country_info_with_context():
+            import time as _time
+            t0 = _time.time()
+            try:
+                report_service = None
+                print(f'[TIMING] Start country information generation: {round(_time.time() - t0, 2)}s')
+                
+                report_service = ReportGenerationService()
+                if not report_service.driver:
+                    reports_cache[report_id]['status'] = 'error'
+                    reports_cache[report_id]['error_message'] = 'Failed to initialize Selenium WebDriver.'
+                    return
+                
+                # Generate general presentation data
+                raw_data = report_service.generate_santander_report_data(form_data['destination_country_code'], None)
+                from ..services.data_processor import MarketDataProcessor
+                data_processor = MarketDataProcessor()
+                service_data = {
+                    'market_data': data_processor.parse_raw_data(raw_data),
+                    'openai_intro': report_service.generate_openai_intro(raw_data, form_data),
+                    'openai_conclusion': report_service.generate_openai_conclusion(raw_data, form_data)
+                }
+                
+                # Update the report with service data
+                reports_cache[report_id].update({
+                    'form_data': form_data,
+                    'status': 'complete',
+                    'error_message': None,
+                    **service_data
+                })
+                
+                print(f'[TIMING] Country information generation completed: {round(_time.time() - t0, 2)}s')
+                current_app.logger.info(f"Country information generation completed")
+                
+            except Exception as e:
+                current_app.logger.error(f"Country information generation failed: {e}", exc_info=True)
+                reports_cache[report_id]['status'] = 'error'
+                reports_cache[report_id]['error_message'] = str(e)
+            finally:
+                if report_service:
+                    report_service.close_driver()
+        
+        # Start background task
+        thread = threading.Thread(target=generate_country_info_with_context)
+        thread.daemon = True
+        thread.start()
+        
+        # Handle AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({
+                'status': 'success',
+                'redirect_url': url_for('main.loading_page')
+            })
+        else:
+            return redirect(url_for('main.loading_page'))
+        
+    except Exception as e:
+        current_app.logger.error(f"Failed to start country information generation: {e}", exc_info=True)
+        return jsonify({
+            'status': 'error',
+            'message': 'Failed to start country information generation'
+        })
+
+@main_bp.route('/country/<country_code>/<service_type>')
+def country_service(country_code, service_type):
+    """Display individual service for a specific country."""
+    # Check if service requires authentication (all except general-presentation)
+    is_locked = service_type != 'general-presentation' and not current_user.is_authenticated
+    
+    # Get country name
+    config_service = current_app.config.get('CONFIG_SERVICE')
+    country = config_service.find_country_by_code(country_code)
+    if not country:
+        flash('Country not found.', 'error')
+        return redirect(url_for('main.country_information'))
+    
+    # Build form_data for the specific service with pre-selected country
+    form_data = {
+        'service_type': service_type,
+        'destination_country_code': country_code,
+        'destination_country_name': country.get('name')
+    }
+    
+    # Generate report ID and store form data
+    report_id = str(uuid.uuid4())
+    session['report_id'] = report_id
+    session['report_form_data'] = form_data
+    session['country_context'] = True  # Flag to indicate this is country information context
+    session.modified = True
+    
+    global reports_cache
+    
+    # Initialize cache entry
+    reports_cache[report_id] = {
+        'status': 'processing',
+        'error_message': None,
+        'service_type': service_type
+    }
+    
+    # If service is locked, return immediately with locked state
+    if is_locked:
+        reports_cache[report_id].update({
+            'status': 'complete',
+            'form_data': form_data,
+            'is_locked': True
+        })
+        return redirect(url_for('main.report_page'))
+    
+    # Otherwise, proceed with normal processing
+    # Create a copy of the application context for the background thread
+    @copy_current_request_context
+    def generate_country_service_with_context():
+        import time as _time
+        t0 = _time.time()
+        try:
+            report_service = None
+            print(f'[TIMING] Start country service generation ({service_type}): {round(_time.time() - t0, 2)}s')
+            
+            report_service = ReportGenerationService()
+            if not report_service.driver:
+                reports_cache[report_id]['status'] = 'error'
+                reports_cache[report_id]['error_message'] = 'Failed to initialize Selenium WebDriver.'
+                return
+            
+            # Generate specific service data
+            service_data = {}
+            
+            # Add default sector for services that don't require it but OpenAI might need it
+            if 'sector' not in form_data:
+                form_data['sector'] = 'General Business'
+            
+            if service_type == 'operating-business':
+                service_data['operating_a_business_data'] = report_service.generate_santander_operating_a_business(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'tax-system':
+                service_data['tax_system_data'] = report_service.generate_santander_tax_system(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'legal-environment':
+                service_data['legal_environment_data'] = report_service.generate_santander_legal_environment(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'foreign-investment':
+                service_data['foreign_investment_data'] = report_service.generate_santander_foreign_investment(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'business-practices':
+                service_data['business_practices_data'] = report_service.generate_santander_business_practices(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'entry-requirements':
+                service_data['entry_requirements_data'] = report_service.generate_santander_entry_requirements(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'practical-information':
+                service_data['practical_information_data'] = report_service.generate_santander_practical_information(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'living-in-country':
+                service_data['living_in_country_data'] = report_service.generate_santander_living_in_country(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'reaching-consumers':
+                service_data['consumer_data'] = report_service.generate_santander_reaching_consumers(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'distributing-product':
+                service_data['distribution_data'] = report_service.generate_santander_distributing_product(form_data['destination_country_code'], None, login_required=True)
+            elif service_type == 'general-presentation':
+                # Generate general presentation data for country context
+                raw_data = report_service.generate_santander_report_data(form_data['destination_country_code'], None)
+                from ..services.data_processor import MarketDataProcessor
+                data_processor = MarketDataProcessor()
+                service_data = {
+                    'market_data': data_processor.parse_raw_data(raw_data),
+                    'openai_intro': report_service.generate_openai_intro(raw_data, form_data),
+                    'openai_conclusion': report_service.generate_openai_conclusion(raw_data, form_data)
+                }
+            
+            # Update the report with service data
+            reports_cache[report_id].update({
+                'form_data': form_data,
+                'status': 'complete',
+                'error_message': None,
+                **service_data
+            })
+            
+            print(f'[TIMING] Country service generation completed: {round(_time.time() - t0, 2)}s')
+            current_app.logger.info(f"Country service generation completed for {service_type}")
+            
+        except Exception as e:
+            current_app.logger.error(f"Country service generation failed: {e}", exc_info=True)
+            reports_cache[report_id]['status'] = 'error'
+            reports_cache[report_id]['error_message'] = str(e)
+        finally:
+            if report_service:
+                report_service.close_driver()
+    
+    # Start background task
+    thread = threading.Thread(target=generate_country_service_with_context)
+    thread.daemon = True
+    thread.start()
+    
+    # Redirect to loading page
+    return redirect(url_for('main.loading_page'))
+
 @main_bp.route('/form', methods=['GET'])
 @login_required
 def form_page():
@@ -823,15 +1062,65 @@ def show_report():
         flash('No report data available. Please generate a report first.', 'warning')
         return redirect(url_for('main.services_page'))
     
+    # Check if this is a country information context (general presentation from country selection)
+    if session.get('country_context') and report.get('service_type') == 'general-presentation':
+        # Render country information results template with sidebar navigation
+        template_data = dict(report)
+        template_data['datetime'] = datetime
+        return render_template('country_information_results.html', **template_data)
+    
     # Check if this is an individual service report
     service_type = report.get('service_type')
     if service_type:
-        # Render individual service template
-        template_name = f'individual_reports/{service_type.replace("-", "_")}.html'
-        # Create a copy of report data without conflicting keys
-        template_data = dict(report)
-        template_data['datetime'] = datetime
-        return render_template(template_name, **template_data)
+        # Check if this came from country service navigation
+        if session.get('country_context'):
+            # Create a country-specific template that extends the country base template
+            template_data = dict(report)
+            template_data['datetime'] = datetime
+            template_data['country_context'] = True
+            
+            # Get the service title and icon for the template
+            service_config = {
+                'operating-business': {'title': 'Operating a Business', 'icon': 'fas fa-briefcase'},
+                'tax-system': {'title': 'Tax System', 'icon': 'fas fa-file-invoice-dollar'},
+                'legal-environment': {'title': 'Legal Environment', 'icon': 'fas fa-gavel'},
+                'foreign-investment': {'title': 'Foreign Investment', 'icon': 'fas fa-globe-americas'},
+                'business-practices': {'title': 'Business Practices', 'icon': 'fas fa-handshake'},
+                'entry-requirements': {'title': 'Entry Requirements', 'icon': 'fas fa-id-card'},
+                'practical-information': {'title': 'Practical Information', 'icon': 'fas fa-info'},
+                'living-in-country': {'title': 'Living in the Country', 'icon': 'fas fa-home'},
+                'general-presentation': {'title': 'General Information', 'icon': 'fas fa-info-circle'},
+                'foreign-trade': {'title': 'Foreign Trade in Figures', 'icon': 'fas fa-exchange-alt'},
+                'reaching-consumers': {'title': 'Reaching the Consumer', 'icon': 'fas fa-users'},
+                'distributing-product': {'title': 'Distributing a Product', 'icon': 'fas fa-truck'}
+            }
+            
+            config = service_config.get(service_type, {'title': service_type.replace('-', ' ').title(), 'icon': 'fas fa-file'})
+            template_data['service_title'] = config['title']
+            template_data['service_icon'] = config['icon']
+            
+            # Check if this is a locked service
+            if report.get('is_locked'):
+                template_data['is_locked'] = True
+                template_name = 'individual_reports/locked_service_country.html'
+                return render_template(template_name, **template_data)
+            
+            # Render the specific service template but it will extend the country base template
+            template_name = f'individual_reports/{service_type.replace("-", "_")}_country.html'
+            
+            # Check if country-specific template exists, if not use the regular template
+            try:
+                return render_template(template_name, **template_data)
+            except:
+                # Fall back to regular template with country context flag
+                template_name = f'individual_reports/{service_type.replace("-", "_")}.html'
+                return render_template(template_name, **template_data)
+        else:
+            # Regular individual service template
+            template_name = f'individual_reports/{service_type.replace("-", "_")}.html'
+            template_data = dict(report)
+            template_data['datetime'] = datetime
+            return render_template(template_name, **template_data)
     
     # Render full report template
     eco_political_data = report.get('eco_political_data') or {}

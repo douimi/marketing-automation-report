@@ -241,7 +241,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <img src="https://www.indegate.com/storage/2020/02/blue-and-white-indegate.png" alt="Indegate Logo" style="height:40px; width:auto; margin-right:0;">
+                <span style="font-size: 1.5rem; font-weight: 700; color: white;">Indatex</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -249,6 +249,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <!-- Always visible navigation items -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.home') }}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" 
                            data-bs-toggle="dropdown" aria-expanded="false">
@@ -266,15 +271,7 @@
                             <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#b2b-partners">
                                 <i class="fas fa-handshake me-2"></i>B2B Partners
                             </a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#business-operations">
-                                <i class="fas fa-briefcase me-2"></i>Business Operations
-                            </a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#travel-entry">
-                                <i class="fas fa-passport me-2"></i>Travel & Entry
-                            </a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#marketing-sales">
-                                <i class="fas fa-bullhorn me-2"></i>Marketing & Sales
-                            </a></li>
+
                             <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#logistics">
                                 <i class="fas fa-truck me-2"></i>Logistics
                             </a></li>
@@ -294,11 +291,6 @@
                     
                     {% if current_user.is_authenticated %}
                     <!-- Authenticated user items -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.form_page') }}">
-                            <i class="fas fa-file-alt me-1"></i>Complete Report
-                        </a>
-                    </li>
                     
                     <!-- User Profile Dropdown -->
                     <li class="nav-item dropdown">

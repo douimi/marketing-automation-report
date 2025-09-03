@@ -1,0 +1,25 @@
+{% extends "individual_reports/base_country_report.html" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if business_practices_data.business_culture_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-users"></i></span>
+            <h5 class="mb-0">Business Culture</h5>
+        </div>
+        <div class="santander-html">{{ business_practices_data.business_culture_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if business_practices_data.opening_hours_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-clock"></i></span>
+            <h5 class="mb-0">Opening Hours</h5>
+        </div>
+        <div class="santander-html">{{ business_practices_data.opening_hours_section|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
