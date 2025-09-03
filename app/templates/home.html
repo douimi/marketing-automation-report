@@ -29,8 +29,7 @@
                             </div>
                             
                             <div class="search-form-container">
-                                <form id="homeCountryForm" action="{{ url_for('main.start_individual_service') }}" method="POST">
-                                    <input type="hidden" name="service_type" value="general-presentation">
+                                <form id="homeCountryForm" action="{{ url_for('main.start_country_information') }}" method="POST">
                                     <div class="input-group search-input-group">
                                         <select class="form-select search-input" id="countrySearch" name="destination_country" required>
                                             <option value="" disabled selected>Enter a target country</option>
