@@ -1,35 +1,35 @@
 {% extends "individual_reports/base_individual_report.html" %}
 
-{% block report_title %}Business Directories{% endblock %}
+{% block report_title %}Online Marketplaces{% endblock %}
 
-{% block report_icon %}fas fa-building{% endblock %}
+{% block report_icon %}fas fa-shopping-cart{% endblock %}
 
 {% block report_content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            {% if business_directories_data.error %}
+            {% if online_marketplaces_data.error %}
                 <div class="alert alert-danger" role="alert">
                     <i class="fas fa-exclamation-triangle me-2"></i>
-                    {{ business_directories_data.error }}
+                    {{ online_marketplaces_data.error }}
                 </div>
             {% else %}
                 <!-- Search Summary -->
-                {% if business_directories_data.results_summary %}
+                {% if online_marketplaces_data.results_summary %}
                 <section class="report-section mb-4">
                     <div class="section-header">
                         <i class="fas fa-search section-icon"></i>Search Results
                     </div>
                     <div class="section-content">
                         <div class="alert alert-info">
-                            <h5 class="mb-0">{{ business_directories_data.results_summary }}</h5>
+                            <h5 class="mb-0">{{ online_marketplaces_data.results_summary }}</h5>
                         </div>
-                        {% if business_directories_data.country_name %}
+                        {% if online_marketplaces_data.country_name %}
                         <div class="search-params mb-3">
                             <small class="text-muted">
                                 <strong>Search Parameters:</strong>
-                                Industry: {{ business_directories_data.search_params.industry_name }}, 
-                                Country: {{ business_directories_data.search_params.country_name }}
+                                Industry: {{ online_marketplaces_data.search_params.industry_name }}, 
+                                Country: {{ online_marketplaces_data.search_params.country_name }}
                             </small>
                         </div>
                         {% endif %}
@@ -37,54 +37,66 @@
                 </section>
                 {% endif %}
 
-                <!-- Business Directories -->
-                {% if business_directories_data.directories %}
+                <!-- Online Marketplaces -->
+                {% if online_marketplaces_data.marketplaces %}
                 <section class="report-section mb-4">
                     <div class="section-header">
-                        <i class="fas fa-building section-icon"></i>Business Directories
-                        <span class="badge bg-primary ms-2">{{ business_directories_data.total_directories }} directories</span>
+                        <i class="fas fa-shopping-cart section-icon"></i>Online Marketplaces
+                        <span class="badge bg-primary ms-2">{{ online_marketplaces_data.total_marketplaces }} marketplaces</span>
                     </div>
                     <div class="section-content">
-                        {% for directory in business_directories_data.directories %}
-                        <div class="directory-card mb-3">
+                        {% for marketplace in online_marketplaces_data.marketplaces %}
+                        <div class="marketplace-card mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-8">
                                             <h5 class="card-title mb-2">
-                                                {% if directory.url %}
-                                                <a href="{{ directory.url }}" target="_blank" class="text-decoration-none">
-                                                    {{ directory.name }}
+                                                {% if marketplace.url %}
+                                                <a href="{{ marketplace.url }}" target="_blank" class="text-decoration-none">
+                                                    {{ marketplace.name }}
                                                     <i class="fas fa-external-link-alt ms-1 small"></i>
                                                 </a>
                                                 {% else %}
-                                                {{ directory.name }}
+                                                {{ marketplace.name }}
                                                 {% endif %}
                                             </h5>
-                                            {% if directory.description %}
-                                            <p class="card-text text-muted mb-2">{{ directory.description }}</p>
+                                            {% if marketplace.description %}
+                                            <p class="card-text text-muted mb-2">{{ marketplace.description }}</p>
                                             {% endif %}
                                         </div>
                                         <div class="col-md-4 text-end">
-                                            {% if directory.geographical_coverage %}
+                                            {% if marketplace.geographical_coverage %}
                                             <span class="badge bg-secondary mb-2">
-                                                <i class="fas fa-globe me-1"></i>{{ directory.geographical_coverage }}
+                                                <i class="fas fa-globe me-1"></i>{{ marketplace.geographical_coverage }}
                                             </span>
                                             {% endif %}
                                         </div>
                                     </div>
                                     
-                                    {% if directory.sector %}
-                                    <div class="mb-2">
-                                        <small class="text-muted">
-                                            <i class="fas fa-industry me-1"></i>{{ directory.sector }}
+                                    <div class="marketplace-details mb-2">
+                                        {% if marketplace.sector %}
+                                        <small class="text-muted me-3">
+                                            <i class="fas fa-industry me-1"></i>{{ marketplace.sector }}
                                         </small>
+                                        {% endif %}
+                                        
+                                        {% if marketplace.type %}
+                                        <small class="text-muted me-3">
+                                            <i class="fas fa-tag me-1"></i>{{ marketplace.type }}
+                                        </small>
+                                        {% endif %}
+                                        
+                                        {% if marketplace.language %}
+                                        <small class="text-muted">
+                                            <i class="fas fa-language me-1"></i>{{ marketplace.language }}
+                                        </small>
+                                        {% endif %}
                                     </div>
-                                    {% endif %}
                                     
-                                    {% if directory.tags %}
+                                    {% if marketplace.tags %}
                                     <div class="tags">
-                                        {% for tag in directory.tags %}
+                                        {% for tag in marketplace.tags %}
                                         <span class="badge bg-light text-dark me-1">{{ tag }}</span>
                                         {% endfor %}
                                     </div>
@@ -97,13 +109,11 @@
                 </section>
                 {% endif %}
 
-
-
-                <!-- Show message if no directories found -->
-                {% if not business_directories_data.directories and not business_directories_data.error %}
+                <!-- Show message if no marketplaces found -->
+                {% if not online_marketplaces_data.marketplaces and not online_marketplaces_data.error %}
                 <div class="alert alert-info" role="alert">
                     <i class="fas fa-info-circle me-2"></i>
-                    No business directories found for the selected criteria.
+                    No online marketplaces found for the selected criteria.
                 </div>
                 {% endif %}
             {% endif %}
@@ -112,15 +122,18 @@
 </div>
 
 <style>
-.directory-card {
+.marketplace-card {
     transition: transform 0.2s ease-in-out;
 }
 
-.directory-card:hover {
+.marketplace-card:hover {
     transform: translateY(-2px);
 }
 
-
+.marketplace-details {
+    border-top: 1px solid #e9ecef;
+    padding-top: 0.5rem;
+}
 
 .search-params {
     font-size: 0.9rem;

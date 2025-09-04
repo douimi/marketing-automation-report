@@ -487,6 +487,13 @@ def service_form(service_type):
             'icon': 'fas fa-door-open',
             'requires': ['origin_country', 'destination_country', 'product'],
             'form_template': 'service_form_full.html'
+        },
+        'online-marketplaces': {
+            'title': 'Online Marketplaces',
+            'description': 'Discover relevant online trading platforms and marketplaces for your industry and target market.',
+            'icon': 'fas fa-shopping-cart',
+            'requires': ['industry', 'geographical_area'],
+            'form_template': 'service_form_online_marketplaces.html'
         }
     }
     
@@ -535,18 +542,22 @@ def start_individual_service():
         if 'sector' in request.form:
             form_data['sector'] = request.form.get('sector')
         
-        # Handle business directories specific fields
+        # Get config service for optimized lookups
+        config_service = current_app.config.get('CONFIG_SERVICE')
+        
+        # Handle business directories and online marketplaces specific fields
         if 'industry' in request.form:
             form_data['industry_code'] = request.form.get('industry')
+            # Get industry name from code for online marketplaces
+            industry_code = request.form.get('industry')
+            sector = config_service.find_sector_by_code(industry_code)
+            form_data['industry_name'] = sector.get('name') if sector else industry_code
         
         if 'geographical_area' in request.form:
             form_data['geographical_area_code'] = request.form.get('geographical_area')
-            # For business directories, the geographical_area is actually a country
+            # For business directories and online marketplaces, the geographical_area is actually a country
             # Add it as destination_country_code for consistency with other services
             form_data['destination_country_code'] = request.form.get('geographical_area')
-        
-        # Get config service for optimized lookups
-        config_service = current_app.config.get('CONFIG_SERVICE')
         
         # Enrich form_data with names using optimized lookups
         if 'origin_country_code' in form_data:
@@ -647,9 +658,13 @@ def start_individual_service():
                 elif service_type == 'trade-compliance':
                     service_data['trade_compliance_data'] = report_service.generate_santander_trade_compliance(form_data['destination_country_code'], None, login_required=True)
                 elif service_type == 'business-directories':
+                    # For business directories, we need to pass the industry name and country name
+                    industry_name = form_data.get('industry_name')  # This contains the industry name
+                    country_name = form_data.get('destination_country_name')
+                    
                     service_data['business_directories_data'] = report_service.generate_santander_business_directories(
-                        form_data['industry_code'], 
-                        form_data['destination_country_code'], 
+                        industry_name, 
+                        country_name, 
                         login_required=True
                     )
                 elif service_type == 'import-export-flows':
@@ -677,6 +692,16 @@ def start_individual_service():
                     )
                     service_data['macmap_intro'] = report_service.generate_openai_macmap_intro(service_data['macmap_data'], form_data)
                     service_data['macmap_insights'] = report_service.generate_openai_macmap_insights(service_data['macmap_data'], form_data)
+                elif service_type == 'online-marketplaces':
+                    # For online marketplaces, we need to pass the industry name and country name
+                    industry_name = form_data.get('industry_name')  # This contains the industry name
+                    country_name = form_data.get('destination_country_name')
+                    
+                    service_data['online_marketplaces_data'] = report_service.generate_santander_online_marketplaces(
+                        industry_name, 
+                        country_name, 
+                        login_required=True
+                    )
                 
                 # Update the report with service data
                 reports_cache[report_id].update({

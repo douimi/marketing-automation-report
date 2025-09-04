@@ -4,9 +4,9 @@ This service prevents memory issues by loading data on-demand.
 """
 import json
 import os
+import threading
 from typing import List, Dict, Optional, Any
 from functools import lru_cache
-import threading
 
 class ConfigService:
     """Service for lazy loading and caching configuration data."""
@@ -185,6 +185,15 @@ class ConfigService:
                 return sector
         return None
     
+    @lru_cache(maxsize=1000)
+    def find_sector_by_code(self, code: str) -> Optional[Dict[str, Any]]:
+        """Find a sector by its code."""
+        sectors = self.get_sectors()
+        for sector in sectors:
+            if sector.get('code') == code:
+                return sector
+        return None
+    
     def search_countries(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Search countries by name or code."""
         countries = self.get_countries()
@@ -228,6 +237,7 @@ class ConfigService:
         self.find_country_by_code.cache_clear()
         self.find_product_by_hs6.cache_clear()
         self.find_sector_by_name.cache_clear()
+        self.find_sector_by_code.cache_clear()
 
 # Global config service instance
 _config_service = None

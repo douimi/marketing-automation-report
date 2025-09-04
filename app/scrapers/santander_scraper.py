@@ -1405,7 +1405,7 @@ def scrape_santander_trade_compliance(driver, formatted_country_name):
         return {'error': f'Error scraping Trade Compliance for {formatted_country_name}: {str(e)}'}
 
 
-def scrape_santander_business_directories(driver, industry_code, country_code):
+def scrape_santander_business_directories(driver, industry_name, country_name):
     """
     Navigates to the business directories page, fills the form with industry and country,
     and scrapes all business directory results.
@@ -1424,35 +1424,37 @@ def scrape_santander_business_directories(driver, industry_code, country_code):
         # Wait for the form to be present
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "code_secteur")))
         
-        # Select industry
+        # Select industry by visible text
         industry_select = Select(driver.find_element(By.ID, "code_secteur"))
-        industry_select.select_by_value(industry_code)
-        print(f"Selected industry: {industry_code}")
-        
-        # Select country/geographical area
-        country_select = Select(driver.find_element(By.ID, "pays_recherche"))
-        
-        # Try to select by value first (direct Santander country code)
         try:
-            country_select.select_by_value(country_code)
-            print(f"Selected country by value: {country_code}")
-        except:
-            # If that fails, try to find by country code lookup from countries.json
-            print(f"Could not select country by value {country_code}, trying country lookup...")
-            santander_code = get_santander_country_code(country_code)
-            
-            if santander_code:
-                try:
-                    country_select.select_by_value(santander_code)
-                    print(f"Selected country using lookup: {country_code} -> {santander_code}")
-                except:
-                    print(f"Could not select Santander code {santander_code} for {country_code}, falling back to World")
-                    # Fallback: select "World" if specific country not found
-                    country_select.select_by_value('240')  # World
-            else:
+            industry_select.select_by_visible_text(industry_name)
+            print(f"Selected industry by name: {industry_name}")
+        except Exception as e:
+            print(f"Could not select industry '{industry_name}': {e}")
+            return {'error': f'Could not find industry option for: {industry_name}'}
+        
+        # Select country/geographical area by visible text
+        country_select = Select(driver.find_element(By.ID, "pays_recherche"))
+        try:
+            country_select.select_by_visible_text(country_name)
+            print(f"Selected country by name: {country_name}")
+        except Exception:
+            # If exact match doesn't work, try to find by partial text match
+            found = False
+            for option in country_select.options:
+                if country_name.upper() in option.text.upper():
+                    country_select.select_by_visible_text(option.text)
+                    print(f"Selected country by partial match: {option.text}")
+                    found = True
+                    break
+            if not found:
                 # Fallback: select "World" if specific country not found
-                country_select.select_by_value('240')  # World
-                print(f"Could not map country {country_code}, selected 'World' as fallback")
+                try:
+                    country_select.select_by_visible_text('World')
+                    print(f"Could not find country '{country_name}', selected 'World' as fallback")
+                except:
+                    print(f"Could not find country option for: {country_name}")
+                    return {'error': f'Could not find country option for: {country_name}'}
         
         # Click search button
         search_button = driver.find_element(By.ID, "bouton")
@@ -1535,14 +1537,164 @@ def scrape_santander_business_directories(driver, industry_code, country_code):
             'directories': directories,
             'pagination': pagination,
             'search_params': {
-                'industry_code': industry_code,
-                'country_code': country_code
+                'industry_name': industry_name,
+                'country_name': country_name
             }
         }
 
     except Exception as e:
         print(f"Error scraping Business Directories: {e}")
         return {'error': f'Error scraping Business Directories: {str(e)}'}
+
+
+def scrape_santander_online_marketplaces(driver, industry_name, country_name):
+    """
+    Navigates to the online marketplaces page, fills the form with industry and country,
+    and scrapes all online marketplace results.
+    Returns a dict with all marketplaces data.
+    """
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait, Select
+    from selenium.webdriver.support import expected_conditions as EC
+    import time
+    
+    target_url = "https://santandertrade.com/en/portal/reach-business-counterparts/online-marketplaces"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        # Wait for the form to be present
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='place_de_marche_secteur']")))
+        
+        # Select industry by visible text
+        industry_select = Select(driver.find_element(By.XPATH, "//*[@id='place_de_marche_secteur']"))
+        try:
+            industry_select.select_by_visible_text(industry_name)
+            print(f"Selected industry by name: {industry_name}")
+        except Exception as e:
+            print(f"Could not select industry '{industry_name}': {e}")
+            return {'error': f'Could not find industry option for: {industry_name}'}
+        
+        # Select country/geographical area by visible text
+        country_select = Select(driver.find_element(By.XPATH, "//*[@id='place_de_marche_zone']"))
+        try:
+            country_select.select_by_visible_text(country_name)
+            print(f"Selected country by name: {country_name}")
+        except Exception:
+            # If exact match doesn't work, try to find by partial text match
+            found = False
+            for option in country_select.options:
+                if country_name.upper() in option.text.upper():
+                    country_select.select_by_visible_text(option.text)
+                    print(f"Selected country by partial match: {option.text}")
+                    found = True
+                    break
+            if not found:
+                print(f"Could not find country option for: {country_name}")
+                return {'error': f'Could not find country option for: {country_name}'}
+        
+        # Click search button
+        search_button = driver.find_element(By.XPATH, "//*[@id='form-submit']")
+        search_button.click()
+        print("Search button clicked")
+        
+        # Wait for results to load
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "contenu-contenu")))
+        time.sleep(4)  # Additional wait for dynamic content
+        
+        # Parse the results
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+        
+        if not main:
+            return {'error': 'Could not find main content area'}
+        
+        # Extract results summary
+        results_summary = ""
+        summary_elem = soup.find('h2', class_='no-bg-bd')
+        if summary_elem:
+            results_summary = summary_elem.get_text(strip=True)
+        
+        # Extract all online marketplaces
+        marketplaces = []
+        marketplace_cards = soup.find_all('div', class_='card-service-result')
+        
+        for card in marketplace_cards:
+            marketplace = {}
+            
+            # Extract name and URL
+            link_elem = card.find('a', class_='lien-externe')
+            if link_elem:
+                marketplace['name'] = link_elem.get_text(strip=True)
+                marketplace['url'] = link_elem.get('href', '')
+            
+            # Extract geographical coverage
+            geo_elem = card.find('div', class_='text-right')
+            if geo_elem:
+                geo_text = geo_elem.get_text(strip=True)
+                marketplace['geographical_coverage'] = geo_text.replace('🌐', '').strip()
+            
+            # Extract description (text between name and sectors line)
+            description_parts = []
+            for elem in card.children:
+                if hasattr(elem, 'get_text'):
+                    text = elem.get_text(strip=True)
+                    if text and not elem.find('a') and not elem.find('i', class_='fa-industry'):
+                        if text not in [marketplace.get('name', ''), marketplace.get('geographical_coverage', '')]:
+                            description_parts.append(text)
+            marketplace['description'] = ' '.join(description_parts)
+            
+            # Extract sector
+            sector_elem = card.find('div', class_='sectors-line')
+            if sector_elem:
+                marketplace['sector'] = sector_elem.get_text(strip=True).replace('🏭', '').strip()
+            
+            # Extract tags/categories
+            tags = []
+            tag_elems = card.find_all('div', class_='tag-style')
+            for tag_elem in tag_elems:
+                spans = tag_elem.find_all('span')
+                for span in spans:
+                    tags.append(span.get_text(strip=True))
+            marketplace['tags'] = tags
+            
+            # Extract additional marketplace-specific information
+            # Look for language information
+            lang_elem = card.find('span', class_='language')
+            if lang_elem:
+                marketplace['language'] = lang_elem.get_text(strip=True)
+            
+            # Look for marketplace type (B2B, B2C, etc.)
+            type_elem = card.find('span', class_='marketplace-type')
+            if type_elem:
+                marketplace['type'] = type_elem.get_text(strip=True)
+            
+            if marketplace.get('name'):  # Only add if we have a name
+                marketplaces.append(marketplace)
+        
+        # Extract navigation/pagination info
+        pagination = []
+        pagination_elem = soup.find('div', class_='ordre-affichage')
+        if pagination_elem:
+            pagination_links = pagination_elem.find_all('a', class_='pagination-lien')
+            for link in pagination_links:
+                pagination.append(link.get_text(strip=True))
+        
+        return {
+            'results_summary': results_summary,
+            'total_marketplaces': len(marketplaces),
+            'marketplaces': marketplaces,
+            'pagination': pagination,
+            'search_params': {
+                'industry_name': industry_name,
+                'country_name': country_name
+            }
+        }
+
+    except Exception as e:
+        print(f"Error scraping Online Marketplaces: {e}")
+        return {'error': f'Error scraping Online Marketplaces: {str(e)}'}
 
 
 def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n):

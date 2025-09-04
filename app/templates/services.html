@@ -129,14 +129,24 @@
                         {% endif %}
                     </div>
 
-                    <!-- Online Marketplaces (Placeholder) -->
+                    <!-- Online Marketplaces -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Online Marketplaces')">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='online-marketplaces') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-shopping-cart service-icon"></i>
+                                <h5>Online Marketplaces</h5>
+                                <p>Discover relevant online trading platforms and marketplaces for your industry and target market</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
                             <i class="fas fa-shopping-cart service-icon"></i>
                             <h5>Online Marketplaces</h5>
-                            <p>Discover relevant online trading platforms</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
+                            <p>Discover relevant online trading platforms and marketplaces for your industry and target market</p>
+                            <i class="fas fa-lock lock-icon"></i>
                         </div>
+                        {% endif %}
                     </div>
                     
                     <!-- Professional Associations (Placeholder) -->

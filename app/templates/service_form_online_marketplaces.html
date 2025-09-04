@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Back to Services -->
+    <div class="mb-4">
+        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Services
+        </a>
+    </div>
+
+    <!-- Service Header -->
+    <div class="text-center mb-5">
+        <div class="service-icon-large mb-3">
+            <i class="{{ service.icon }}"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
+        <p class="lead text-muted">{{ service.description }}</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                        <input type="hidden" name="service_type" value="{{ service_type }}">
+                        
+                        <div class="mb-4">
+                            <label for="industry" class="form-label">
+                                <i class="fas fa-industry me-2"></i>Industry Sector
+                            </label>
+                            <select class="form-select" id="industry" name="industry" required style="width: 100%">
+                                <option value="" disabled selected>Select Industry Sector</option>
+                            </select>
+                            <div class="form-text">Select the industry sector you want to analyze</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="geographical_area" class="form-label">
+                                <i class="fas fa-globe me-2"></i>Country
+                            </label>
+                            <select class="form-select" id="geographical_area" name="geographical_area" required style="width: 100%">
+                                <option value="" disabled selected>Select Country</option>
+                            </select>
+                            <div class="form-text">Select the country to search in</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Features -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 class="text-center mb-4">What You'll Get</h4>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h6>Online Platforms</h6>
+                        <p class="text-muted small">Discover relevant online trading platforms and marketplaces</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h6>Market-Specific</h6>
+                        <p class="text-muted small">Find marketplaces specific to your target market and industry</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box text-center">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h6>Direct Access</h6>
+                        <p class="text-muted small">Ready-to-use links to online marketplace platforms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize industry selector with static options (from the draft.html)
+    const industries = [
+        {id: "1", text: "Administration, Institutions, Justice, Social services"},
+        {id: "18", text: "Aeronautics, Aerospace"},
+        {id: "2", text: "Agriculture, Horticulture, Livestock, Fishing, Forestry"},
+        {id: "3", text: "Arts, Culture, Handcraft, Museums, Entertainment"},
+        {id: "4", text: "Audiovisual, Cinema, Photography, Multimedia"},
+        {id: "17", text: "Automotive, Lorries, Cycles, Motorcycles"},
+        {id: "5", text: "Banking, Finance, Investment, Insurance"},
+        {id: "30", text: "Business services: Services, Outsourcing"},
+        {id: "14", text: "Chemicals, Cosmetics, Pharma, Plastics, Fertilisers"},
+        {id: "8", text: "Communication, Marketing, Advertising, Incentive"},
+        {id: "6", text: "Construction, Real Estate, Architecture, Urbanism"},
+        {id: "16", text: "Defense, Armaments, Security"},
+        {id: "9", text: "Education, Training, Apprenticeship"},
+        {id: "21", text: "Electricity and electronics: Equipment and components"},
+        {id: "19", text: "Energy, Oil, Gas, Hydrogen, Electricity, Renewables"},
+        {id: "10", text: "Environment, Ecology, Water, Recycling, Waste"},
+        {id: "12", text: "Fresh & Processed Food, Beverages, Cereals, Tobacco"},
+        {id: "11", text: "Furniture, Decoration, DIY, Garden"},
+        {id: "28", text: "Health, Hospital, Pharmacies, Dental, Veterinary"},
+        {id: "25", text: "Industrial subcontracting, Maintenance, Design, IP"},
+        {id: "27", text: "IT, Hardware, Software, Telecommunications, Internet"},
+        {id: "23", text: "Materials, Metals, Metallurgy, Mining, Quarries"},
+        {id: "15", text: "Mechanical, Railway, Naval, Machinery, Agricultural machinery"},
+        {id: "22", text: "Packaging, Conditioning"},
+        {id: "31", text: "Personal Services, Family, Pets"},
+        {id: "26", text: "Press, Information, Events, Bookstores, Libraries"},
+        {id: "20", text: "Printing, Publishing, Graphic Art, Stamps, Cards"},
+        {id: "29", text: "Science, Humanities, Research, Technology"},
+        {id: "32", text: "Sports, Leisure, Hunting, Hobbies, Toys"},
+        {id: "24", text: "Textile, Clothing, Footwear, Accessories, Jewellery"},
+        {id: "34", text: "Tourism, Travel, Hosting, Bars, Restaurants, Parks"},
+        {id: "7", text: "Trade, Distribution, Retail, Import/Export"},
+        {id: "33", text: "Transport, Logistics, Handling, Parcel Shipping"},
+        {id: "13", text: "Wood, Paper, Cardboard"},
+        {id: "all", text: "All Industries"}
+    ];
+
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+
+    $('#industry').select2({
+        data: industries,
+        placeholder: 'Select an industry',
+        allowClear: true
+    });
+
+    $('#geographical_area').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Submit form directly - centralized loading page will handle loading state
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new FormData(this)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            // Redirect to the centralized loading page
+            window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+
+        } else {
+            alert('Unexpected response format. Please try again.');
+
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+        loadingOverlay.remove();
+    });
+});
+</script>
+
+<style>
+.service-icon-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+}
+
+.feature-box {
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+    height: 100%;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .display-5 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %}
