@@ -1,0 +1,598 @@
+{% extends "base.html" %}
+
+{% block title %}Risk Management - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-primary mb-3">
+                    <i class="fas fa-shield-alt me-3"></i>Risk Management
+                </h1>
+                <p class="lead text-muted">Comprehensive guide to managing international trade risks and hedging strategies</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    
+                    <!-- Risk Hedging Section -->
+                    <div id="exchange-rate-risk" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-chart-line me-2"></i>Risk Hedging
+                        </h2>
+                        
+                        <!-- Foreign Exchange Risk -->
+                        <h3 class="h4 text-secondary mb-3">Foreign Exchange Risk</h3>
+                        <p class="mb-4">Santander offers the most effective management of exchange rate risk to maximize your profits. The solution we propose is the simplest, fastest and most convenient way to manage your exchange rate risk, enabling you to reduce potential fluctuations in the exchange rates of the various currencies.</p>
+                        
+                        <div class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Santander Services:</strong> Santander can provide all the instruments you need to set exchange rates at a future date; for more information click any of the following options.
+                        </div>
+                        
+                        <!-- Foreign Exchange Market -->
+                        <h3 class="h4 text-secondary mb-3">Foreign Exchange (Forex) Market</h3>
+                        <p class="mb-4">This refers to the organizational structure through which national currencies are bought and sold. The principal operators are banks or financial intermediaries, the central banks of the respective countries, brokers and companies.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">The Concept of Currency</h4>
+                        <p class="mb-4">Any means of payment (cheque, bank transfer, etc.) denominated in a currency other than the domestic currency. The concept of currency also encompasses foreign bank notes.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">Currency Fluctuations</h4>
+                        <p class="mb-3">Currencies are in constant flux owing to a series of factors such as:</p>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-ship text-primary me-2"></i>Import and export operations</li>
+                                    <li class="list-group-item"><i class="fas fa-globe text-warning me-2"></i>The socio-political situation</li>
+                                    <li class="list-group-item"><i class="fas fa-chart-bar text-success me-2"></i>Economic indicators (rates of interest, inflation etc.)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-coins text-info me-2"></i>Events in the money markets</li>
+                                    <li class="list-group-item"><i class="fas fa-university text-danger me-2"></i>Central bank interventions</li>
+                                    <li class="list-group-item"><i class="fas fa-water text-secondary me-2"></i>Market liquidity</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Basic Divisions of the Currency Market</h4>
+                        <p class="mb-4">There are two basic segments of the foreign exchange market, depending on the time which elapses between the making and the settling of contracts; they comprise two specific groups of operations and two distinct prices or exchange rates:</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-bolt me-2"></i>The Spot Market</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">In this type of transaction, foreign exchange is bought and sold against the domestic currency, and settlement is carried out up to two business days after the contract has been made.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>The Forward Market</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This refers to the buying and selling of foreign exchange against the domestic currency, the rate of exchange being set on the day the contract is entered into, with settlement made at some future date starting from the third business day after the transaction is agreed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Foreign Exchange Insurance Section -->
+                    <div id="foreign-exchange-insurance" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-umbrella me-2"></i>Foreign Exchange Insurance
+                        </h2>
+                        
+                        <p class="mb-4">This is a forward operation involving the buying and selling of currencies that has the effect of eliminating the uncertainty arising from any future payment or collection of payment to be carried out in a foreign currency.</p>
+                        
+                        <p class="mb-4">The contract is thus signed by a financial institution and an exporter/importer, creating two main obligations:</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user-tie me-2"></i>Exporter/Importer Obligation</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">To sell/buy from the bank the currency of the export/import operation on a specific date.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>Bank Obligation</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">To buy from/sell to the exporter/importer the transaction currency at a fixed exchange rate agreed at the time the contract was signed, regardless of the quoted rate prevailing at the time of the payment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">General Characteristics</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-check text-success me-2"></i>Foreign exchange insurance can cover all or part of an operation.</li>
+                                    <li class="list-group-item"><i class="fas fa-clock text-info me-2"></i>It can be arranged from the moment the trade operation is sealed or at any other time prior to final payment maturity.</li>
+                                    <li class="list-group-item"><i class="fas fa-university text-primary me-2"></i>Foreign exchange insurance is fixed by the bank.</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-calendar text-warning me-2"></i>There is no maximum time in law for implementing a hedge although, in practice, the maximum insurable time is one year.</li>
+                                    <li class="list-group-item"><i class="fas fa-percentage text-danger me-2"></i>The quoted prices for foreign exchange insurance are approximately equivalent to the difference in interest rates between the currencies.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Quoted Prices for Foreign Exchange Insurance</h3>
+                        <p class="mb-4">Let us take an export operation by way of example. When an exporter and a bank arrange foreign exchange insurance, the latter fixes a currency rate against the euro at a specific date. So, if the spot price for the US dollar is quoted at 1.25 (€1 = $1.25), and the exporter takes out foreign exchange insurance for three months (the time it will take to collect payment in dollars), the bank will set the insurance at, for example, 1.247.</p>
+                        
+                        <div class="alert alert-info mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>Result Analysis</h5>
+                            <p class="mb-2">As a result the exporter now knows that whatever happens in the next 90 days, the bank is committed to buying the US dollars from him at 1.247 and:</p>
+                            <ul class="mb-0">
+                                <li>If the exchange rate for the US dollar falls he will not suffer losses</li>
+                                <li>If the US dollar appreciates, he will miss out on earnings</li>
+                                <li>Therefore the foreign exchange insurance covers the losses</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">How Does the Bank Calculate the Exchange Rate for the Insurance?</h3>
+                        <p class="mb-4">A simple example (using a Spanish exporter) illustrates the theoretical steps the bank follows. Imagine the following scenario:</p>
+                        
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Example Scenario</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Sum insured:</strong> 100,000 US dollars (value of the export operation to be collected in 90 days)</li>
+                                    <li class="list-group-item"><strong>US dollar Libor:</strong> 2%</li>
+                                    <li class="list-group-item"><strong>Euribor:</strong> 3%</li>
+                                    <li class="list-group-item"><strong>Spot rate for the US dollar:</strong> 1.25 (€1 = $1.25)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-3"><strong>The theoretical steps taken by the bank to calculate the foreign exchange insurance are:</strong></p>
+                        <ol class="mb-4">
+                            <li class="mb-2">It would borrow 100,000 US dollars at 90 days on the Interbank Market</li>
+                            <li class="mb-2">For this loan it would pay the US dollar Libor rate: 2%.</li>
+                            <li class="mb-2">It would sell the US dollars on the spot market for euros.</li>
+                            <li class="mb-2">It would place the euros on the interbank market for 90 days at 3% (Euribor).</li>
+                            <li class="mb-2">Once the 90 days had elapsed the bank would redeem the loan in US dollars using the dollars paid to it by the customer using the proceeds of the export operation and in turn the bank would pass on to the exporting customer the euros it had placed on the Interbank Market.</li>
+                        </ol>
+                        
+                        <p class="mb-4"><strong>Maintaining the same example, the mathematical calculation is as follows:</strong></p>
+                        <p class="mb-4">It has cost the insuring bank 2% to borrow the US dollars. On the other hand, the same insuring bank has earned 3% (Euribor) by placing the euros on the Interbank Market. The upshot is that the bank has obtained a difference in interest of 1%, which it passes on to the exporter in the forward price.</p>
+                        
+                        <div class="text-center mb-4">
+                            <div class="alert alert-light border">
+                                <p class="mb-2"><strong>Calculation Diagram</strong></p>
+                                <p class="text-muted small">Risk management calculation visualization</p>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">So: <strong>Foreign Exchange Insurance = 1.250 (spot rate) – 0.003 = 1.247</strong></p>
+                        
+                        <h4 class="h5 text-secondary mb-3">From This It Follows That:</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-arrow-up me-2"></i>If Libor < Euribor</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The currency insured has a higher rate in the future, so the exporter will receive more euros (if it is an import operation, the importer will have to pay more euros)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-arrow-down me-2"></i>If Libor > Euribor</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The currency insured has a lower rate in the future and the exporter will receive fewer euros (in this case, an importer would have to pay fewer euros for his purchases)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Cancellation of Foreign Exchange Insurance</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-check-circle me-2"></i>Cancellation at Agreed Time</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">In this case, no problems arise. On receiving payment, the exporter pays in the currency to the bank to cancel the Foreign Exchange Insurance contract.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0"><i class="fas fa-times-circle me-2"></i>Breach of Contract</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This arises when the customer does not use the contracted Foreign Exchange Insurance. Once the deadline has expired, the bank will go to the spot market to sell or buy the currency that it had reserved for its customer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-clock me-2"></i>Early Cancellation</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This takes place by mutual agreement, and as a general rule it is done by signing a foreign exchange insurance contract for a different currency with same expiry date as the one agreed previously.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>Extension of Insurance</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">If the period of the contract expires and the customer is certain he is going to be paid at some future date, he can negotiate the extension of the foreign exchange insurance with the bank for the number of days the payment will be delayed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Advantages for the Customer</h4>
+                        <div class="alert alert-success mb-4">
+                            <ul class="mb-0">
+                                <li>Elimination of exchange rate risks, whereby future results in foreign currency transactions are fixed in cases where payment is deferred.</li>
+                                <li>There is no up-front expenditure, because payment is made upon expiry.</li>
+                            </ul>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Open Foreign Exchange Insurance</h4>
+                        <p class="mb-4">This refers to a type of foreign exchange insurance whereby the customer and the bank are mutually bound to respect an agreed exchange rate for the purchase or sale of one currency against another within a pre-established period of time.</p>
+                        
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Key Differences from Conventional Insurance</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="mb-0">
+                                    <li>It differs from conventional foreign exchange insurance in that, with conventional foreign exchange insurance, the price is fixed for a specific day, while in open foreign exchange insurance the price is fixed for a length of time (15 days, 2 months and so on).</li>
+                                    <li>The customer may conduct as many partial transactions as he wishes, within the time limit and the total sum remaining, at the same price and without penalties.</li>
+                                    <li>In order to make the fixed exchange rate competitive, the customer gives us an advance estimate of his cash streams.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Advantages for the Customer</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-shield-alt text-success me-2"></i>It eliminates possible adverse currency fluctuations with one single contract.</li>
+                                    <li class="list-group-item"><i class="fas fa-calculator text-info me-2"></i>It enables the maximum cost or the minimum yield of a commercial operation to be known in advance.</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fas fa-tasks text-primary me-2"></i>It simplifies the management of payments divided into many instalments and with uncertain dates.</li>
+                                    <li class="list-group-item"><i class="fas fa-dollar-sign text-warning me-2"></i>There is no up-front expenditure.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> To enable Santander to offer a price that accurately reflects the market, the customer needs to tell us about the estimated dates and amounts <strong>AS REALISTICALLY AS POSSIBLE</strong>, depending on how he envisages the open foreign exchange insurance will be used.
+                        </div>
+                    </div>
+
+                    <!-- Foreign Exchange Options Section -->
+                    <div id="foreign-exchange-options" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-chart-line me-2"></i>Foreign Exchange Options
+                        </h2>
+                        
+                        <p class="mb-4">This refers to a contract that confers a right (not an obligation) to buy (Call Option) or sell (Put Option) a specific amount of one currency for another, at a pre-agreed exchange rate (strike price) during a stipulated period of time. In return for this right, the buyer of the option (the customer) has to pay the seller (the bank) a premium.</p>
+                        
+                        <div class="alert alert-info mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>Key Difference from Foreign Exchange Insurance</h5>
+                            <p class="mb-0">The basic difference between foreign exchange insurance and options is that in foreign exchange insurance a fulfilment obligation is contracted, whereas with options, a right, but not an obligation, is acquired.</p>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Parties Involved in Foreign Exchange Options</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user me-2"></i>The Buyer (Customer)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Acquires the right (not the obligation) to buy or sell the currency. The consequences are: losses limited by the price of the premium or the possibility of obtaining unlimited profits.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-university me-2"></i>The Seller (Bank)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Has the obligation to fulfil the contract when the option is exercised.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-tag me-2"></i>The Option Premium</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This is the price of the contract, the fee paid by the Buyer (Customer) and received by the Seller (Bank).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-bullseye me-2"></i>The Strike or Exercise Price</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">This is the price or exchange rate at which, if better than the spot price, the Option Buyer (Customer) will have the right to buy or sell the currency.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Cost of Options</h4>
+                        <p class="mb-4">It is the exporter or importer, in other words, the purchaser of the option, who negotiates and fixes the price (Strike Price) at which he wishes to acquire or sell a specific currency on a particular day.</p>
+                        
+                        <p class="mb-4">Depending on the exchange rate that is set, the buyer has to pay a premium to the selling bank. This premium is paid at the time of acquisition. Another basic difference from foreign exchange insurance is that in the latter nothing is paid (except the bank's fee) while with options a premium is paid.</p>
+                        
+                        <p class="mb-4">Once the buyer pays the premium, the final cost of the option is:</p>
+                        
+                        <div class="alert alert-warning mb-4">
+                            <h5 class="alert-heading"><i class="fas fa-calculator me-2"></i>Final Cost Formula</h5>
+                            <p class="mb-0"><strong>Premium + Loss of profit</strong></p>
+                            <p class="mb-0">Loss of profit is here taken to mean the yield that would have been obtained by an alternative investment of the money paid for the premium.</p>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Exercise of the Option (European Option)</h4>
+                        <p class="mb-4">When the option settlement date arrives the buyer (customer) decides whether he is interested in exercising it.</p>
+                        
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Example Scenario</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2">Suppose for example that an exporter is going to receive 100,000 US dollars within three months. The spot price for the dollar is 1.250 and the rate quoted for foreign exchange insurance is 1.247. The exporter however wishes to exchange his dollars at 1.230. He will acquire an option to sell (put option) at 1.230. The selling bank charges him a premium, say $0.017 for every US dollar.</p>
+                                <p class="mb-0">When the option settlement day comes round (three months later) the spot market offers a US dollar exchange rate of 1.260. Obviously the exporter will exercise his right to sell his US dollars to the bank at 1.230.</p>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">Strike price $1.230 + 0.017 premium = 1.247 US dollars for every euro. This result works out just the same as if he had taken out foreign exchange insurance at 1.247. It could have transpired that at the settlement date the US dollar was quoted at, for example, 1.200. In this eventuality the exporter would not exercise the option and would sell the dollars on the market at 1.200.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">American Options</h4>
+                        <p class="mb-4">An option that can only be exercised on the day it expires is known as a European option.</p>
+                        
+                        <p class="mb-4">There is also the American option, which can be exercised at any time during its term, in other words from the moment it is acquired to the time it expires.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">Zero-Premium Options (Tunnel)</h4>
+                        <p class="mb-4">This is based on a simultaneous option to buy and an option to sell for the same amount and the same expiry date, in such a way that the premiums cancel each other out. In this way a sort of price tunnel is created, ensuring the exchange rate for some fixed values of the strike prices, and restricting the possibilities for making both profits and losses.</p>
+                    </div>
+
+                    <!-- Other Exchange Rate Derivatives Section -->
+                    <div id="exchange-rate-derivatives" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-chart-area me-2"></i>Other Exchange Rate Derivatives
+                        </h2>
+                        
+                        <p class="mb-4">In addition to foreign exchange insurance and currency options, Santander offers other exchange rate derivatives to reduce or eliminate the exchange rate risks of international trade.</p>
+                        
+                        <p class="mb-4">These include:</p>
+                        <ul class="mb-4">
+                            <li>Foreign Exchange Insurance Extra (Forward Extra)</li>
+                            <li>Foreign Exchange Insurance with a Ceiling</li>
+                        </ul>
+                        
+                        <h3 class="h4 text-secondary mb-3">Foreign Exchange Insurance Extra (Forward Extra)</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="fas fa-download me-2"></i>Imports</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The customer is insured for a maximum purchase price and benefits from any favourable development up to a level of depreciation; if this level is reached or exceeded during a specific period, the customer buys at the maximum price.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-upload me-2"></i>Exports</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The customer is insured for a minimum sale price and benefits from any favourable development up to an appreciation level; if this level is reached or exceeded during a specific period, the customer sells at the minimum price.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="h4 text-secondary mb-3">Foreign Exchange Insurance with a Ceiling</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-download me-2"></i>Imports</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The customer is insured for the purchase price (better than the conventional foreign exchange insurance), but if during a certain period the quoted rate reaches or exceeds a ceiling, the insurance disappears.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0"><i class="fas fa-upload me-2"></i>Exports</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The customer is insured for the sale price (better than the conventional foreign exchange insurance), but if during a certain period a ceiling is reached or exceeded, the insurance disappears.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Insolvency Risk Section -->
+                    <div id="insolvency-risk" class="mb-5">
+                        <h2 class="text-primary mb-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Insolvency Risk
+                        </h2>
+                        
+                        <p class="mb-4">The two most fundamental components of a sales transaction, whether the transaction is domestic or international, are the delivery of the merchandise and collection of payment. The latter is undoubtedly crucial for an exporter. Obviously, any problem connected to the collection of payment for goods sold will be more difficult to resolve in foreign than in domestic trade operations. It is therefore in the interests of the exporter to build in as much security as possible when collecting the money owed from a sale.</p>
+                        
+                        <p class="mb-4">This greater degree of security in international trade payments may be obtained in a variety of ways; payments in advance, mechanisms involving documentary payments or bank guarantees, for example. Another way is "credit insurance" - in other words, the exporter obtains a guarantee, through an insurance company, that if the money from a sale is not collected, the insurance company will indemnify him for the loss incurred by non-payment. Credit insurance for domestic transactions works on a similar basis.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">Concept</h4>
+                        <p class="mb-4">An insurance contract that covers the exporter against the risk of non-payment, as well as other risks associated with selling abroad. In return for a premium, the insurance company agrees to indemnify the exporter against the loss incurred by the occurrence, as well as other risks connected to export operations.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">Types of Risk</h4>
+                        <p class="mb-4">The greatest risk normally covered by credit insurance is non-payment on the part of the buyer, which is specifically known as <strong>credit risk</strong>, in other words, the risk that exists from the moment the goods are sent until they are paid for.</p>
+                        
+                        <p class="mb-4">The other important risk that can be covered is the one where the manufacturer is given an order which is subsequently cancelled. This risk is particularly significant in the case of products that are made to order, as is the case with many capital goods and equipment (machinery, ships etc.). This contingency is known as the <strong>contract resolution risk</strong>, in other words, the risk that exists from the moment the contract is signed until the goods are despatched.</p>
+                        
+                        <p class="mb-4">Similarly, the <strong>non-collection of merchandise</strong> risk can be covered, in other words when the buyer, in breach of the sales contract, does not take possession of the merchandise at the time and place agreed, and it has to be recovered by the exporter.</p>
+                        
+                        <p class="mb-4">However, there is another important way in which risks may be classified, which overlies the one above, depending on the reason for the non-payment. The risks are:</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0"><i class="fas fa-building me-2"></i>Commercial Risk</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Arising from the insolvency or prolonged indebtedness of private debtors and their guarantors.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-flag me-2"></i>Political Risk</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Which includes <strong>transfer risk</strong> (the impossibility of transferring a currency for political reasons) and <strong>sovereign risk</strong> (non-payment of government debt).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-bolt me-2"></i>Extraordinary Risks</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Arising from catastrophic situations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="mb-4">This is the classification of the most important types of risk to consider in a trade operation from the exporter's point of view.</p>
+                        
+                        <h4 class="h5 text-secondary mb-3">Institutions Supplying Cover</h4>
+                        <p class="mb-4">Insurance companies that provide export credit insurance (specialist or general) including this type of cover:</p>
+                        
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-globe me-2"></i>International Credit Insurance Providers</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><strong>Spain:</strong> <a href="http://www.cesce.es/web/sp/productos/index.aspx" target="_blank" class="text-primary">CESCE</a>, Crédito y Caución, Mapfre Caución y Crédito and COFACE Ibérica.</li>
+                                            <li class="list-group-item"><strong>Portugal:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>United Kingdom:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Poland:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Chile:</strong> To be identified by each country concerned</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><strong>Brazil:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Argentina:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Mexico:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>USA:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Uruguay:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Peru:</strong> To be identified by each country concerned</li>
+                                            <li class="list-group-item"><strong>Puerto Rico:</strong> To be identified by each country concerned</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="h5 text-secondary mb-3">Shared Characteristics of Export Credit Policies</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0"><i class="fas fa-percentage me-2"></i>Degree of Coverage</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">Export credit insurance policies do not cover 100% of the value of the export. There is always a percentage of the total value that is uninsured (around 20%).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="fas fa-clock me-2"></i>Indemnification Period</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">The exporter is not indemnified immediately for the incident.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-primary mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Cost of Insurance</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">The cost of the insurance always depends on the assessment of the risk involved in the operation as adjudged by the insurance company. Factors such as the total value of the export operation, the customer's characteristics, the industry in which the exporter operates, the destination countries, the buyer's credit terms, payment methods, the average quantity of the operation and non-payment histories are all taken into account when calculating a premium.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Usage Patterns</h5>
+                            <p class="mb-0"><strong>Countries in which short term credit insurance tends to be used more:</strong> It is used much more frequently for operations with developed as opposed to developing countries, given the fact that in the former, buyers tend to avoid the most secure payment and collection of payment methods (owing to their greater cost and inferior flexibility) and the exporter has to look for alternative ways of covering the risk of non-payment. The greater availability of company information and a more securely grounded judicial system also encourage their use in developed countries.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

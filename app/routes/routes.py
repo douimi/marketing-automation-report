@@ -86,6 +86,18 @@ def payment_means():
     """Display the payment means page."""
     return render_template('payment_means.html')
 
+@main_bp.route('/risk-management')
+@login_required
+def risk_management():
+    """Display the risk management page."""
+    return render_template('risk_management.html')
+
+@main_bp.route('/incoterms')
+@login_required
+def incoterms():
+    """Display the incoterms page."""
+    return render_template('incoterms.html')
+
 @main_bp.route('/industry-information')
 @login_required
 def industry_information():
