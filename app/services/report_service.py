@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tempfile
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_online_marketplaces
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_professional_associations, scrape_santander_online_marketplaces
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -883,6 +883,32 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Business Directories scraping: {e}")
             return {"error": f"Error during Business Directories scraping: {str(e)}"}
+
+    def generate_santander_professional_associations(self, industry_name, destination_country_name, login_required=True):
+        """Generates the Professional Associations data by scraping Santander Trade."""
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Professional Associations for industry: {industry_name}, country: {destination_country_name}...")
+            scraped_data = scrape_santander_professional_associations(self.driver, industry_name, destination_country_name)
+            
+            # Add country name to the returned data for proper display (if not already there)
+            if not scraped_data.get('error'):
+                scraped_data['country_name'] = destination_country_name
+                scraped_data['industry_name'] = industry_name
+            
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Professional Associations scraping: {e}")
+            return {"error": f"Error during Professional Associations scraping: {str(e)}"}
 
     def generate_santander_online_marketplaces(self, industry_name, destination_country_name, login_required=True):
         """Generates the Online Marketplaces data by scraping Santander Trade."""

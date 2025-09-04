@@ -1547,6 +1547,143 @@ def scrape_santander_business_directories(driver, industry_name, country_name):
         return {'error': f'Error scraping Business Directories: {str(e)}'}
 
 
+def scrape_santander_professional_associations(driver, industry_name, country_name):
+    """
+    Navigates to the professional associations page, fills the form with industry and country,
+    and scrapes all professional association results.
+    Returns a dict with all associations data.
+    """
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait, Select
+    from selenium.webdriver.support import expected_conditions as EC
+    import time
+    
+    target_url = "https://santandertrade.com/en/portal/reach-business-counterparts/professional-associations"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+
+    try:
+        # Wait for the form to be present
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='federation_secteur']")))
+        
+        # Select industry by visible text
+        industry_select = Select(driver.find_element(By.XPATH, "//*[@id='federation_secteur']"))
+        try:
+            industry_select.select_by_visible_text(industry_name)
+            print(f"Selected industry by name: {industry_name}")
+        except Exception as e:
+            print(f"Could not select industry '{industry_name}': {e}")
+            return {'error': f'Could not find industry option for: {industry_name}'}
+        
+        # Select country/geographical area by visible text
+        country_select = Select(driver.find_element(By.XPATH, "//*[@id='critere_pays']"))
+        try:
+            country_select.select_by_visible_text(country_name)
+            print(f"Selected country by name: {country_name}")
+        except Exception:
+            # If exact match doesn't work, try to find by partial text match
+            found = False
+            for option in country_select.options:
+                if country_name.upper() in option.text.upper():
+                    country_select.select_by_visible_text(option.text)
+                    print(f"Selected country by partial match: {option.text}")
+                    found = True
+                    break
+            if not found:
+                print(f"Could not find country option for: {country_name}")
+                return {'error': f'Could not find country option for: {country_name}'}
+        
+        # Click search button
+        search_button = driver.find_element(By.XPATH, "//*[@id='bouton']")
+        search_button.click()
+        print("Search button clicked")
+        
+        # Wait for results to load
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "contenu-contenu")))
+        time.sleep(4)  # Additional wait for dynamic content
+        
+        # Parse the results
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        main = soup.find(id="contenu-contenu")
+        
+        if not main:
+            return {'error': 'Could not find main content area'}
+        
+        # Extract results summary
+        results_summary = ""
+        summary_elem = soup.find('h2', class_='no-bg-bd')
+        if summary_elem:
+            results_summary = summary_elem.get_text(strip=True)
+        
+        # Extract all professional associations
+        associations = []
+        association_cards = soup.find_all('div', class_='card-service-result')
+        
+        for card in association_cards:
+            association = {}
+            
+            # Extract name and URL
+            link_elem = card.find('a', class_='lien-externe')
+            if link_elem:
+                association['name'] = link_elem.get_text(strip=True)
+                association['url'] = link_elem.get('href', '')
+            
+            # Extract geographical coverage
+            geo_elem = card.find('div', class_='text-right')
+            if geo_elem:
+                geo_text = geo_elem.get_text(strip=True)
+                # Remove the globe icon and clean up
+                association['geographical_coverage'] = geo_text.replace('🌐', '').strip()
+            
+            # Extract full name/description (text between name and sectors line)
+            description_parts = []
+            for elem in card.children:
+                if hasattr(elem, 'get_text'):
+                    text = elem.get_text(strip=True)
+                    # Skip if it's the name, geographical coverage, or sectors line
+                    if (text and 
+                        not elem.find('a') and 
+                        not elem.find('i', class_='fa-industry') and
+                        not elem.find('i', class_='fa-globe') and
+                        text not in [association.get('name', ''), association.get('geographical_coverage', '')]):
+                        description_parts.append(text)
+            association['description'] = ' '.join(description_parts)
+            
+            # Extract sector
+            sector_elem = card.find('div', class_='sectors-line')
+            if sector_elem:
+                sector_text = sector_elem.get_text(strip=True)
+                # Remove the industry icon and clean up
+                association['sector'] = sector_text.replace('🏭', '').strip()
+            
+            if association.get('name'):  # Only add if we have a name
+                associations.append(association)
+        
+        # Extract navigation/pagination info
+        pagination = []
+        pagination_elem = soup.find('div', class_='ordre-affichage')
+        if pagination_elem:
+            pagination_links = pagination_elem.find_all('a', class_='pagination-lien')
+            for link in pagination_links:
+                pagination.append(link.get_text(strip=True))
+        
+        return {
+            'results_summary': results_summary,
+            'total_associations': len(associations),
+            'associations': associations,
+            'pagination': pagination,
+            'search_params': {
+                'industry_name': industry_name,
+                'country_name': country_name
+            }
+        }
+
+    except Exception as e:
+        print(f"Error scraping Professional Associations: {e}")
+        return {'error': f'Error scraping Professional Associations: {str(e)}'}
+
+
 def scrape_santander_online_marketplaces(driver, industry_name, country_name):
     """
     Navigates to the online marketplaces page, fills the form with industry and country,

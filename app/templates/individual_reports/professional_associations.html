@@ -1,0 +1,126 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}Professional Associations{% endblock %}
+
+{% block report_icon %}fas fa-certificate{% endblock %}
+
+{% block report_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% if professional_associations_data.error %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ professional_associations_data.error }}
+                </div>
+            {% else %}
+                <!-- Search Summary -->
+                {% if professional_associations_data.results_summary %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-search section-icon"></i>Search Results
+                    </div>
+                    <div class="section-content">
+                        <div class="alert alert-info">
+                            <h5 class="mb-0">{{ professional_associations_data.results_summary }}</h5>
+                        </div>
+                        {% if professional_associations_data.country_name %}
+                        <div class="search-params mb-3">
+                            <small class="text-muted">
+                                <strong>Search Parameters:</strong>
+                                Industry: {{ professional_associations_data.search_params.industry_name }}, 
+                                Country: {{ professional_associations_data.search_params.country_name }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Professional Associations -->
+                {% if professional_associations_data.associations %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-certificate section-icon"></i>Professional Associations
+                        <span class="badge bg-primary ms-2">{{ professional_associations_data.total_associations }} associations</span>
+                    </div>
+                    <div class="section-content">
+                        {% for association in professional_associations_data.associations %}
+                        <div class="association-card mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="card-title mb-2">
+                                                {% if association.url %}
+                                                <a href="{{ association.url }}" target="_blank" class="text-decoration-none">
+                                                    {{ association.name }}
+                                                    <i class="fas fa-external-link-alt ms-1 small"></i>
+                                                </a>
+                                                {% else %}
+                                                {{ association.name }}
+                                                {% endif %}
+                                            </h5>
+                                            {% if association.description %}
+                                            <p class="card-text text-muted mb-2">{{ association.description }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            {% if association.geographical_coverage %}
+                                            <span class="badge bg-secondary mb-2">
+                                                <i class="fas fa-globe me-1"></i>{{ association.geographical_coverage }}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    {% if association.sector %}
+                                    <div class="association-details mb-2">
+                                        <small class="text-muted">
+                                            <i class="fas fa-industry me-1"></i>{{ association.sector }}
+                                        </small>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Show message if no associations found -->
+                {% if not professional_associations_data.associations and not professional_associations_data.error %}
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No professional associations found for the selected criteria.
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.association-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.association-card:hover {
+    transform: translateY(-2px);
+}
+
+.association-details {
+    border-top: 1px solid #e9ecef;
+    padding-top: 0.5rem;
+}
+
+.search-params {
+    font-size: 0.9rem;
+}
+
+.section-header .badge {
+    font-size: 0.75rem;
+}
+</style>
+{% endblock %}

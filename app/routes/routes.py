@@ -494,6 +494,13 @@ def service_form(service_type):
             'icon': 'fas fa-shopping-cart',
             'requires': ['industry', 'geographical_area'],
             'form_template': 'service_form_online_marketplaces.html'
+        },
+        'professional-associations': {
+            'title': 'Professional Associations',
+            'description': 'Find professional associations and industry organizations in your target market and sector.',
+            'icon': 'fas fa-certificate',
+            'requires': ['industry', 'geographical_area'],
+            'form_template': 'service_form_industry_country.html'
         }
     }
     
@@ -698,6 +705,16 @@ def start_individual_service():
                     country_name = form_data.get('destination_country_name')
                     
                     service_data['online_marketplaces_data'] = report_service.generate_santander_online_marketplaces(
+                        industry_name, 
+                        country_name, 
+                        login_required=True
+                    )
+                elif service_type == 'professional-associations':
+                    # For professional associations, we need to pass the industry name and country name
+                    industry_name = form_data.get('industry_name')  # This contains the industry name
+                    country_name = form_data.get('destination_country_name')
+                    
+                    service_data['professional_associations_data'] = report_service.generate_santander_professional_associations(
                         industry_name, 
                         country_name, 
                         login_required=True
