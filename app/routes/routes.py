@@ -501,6 +501,13 @@ def service_form(service_type):
             'icon': 'fas fa-certificate',
             'requires': ['industry', 'geographical_area'],
             'form_template': 'service_form_industry_country.html'
+        },
+        'blacklisted-companies': {
+            'title': 'Blacklisted Companies and Vessels',
+            'description': 'Search for companies and vessels that have been blacklisted by various countries and organizations.',
+            'icon': 'fas fa-ban',
+            'requires': ['entity_name'],
+            'form_template': 'service_form_blacklisted_companies.html'
         }
     }
     
@@ -565,6 +572,9 @@ def start_individual_service():
             # For business directories and online marketplaces, the geographical_area is actually a country
             # Add it as destination_country_code for consistency with other services
             form_data['destination_country_code'] = request.form.get('geographical_area')
+        
+        if 'entity_name' in request.form:
+            form_data['entity_name'] = request.form.get('entity_name')
         
         # Enrich form_data with names using optimized lookups
         if 'origin_country_code' in form_data:
@@ -717,6 +727,14 @@ def start_individual_service():
                     service_data['professional_associations_data'] = report_service.generate_santander_professional_associations(
                         industry_name, 
                         country_name, 
+                        login_required=True
+                    )
+                elif service_type == 'blacklisted-companies':
+                    # For blacklisted companies, we need the entity name
+                    entity_name = form_data.get('entity_name')
+                    
+                    service_data['blacklisted_companies_data'] = report_service.generate_santander_blacklisted_companies(
+                        entity_name, 
                         login_required=True
                     )
                 

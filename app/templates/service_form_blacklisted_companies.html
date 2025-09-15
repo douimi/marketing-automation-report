@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Back to Services -->
+    <div class="mb-4">
+        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Services
+        </a>
+    </div>
+
+    <!-- Service Header -->
+    <div class="text-center mb-5">
+        <div class="service-icon-large mb-3">
+            <i class="{{ service.icon }}"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
+        <p class="lead text-muted">{{ service.description }}</p>
+    </div>
+
+    <!-- Service Form -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <h3 class="card-title mb-4 text-center">Search Parameters</h3>
+                    
+                    <form id="serviceForm" action="{{ url_for('main.start_individual_service') }}" method="POST">
+                        <input type="hidden" name="service_type" value="{{ service_type }}">
+                        
+                        <!-- Entity Name Input -->
+                        <div class="mb-4">
+                            <label for="entity_name" class="form-label fw-bold">
+                                <i class="fas fa-building text-primary me-2"></i>Entity Name
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="entity_name" 
+                                   name="entity_name" 
+                                   placeholder="Enter company or vessel name to search..."
+                                   required>
+                            <div class="form-text">
+                                Enter the name of the company or vessel you want to search for in blacklist databases.
+                            </div>
+                        </div>
+
+                        <!-- Service Features -->
+                        <div class="mb-4">
+                            <h5 class="mb-3">
+                                <i class="fas fa-list-check text-success me-2"></i>What you'll get:
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Comprehensive blacklist search
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Multiple sanctions databases
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Entity details and links
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Blacklisting authorities
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Real-time data access
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Detailed compliance information
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Important Notice -->
+                        <div class="alert alert-warning mb-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> This search will check multiple sanctions and blacklist databases. 
+                            Results should be verified independently for compliance purposes.
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>Search Blacklist Databases
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Information -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title">
+                        <i class="fas fa-info-circle text-primary me-2"></i>About This Service
+                    </h5>
+                    <p class="card-text">
+                        Our Blacklisted Companies and Vessels service provides comprehensive access to sanctions and blacklist databases 
+                        from various countries and international organizations. This tool helps you perform due diligence checks on 
+                        potential business partners, suppliers, or customers to ensure compliance with international trade regulations.
+                    </p>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <h6 class="fw-bold">
+                                <i class="fas fa-database text-primary me-2"></i>Data Sources
+                            </h6>
+                            <p class="small mb-0">Multiple government and international sanctions databases</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="fw-bold">
+                                <i class="fas fa-clock text-primary me-2"></i>Processing Time
+                            </h6>
+                            <p class="small mb-0">Results typically available within 30-60 seconds</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="fw-bold">
+                                <i class="fas fa-shield-alt text-primary me-2"></i>Compliance
+                            </h6>
+                            <p class="small mb-0">Supports international trade compliance requirements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    const entityName = document.getElementById('entity_name').value.trim();
+    
+    if (!entityName) {
+        e.preventDefault();
+        alert('Please enter an entity name to search for.');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching...';
+    submitBtn.disabled = true;
+    
+    // Redirect to loading page
+    setTimeout(() => {
+        window.location.href = "{{ url_for('main.loading_page') }}";
+    }, 500);
+});
+</script>
+{% endblock %}

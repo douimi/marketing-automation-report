@@ -169,14 +169,24 @@
                         {% endif %}
                     </div>
                     
-                    <!-- Blacklisted Companies (Placeholder) -->
+                    <!-- Blacklisted Companies and Vessels -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Blacklisted Companies')">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='blacklisted-companies') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-ban service-icon"></i>
+                                <h5>Blacklisted Companies and Vessels</h5>
+                                <p>Check sanctions and blacklist databases</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card">
                             <i class="fas fa-ban service-icon"></i>
                             <h5>Blacklisted Companies and Vessels</h5>
                             <p>Check sanctions and blacklist databases</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
+                            <i class="fas fa-lock lock-icon"></i>
                         </div>
+                        {% endif %}
                     </div>
                     
                     <!-- Financial Reports (Placeholder) -->

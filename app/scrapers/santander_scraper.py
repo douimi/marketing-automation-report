@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from bs4 import BeautifulSoup
@@ -1899,4 +1899,154 @@ def scrape_santander_trade_shows(driver, sector_code, destination_country_iso3n)
             'description': description,
             'sectors': sectors
         })
-    return shows 
+    return shows
+
+
+def scrape_santander_blacklisted_companies(driver, entity_name):
+    """
+    Scrapes blacklisted companies and vessels data from Santander Trade
+    """
+    target_url = "https://santandertrade.com/en/portal/reach-business-counterparts/black-listed-companies"
+    print(f"Navigating to: {target_url}")
+    driver.get(target_url)
+    
+    try:
+        # Wait for the form to be present
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='nom_contact']")))
+        
+        # Get the entity name input field
+        entity_element = driver.find_element(By.XPATH, "//*[@id='nom_contact']")
+        
+        # Clear and enter the entity name
+        try:
+            entity_element.clear()
+            entity_element.send_keys(entity_name)
+            print(f"Entered entity name: {entity_name}")
+            
+            # Wait a moment for any autocomplete to appear
+            time.sleep(2)
+            
+            # Try to find and click on autocomplete suggestion if available
+            try:
+                # Look for common autocomplete dropdown patterns
+                suggestions = driver.find_elements(By.CSS_SELECTOR, ".ui-menu-item, .autocomplete-item, .suggestion-item")
+                if suggestions:
+                    for suggestion in suggestions:
+                        if entity_name.upper() in suggestion.text.upper():
+                            suggestion.click()
+                            print(f"Clicked autocomplete suggestion: {suggestion.text}")
+                            break
+                else:
+                    print("No autocomplete suggestions found, proceeding with typed value")
+            except:
+                # If no autocomplete found, just proceed with typed value
+                print("No autocomplete suggestions found, proceeding with typed value")
+                
+        except Exception as e:
+            print(f"Could not enter entity name: {e}")
+            return {'error': f'Could not enter entity name: {str(e)}'}
+        
+        # Click search button
+        search_button = driver.find_element(By.XPATH, "//*[@id='bouton']")
+        search_button.click()
+        print("Search button clicked")
+        search_button = driver.find_element(By.XPATH, "//*[@id='bouton']")
+        search_button.click()
+        print("need to click the button again inside the container")
+        
+        # Wait for results to load - this takes time so we wait for the specific element
+        WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, "//*[@id='resultats_gtm']")))
+        time.sleep(5)  # Additional wait for dynamic content to fully load
+        
+        # Get page source and parse with BeautifulSoup
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'html.parser')
+        
+        # Find the results container
+        results_container = soup.find(id="resultats_gtm")
+        if not results_container:
+            print("Could not find results container")
+            return {'error': 'Could not find results content'}
+        
+        # Extract results summary from header
+        results_summary = ""
+        header_elem = results_container.find('li', class_='fond-titre')
+        if header_elem:
+            # Get the column headers
+            titre_spans = header_elem.find_all('span', class_=['titre-1', 'titre-2'])
+            if titre_spans:
+                headers = [span.get_text(strip=True) for span in titre_spans]
+                results_summary = f"Results showing columns: {' | '.join(headers)}"
+        
+        # Extract blacklisted entities data
+        blacklisted_entities = []
+        
+        # Look for entity items in the results
+        entity_items = results_container.find_all('li', class_='liste-titre')
+        
+        for item in entity_items:
+            entity_data = {}
+            
+            # Get the link element
+            link_elem = item.find('a')
+            if link_elem:
+                # Build full URL if it's relative
+                href = link_elem.get('href', '')
+                if href.startswith('/'):
+                    entity_data['url'] = f"https://santandertrade.com{href}"
+                else:
+                    entity_data['url'] = href
+                
+                # Extract data-entity attribute (can contain multiple IDs separated by commas)
+                entity_data['data_entity'] = link_elem.get('data-entity', '')
+                
+                # Extract entity name
+                name_span = link_elem.find('span', class_='nom-desc')
+                if name_span:
+                    entity_data['name'] = name_span.get_text(strip=True)
+                
+                # Extract blacklisted by information
+                blacklisted_by_span = link_elem.find('span', class_='pays-desc')
+                if blacklisted_by_span:
+                    # Create a copy to avoid modifying the original
+                    blacklisted_by_copy = blacklisted_by_span.__copy__()
+                    # Remove mobile title if present
+                    mobile_title = blacklisted_by_copy.find('span', class_='titre-mobile')
+                    if mobile_title:
+                        mobile_title.decompose()
+                    entity_data['blacklisted_by'] = blacklisted_by_copy.get_text(strip=True)
+                
+                # Extract tracking ID attribute
+                tracking_id = link_elem.get('id_tracking', '')
+                if tracking_id:
+                    entity_data['tracking_id'] = tracking_id
+            
+            if entity_data.get('name'):
+                blacklisted_entities.append(entity_data)
+        
+        print(f"Found {len(blacklisted_entities)} blacklisted entities")
+        
+        # Check for pagination
+        pagination = {}
+        pagination_elem = results_container.find('div', class_='pagination') or soup.find('div', class_='pagination')
+        if pagination_elem:
+            pagination['has_pagination'] = True
+            page_links = pagination_elem.find_all('a')
+            pagination['total_pages'] = len(page_links)
+        else:
+            pagination['has_pagination'] = False
+        
+        return {
+            'results_summary': results_summary,
+            'total_entities': len(blacklisted_entities),
+            'blacklisted_entities': blacklisted_entities,
+            'pagination': pagination,
+            'search_params': {
+                'entity_name': entity_name
+            }
+        }
+        
+    except Exception as e:
+        driver.save_screenshot("/tmp/blacklisted_companies.png")
+        print(f"Error scraping Blacklisted Companies: {e}")
+        return {'error': f'Error scraping Blacklisted Companies: {str(e)}'} 

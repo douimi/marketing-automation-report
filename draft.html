@@ -1,377 +1,68 @@
-<div id="contenu-contenu" class="theme_santander_">
-    <!-- InstanceBeginEditable name="Contenu" -->
-    <div id="message_veille" class="message-attente" style="display: none;">
-    <img src="/commun/images/gif-anime_80px.gif" alt="alt_image-attente" title="">
-    <span class="spinner-message-attente"></span>
-    <p>Please wait</p>
-    </div>
-    <script language="Javascript" type="text/javascript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    var ancien_pays_choisi = '';
-    var ancien_secteur_choisi = '';
-    function mise_a_jour_liste_des_secteurs()
-    {
-    Element.hide( 'federation_secteur' );
-    Element.show( 'tempo_secteurs' );
-    var url = '/commun/ajax_service__federations.php';
-    var parametres = 'todo=lister_secteurs_selon_pays&critere_pays=' + $('critere_pays').value + '&langue=en';
-    new Ajax.Request(
-    url,
-    {
-    method: 'get',
-    parameters: parametres,
-    onComplete: afficher_les_secteurs_selon_pays
-    }
-    );
-    }
-    function afficher_les_secteurs_selon_pays(requete)
-    {
-    ancien_secteur_choisi = $('federation_secteur').value;
-    Element.hide( 'tempo_secteurs' );
-    Element.show( 'federation_secteur' );
-    var tab = requete.responseText;
-    $('federation_secteur').innerHTMLcsp = '';
-    $A(tab).each( function( valeur, indice )
-    {
-    new Insertion.Bottom( 'federation_secteur', '<option value="' + valeur['id'] + '">' + valeur['nom'] + '</option>' );
-    } );
-    new Insertion.Bottom( 'federation_secteur', '<option value="all">All Industries</option>' );
-    new Insertion.Top( 'federation_secteur', '<option value="" selelected="selected">Choose an industry</option>');
-    champ_ecrire_valeur( $( "federation_secteur" ), ancien_secteur_choisi );
-    }
-    function mise_a_jour_liste_des_pays()
-    {
-    ancien_pays_choisi = $('critere_pays').value;
-    Element.hide( 'critere_pays' );
-    Element.show( 'tempo_critere_pays' );
-    var url = '/commun/ajax_service__federations.php';
-    var parametres = 'todo=lister_pays_selon_secteurs&secteurs=' + $('federation_secteur').value + '&langue=en';
-    new Ajax.Request(
-    url,
-    {
-    method: 'get',
-    parameters: parametres,
-    onComplete: afficher_les_pays_selon_secteurs
-    }
-    );
-    }
-    function afficher_les_pays_selon_secteurs(requete)
-    {
-    Element.hide( 'tempo_critere_pays' );
-    Element.show( 'critere_pays' );
-    var tab = requete.responseText;
-    $('critere_pays').innerHTMLcsp = '';
-    $A(tab).each( function( valeur, indice )
-    {
-    new Insertion.Bottom( 'critere_pays', '<option value="' + valeur['id_pays'] + '">' + valeur['nom_pays'] + '</option>' );
-    } );
-    new Insertion.Bottom( 'critere_pays', '<option value="all">All countries</option>' );
-    new Insertion.Top( 'critere_pays', '<option value="" selelected="selected">Select an area</option>');
-    champ_ecrire_valeur( $( "critere_pays" ), ancien_pays_choisi );
-    }
-    function verifier_formulaire_federations()
-    {
-    if( ( $('critere_pays').value == '' || $('critere_pays').value == 'all' ) && ( $('federation_secteur').value == '' || $('federation_secteur').value == 'all' ) )
-    {
-    gestion_erreurs__formulaire( true, true );
-    return false;
-    }
-    Element.show( 'message_veille' );
-    if (typeof datalayer__gestion_submit === "function") 
-    datalayer__gestion_submit();
-    $('form_professional_associations').submit();
-    return true;
-    }
-    function gestion_erreurs__formulaire( type, via_btn_submit )
-    {
-    if( type )
-    {
-    if( via_btn_submit )
-    Element.show('message_erreur__principal');
-    $('dt_critere_pays').className = 'champ_en_erreur';
-    $('dd_critere_pays').className = 'champ_en_erreur';
-    $('dt_federation_secteur').className = 'champ_en_erreur';
-    $('dd_federation_secteur').className = 'champ_en_erreur';
-    }
-    else
-    {
-    Element.hide('message_erreur__principal');
-    $('dt_critere_pays').className = '';
-    $('dd_critere_pays').className = '';
-    $('dt_federation_secteur').className = '';
-    $('dd_federation_secteur').className = '';
-    }
-    }
-    function gestion_erreurs__onchange()
-    {
-    if( ( $('critere_pays').value == '' || $('critere_pays').value == 'all' ) && ( $('federation_secteur').value == '' || $('federation_secteur').value == 'all' ) )
-    gestion_erreurs__formulaire( true, false );
-    else
-    gestion_erreurs__formulaire( false, false );
-    }
-    --></script>
-    <div id="message_veille" class="message-attente" style="display: none;">
-    <img src="/commun/images/gif-anime_80px.gif" alt="alt_image-attente" title="">
-    <span class="spinner-message-attente"></span>
-    <p>Please wait</p>
-    </div>
-    <h1>Professional Associations </h1>
-    <div class="salon-dispo_v2">
-    <span class="salons-dispos">
-    <strong>5,911</strong> professional associations
-    </span>
-    </div>
-    <a name="form_service"></a>
-    <!-- encart demo -->
-    <p class="" style="clear: both;">This database compiles professional associations around the world, representing many business sectors.</p>
-    <p class="" style="clear: both;">To make a search, select an industry and/or a country.</p>
-    <!-- formulaire -->
-    <form id="form_professional_associations" name="form_professional_associations" action="#result" method="post">
-    <input type="hidden" name="todo" value="valider">
-    <input type="hidden" name="csrf" value="b39c0edd854c949b3d4aed2e8545d552">
-    <p id="message_erreur__principal" class="message_erreur message-erreur-principal" style="display: none;">Please select an industry and/or a country</p>
-    <div id="recherche-intro">
-    <dl class="informations-3">
-    <dt id="dt_federation_secteur">Industry</dt>
-    <dd id="dd_federation_secteur">
-    <span id="tempo_secteurs" class="" style="display: none;"><img src="/ressources/images/anim_attente.gif" alt="" title=""></span>
-    <select id="federation_secteur" name="secteur">
-    <option value="">Choose an industry</option>
-    <option value="1">Administration, Institutions, Justice, Social services</option><option value="18">Aeronautics, Aerospace</option><option value="2">Agriculture, Horticulture, Livestock, Fishing, Forestry</option><option value="3">Arts, Culture, Handcraft, Museums, Entertainment</option><option value="4">Audiovisual, Cinema, Photography, Multimedia</option><option value="17">Automotive, Lorries, Cycles, Motorcycles</option><option value="5">Banking, Finance, Investment, Insurance</option><option value="30">Business services: Services, Outsourcing</option><option value="14">Chemicals, Cosmetics, Pharma, Plastics, Fertilisers</option><option value="8">Communication, Marketing, Advertising, Incentive</option><option value="6">Construction, Real Estate, Architecture, Urbanism</option><option value="16">Defense, Armaments, Security</option><option value="9">Education, Training, Apprenticeship</option><option value="21">Electricity and electronics: Equipment and components</option><option value="19">Energy, Oil, Gas, Hydrogen, Electricity, Renewables</option><option value="10">Environment, Ecology, Water, Recycling, Waste</option><option value="12">Fresh &amp; Processed Food, Beverages, Cereals, Tobacco</option><option value="11">Furniture, Decoration, DIY, Garden</option><option value="28">Health, Hospital, Pharmacies, Dental, Veterinary</option><option value="25">Industrial subcontracting, Maintenance, Design, IP</option><option value="27">IT, Hardware, Software, Telecommunications, Internet</option><option value="23">Materials, Metals, Metallurgy, Mining, Quarries</option><option value="15">Mechanical, Railway, Naval, Machinery, Agricultural machinery</option><option value="22">Packaging, Conditioning</option><option value="31">Personal Services, Family, Pets</option><option value="26">Press, Information, Events, Bookstores, Libraries</option><option value="20">Printing, Publishing, Graphic Art, Stamps, Cards</option><option value="29">Science, Humanities, Research, Technology</option><option value="32">Sports, Leisure, Hunting, Hobbies, Toys</option><option value="24">Textile, Clothing, Footwear, Accessories, Jewellery</option><option value="34">Tourism, Travel, Hosting, Bars, Restaurants, Parks</option><option value="7">Trade, Distribution, Retail, Import/Export</option><option value="33">Transport, Logistics, Handling, Parcel Shipping</option><option value="13">Wood, Paper, Cardboard</option>
-    <option value="all">All Industries</option>
-    </select>
-    </dd>
-    <dt id="dt_critere_pays">Country</dt>
-    <dd id="dd_critere_pays">
-    <span id="tempo_critere_pays" class="" style="display: none;"><img src="/ressources/images/anim_attente.gif" alt="" title=""></span>
-    <select id="critere_pays" name="critere_pays">
-    <option value="">Select a country / region</option>
-    <option value="96">Afghanistan</option><option value="85">Albania</option><option value="73">Algeria</option><option value="98">Angola</option><option value="3">Argentina</option><option value="86">Armenia</option><option value="4">Australia</option><option value="5">Austria</option><option value="55">Azerbaijan</option><option value="100">Bahrain</option><option value="101">Bangladesh</option><option value="6">Belgium</option><option value="103">Benin</option><option value="105">Bolivia</option><option value="106">Bosnia and Herzegovina</option><option value="107">Botswana</option><option value="7">Brazil</option><option value="8">Bulgaria</option><option value="109">Burkina Faso</option><option value="83">Burundi</option><option value="74">Cameroon</option><option value="9">Canada</option><option value="111">Cape Verde</option><option value="113">Chad</option><option value="10">Chile</option><option value="11">China</option><option value="12">Colombia</option><option value="166">Congo</option><option value="115">Costa Rica</option><option value="14">Croatia</option><option value="87">Cyprus</option><option value="42">Czech Republic</option><option value="15">Denmark</option><option value="116">Djibouti</option><option value="117">Dominican Republic</option><option value="118">Ecuador</option><option value="16">Egypt</option><option value="121">Eritrea</option><option value="58">Estonia</option><option value="174">Eswatini</option><option value="122">Ethiopia</option><option value="19">Finland</option><option value="20">France</option><option value="124">Gabon</option><option value="125">Gambia</option><option value="88">Georgia</option><option value="54">Germany</option><option value="126">Ghana</option><option value="21">Greece</option><option value="22">Guatemala</option><option value="128">Guinea</option><option value="129">Guinea-Bissau</option><option value="23">Hong Kong SAR, China</option><option value="24">Hungary</option><option value="28">Iceland</option><option value="25">India</option><option value="26">Indonesia</option><option value="27">Ireland</option><option value="29">Israel</option><option value="30">Italy</option><option value="31">Japan</option><option value="32">Jordan</option><option value="60">Kazakhstan</option><option value="135">Kenya</option><option value="77">Kuwait</option><option value="61">Latvia</option><option value="138">Lesotho</option><option value="62">Lithuania</option><option value="79">Luxembourg</option><option value="141">Macao SAR, China</option><option value="142">Madagascar</option><option value="143">Malawi</option><option value="33">Malaysia</option><option value="144">Maldives</option><option value="145">Mali</option><option value="91">Malta</option><option value="94">Mauritania</option><option value="147">Mauritius</option><option value="35">Mexico</option><option value="93">Moldova</option><option value="151">Montenegro</option><option value="34">Morocco</option><option value="152">Mozambique</option><option value="154">Namibia</option><option value="37">Netherlands</option><option value="63">New Zealand</option><option value="157">Niger</option><option value="158">Nigeria</option><option value="90">North Macedonia</option><option value="64">Norway</option><option value="160">Oman</option><option value="66">Pakistan</option><option value="36">Panama</option><option value="164">Paraguay</option><option value="38">Peru</option><option value="39">Philippines (the)</option><option value="40">Poland</option><option value="41">Portugal</option><option value="237">Puerto Rico</option><option value="165">Qatar</option><option value="43">Romania</option><option value="82">Rwanda</option><option value="2">Saudi Arabia</option><option value="80">Senegal</option><option value="95">Serbia</option><option value="168">Seychelles</option><option value="169">Sierra Leone</option><option value="46">Singapore</option><option value="67">Slovakia</option><option value="68">Slovenia</option><option value="1">South Africa</option><option value="13">South Korea</option><option value="17">Spain</option><option value="171">Sri Lanka</option><option value="47">Sweden</option><option value="48">Switzerland</option><option value="49">Taiwan, China</option><option value="176">Tanzania</option><option value="50">Thailand</option><option value="178">Togo</option><option value="51">Tunisia</option><option value="52">Türkiye</option><option value="181">Turkmenistan</option><option value="182">Uganda</option><option value="57">United Arab Emirates</option><option value="44">United Kingdom</option><option value="18">United States</option><option value="53">Uruguay</option><option value="65">Uzbekistan</option><option value="71">Venezuela</option><option value="72">Vietnam</option><option value="185">Zambia</option>
-    <option value="all">All countries</option>
-    </select>
-    </dd>
-    <dt>&nbsp;</dt>
-    <dd>
-    <a id_tracking="g-s-federations-rechercher" href="#" id="bouton" class="bouton-off" role="button">Search</a>
-    </dd>
-    </dl>
-    </div>
-    <div class="clean"></div>
-    </form>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    var datalayer__form_name = 'form_professional_associations';</script>
-    <script type="text/javascript" language="javascript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    champ_ecrire_valeur( $( "federation_secteur" ), lib_general__convertir_unicode_vers_js( "18" ) );
-    --></script>
-    <script type="text/javascript" language="javascript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    champ_ecrire_valeur( $( "critere_pays" ), lib_general__convertir_unicode_vers_js( "18" ) );
-    --></script>
-    <!-- fin formulaire -->
-    <div class="" style="clear: both;">
-    <a name="result"></a>
-    </div>
-    <div class="clean"></div>
-    <div class="bloc-spot">
-    <div class="titre-resultat-l">
-    <h2 class="no-bg-bd">7 Professional associations - United States</h2>
-    </div>
-    <div class="ancre-resultat-r bloc_navigation_non_imprimable">
-    <a id_tracking="g-s-federations-titre-ancre-retour" name="haut" href="#haut">Back to your search</a>
-    </div>
-    <div class="clean"></div>
-    <ul>
-    <li><a id_tracking="g-s-federations-titre-ancre-resultats" name="title_1" href="#title_1">4 Professional associations "Aeronautics, Aerospace"</a></li>
-    <li><a id_tracking="g-s-federations-titre-ancre-resultats-generalistes" name="title_2" href="#title_2">3 General associations</a></li>
-    </ul>
-    </div>
-    <div class="filtres-search filtres-pm4 bloc_navigation_non_imprimable">
-    <div class="clean"></div>
-    <h3 class="mb-4 mt-1">4 Professional associations "Aeronautics, Aerospace"<a name="title_1" id="title_1" class="ancre-service"></a></h3>
-    <a id_tracking="g-s-federations-filtres-affiner" class="lien-filtres-counterparts add-truncate-active" data-toggle="collapse" data-bs-toggle="collapse" href="#filtres" role="button" aria-expanded="false" aria-controls="filtres">
-    <i class="fa fa-filter" aria-hidden="true">&nbsp;</i>Refine your results
+<div id="resultats_gtm">
+    <ul class="resultats-gtm-page" id="resultats_gtm_page__1" style="">
+    <li class="fond-titre">
+    <span class="titre-1">Blacklisted entity</span><span class="titre-2">Blacklisted by</span>
+    </li>
+    <li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY248331823"><span class="nom-desc">"308 Aircraft Repair Plant"</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
     </a>
-    <div id="filtres" class="filter-counterparts collapse-truncate collapse">
-    <form id="filtres-form" method="post">
-    <input type="hidden" name="csrf" value="b39c0edd854c949b3d4aed2e8545d552">
-    <input name="critere_pays" type="hidden" value="18">
-    <input name="secteur" type="hidden" value="18">
-    <input name="todo" type="hidden" value="valider">
-    <div class="bloc_filtre">
-    <dl class="villes bloc_navigation_non_imprimable">
-    <div class="row">
-    <div class="col-md-6">
-    <p><strong><i class="fa fa-industry" aria-hidden="true"></i> Sub-sectors</strong></p>
-    </div>
-    <div class="col-md-6">
-    <p class="text-right"><a id_tracking="g-s-federations-filtres-tout-reinitialiser" href="#" role="button">Reset all</a></p>
-    </div>
-    </div>
-    <div class="cont-filter"> 
-    <div>
-    <input id="filtre_ss_11.07.01" type="checkbox" name="filtre_secteurs[]" value="11.07.01" class="checkClass">
-    <label for="filtre_ss_11.07.01"><span class="addtruncate">Aeronautics, aero spatial</span> (2)</label>
-    </div><div>
-    <input id="filtre_ss_11.07.01.01" type="checkbox" name="filtre_secteurs[]" value="11.07.01.01" class="checkClass">
-    <label for="filtre_ss_11.07.01.01"><span class="addtruncate">Aerospace</span> (1)</label>
-    </div><div>
-    <input id="filtre_ss_11.07.01.02" type="checkbox" name="filtre_secteurs[]" value="11.07.01.02" class="checkClass">
-    <label for="filtre_ss_11.07.01.02"><span class="addtruncate">Space</span> (1)</label>
-    </div>
-    </div>
-    </dl>
-    </div>
-    <div class="btn_valider bloc_navigation_non_imprimable"><input id_tracking="g-s-federations-filtres-valider" class="bouton-off" type="submit" value="Apply"></div>
-    </form>
-    <div class="clean"></div>
-    </div>
-    </div>
-    <div id="ordre-affichage1" class="ordre-affichage mb-3" style="display: none;">
-    <span class="pagination-page">Pages</span>
-    <span>
-    <a id_tracking="g-s-federations-pagination-1" class="pagination-lien" id="page_lien__1" href="#result" style="display: none;">1</a>
-    <span class="pagination-on" id="page_texte__1" style="font-weight: bold;">1</span>
-    <span class="numero-vide" id="span_texte__1" style="display: none;">..</span>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    nbr_element_pagination = 1;
-    --></script>
-    </span>
-    </div>
-    <div id="page_actu__1" class="traduction_forcee" style="clear: both;">
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="https://astronautical.org/" target="_blank" class="text-uppercase lien-externe" aria-label="AAS (Opens a new tab)">AAS</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>American Astronautical Society</div>
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Aeronautics, Aerospace</div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="https://www.afacwa.org/join_us" target="_blank" class="text-uppercase lien-externe" aria-label="AFA (Opens a new tab)">AFA</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>Association of Flight Attendants</div>
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Aeronautics, Aerospace</div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="http://www.aia-aerospace.org/" target="_blank" class="text-uppercase lien-externe" aria-label="AIA (Opens a new tab)">AIA</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>Aerospace Industry Association</div>
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Aeronautics, Aerospace</div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="http://www.iafastro.org/" target="_blank" class="text-uppercase lien-externe" aria-label="IAFASTRO (Opens a new tab)">IAFASTRO</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> World</div>
-    </div>
-    <div>International Astronautical Federation</div>
-    <div class="sectors-line"><i class="fa fa-industry" aria-hidden="true"></i> Aeronautics, Aerospace</div>
-    </div>
-    </div>
-    <div id="ordre-affichage2" class="ordre-affichage" style="display: none;">
-    <span class="pagination-page">Pages</span>
-    <span>
-    <a id_tracking="g-s-federations-pagination2-1" class="pagination-lien" id="page_lien2__1" href="#result" style="display: none;">1</a>
-    <span class="pagination-on" id="page_texte2__1" style="font-weight: bold;">1</span>
-    <span class="numero-vide" id="span_texte2__1" style="display: none;">..</span>
-    </span>
-    </div>
-    <div class="clean"></div>
-    <h3 class="mb-4 mt-1">3 General associations<a name="title_2" id="title_2" class="ancre-service"></a></h3>
-    <div class="clean"></div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="https://www.aseonline.org/" target="_blank" class="text-uppercase lien-externe" aria-label="ASE (Opens a new tab)">ASE</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>American Society of Employers</div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="https://www.sba.gov/" target="_blank" class="text-uppercase lien-externe" aria-label="SBA (Opens a new tab)">SBA</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>U.S. Small Business Administration</div>
-    </div>
-    <div class="card-service-result">
-    <div class="row">
-    <div class="col-md-8 mb-1">
-    <a id_tracking="g-s-federations-lien-federation" href="https://www.nam.org" target="_blank" class="text-uppercase lien-externe" aria-label="NAM (Opens a new tab)">NAM</a>
-    </div>
-    <div class="col-md-4 mb-1 text-right"><i class="fa fa-globe" aria-hidden="true"></i> United States</div>
-    </div>
-    <div>National Association of Manufacturers</div>
-    </div>
-    <p class="sources traduction_forcee">Source: eexpand</p>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    <!--
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    page__cacher_pages();
-    if( $('page_actu__1') )
-    page_montrer_page( 1 );
-    if( nbr_element_pagination == 1 )
-    {
-    Element.hide('ordre-affichage1');
-    Element.hide('ordre-affichage2');
-    }
-    --></script>
-    <script type="text/javascript" language="JavaScript" nonce="">
-    'function'===typeof(global_csp_handle)&&global_csp_handle(document,false);
-    function addTooltip()
-    {
-    jQuery(".truncate").each(function() {
-    var thisTxt = jQuery(this).text();
-    var cloneEle = document.createElement("div");
-    cloneEle = jQuery(cloneEle);
-    cloneEle.addClass("ele-clone");
-    cloneEle.html(thisTxt);
-    jQuery("body").append(cloneEle);
-    if (jQuery(this).width() <= cloneEle.width()) {
-    jQuery(this).attr("title", thisTxt);
-    jQuery(this).tooltip({
-    template: '<div class="tooltip truncate-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-    });
-    } else {
-    jQuery(this).removeAttr("title");
-    }
-    cloneEle.remove();
-    });
-    }
-    jQuery(document).ready(function() {
-    addTooltip();
-    });
-    function addTooltipClass() {
-    jQuery(".addtruncate").addClass("truncate");
-    addTooltip()
-    };
-    jQuery(".add-truncate-active").on("click", function() {
-    if (jQuery(".collapse-truncate").is(":visible")){
-    jQuery(".addtruncate").removeClass("truncate");
-    } else {
-    setTimeout(addTooltipClass, 500);
-    }
-    });</script>
-    <!-- InstanceEndEditable -->
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476101530"><span class="nom-desc">" Beriev Aircraft" PJSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY803644194"><span class="nom-desc">4U AIRCRAFT DESIGN AND ENGINEERING GMBH</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY657934803,ENTITY666272862,ENTITY919426506"><span class="nom-desc">53rd Anti-Aircraft Missile Brigade</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Switzerland, EU</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY191916881"><span class="nom-desc">150th Aircraft Repair Plant</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476102759"><span class="nom-desc">150th Aircraft Repair Plant JSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY501943714,ENTITY703528989,ENTITY523295187,ENTITY647002822"><span class="nom-desc">356 Aircraft Repair Plant</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Japan, United States, New Zealand</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476102762"><span class="nom-desc">356TH aircraft repair plant JSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY438148745"><span class="nom-desc">558 Aircraft Repair Plant</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Canada</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY452448646,ENTITY453435368,ENTITY458050581"><span class="nom-desc">558 Aircraft Repair Plant JSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States, Switzerland, Japan</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476102568"><span class="nom-desc">558 aircraft repair plant PJSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY523295185"><span class="nom-desc">711 Aircraft Repair Plant (711 ARZ)</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>New Zealand</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476102761"><span class="nom-desc">711TH aircraft repair plant JSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY476102766"><span class="nom-desc">810th Aircraft Repair Plant JSC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Ukraine</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY372586285"><span class="nom-desc">AECC Commercial Aircraft Engine Co. Ltd.</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY931958534,ENTITY931961202,ENTITY931967684,ENTITY931967685"><span class="nom-desc">AIRCRAFT AVIONICS PARTS AND SUPPORT LTD.</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States, Hong Kong SAR, China</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY703532933"><span class="nom-desc">AIRCRAFT COMPONENTS LOGISTICS LTD</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY455870567,ENTITY523295554"><span class="nom-desc">AIRCRAFT ENGINEERING CONCERN OPEN JOINT STOCK COMPANY</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States, New Zealand</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY679715834"><span class="nom-desc">AIRCRAFT ENGINES DESIGN AND MANUFACTURING COMPANY</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>Australia</span>
+    </a>
+    </li><li class="liste-titre">
+    <a id_tracking="g-s-gtm-denied-party-resultats-lien" href="/en/portal/reach-business-counterparts/black-listed-companies__ajax" class="ajax toggle-informations" data-entity="ENTITY703533083"><span class="nom-desc">AIRCRAFT MAINTENANCE CENTER FZC</span><span class="pays-desc"><span class="titre-mobile">Blacklisted by: </span>United States</span>
+    </a>
+    </li>
+    </ul>
     </div>

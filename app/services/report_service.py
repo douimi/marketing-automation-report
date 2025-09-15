@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tempfile
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_professional_associations, scrape_santander_online_marketplaces
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_professional_associations, scrape_santander_online_marketplaces, scrape_santander_blacklisted_companies
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -48,15 +48,38 @@ class ReportGenerationService:
 
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
+        # Start virtual display for headless environments (fallback)
+        try:
+            import os
+            if os.environ.get('DISPLAY') is None:
+                os.environ['DISPLAY'] = ':99'
+                print("Set DISPLAY environment variable to :99")
+        except Exception as e:
+            print(f"Could not set DISPLAY: {e}")
+        
         chrome_options = Options()
-        # Robust headless settings for containers
-        chrome_options.add_argument("--headless=new")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
+        # Comprehensive headless settings for containers
+        chrome_options.add_argument("--headless=new")  # Enable headless mode
+        chrome_options.add_argument("--no-sandbox")  # Required for Docker
+        chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+        chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration
         chrome_options.add_argument("--disable-software-rasterizer")
-        chrome_options.add_argument("--remote-debugging-port=9222")
-        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--disable-extensions")  # Disable extensions
+        chrome_options.add_argument("--disable-plugins")  # Disable plugins
+        chrome_options.add_argument("--disable-images")  # Speed up by not loading images
+        chrome_options.add_argument("--disable-web-security")  # Disable web security
+        chrome_options.add_argument("--disable-features=VizDisplayCompositor")  # Disable compositor
+        chrome_options.add_argument("--disable-background-timer-throttling")
+        chrome_options.add_argument("--disable-renderer-backgrounding")
+        chrome_options.add_argument("--disable-backgrounding-occluded-windows")
+        chrome_options.add_argument("--disable-ipc-flooding-protection")
+        chrome_options.add_argument("--window-size=1920,1080")  # Set window size
+        chrome_options.add_argument("--start-maximized")  # Start maximized
+        chrome_options.add_argument("--remote-debugging-port=9222")  # Enable remote debugging
+        chrome_options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")  # Set user agent
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")  # Hide automation
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])  # Hide automation
+        chrome_options.add_experimental_option('useAutomationExtension', False)  # Disable automation extension
 
         # Use unique temp user data to avoid profile locking across concurrent runs
         user_data_dir = tempfile.mkdtemp(prefix="chrome-user-data-")
@@ -79,6 +102,10 @@ class ReportGenerationService:
                 service = ChromeService(executable_path=chromedriver_path)
                 self.driver = webdriver.Chrome(service=service, options=chrome_options)
                 print("WebDriver initialized successfully with system chromedriver.")
+                # Test the driver with a simple navigation
+                print("Testing WebDriver with a simple navigation...")
+                self.driver.get("https://www.google.com")
+                print(f"WebDriver test successful. Current URL: {self.driver.current_url}")
             else:
                 raise FileNotFoundError("System chromedriver not found; using WebDriverManager")
         except Exception as e:
@@ -87,6 +114,10 @@ class ReportGenerationService:
                 print("Initializing WebDriver with ChromeDriverManager...")
                 self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
                 print("WebDriver initialized successfully with ChromeDriverManager.")
+                # Test the driver with a simple navigation
+                print("Testing WebDriver with a simple navigation...")
+                self.driver.get("https://www.google.com")
+                print(f"WebDriver test successful. Current URL: {self.driver.current_url}")
             except Exception as e2:
                 print(f"Error initializing WebDriver with ChromeDriverManager: {e2}")
                 self.driver = None # Ensure driver is None if initialization fails
@@ -935,6 +966,31 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Online Marketplaces scraping: {e}")
             return {"error": f"Error during Online Marketplaces scraping: {str(e)}"}
+
+    def generate_santander_blacklisted_companies(self, entity_name, login_required=True):
+        """Generates the Blacklisted Companies and Vessels data by scraping Santander Trade."""
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Blacklisted Companies for entity: {entity_name}...")
+            scraped_data = scrape_santander_blacklisted_companies(self.driver, entity_name)
+            
+            # Add entity name to the returned data for proper display (if not already there)
+            if not scraped_data.get('error'):
+                scraped_data['entity_name'] = entity_name
+            
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Blacklisted Companies scraping: {e}")
+            return {"error": f"Error during Blacklisted Companies scraping: {str(e)}"}
 
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""
