@@ -272,14 +272,15 @@
                         </div>
                     </div>
                     
-                    <!-- HS Customs Classification (Placeholder) -->
+                    <!-- HS Customs Classification -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('HS Customs Classification')">
-                            <i class="fas fa-tags service-icon"></i>
-                            <h5>HS Customs Classification</h5>
-                            <p>Find correct HS codes for your products</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.hs_customs_classification') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-tags service-icon"></i>
+                                <h5>HS Customs Classification</h5>
+                                <p>Find correct HS codes for your products</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -302,36 +303,31 @@
                 </div>
                 <div class="row g-3">
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Export Price Calculator')">
-                            <i class="fas fa-calculator service-icon"></i>
-                            <h5>Export Price Calculator</h5>
-                            <p>Calculate optimal export pricing strategies</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.export_price_calculator') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-calculator service-icon"></i>
+                                <h5>Export Price Calculator</h5>
+                                <p>Calculate optimal export pricing strategies</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Landed Cost Calculator')">
-                            <i class="fas fa-shipping-fast service-icon"></i>
-                            <h5>Landed Cost Calculator</h5>
-                            <p>Calculate total landed costs including duties</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.measurement_converter') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-ruler service-icon"></i>
+                                <h5>Measurement Converter</h5>
+                                <p>Convert between different measurement units</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Measurement Converter')">
-                            <i class="fas fa-ruler service-icon"></i>
-                            <h5>Measurement Converter</h5>
-                            <p>Convert between different measurement units</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Currency Converter')">
-                            <i class="fas fa-dollar-sign service-icon"></i>
-                            <h5>Currency Converter</h5>
-                            <p>Real-time currency conversion and rates</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.currency_converter') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-dollar-sign service-icon"></i>
+                                <h5>Currency Converter</h5>
+                                <p>Real-time currency conversion and rates</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -426,14 +422,6 @@
                             <i class="fas fa-lock lock-icon"></i>
                         </div>
                         {% endif %}
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Export/Import Factsheets')">
-                            <i class="fas fa-file-alt service-icon"></i>
-                            <h5>Indatex Export/Import Factsheets</h5>
-                            <p>Quick reference guides for trade operations</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="service-card placeholder-card" onclick="showComingSoon('Trade Show Preparation')">

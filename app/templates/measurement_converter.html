@@ -1,0 +1,623 @@
+{% extends "base.html" %}
+
+{% block title %}Measurement Converter{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Hero Section -->
+            <div class="bg-primary text-white py-5 mb-4">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="fas fa-ruler me-3"></i>Measurement Converter
+                            </h1>
+                            <p class="lead mb-0">Convert between different measurement units with precision</p>
+                            <p class="mt-2 mb-0">
+                                <small>
+                                    Length • Mass • Volume • Area • Temperature
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="bg-white bg-opacity-25 rounded p-3">
+                                <h5 class="mb-2">Quick Convert</h5>
+                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('length')">Length</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('mass')">Mass</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('volume')">Volume</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Converter Section -->
+            <div class="container mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card shadow-lg border-0">
+                            <div class="card-header bg-light text-center py-4">
+                                <h3 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Unit Conversion</h3>
+                                <p class="text-muted mb-0">Convert between metric, imperial, and other measurement systems</p>
+                            </div>
+                            <div class="card-body p-4">
+                                <!-- Category Selection -->
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <div class="category-selector">
+                                            {% for category in categories %}
+                                            <button class="btn btn-outline-primary category-btn" 
+                                                    data-category="{{ category.id }}"
+                                                    onclick="selectCategory('{{ category.id }}')">
+                                                <i class="fas {{ category.icon }} me-2"></i>
+                                                {{ category.name }}
+                                            </button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Conversion Forms -->
+                                {% for category in categories %}
+                                <div class="conversion-section" id="section-{{ category.id }}" style="display: none;">
+                                    <div class="section-header mb-4">
+                                        <h4 class="text-primary">
+                                            <i class="fas {{ category.icon }} me-2"></i>
+                                            Convert a {{ category.name.lower() }}:
+                                        </h4>
+                                    </div>
+                                    
+                                    <div class="conversion-row">
+                                        <div class="conversion-input">
+                                            <input type="number" 
+                                                   class="form-control value-input" 
+                                                   id="value-{{ category.id }}"
+                                                   placeholder="Enter value"
+                                                   step="any"
+                                                   oninput="autoConvert('{{ category.id }}')">
+                                        </div>
+                                        
+                                        <div class="conversion-from">
+                                            <select class="form-select unit-select" 
+                                                    id="from-{{ category.id }}"
+                                                    onchange="autoConvert('{{ category.id }}')">
+                                                <optgroup label="Popular Units">
+                                                    {% for unit in units_by_category[category.id] %}
+                                                    {% if unit.popular %}
+                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                                <optgroup label="All Units">
+                                                    {% for unit in units_by_category[category.id] %}
+                                                    {% if not unit.popular %}
+                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="conversion-equals">
+                                            <button class="btn btn-primary swap-btn" 
+                                                    onclick="swapUnits('{{ category.id }}')"
+                                                    title="Swap units">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="conversion-result">
+                                            <input type="text" 
+                                                   class="form-control result-input" 
+                                                   id="result-{{ category.id }}"
+                                                   placeholder="Result"
+                                                   readonly>
+                                        </div>
+                                        
+                                        <div class="conversion-to">
+                                            <select class="form-select unit-select" 
+                                                    id="to-{{ category.id }}"
+                                                    onchange="autoConvert('{{ category.id }}')">
+                                                <optgroup label="Popular Units">
+                                                    {% for unit in units_by_category[category.id] %}
+                                                    {% if unit.popular %}
+                                                    <option value="{{ unit.code }}" 
+                                                            {% if loop.index == 2 %}selected{% endif %}>
+                                                        {{ unit.name }}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                                <optgroup label="All Units">
+                                                    {% for unit in units_by_category[category.id] %}
+                                                    {% if not unit.popular %}
+                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Conversion Result Display -->
+                                    <div class="conversion-details mt-4" id="details-{{ category.id }}" style="display: none;">
+                                        <div class="alert alert-info border-0 shadow-sm">
+                                            <h6 class="alert-heading">
+                                                <i class="fas fa-calculator me-2"></i>Conversion Details
+                                            </h6>
+                                            <p class="mb-1" id="formula-{{ category.id }}">-</p>
+                                            <small class="text-muted">
+                                                <i class="fas fa-clock me-1"></i>
+                                                <span id="timestamp-{{ category.id }}">-</span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <!-- Loading Indicator -->
+                                <div id="loadingIndicator" class="text-center py-4 d-none">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Converting...</span>
+                                    </div>
+                                    <p class="mt-2 text-muted">Converting measurement...</p>
+                                </div>
+
+                                <!-- Error Message -->
+                                <div id="errorMessage" class="d-none">
+                                    <div class="alert alert-danger border-0 shadow-sm">
+                                        <h5 class="alert-heading">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>Conversion Error
+                                        </h5>
+                                        <p class="mb-0" id="errorText">An error occurred during conversion.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-ruler text-primary mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title text-primary">Length</h5>
+                                <p class="card-text">Metric, imperial, nautical, and astronomical units</p>
+                                <small class="text-muted">mm, cm, m, km, in, ft, yd, mi</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-weight text-success mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title text-success">Mass/Weight</h5>
+                                <p class="card-text">Metric, imperial, and specialty weight units</p>
+                                <small class="text-muted">mg, g, kg, oz, lb, tons</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-flask text-info mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title text-info">Volume</h5>
+                                <p class="card-text">Liquid, dry, and cubic measurements</p>
+                                <small class="text-muted">ml, l, fl oz, gal, m³, ft³</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-square text-warning mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title text-warning">Area</h5>
+                                <p class="card-text">Surface area and land measurements</p>
+                                <small class="text-muted">m², ft², acres, hectares</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow">
+                            <div class="card-body text-center">
+                                <i class="fas fa-thermometer-half text-danger mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title text-danger">Temperature</h5>
+                                <p class="card-text">All major temperature scales with precise formulas</p>
+                                <small class="text-muted">°C, °F, K, °R, °Ré</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables
+let currentCategory = 'length';
+let conversionTimeout = {};
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the first category by default
+    selectCategory('length');
+    console.log('Measurement Converter initialized');
+});
+
+// Category selection
+function selectCategory(category) {
+    currentCategory = category;
+    
+    // Hide all sections
+    document.querySelectorAll('.conversion-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Show selected section
+    document.getElementById(`section-${category}`).style.display = 'block';
+    
+    // Update button states
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline-primary');
+    });
+    
+    document.querySelector(`[data-category="${category}"]`).classList.remove('btn-outline-primary');
+    document.querySelector(`[data-category="${category}"]`).classList.add('btn-primary');
+    
+    // Clear previous results
+    document.getElementById(`value-${category}`).value = '';
+    document.getElementById(`result-${category}`).value = '';
+    document.getElementById(`details-${category}`).style.display = 'none';
+    
+    hideError();
+}
+
+// Switch category from quick buttons
+function switchCategory(category) {
+    selectCategory(category);
+}
+
+// Auto-convert when values change
+function autoConvert(category) {
+    clearTimeout(conversionTimeout[category]);
+    conversionTimeout[category] = setTimeout(() => {
+        convertMeasurement(category);
+    }, 300);
+}
+
+// Main conversion function
+async function convertMeasurement(category) {
+    const value = parseFloat(document.getElementById(`value-${category}`).value);
+    const fromUnit = document.getElementById(`from-${category}`).value;
+    const toUnit = document.getElementById(`to-${category}`).value;
+    
+    if (!value || isNaN(value)) {
+        document.getElementById(`result-${category}`).value = '';
+        document.getElementById(`details-${category}`).style.display = 'none';
+        return;
+    }
+    
+    if (fromUnit === toUnit) {
+        document.getElementById(`result-${category}`).value = value.toString();
+        updateConversionDetails(category, {
+            original_value: value,
+            converted_value: value,
+            formula: `${value} = ${value} (same unit)`,
+            timestamp: new Date().toISOString()
+        });
+        return;
+    }
+    
+    showLoading();
+    hideError();
+    
+    try {
+        const response = await fetch('/api/convert-measurement', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                value: value,
+                from_unit: fromUnit,
+                to_unit: toUnit,
+                category: category
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            displayResult(category, data);
+        } else {
+            showError(data.error || 'Conversion failed');
+        }
+    } catch (error) {
+        showError('Network error. Please check your connection and try again.');
+        console.error('Conversion error:', error);
+    } finally {
+        hideLoading();
+    }
+}
+
+// Display conversion result
+function displayResult(category, data) {
+    const resultInput = document.getElementById(`result-${category}`);
+    
+    // Format the result appropriately
+    let formattedResult;
+    const convertedValue = data.converted_value;
+    
+    if (Math.abs(convertedValue) >= 1000000) {
+        formattedResult = convertedValue.toExponential(4);
+    } else if (Math.abs(convertedValue) >= 1000) {
+        formattedResult = convertedValue.toFixed(2);
+    } else if (Math.abs(convertedValue) >= 1) {
+        formattedResult = convertedValue.toFixed(4);
+    } else if (Math.abs(convertedValue) >= 0.0001) {
+        formattedResult = convertedValue.toFixed(6);
+    } else {
+        formattedResult = convertedValue.toExponential(4);
+    }
+    
+    resultInput.value = formattedResult;
+    updateConversionDetails(category, data);
+}
+
+// Update conversion details
+function updateConversionDetails(category, data) {
+    document.getElementById(`formula-${category}`).textContent = data.formula || '-';
+    document.getElementById(`timestamp-${category}`).textContent = 
+        new Date(data.timestamp).toLocaleString() || '-';
+    document.getElementById(`details-${category}`).style.display = 'block';
+}
+
+// Swap units
+function swapUnits(category) {
+    const fromSelect = document.getElementById(`from-${category}`);
+    const toSelect = document.getElementById(`to-${category}`);
+    const valueInput = document.getElementById(`value-${category}`);
+    const resultInput = document.getElementById(`result-${category}`);
+    
+    // Swap the select values
+    const fromValue = fromSelect.value;
+    const toValue = toSelect.value;
+    
+    fromSelect.value = toValue;
+    toSelect.value = fromValue;
+    
+    // Swap the input values if result has a value
+    if (resultInput.value && !isNaN(parseFloat(resultInput.value))) {
+        valueInput.value = resultInput.value;
+        autoConvert(category);
+    }
+}
+
+// Utility functions
+function showLoading() {
+    document.getElementById('loadingIndicator').classList.remove('d-none');
+}
+
+function hideLoading() {
+    document.getElementById('loadingIndicator').classList.add('d-none');
+}
+
+function showError(message) {
+    document.getElementById('errorText').textContent = message;
+    document.getElementById('errorMessage').classList.remove('d-none');
+}
+
+function hideError() {
+    document.getElementById('errorMessage').classList.add('d-none');
+}
+
+// Toast notification system
+function showToast(message, type = 'info') {
+    const toastHtml = `
+        <div class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'} border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : type === 'success' ? 'check' : 'info-circle'} me-2"></i>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+</script>
+
+<style>
+/* Category selector */
+.category-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.category-btn {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Conversion rows */
+.conversion-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto 1fr 2fr;
+    gap: 1rem;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+    margin-bottom: 1rem;
+}
+
+.conversion-input input,
+.conversion-result input {
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 0.75rem;
+}
+
+.conversion-input input:focus,
+.conversion-result input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.conversion-from select,
+.conversion-to select {
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.swap-btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.swap-btn:hover {
+    transform: rotate(180deg);
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Section headers */
+.section-header h4 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Cards */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Loading animation */
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .conversion-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .swap-btn {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+    
+    .category-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .category-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .conversion-row {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.conversion-section {
+    animation: fadeIn 0.3s ease;
+}
+
+.alert {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Result highlighting */
+.result-input {
+    background-color: #e3f2fd !important;
+    color: #1976d2 !important;
+    font-weight: 600 !important;
+}
+
+/* Unit select styling */
+.unit-select optgroup {
+    font-weight: 600;
+    color: #495057;
+}
+
+.unit-select option {
+    padding: 0.5rem;
+}
+</style>
+{% endblock %}

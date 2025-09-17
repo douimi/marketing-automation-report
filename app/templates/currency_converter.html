@@ -1,0 +1,865 @@
+{% extends "base.html" %}
+
+{% block title %}Currency Converter{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Hero Section -->
+            <div class="bg-primary text-white py-5 mb-4">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="fas fa-dollar-sign me-3"></i>Currency Converter
+                            </h1>
+                            <p class="lead mb-0">Real-time currency conversion with live exchange rates</p>
+                            <p class="mt-2 mb-0">
+                                <small>
+                                    <i class="fas fa-circle text-{{ 'success' if api_status.status == 'online' else 'warning' }} me-1"></i>
+                                    {{ api_status.message }}
+                                    {% if api_status.last_updated %}
+                                    • Last updated: {{ api_status.last_updated }}
+                                    {% endif %}
+                                    • 180+ world currencies supported
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="bg-white bg-opacity-25 rounded p-3">
+                                <h5 class="mb-2">Quick Actions</h5>
+                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                                    <button class="btn btn-sm btn-outline-light" onclick="swapCurrencies()">
+                                        <i class="fas fa-exchange-alt"></i> Swap
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="showRatesTable()">
+                                        <i class="fas fa-table"></i> Rates Table
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="showCalculator()">
+                                        <i class="fas fa-calculator"></i> Calculator
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Converter Section -->
+            <div class="container mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card shadow-lg border-0">
+                            <div class="card-header bg-light text-center py-4">
+                                <h3 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Currency Conversion</h3>
+                                <p class="text-muted mb-0">Convert between 180+ world currencies including cryptocurrencies</p>
+                            </div>
+                            <div class="card-body p-4">
+                                <!-- Converter Form -->
+                                <form id="converterForm" class="mb-4">
+                                    <div class="row g-3 align-items-end">
+                                        <!-- Amount Input -->
+                                        <div class="col-md-3">
+                                            <label for="amount" class="form-label fw-bold">Amount</label>
+                                            <div class="input-group input-group-lg">
+                                                <input type="number" 
+                                                       class="form-control" 
+                                                       id="amount" 
+                                                       placeholder="1.00"
+                                                       value="1"
+                                                       min="0.01" 
+                                                       step="0.01"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- From Currency -->
+                                        <div class="col-md-3">
+                                            <label for="fromCurrency" class="form-label fw-bold">From</label>
+                                            <select class="form-select form-select-lg" id="fromCurrency" required>
+                                                <optgroup label="Popular Currencies">
+                                                    {% for currency in currencies %}
+                                                    {% if currency.popular %}
+                                                    <option value="{{ currency.code }}" 
+                                                            {% if currency.code == 'USD' %}selected{% endif %}>
+                                                        {{ currency.code }} - {{ currency.name }}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                                <optgroup label="All Currencies">
+                                                    {% for currency in currencies %}
+                                                    {% if not currency.popular %}
+                                                    <option value="{{ currency.code }}">
+                                                        {{ currency.code }} - {{ currency.name }}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Swap Button -->
+                                        <div class="col-md-1 text-center">
+                                            <button type="button" class="btn btn-outline-primary btn-lg" onclick="swapCurrencies()">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- To Currency -->
+                                        <div class="col-md-3">
+                                            <label for="toCurrency" class="form-label fw-bold">To</label>
+                                            <select class="form-select form-select-lg" id="toCurrency" required>
+                                                <optgroup label="Popular Currencies">
+                                                    {% for currency in currencies %}
+                                                    {% if currency.popular %}
+                                                    <option value="{{ currency.code }}" 
+                                                            {% if currency.code == 'EUR' %}selected{% endif %}>
+                                                        {{ currency.code }} - {{ currency.name }}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                                <optgroup label="All Currencies">
+                                                    {% for currency in currencies %}
+                                                    {% if not currency.popular %}
+                                                    <option value="{{ currency.code }}">
+                                                        {{ currency.code }} - {{ currency.name }}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Convert Button -->
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                                <i class="fas fa-calculator me-2"></i>Convert
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- Loading Indicator -->
+                                <div id="loadingIndicator" class="text-center py-4 d-none">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Converting...</span>
+                                    </div>
+                                    <p class="mt-2 text-muted">Converting currencies...</p>
+                                </div>
+
+                                <!-- Conversion Result -->
+                                <div id="conversionResult" class="d-none">
+                                    <div class="alert alert-success border-0 shadow-sm">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8">
+                                                <h4 class="alert-heading mb-2">
+                                                    <span id="resultAmount">1.00</span> 
+                                                    <span id="resultFromCurrency">USD</span> = 
+                                                    <span id="resultConvertedAmount" class="text-primary">0.85</span> 
+                                                    <span id="resultToCurrency" class="text-primary">EUR</span>
+                                                </h4>
+                                                <p class="mb-1">
+                                                    Exchange Rate: <strong>1 <span id="resultFromCurrencyRate">USD</span> = <span id="resultExchangeRate">0.85</span> <span id="resultToCurrencyRate">EUR</span></strong>
+                                                </p>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>
+                                                    Last updated: <span id="resultTimestamp">-</span>
+                                                </small>
+                                            </div>
+                                            <div class="col-md-4 text-md-end">
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-outline-success btn-sm" onclick="copyResult()">
+                                                        <i class="fas fa-copy"></i> Copy
+                                                    </button>
+                                                    <button class="btn btn-outline-primary btn-sm" onclick="shareResult()">
+                                                        <i class="fas fa-share"></i> Share
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Error Message -->
+                                <div id="errorMessage" class="d-none">
+                                    <div class="alert alert-danger border-0 shadow-sm">
+                                        <h5 class="alert-heading">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>Conversion Error
+                                        </h5>
+                                        <p class="mb-0" id="errorText">An error occurred during conversion.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exchange Rates Table -->
+            <div id="ratesTableSection" class="container mb-5 d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card shadow border-0">
+                            <div class="card-header bg-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-table me-2"></i>Exchange Rates
+                                        <span id="ratesBaseCurrency" class="badge bg-primary ms-2">USD</span>
+                                    </h5>
+                                    <div>
+                                        <select class="form-select form-select-sm" id="ratesBaseCurrencySelect" onchange="updateRatesTable()">
+                                            <optgroup label="Popular">
+                                                {% for currency in currencies %}
+                                                {% if currency.popular %}
+                                                <option value="{{ currency.code }}" 
+                                                        {% if currency.code == 'USD' %}selected{% endif %}>
+                                                    {{ currency.code }}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </optgroup>
+                                            <optgroup label="All">
+                                                {% for currency in currencies %}
+                                                {% if not currency.popular %}
+                                                <option value="{{ currency.code }}">
+                                                    {{ currency.code }}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Currency</th>
+                                                <th>Code</th>
+                                                <th class="text-end">Rate</th>
+                                                <th class="text-end">1 Unit =</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ratesTableBody">
+                                            <!-- Rates will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Calculator -->
+            <div id="calculatorSection" class="container mb-5 d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card shadow border-0">
+                            <div class="card-header bg-light text-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-calculator me-2"></i>Quick Calculator
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="calculator-input">
+                                            <label class="form-label">Amount & Currency</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="calcAmount" placeholder="100" value="100">
+                                                <select class="form-select" id="calcFromCurrency">
+                                                    <optgroup label="Popular">
+                                                        {% for currency in currencies %}
+                                                        {% if currency.popular %}
+                                                        <option value="{{ currency.code }}" 
+                                                                {% if currency.code == 'USD' %}selected{% endif %}>
+                                                            {{ currency.code }}
+                                                        </option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                    <optgroup label="All">
+                                                        {% for currency in currencies %}
+                                                        {% if not currency.popular %}
+                                                        <option value="{{ currency.code }}">
+                                                            {{ currency.code }}
+                                                        </option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="calculator-result">
+                                            <label class="form-label">Equals</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="calcResult" readonly placeholder="0.00">
+                                                <select class="form-select" id="calcToCurrency" onchange="quickCalculate()">
+                                                    <optgroup label="Popular">
+                                                        {% for currency in currencies %}
+                                                        {% if currency.popular %}
+                                                        <option value="{{ currency.code }}" 
+                                                                {% if currency.code == 'EUR' %}selected{% endif %}>
+                                                            {{ currency.code }}
+                                                        </option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                    <optgroup label="All">
+                                                        {% for currency in currencies %}
+                                                        {% if not currency.popular %}
+                                                        <option value="{{ currency.code }}">
+                                                            {{ currency.code }}
+                                                        </option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-primary" onclick="quickCalculate()">
+                                        <i class="fas fa-calculator me-2"></i>Calculate
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-info-circle me-2"></i>About Exchange Rates
+                                </h5>
+                                <p class="card-text">
+                                    Exchange rates fluctuate constantly based on market conditions, economic factors, and global events.
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Real-time rates from financial markets</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Updated every hour</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>180+ world currencies supported</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Cryptocurrencies included</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Precious metals pricing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-lightbulb me-2"></i>Usage Tips
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use the swap button for quick currency reversal</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Check the rates table for multiple currencies</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use the calculator for quick estimates</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Copy results for use in other applications</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Rates are for reference only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-chart-line me-2"></i>Market Status
+                                </h5>
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <h4 class="text-success mb-0" id="statusIndicator">
+                                            <i class="fas fa-circle"></i>
+                                        </h4>
+                                        <small class="text-muted">API Status</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <h4 class="text-info mb-0" id="currencyCount">180+</h4>
+                                        <small class="text-muted">Currencies</small>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <button class="btn btn-outline-primary btn-sm" onclick="refreshRates()">
+                                            <i class="fas fa-sync-alt me-1"></i>Refresh Rates
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables
+let currentRates = {};
+let lastConversion = null;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up event listeners
+    document.getElementById('converterForm').addEventListener('submit', handleConversion);
+    document.getElementById('amount').addEventListener('input', debounce(autoConvert, 500));
+    document.getElementById('fromCurrency').addEventListener('change', autoConvert);
+    document.getElementById('toCurrency').addEventListener('change', autoConvert);
+    
+    // Calculator event listeners
+    document.getElementById('calcAmount').addEventListener('input', debounce(quickCalculate, 500));
+    document.getElementById('calcFromCurrency').addEventListener('change', quickCalculate);
+    
+    // Perform initial conversion
+    autoConvert();
+    
+    console.log('Currency Converter initialized');
+});
+
+// Handle form submission
+function handleConversion(e) {
+    e.preventDefault();
+    convertCurrency();
+}
+
+// Main conversion function
+async function convertCurrency() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    const fromCurrency = document.getElementById('fromCurrency').value;
+    const toCurrency = document.getElementById('toCurrency').value;
+    
+    if (!amount || amount <= 0) {
+        showError('Please enter a valid amount greater than 0');
+        return;
+    }
+    
+    showLoading();
+    hideError();
+    hideResult();
+    
+    try {
+        const response = await fetch('/api/convert-currency', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                from_currency: fromCurrency,
+                to_currency: toCurrency
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            displayResult(data);
+            lastConversion = data;
+        } else {
+            showError(data.error || 'Conversion failed');
+        }
+    } catch (error) {
+        showError('Network error. Please check your connection and try again.');
+        console.error('Conversion error:', error);
+    } finally {
+        hideLoading();
+    }
+}
+
+// Auto-convert when values change
+function autoConvert() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    if (amount && amount > 0) {
+        convertCurrency();
+    }
+}
+
+// Display conversion result
+function displayResult(data) {
+    document.getElementById('resultAmount').textContent = data.amount.toFixed(2);
+    document.getElementById('resultFromCurrency').textContent = data.from_currency;
+    document.getElementById('resultConvertedAmount').textContent = data.converted_amount.toFixed(2);
+    document.getElementById('resultToCurrency').textContent = data.to_currency;
+    document.getElementById('resultFromCurrencyRate').textContent = data.from_currency;
+    document.getElementById('resultExchangeRate').textContent = data.exchange_rate.toFixed(4);
+    document.getElementById('resultToCurrencyRate').textContent = data.to_currency;
+    document.getElementById('resultTimestamp').textContent = formatTimestamp(data.timestamp);
+    
+    showResult();
+}
+
+// Utility functions
+function showLoading() {
+    document.getElementById('loadingIndicator').classList.remove('d-none');
+}
+
+function hideLoading() {
+    document.getElementById('loadingIndicator').classList.add('d-none');
+}
+
+function showResult() {
+    document.getElementById('conversionResult').classList.remove('d-none');
+}
+
+function hideResult() {
+    document.getElementById('conversionResult').classList.add('d-none');
+}
+
+function showError(message) {
+    document.getElementById('errorText').textContent = message;
+    document.getElementById('errorMessage').classList.remove('d-none');
+}
+
+function hideError() {
+    document.getElementById('errorMessage').classList.add('d-none');
+}
+
+function formatTimestamp(timestamp) {
+    try {
+        return new Date(timestamp).toLocaleString();
+    } catch {
+        return timestamp;
+    }
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Swap currencies
+function swapCurrencies() {
+    const fromSelect = document.getElementById('fromCurrency');
+    const toSelect = document.getElementById('toCurrency');
+    
+    const fromValue = fromSelect.value;
+    const toValue = toSelect.value;
+    
+    fromSelect.value = toValue;
+    toSelect.value = fromValue;
+    
+    autoConvert();
+}
+
+// Copy result to clipboard
+function copyResult() {
+    if (!lastConversion) return;
+    
+    const text = `${lastConversion.amount} ${lastConversion.from_currency} = ${lastConversion.converted_amount.toFixed(2)} ${lastConversion.to_currency}`;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Result copied to clipboard!', 'success');
+    }).catch(() => {
+        showToast('Failed to copy to clipboard', 'error');
+    });
+}
+
+// Share result
+function shareResult() {
+    if (!lastConversion) return;
+    
+    const text = `${lastConversion.amount} ${lastConversion.from_currency} = ${lastConversion.converted_amount.toFixed(2)} ${lastConversion.to_currency}`;
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Currency Conversion Result',
+            text: text,
+            url: url
+        });
+    } else {
+        copyResult();
+    }
+}
+
+// Show/hide rates table
+function showRatesTable() {
+    const section = document.getElementById('ratesTableSection');
+    const isVisible = !section.classList.contains('d-none');
+    
+    if (isVisible) {
+        section.classList.add('d-none');
+    } else {
+        section.classList.remove('d-none');
+        updateRatesTable();
+    }
+}
+
+// Update rates table
+async function updateRatesTable() {
+    const baseCurrency = document.getElementById('ratesBaseCurrencySelect').value;
+    document.getElementById('ratesBaseCurrency').textContent = baseCurrency;
+    
+    try {
+        const response = await fetch(`/api/exchange-rates/${baseCurrency}`);
+        const data = await response.json();
+        
+        if (response.ok && data.rates) {
+            populateRatesTable(data.rates, baseCurrency);
+            currentRates = data.rates;
+        } else {
+            showToast('Failed to load exchange rates', 'error');
+        }
+    } catch (error) {
+        showToast('Error loading exchange rates', 'error');
+        console.error('Rates error:', error);
+    }
+}
+
+// Populate rates table
+function populateRatesTable(rates, baseCurrency) {
+    const tbody = document.getElementById('ratesTableBody');
+    const currencies = {{ currencies|tojson }};
+    
+    tbody.innerHTML = '';
+    
+    // Add base currency
+    const baseRow = document.createElement('tr');
+    baseRow.innerHTML = `
+        <td><strong>${getCurrencyName(baseCurrency)}</strong></td>
+        <td><span class="badge bg-primary">${baseCurrency}</span></td>
+        <td class="text-end"><strong>1.0000</strong></td>
+        <td class="text-end">1.00 ${baseCurrency}</td>
+        <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary" onclick="setConverterCurrency('${baseCurrency}', 'from')">
+                Use as From
+            </button>
+        </td>
+    `;
+    tbody.appendChild(baseRow);
+    
+    // Add other currencies
+    Object.entries(rates).forEach(([code, rate]) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${getCurrencyName(code)}</td>
+            <td><span class="badge bg-light text-dark">${code}</span></td>
+            <td class="text-end">${rate.toFixed(4)}</td>
+            <td class="text-end">${(1/rate).toFixed(4)} ${baseCurrency}</td>
+            <td class="text-center">
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary" onclick="setConverterCurrency('${code}', 'from')">From</button>
+                    <button class="btn btn-outline-success" onclick="setConverterCurrency('${code}', 'to')">To</button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Get currency name
+function getCurrencyName(code) {
+    const currencies = {{ currencies|tojson }};
+    const currency = currencies.find(c => c.code === code);
+    return currency ? currency.name : code;
+}
+
+// Set converter currency
+function setConverterCurrency(code, type) {
+    if (type === 'from') {
+        document.getElementById('fromCurrency').value = code;
+    } else {
+        document.getElementById('toCurrency').value = code;
+    }
+    autoConvert();
+    showToast(`${type === 'from' ? 'From' : 'To'} currency set to ${code}`, 'success');
+}
+
+// Show/hide calculator
+function showCalculator() {
+    const section = document.getElementById('calculatorSection');
+    section.classList.toggle('d-none');
+    
+    if (!section.classList.contains('d-none')) {
+        quickCalculate();
+    }
+}
+
+// Quick calculate
+async function quickCalculate() {
+    const amount = parseFloat(document.getElementById('calcAmount').value);
+    const fromCurrency = document.getElementById('calcFromCurrency').value;
+    const toCurrency = document.getElementById('calcToCurrency').value;
+    
+    if (!amount || amount <= 0) {
+        document.getElementById('calcResult').value = '';
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/convert-currency', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                from_currency: fromCurrency,
+                to_currency: toCurrency
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('calcResult').value = data.converted_amount.toFixed(2);
+        } else {
+            document.getElementById('calcResult').value = 'Error';
+        }
+    } catch (error) {
+        document.getElementById('calcResult').value = 'Error';
+        console.error('Calculator error:', error);
+    }
+}
+
+// Refresh rates
+async function refreshRates() {
+    showToast('Refreshing exchange rates...', 'info');
+    
+    // Clear cache by making a fresh request
+    try {
+        const response = await fetch('/api/exchange-rates/USD?refresh=true');
+        if (response.ok) {
+            showToast('Exchange rates refreshed!', 'success');
+            autoConvert();
+            if (!document.getElementById('ratesTableSection').classList.contains('d-none')) {
+                updateRatesTable();
+            }
+        } else {
+            showToast('Failed to refresh rates', 'error');
+        }
+    } catch (error) {
+        showToast('Error refreshing rates', 'error');
+        console.error('Refresh error:', error);
+    }
+}
+
+// Toast notification system
+function showToast(message, type = 'info') {
+    // Create toast element
+    const toastHtml = `
+        <div class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'} border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : type === 'success' ? 'check' : 'info-circle'} me-2"></i>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    // Add toast to body
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    // Show toast
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+    toast.show();
+    
+    // Remove toast element after it's hidden
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+</script>
+
+<style>
+.calculator-input, .calculator-result {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e9ecef;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+
+.input-group-lg .form-control, .input-group-lg .form-select {
+    font-size: 1.1rem;
+}
+
+/* Loading animation */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.75rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.alert {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Status indicators */
+.text-success .fa-circle {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+</style>
+{% endblock %}

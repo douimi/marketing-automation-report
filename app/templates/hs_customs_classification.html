@@ -1,0 +1,650 @@
+{% extends "base.html" %}
+
+{% block title %}HS Customs Classification{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Hero Section -->
+            <div class="bg-primary text-white py-5 mb-4">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="fas fa-tags me-3"></i>HS Customs Classification
+                            </h1>
+                            <p class="lead mb-0">Search and find the correct Harmonized System (HS) codes for your products</p>
+                            <p class="mt-2 mb-0"><small>Complete database with 6,927 HS codes across all chapters</small></p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="bg-white bg-opacity-25 rounded p-3">
+                                <h5 class="mb-2">Search Options</h5>
+                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                                    <button class="btn btn-sm btn-outline-light" onclick="focusSearchByName()">By Product Name</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="focusSearchByCode()">By HS Code</button>
+                                    <button class="btn btn-sm btn-outline-light" onclick="showChapterBrowser()">Browse Chapters</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="container mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card shadow-lg border-0">
+                            <div class="card-header bg-light text-center py-4">
+                                <h3 class="mb-0"><i class="fas fa-search me-2"></i>Search HS Codes</h3>
+                                <p class="text-muted mb-0">Find products by name or search by HS code</p>
+                            </div>
+                            <div class="card-body p-4">
+                                <!-- Search Input -->
+                                <div class="mb-4">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-primary text-white">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="searchInput" 
+                                               placeholder="Enter product name (e.g., 'horses', 'cattle') or HS code (e.g., '0101', '0102.21')"
+                                               autocomplete="off">
+                                        <button class="btn btn-primary" type="button" onclick="clearSearch()">
+                                            <i class="fas fa-times"></i> Clear
+                                        </button>
+                                        <button class="btn btn-outline-primary" type="button" onclick="showChapterBrowser()">
+                                            <i class="fas fa-list"></i> Browse
+                                        </button>
+                                    </div>
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Search examples: "live animals", "meat", "chemicals", "0101" (HS4), "0101.21" (HS6)
+                                    </div>
+                                </div>
+
+                                <!-- Chapter Filter -->
+                                <div id="chapterFilter" class="mb-4 d-none">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="mb-0">Filter by Chapter</h5>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="hideChapterFilter()">
+                                            <i class="fas fa-times"></i> Hide Filter
+                                        </button>
+                                    </div>
+                                    <div class="row g-2" id="chapterButtons">
+                                        <!-- Chapter buttons will be populated here -->
+                                    </div>
+                                </div>
+
+                                <!-- Search Results -->
+                                <div id="searchResults" class="d-none">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="mb-0">Search Results</h5>
+                                        <div>
+                                            <span id="resultsCount" class="badge bg-primary me-2">0 results</span>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-secondary" onclick="toggleGrouping()">
+                                                    <i class="fas fa-layer-group"></i> <span id="groupingText">Group by Chapter</span>
+                                                </button>
+                                                <button class="btn btn-outline-secondary" onclick="exportResults()">
+                                                    <i class="fas fa-download"></i> Export
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="resultsList" class="list-group">
+                                        <!-- Results will be populated here -->
+                                    </div>
+                                </div>
+
+                                <!-- No Results -->
+                                <div id="noResults" class="d-none text-center py-4">
+                                    <i class="fas fa-search text-muted" style="font-size: 3rem;"></i>
+                                    <h5 class="text-muted mt-3">No results found</h5>
+                                    <p class="text-muted">Try different keywords or browse chapters</p>
+                                </div>
+
+                                <!-- Chapter Browser -->
+                                <div id="chapterBrowser" class="d-none">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="mb-0">Browse by Chapter</h5>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="hideChapterBrowser()">
+                                            <i class="fas fa-times"></i> Close Browser
+                                        </button>
+                                    </div>
+                                    <div id="chapterList" class="row g-3">
+                                        <!-- Chapter list will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-info-circle me-2"></i>About HS Codes
+                                </h5>
+                                <p class="card-text">
+                                    The Harmonized Commodity Description and Coding System (HS) is an internationally standardized system of names and numbers to classify traded products.
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Sections: 20 major categories</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Chapters: 95 chapters (HS2)</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Headings: 1,220 headings (HS4)</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Subheadings: 5,592 subheadings (HS6)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-lightbulb me-2"></i>Search Tips
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use specific product names for better results</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Try different synonyms or related terms</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Search by HS code if you know it (e.g., "0101")</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Browse chapters for systematic exploration</li>
+                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use filters to narrow down results</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <i class="fas fa-chart-bar me-2"></i>Database Stats
+                                </h5>
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <h4 class="text-primary mb-0">6,927</h4>
+                                        <small class="text-muted">Total Codes</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <h4 class="text-success mb-0">95</h4>
+                                        <small class="text-muted">Chapters</small>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <h4 class="text-info mb-0">1,220</h4>
+                                        <small class="text-muted">HS4 Codes</small>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <h4 class="text-warning mb-0">5,592</h4>
+                                        <small class="text-muted">HS6 Codes</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load HS Codes Data from external file -->
+<script src="{{ url_for('static', filename='hs_codes_data.js') }}"></script>
+
+<script>
+// Global variables
+let searchTimeout;
+let currentResults = [];
+let isGrouped = false;
+let currentChapterFilter = null;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('searchInput').focus();
+    populateChapterButtons();
+    console.log(`Loaded ${hsCodesData.length} HS codes`);
+});
+
+// Search input event listeners
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        performSearch(this.value.trim());
+    }, 300);
+});
+
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        clearTimeout(searchTimeout);
+        performSearch(this.value.trim());
+    }
+});
+
+// Main search function
+function performSearch(query) {
+    const resultsDiv = document.getElementById('searchResults');
+    const noResultsDiv = document.getElementById('noResults');
+    const resultsList = document.getElementById('resultsList');
+    const resultsCount = document.getElementById('resultsCount');
+    const chapterBrowser = document.getElementById('chapterBrowser');
+    
+    // Hide chapter browser if open
+    chapterBrowser.classList.add('d-none');
+    
+    if (!query) {
+        resultsDiv.classList.add('d-none');
+        noResultsDiv.classList.add('d-none');
+        return;
+    }
+    
+    const results = searchHSCodes(query);
+    currentResults = results;
+    
+    if (results.length > 0) {
+        resultsCount.textContent = `${results.length} result${results.length > 1 ? 's' : ''}`;
+        displayResults(results);
+        resultsDiv.classList.remove('d-none');
+        noResultsDiv.classList.add('d-none');
+    } else {
+        resultsDiv.classList.add('d-none');
+        noResultsDiv.classList.remove('d-none');
+    }
+}
+
+// Search algorithm
+function searchHSCodes(query) {
+    const lowerQuery = query.toLowerCase();
+    
+    let results = hsCodesData.filter(item => {
+        // Search by code (remove dots for comparison)
+        if (item.code.replace(/\./g, '').toLowerCase().includes(lowerQuery.replace(/\./g, ''))) {
+            return true;
+        }
+        
+        // Search by description
+        if (item.description.toLowerCase().includes(lowerQuery)) {
+            return true;
+        }
+        
+        return false;
+    });
+    
+    // Apply chapter filter if active
+    if (currentChapterFilter) {
+        results = results.filter(item => item.chapter === currentChapterFilter);
+    }
+    
+    // Sort results: exact code matches first, then by code
+    return results.sort((a, b) => {
+        const aCodeMatch = a.code.toLowerCase().startsWith(lowerQuery.toLowerCase());
+        const bCodeMatch = b.code.toLowerCase().startsWith(lowerQuery.toLowerCase());
+        
+        if (aCodeMatch && !bCodeMatch) return -1;
+        if (bCodeMatch && !aCodeMatch) return 1;
+        
+        return a.code.localeCompare(b.code);
+    });
+}
+
+// Display search results
+function displayResults(results) {
+    const resultsList = document.getElementById('resultsList');
+    
+    if (isGrouped) {
+        displayGroupedResults(results);
+    } else {
+        resultsList.innerHTML = results.map(item => createResultCard(item)).join('');
+    }
+}
+
+// Display results grouped by chapter
+function displayGroupedResults(results) {
+    const resultsList = document.getElementById('resultsList');
+    const grouped = {};
+    
+    results.forEach(item => {
+        const chapter = item.chapter || 'Other';
+        if (!grouped[chapter]) {
+            grouped[chapter] = [];
+        }
+        grouped[chapter].push(item);
+    });
+    
+    let html = '';
+    Object.keys(grouped).sort().forEach(chapter => {
+        const chapterItems = grouped[chapter];
+        const chapterInfo = hsCodesData.find(item => item.code === chapter && item.level === 'chapter');
+        const chapterTitle = chapterInfo ? chapterInfo.description : chapter;
+        
+        html += `
+            <div class="chapter-group mb-4">
+                <div class="chapter-header bg-light p-3 rounded-top">
+                    <h6 class="mb-0">
+                        <i class="fas fa-folder-open text-primary me-2"></i>
+                        Chapter ${chapter}: ${chapterTitle}
+                        <span class="badge bg-primary ms-2">${chapterItems.length} items</span>
+                    </h6>
+                </div>
+                <div class="chapter-items">
+                    ${chapterItems.map(item => createResultCard(item, true)).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    resultsList.innerHTML = html;
+}
+
+// Create individual result card
+function createResultCard(item, inGroup = false) {
+    const levelBadge = getLevelBadge(item.level);
+    const levelIcon = getLevelIcon(item.level);
+    const borderClass = inGroup ? 'border-start-0 border-end-0 border-top-0' : '';
+    
+    return `
+        <div class="list-group-item list-group-item-action ${borderClass}">
+            <div class="d-flex w-100 justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="badge bg-primary me-2 fs-6 font-monospace">${item.code}</span>
+                        ${levelBadge}
+                        ${item.chapter ? `<span class="badge bg-light text-dark ms-2">Ch. ${item.chapter}</span>` : ''}
+                    </div>
+                    <p class="mb-1">${item.description}</p>
+                    ${item.section ? `<small class="text-muted">Section ${item.section}</small>` : ''}
+                </div>
+                <div class="ms-3">
+                    ${levelIcon}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Utility functions for badges and icons
+function getLevelBadge(level) {
+    switch(level) {
+        case 'section':
+            return '<span class="badge bg-dark">Section</span>';
+        case 'chapter':
+            return '<span class="badge bg-success">Chapter</span>';
+        case 'hs4':
+            return '<span class="badge bg-warning">HS4</span>';
+        case 'hs6':
+            return '<span class="badge bg-info">HS6</span>';
+        default:
+            return '';
+    }
+}
+
+function getLevelIcon(level) {
+    switch(level) {
+        case 'section':
+            return '<i class="fas fa-book-open text-dark" style="font-size: 1.5rem;"></i>';
+        case 'chapter':
+            return '<i class="fas fa-book text-success" style="font-size: 1.5rem;"></i>';
+        case 'hs4':
+            return '<i class="fas fa-layer-group text-warning" style="font-size: 1.5rem;"></i>';
+        case 'hs6':
+            return '<i class="fas fa-tag text-info" style="font-size: 1.5rem;"></i>';
+        default:
+            return '<i class="fas fa-tag text-secondary" style="font-size: 1.5rem;"></i>';
+    }
+}
+
+// Chapter browser functionality
+function populateChapterButtons() {
+    const chapters = hsCodesData.filter(item => item.level === 'chapter').sort((a, b) => a.code.localeCompare(b.code));
+    const chapterButtons = document.getElementById('chapterButtons');
+    
+    chapterButtons.innerHTML = chapters.map(chapter => `
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <button class="btn btn-outline-primary btn-sm w-100 text-start" onclick="filterByChapter('${chapter.code}')">
+                <strong>${chapter.code}</strong>: ${chapter.description.length > 40 ? chapter.description.substring(0, 40) + '...' : chapter.description}
+            </button>
+        </div>
+    `).join('');
+}
+
+function showChapterBrowser() {
+    const chapterBrowser = document.getElementById('chapterBrowser');
+    const chapterList = document.getElementById('chapterList');
+    
+    // Hide other sections
+    document.getElementById('searchResults').classList.add('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+    
+    const chapters = hsCodesData.filter(item => item.level === 'chapter').sort((a, b) => a.code.localeCompare(b.code));
+    
+    chapterList.innerHTML = chapters.map(chapter => `
+        <div class="col-lg-6 col-md-12">
+            <div class="card h-100 shadow-sm chapter-card" onclick="exploreChapter('${chapter.code}')">
+                <div class="card-body">
+                    <h6 class="card-title text-primary">Chapter ${chapter.code}</h6>
+                    <p class="card-text">${chapter.description}</p>
+                    <div class="text-muted small">
+                        <i class="fas fa-layer-group me-1"></i>
+                        ${hsCodesData.filter(item => item.chapter === chapter.code && item.level === 'hs4').length} headings,
+                        ${hsCodesData.filter(item => item.chapter === chapter.code && item.level === 'hs6').length} subheadings
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    chapterBrowser.classList.remove('d-none');
+}
+
+function hideChapterBrowser() {
+    document.getElementById('chapterBrowser').classList.add('d-none');
+}
+
+function exploreChapter(chapterCode) {
+    currentChapterFilter = chapterCode;
+    document.getElementById('searchInput').value = '';
+    
+    const chapterItems = hsCodesData.filter(item => item.chapter === chapterCode);
+    currentResults = chapterItems;
+    
+    document.getElementById('resultsCount').textContent = `${chapterItems.length} items in Chapter ${chapterCode}`;
+    displayResults(chapterItems);
+    
+    document.getElementById('chapterBrowser').classList.add('d-none');
+    document.getElementById('searchResults').classList.remove('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+}
+
+function filterByChapter(chapterCode) {
+    currentChapterFilter = currentChapterFilter === chapterCode ? null : chapterCode;
+    
+    // Update button states
+    const buttons = document.querySelectorAll('#chapterButtons button');
+    buttons.forEach(btn => {
+        if (btn.textContent.includes(chapterCode)) {
+            btn.classList.toggle('btn-primary', currentChapterFilter === chapterCode);
+            btn.classList.toggle('btn-outline-primary', currentChapterFilter !== chapterCode);
+        }
+    });
+    
+    // Re-run search with filter
+    const query = document.getElementById('searchInput').value.trim();
+    if (query) {
+        performSearch(query);
+    }
+}
+
+function showChapterFilter() {
+    document.getElementById('chapterFilter').classList.remove('d-none');
+}
+
+function hideChapterFilter() {
+    document.getElementById('chapterFilter').classList.add('d-none');
+    currentChapterFilter = null;
+    
+    // Reset button states
+    const buttons = document.querySelectorAll('#chapterButtons button');
+    buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline-primary');
+    });
+}
+
+// UI helper functions
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchResults').classList.add('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+    document.getElementById('chapterBrowser').classList.add('d-none');
+    document.getElementById('searchInput').focus();
+    currentResults = [];
+    currentChapterFilter = null;
+    hideChapterFilter();
+}
+
+function focusSearchByName() {
+    const input = document.getElementById('searchInput');
+    input.focus();
+    input.placeholder = "Enter product name (e.g., 'horses', 'cattle', 'meat')";
+}
+
+function focusSearchByCode() {
+    const input = document.getElementById('searchInput');
+    input.focus();
+    input.placeholder = "Enter HS code (e.g., '0101', '0102.21')";
+}
+
+function toggleGrouping() {
+    isGrouped = !isGrouped;
+    document.getElementById('groupingText').textContent = isGrouped ? 'List View' : 'Group by Chapter';
+    
+    if (currentResults.length > 0) {
+        displayResults(currentResults);
+    }
+}
+
+function exportResults() {
+    if (currentResults.length === 0) {
+        alert('No results to export');
+        return;
+    }
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+        + "Code,Description,Level,Chapter,Section\n"
+        + currentResults.map(item => 
+            `"${item.code}","${item.description.replace(/"/g, '""')}","${item.level}","${item.chapter || ''}","${item.section || ''}"`
+        ).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "hs_codes_search_results.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
+<style>
+.list-group-item {
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    border-left-color: var(--bs-primary);
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+
+.input-group-lg .form-control {
+    font-size: 1.1rem;
+}
+
+#searchResults {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.chapter-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chapter-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.chapter-group {
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+}
+
+.chapter-header {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.chapter-items .list-group-item:first-child {
+    border-top: none;
+}
+
+.font-monospace {
+    font-family: 'Courier New', monospace;
+}
+
+/* Loading animation */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .chapter-card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn-group-sm .btn {
+        font-size: 0.75rem;
+    }
+}
+</style>
+{% endblock %}

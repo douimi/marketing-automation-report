@@ -98,6 +98,223 @@ def incoterms():
     """Display the incoterms page."""
     return render_template('incoterms.html')
 
+@main_bp.route('/hs-customs-classification')
+def hs_customs_classification():
+    """Display the HS Customs Classification page."""
+    return render_template('hs_customs_classification.html')
+
+@main_bp.route('/currency-converter')
+def currency_converter():
+    """Display the Currency Converter page."""
+    from ..services.currency_service import currency_service
+    
+    # Get all supported currencies for the dropdown
+    currencies = currency_service.get_supported_currencies()
+    api_status = currency_service.get_api_status()
+    
+    return render_template('currency_converter.html', 
+                         currencies=currencies, 
+                         api_status=api_status)
+
+@main_bp.route('/api/convert-currency', methods=['POST'])
+def api_convert_currency():
+    """API endpoint for currency conversion."""
+    from ..services.currency_service import currency_service
+    
+    try:
+        data = request.get_json()
+        
+        amount = float(data.get('amount', 0))
+        from_currency = data.get('from_currency', 'USD').upper()
+        to_currency = data.get('to_currency', 'EUR').upper()
+        
+        if amount <= 0:
+            return jsonify({'error': 'Amount must be greater than 0'}), 400
+        
+        result = currency_service.convert_currency(amount, from_currency, to_currency)
+        
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({'error': 'Currency conversion failed. Please try again.'}), 500
+            
+    except ValueError:
+        return jsonify({'error': 'Invalid amount. Please enter a valid number.'}), 400
+    except Exception as e:
+        return jsonify({'error': f'Conversion error: {str(e)}'}), 500
+
+@main_bp.route('/api/exchange-rates/<base_currency>')
+def api_exchange_rates(base_currency):
+    """API endpoint to get exchange rates for a base currency."""
+    from ..services.currency_service import currency_service
+    
+    try:
+        base_currency = base_currency.upper()
+        rates_data = currency_service.get_exchange_rates(base_currency)
+        
+        if rates_data:
+            return jsonify(rates_data)
+        else:
+            return jsonify({'error': 'Unable to fetch exchange rates'}), 500
+            
+    except Exception as e:
+        return jsonify({'error': f'Error fetching rates: {str(e)}'}), 500
+
+@main_bp.route('/api/currencies')
+def api_currencies():
+    """API endpoint to get supported currencies."""
+    from ..services.currency_service import currency_service
+    
+    try:
+        currencies = currency_service.get_supported_currencies()
+        return jsonify({'currencies': currencies})
+    except Exception as e:
+        return jsonify({'error': f'Error fetching currencies: {str(e)}'}), 500
+
+@main_bp.route('/measurement-converter')
+def measurement_converter():
+    """Display the Measurement Converter page."""
+    from ..services.measurement_service import measurement_service
+    
+    # Get measurement categories and units
+    categories = measurement_service.get_measurement_categories()
+    
+    # Get units for each category
+    units_by_category = {}
+    for category in categories:
+        units_by_category[category['id']] = measurement_service.get_units_for_category(category['id'])
+    
+    return render_template('measurement_converter.html', 
+                         categories=categories,
+                         units_by_category=units_by_category)
+
+@main_bp.route('/api/convert-measurement', methods=['POST'])
+def api_convert_measurement():
+    """API endpoint for measurement conversion."""
+    from ..services.measurement_service import measurement_service
+    
+    try:
+        data = request.get_json()
+        
+        value = float(data.get('value', 0))
+        from_unit = data.get('from_unit', '')
+        to_unit = data.get('to_unit', '')
+        category = data.get('category', '')
+        
+        if value == 0 and data.get('value') != 0:
+            return jsonify({'error': 'Invalid value. Please enter a valid number.'}), 400
+        
+        if not all([from_unit, to_unit, category]):
+            return jsonify({'error': 'Missing required parameters.'}), 400
+        
+        result = measurement_service.convert_measurement(value, from_unit, to_unit, category)
+        
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({'error': 'Measurement conversion failed. Please check your units.'}), 500
+            
+    except ValueError:
+        return jsonify({'error': 'Invalid value. Please enter a valid number.'}), 400
+    except Exception as e:
+        return jsonify({'error': f'Conversion error: {str(e)}'}), 500
+
+@main_bp.route('/api/measurement-units/<category>')
+def api_measurement_units(category):
+    """API endpoint to get units for a measurement category."""
+    from ..services.measurement_service import measurement_service
+    
+    try:
+        units = measurement_service.get_units_for_category(category)
+        info = measurement_service.get_conversion_info(category)
+        
+        return jsonify({
+            'category': category,
+            'units': units,
+            'info': info
+        })
+    except Exception as e:
+        return jsonify({'error': f'Error fetching units: {str(e)}'}), 500
+
+@main_bp.route('/export-price-calculator')
+def export_price_calculator():
+    """Display the Export Price Calculator page."""
+    from ..services.export_price_service import export_price_service
+    
+    # Get Incoterms and cost components
+    incoterms = export_price_service.get_incoterms_list()
+    cost_components = export_price_service.get_cost_components()
+    
+    return render_template('export_price_calculator.html', 
+                         incoterms=incoterms,
+                         cost_components=cost_components)
+
+@main_bp.route('/api/calculate-export-price', methods=['POST'])
+def api_calculate_export_price():
+    """API endpoint for export price calculation."""
+    from ..services.export_price_service import export_price_service
+    
+    try:
+        data = request.get_json()
+        
+        costs = data.get('costs', {})
+        target_incoterm = data.get('target_incoterm', 'DDP')
+        
+        # Validate costs
+        is_valid, errors = export_price_service.validate_costs(costs)
+        if not is_valid:
+            return jsonify({'error': 'Validation failed', 'details': errors}), 400
+        
+        result = export_price_service.calculate_export_price(costs, target_incoterm)
+        
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({'error': 'Export price calculation failed. Please check your inputs.'}), 500
+            
+    except Exception as e:
+        return jsonify({'error': f'Calculation error: {str(e)}'}), 500
+
+@main_bp.route('/api/incoterm-comparison', methods=['POST'])
+def api_incoterm_comparison():
+    """API endpoint for Incoterm comparison."""
+    from ..services.export_price_service import export_price_service
+    
+    try:
+        data = request.get_json()
+        costs = data.get('costs', {})
+        
+        # Validate costs
+        is_valid, errors = export_price_service.validate_costs(costs)
+        if not is_valid:
+            return jsonify({'error': 'Validation failed', 'details': errors}), 400
+        
+        comparison = export_price_service.get_incoterm_comparison(costs)
+        
+        if comparison:
+            return jsonify({'comparison': comparison})
+        else:
+            return jsonify({'error': 'Comparison calculation failed.'}), 500
+            
+    except Exception as e:
+        return jsonify({'error': f'Comparison error: {str(e)}'}), 500
+
+@main_bp.route('/api/cost-explanation/<component>')
+def api_cost_explanation(component):
+    """API endpoint to get cost component explanation."""
+    from ..services.export_price_service import export_price_service
+    
+    try:
+        explanation = export_price_service.get_cost_explanation(component)
+        
+        if explanation:
+            return jsonify(explanation)
+        else:
+            return jsonify({'error': 'Cost component not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'error': f'Error fetching explanation: {str(e)}'}), 500
+
 @main_bp.route('/industry-information')
 @login_required
 def industry_information():
