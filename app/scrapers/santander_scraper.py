@@ -2049,4 +2049,297 @@ def scrape_santander_blacklisted_companies(driver, entity_name):
     except Exception as e:
         driver.save_screenshot("/tmp/blacklisted_companies.png")
         print(f"Error scraping Blacklisted Companies: {e}")
-        return {'error': f'Error scraping Blacklisted Companies: {str(e)}'} 
+        return {'error': f'Error scraping Blacklisted Companies: {str(e)}'}
+
+def scrape_santander_shipping_documents(driver, import_country_name, export_country_name, manufacture_country_name, transport_mode, shipment_date, document_type):
+    """
+    Scrapes Santander Trade shipping documents data.
+    
+    Args:
+        driver: Selenium WebDriver instance
+        import_country_name: Name of the import country
+        export_country_name: Name of the export country  
+        manufacture_country_name: Name of the manufacture country
+        transport_mode: Transport mode ('Air', 'Sea', or 'Land')
+        shipment_date: Shipment date in dd/MM/YYYY format
+        document_type: Document type ('country_specific' or 'country_product_specific')
+    
+    Returns:
+        dict: Scraped shipping documents data
+    """
+    try:
+        print("Navigating to Santander Trade shipping documents page...")
+        driver.get("https://santandertrade.com/en/portal/international-shipments/shipping-documents")
+        
+        # Wait for page to load
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[@id='pays_import']"))
+        )
+        
+        print("Selecting import country...")
+        import_dropdown = Select(driver.find_element(By.XPATH, "//*[@id='pays_import']"))
+        try:
+            import_dropdown.select_by_visible_text(import_country_name)
+            print(f"Selected import country: {import_country_name}")
+        except:
+            # Try partial match
+            for option in import_dropdown.options:
+                if import_country_name.lower() in option.text.lower():
+                    import_dropdown.select_by_visible_text(option.text)
+                    print(f"Selected import country (partial match): {option.text}")
+                    break
+            else:
+                print(f"Could not find import country: {import_country_name}")
+        
+        print("Selecting export country...")
+        export_dropdown = Select(driver.find_element(By.XPATH, "//*[@id='pays_export']"))
+        try:
+            export_dropdown.select_by_visible_text(export_country_name)
+            print(f"Selected export country: {export_country_name}")
+        except:
+            # Try partial match
+            for option in export_dropdown.options:
+                if export_country_name.lower() in option.text.lower():
+                    export_dropdown.select_by_visible_text(option.text)
+                    print(f"Selected export country (partial match): {option.text}")
+                    break
+            else:
+                print(f"Could not find export country: {export_country_name}")
+        
+        print("Selecting manufacture country...")
+        # Note: User mentioned XPath was //*[@id="pays_export"] but this seems wrong for manufacture
+        # Using //*[@id="pays_manufacture"] as it makes more sense, but may need correction based on actual page
+        try:
+            manufacture_dropdown = Select(driver.find_element(By.XPATH, '//*[@id="pays_origine"]'))
+        except:
+            # Fallback to the XPath mentioned in user requirements (which may be incorrect)
+            print("Warning: //*[@id='pays_manufacture'] not found, trying //*[@id='pays_export'] as fallback")
+            manufacture_dropdown = Select(driver.find_element(By.XPATH, "//*[@id='pays_export']"))
+        try:
+            manufacture_dropdown.select_by_visible_text(manufacture_country_name)
+            print(f"Selected manufacture country: {manufacture_country_name}")
+        except:
+            # Try partial match
+            for option in manufacture_dropdown.options:
+                if manufacture_country_name.lower() in option.text.lower():
+                    manufacture_dropdown.select_by_visible_text(option.text)
+                    print(f"Selected manufacture country (partial match): {option.text}")
+                    break
+            else:
+                print(f"Could not find manufacture country: {manufacture_country_name}")
+        
+        print(f"Selecting transport mode: {transport_mode}")
+        if transport_mode.lower() == 'air':
+            driver.find_element(By.XPATH, "//*[@id='mot_air']").click()
+        elif transport_mode.lower() == 'sea':
+            driver.find_element(By.XPATH, "//*[@id='mot_sea']").click()
+        elif transport_mode.lower() == 'land':
+            driver.find_element(By.XPATH, "//*[@id='mot_land']").click()
+        
+        print(f"Entering shipment date: {shipment_date}")
+        date_input = driver.find_element(By.XPATH, "//*[@id='date_requete']")
+        date_input.clear()
+        date_input.send_keys(shipment_date)
+        
+        print(f"Selecting document type: {document_type}")
+        if document_type == 'country_specific':
+            driver.find_element(By.XPATH, "//*[@id='type_recherche_1']").click()
+        else:  # country_product_specific
+            driver.find_element(By.XPATH, "//*[@id='type_recherche_2']").click()
+        
+        print("Clicking search button...")
+        search_button = driver.find_element(By.XPATH, "//*[@id='bouton']")
+        driver.execute_script("arguments[0].click();", search_button)
+        
+        # Wait for results to load
+        print("Waiting for results to load...")
+        WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.ID, "encart-produit"))
+        )
+        
+        # Scrape export documents first
+        print("Scraping export documents...")
+        time.sleep(2)
+        
+        # Expand all export document categories by clicking on headers
+        try:
+            export_headers = driver.find_elements(By.XPATH, "//div[@id='choix_hs']//thead//th")
+            print(f"Found {len(export_headers)} export category headers to expand")
+            for header in export_headers:
+                try:
+                    driver.execute_script("arguments[0].click();", header)
+                    time.sleep(0.5)  # Small delay between clicks
+                except:
+                    pass
+        except Exception as e:
+            print(f"Warning: Could not expand export categories: {e}")
+        
+        export_documents = scrape_document_section(driver, "export")
+
+        
+        # Click on import documents tab
+        print("Switching to import documents tab...")
+        import_tab = driver.find_element(By.XPATH, '//*[@id="lien-onglet-keyword"]')
+        import_tab.click()
+        
+        # Wait for import section to load and become visible
+        print("Waiting for import section to become visible...")
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "choix_keyword"))
+        )
+        time.sleep(3)  # Additional wait for content to fully load
+        
+        # Expand all import document categories by clicking on headers
+        try:
+            import_headers = driver.find_elements(By.XPATH, "//div[@id='choix_keyword']//thead//th")
+            print(f"Found {len(import_headers)} import category headers to expand")
+            for header in import_headers:
+                try:
+                    driver.execute_script("arguments[0].click();", header)
+                    time.sleep(0.5)  # Small delay between clicks
+                except:
+                    pass
+        except Exception as e:
+            print(f"Warning: Could not expand import categories: {e}")
+        
+        # Scrape import documents
+        print("Scraping import documents...")
+        import_documents = scrape_document_section(driver, "import")
+        
+        return {
+            'results_summary': f'Found {len(export_documents)} export documents and {len(import_documents)} import documents',
+            'total_export_documents': len(export_documents),
+            'total_import_documents': len(import_documents),
+            'export_documents': export_documents,
+            'import_documents': import_documents,
+            'search_params': {
+                'import_country_name': import_country_name,
+                'export_country_name': export_country_name,
+                'manufacture_country_name': manufacture_country_name,
+                'transport_mode': transport_mode,
+                'shipment_date': shipment_date,
+                'document_type': document_type
+            }
+        }
+        
+    except Exception as e:
+        print(f"Error scraping Shipping Documents: {e}")
+        return {
+            'error': str(e),
+            'results_summary': 'Error occurred during scraping',
+            'total_export_documents': 0,
+            'total_import_documents': 0,
+            'export_documents': [],
+            'import_documents': [],
+            'search_params': {
+                'import_country_name': import_country_name,
+                'export_country_name': export_country_name,
+                'manufacture_country_name': manufacture_country_name,
+                'transport_mode': transport_mode,
+                'shipment_date': shipment_date,
+                'document_type': document_type
+            }
+        }
+
+def scrape_document_section(driver, section_type):
+    """
+    Helper function to scrape documents from export or import section.
+    
+    Args:
+        driver: Selenium WebDriver instance
+        section_type: 'export' or 'import'
+        
+    Returns:
+        list: List of scraped documents
+    """
+    documents = []
+    
+    try:
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        
+        # Find the specific section based on section_type
+        if section_type == 'export':
+            # Look for export section div
+            section_div = soup.find('div', {'id': 'choix_hs'})
+        else:  # import
+            # Look for import section div
+            section_div = soup.find('div', {'id': 'choix_keyword'})
+        
+        if not section_div:
+            print(f"Warning: Could not find {section_type} section div")
+            return documents
+        
+        # Check if the section is visible (not hidden)
+        section_style = section_div.get('style', '')
+        if 'display: none' in section_style:
+            print(f"Warning: {section_type} section is hidden")
+            return documents
+        
+        # Find tables within the specific section
+        tables = section_div.find_all('table', class_='tableau_methode')
+        print(f"Found {len(tables)} tables in {section_type} section")
+        
+        for table in tables:
+            # Get the category header
+            thead = table.find('thead')
+            if thead:
+                category_header = thead.find('th')
+                category = category_header.get_text(strip=True) if category_header else 'Unknown Category'
+            else:
+                category = 'Unknown Category'
+            
+            print(f"Processing category: {category}")
+            
+            # Find all document rows in this table
+            tbody = table.find('tbody')
+            if tbody:
+                # Don't skip hidden tbody - the content is there but hidden by CSS/JS
+                # The page uses JavaScript to show/hide content dynamically
+                rows = tbody.find_all('tr')
+                
+                for row in rows:
+                    td = row.find('td', class_='agauche')
+                    if td and td.get_text(strip=True):  # Skip empty rows
+                        # Extract document name
+                        doc_name_elem = td.find('strong')
+                        doc_name = doc_name_elem.get_text(strip=True) if doc_name_elem else 'Unknown Document'
+                        
+                        # Skip if no document name found
+                        if not doc_name or doc_name == 'Unknown Document':
+                            continue
+                        
+                        # Extract download link
+                        download_link = None
+                        link_elem = td.find('a', class_='link-download')
+                        if link_elem:
+                            download_link = link_elem.get('href')
+                        
+                        # Extract description
+                        description_elem = td.find('p', class_='doc-description-gtm')
+                        description = description_elem.get_text(strip=True) if description_elem else ''
+                        
+                        # Extract source
+                        source = ''
+                        source_elem = td.find('em')
+                        if source_elem:
+                            source = source_elem.get_text(strip=True).replace('Source: ', '')
+                        
+                        documents.append({
+                            'category': category,
+                            'name': doc_name,
+                            'description': description,
+                            'download_link': download_link,
+                            'source': source,
+                            'section': section_type
+                        })
+                        
+                        print(f"Found document: {doc_name}")
+        
+        print(f"Total found {len(documents)} documents in {section_type} section")
+        return documents
+        
+    except Exception as e:
+        print(f"Error scraping {section_type} documents: {e}")
+        import traceback
+        traceback.print_exc()
+        return documents 

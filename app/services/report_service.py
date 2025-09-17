@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tempfile
-from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_professional_associations, scrape_santander_online_marketplaces, scrape_santander_blacklisted_companies
+from ..scrapers.santander_scraper import login_santander, scrape_santander_country_data, scrape_santander_economic_political_outline, scrape_santander_foreign_trade_in_figures, scrape_santander_import_export_flows, scrape_santander_trade_shows, scrape_santander_operating_a_business, scrape_santander_tax_system, scrape_santander_legal_environment, scrape_santander_foreign_investment, scrape_santander_business_practices, scrape_santander_entry_requirements, scrape_santander_practical_information, scrape_santander_living_in_country, scrape_santander_reaching_consumers, scrape_santander_distributing_product, scrape_santander_identify_suppliers, scrape_santander_trade_compliance, scrape_santander_business_directories, scrape_santander_professional_associations, scrape_santander_online_marketplaces, scrape_santander_blacklisted_companies, scrape_santander_shipping_documents
 from ..scrapers.macmap_scraper import scrape_macmap_market_access_conditions
 import os
 import openai
@@ -991,6 +991,46 @@ class ReportGenerationService:
         except Exception as e:
             print(f"An error occurred during Blacklisted Companies scraping: {e}")
             return {"error": f"Error during Blacklisted Companies scraping: {str(e)}"}
+
+    def generate_santander_shipping_documents(self, import_country_name, export_country_name, manufacture_country_name, transport_mode, shipment_date, document_type, login_required=True):
+        """Generates the Shipping Documents data by scraping Santander Trade."""
+        try:
+            if not self.driver:
+                print("Driver not available. Skipping scraping.")
+                return {"error": "Driver not available"}
+            
+            # Login to Santander Trade if required
+            if login_required:
+                print("Login is required. Attempting to login...")
+                login_santander(self.driver, SANTANDER_EMAIL, SANTANDER_PASSWORD)
+                print("Login attempt finished.")
+            
+            print(f"Scraping Shipping Documents for import: {import_country_name}, export: {export_country_name}, manufacture: {manufacture_country_name}...")
+            scraped_data = scrape_santander_shipping_documents(
+                self.driver, 
+                import_country_name, 
+                export_country_name, 
+                manufacture_country_name, 
+                transport_mode, 
+                shipment_date, 
+                document_type
+            )
+            
+            # Add search parameters to the returned data for proper display (if not already there)
+            if not scraped_data.get('error'):
+                scraped_data.update({
+                    'import_country_name': import_country_name,
+                    'export_country_name': export_country_name,
+                    'manufacture_country_name': manufacture_country_name,
+                    'transport_mode': transport_mode,
+                    'shipment_date': shipment_date,
+                    'document_type': document_type
+                })
+            
+            return scraped_data
+        except Exception as e:
+            print(f"An error occurred during Shipping Documents scraping: {e}")
+            return {"error": f"Error during Shipping Documents scraping: {str(e)}"}
 
     def generate_full_report(self, form_data, countries_config, products_config):
         """Orchestrates the full scraping and returns all data for the report."""

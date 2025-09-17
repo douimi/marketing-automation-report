@@ -508,6 +508,13 @@ def service_form(service_type):
             'icon': 'fas fa-ban',
             'requires': ['entity_name'],
             'form_template': 'service_form_blacklisted_companies.html'
+        },
+        'shipping-documents': {
+            'title': 'Shipping Documents',
+            'description': 'Find the required documents for importing and exporting goods between countries.',
+            'icon': 'fas fa-file-contract',
+            'requires': ['import_country', 'export_country', 'manufacture_country', 'transport_mode', 'shipment_date'],
+            'form_template': 'service_form_shipping_documents.html'
         }
     }
     
@@ -517,13 +524,19 @@ def service_form(service_type):
     
     config = service_config[service_type]
     config_service = current_app.config.get('CONFIG_SERVICE')
-    # Only load sectors - countries and products use AJAX
-    sectors = config_service.get_sectors()
     
-    return render_template(config['form_template'], 
-                         service=config, 
-                         service_type=service_type,
-                         sectors=sectors)
+    # Only load sectors for services that need them
+    template_vars = {
+        'service': config,
+        'service_type': service_type
+    }
+    
+    # Add sectors only for services that require them
+    if 'industry' in config.get('requires', []):
+        sectors = config_service.get_sectors()
+        template_vars['sectors'] = sectors
+    
+    return render_template(config['form_template'], **template_vars)
 
 @main_bp.route('/start_individual_service', methods=['POST'])
 def start_individual_service():
@@ -575,6 +588,25 @@ def start_individual_service():
         
         if 'entity_name' in request.form:
             form_data['entity_name'] = request.form.get('entity_name')
+        
+        # Handle shipping documents specific fields
+        if 'import_country' in request.form:
+            form_data['import_country'] = request.form.get('import_country')
+        
+        if 'export_country' in request.form:
+            form_data['export_country'] = request.form.get('export_country')
+        
+        if 'manufacture_country' in request.form:
+            form_data['manufacture_country'] = request.form.get('manufacture_country')
+        
+        if 'transport_mode' in request.form:
+            form_data['transport_mode'] = request.form.get('transport_mode')
+        
+        if 'shipment_date' in request.form:
+            form_data['shipment_date'] = request.form.get('shipment_date')
+        
+        # Document type - always default to country_specific
+        form_data['document_type'] = request.form.get('document_type', 'country_specific')
         
         # Enrich form_data with names using optimized lookups
         if 'origin_country_code' in form_data:
@@ -735,6 +767,47 @@ def start_individual_service():
                     
                     service_data['blacklisted_companies_data'] = report_service.generate_santander_blacklisted_companies(
                         entity_name, 
+                        login_required=True
+                    )
+                elif service_type == 'shipping-documents':
+                    # Debug: Print all form data
+                    print(f"Debug: All form_data = {dict(form_data)}")
+                    
+                    # For shipping documents, we need multiple parameters
+                    import_country_code = form_data.get('import_country')
+                    export_country_code = form_data.get('export_country')
+                    manufacture_country_code = form_data.get('manufacture_country')
+                    transport_mode = form_data.get('transport_mode')
+                    shipment_date = form_data.get('shipment_date')
+                    document_type = form_data.get('document_type')
+                    
+                    # Get country names from codes
+                    config_service = current_app.config.get('CONFIG_SERVICE')
+                    
+                    # Debug logging
+                    print(f"Debug: import_country_code = {import_country_code}")
+                    print(f"Debug: export_country_code = {export_country_code}")
+                    print(f"Debug: manufacture_country_code = {manufacture_country_code}")
+                    
+                    import_country = config_service.find_country_by_code(import_country_code) if import_country_code else None
+                    export_country = config_service.find_country_by_code(export_country_code) if export_country_code else None
+                    manufacture_country = config_service.find_country_by_code(manufacture_country_code) if manufacture_country_code else None
+                    
+                    import_country_name = import_country.get('name') if import_country else None
+                    export_country_name = export_country.get('name') if export_country else None
+                    manufacture_country_name = manufacture_country.get('name') if manufacture_country else None
+                    
+                    print(f"Debug: import_country_name = {import_country_name}")
+                    print(f"Debug: export_country_name = {export_country_name}")
+                    print(f"Debug: manufacture_country_name = {manufacture_country_name}")
+                    
+                    service_data['shipping_documents_data'] = report_service.generate_santander_shipping_documents(
+                        import_country_name,
+                        export_country_name,
+                        manufacture_country_name,
+                        transport_mode,
+                        shipment_date,
+                        document_type,
                         login_required=True
                     )
                 

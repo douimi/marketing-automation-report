@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex align-items-center">
+                        <i class="{{ service.icon }} fa-2x me-3"></i>
+                        <div>
+                            <h4 class="mb-0">{{ service.title }}</h4>
+                            <small class="opacity-75">{{ service.description }}</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Service Features -->
+                    <div class="alert alert-info border-0 mb-4">
+                        <h6 class="alert-heading mb-3">
+                            <i class="fas fa-info-circle me-2"></i>What you'll get:
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="fas fa-check text-success me-2"></i>Export document requirements</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Import document requirements</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Transport-specific documents</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="fas fa-check text-success me-2"></i>Country-specific requirements</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Document templates and examples</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Compliance guidelines</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                        <input type="hidden" name="service_type" value="{{ service_type }}">
+                        
+                        <!-- Country Selection -->
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label for="import_country" class="form-label fw-bold">
+                                    <i class="fas fa-flag me-2 text-primary"></i>Country of Import *
+                                </label>
+                                <select class="form-select" id="import_country" name="import_country" required>
+                                    <option value="">Select Import Country</option>
+                                </select>
+                                <div class="form-text">Where goods will be imported to</div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="export_country" class="form-label fw-bold">
+                                    <i class="fas fa-flag me-2 text-success"></i>Country of Export *
+                                </label>
+                                <select class="form-select" id="export_country" name="export_country" required>
+                                    <option value="">Select Export Country</option>
+                                </select>
+                                <div class="form-text">Where goods will be exported from</div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="manufacture_country" class="form-label fw-bold">
+                                    <i class="fas fa-industry me-2 text-warning"></i>Country of Manufacture *
+                                </label>
+                                <select class="form-select" id="manufacture_country" name="manufacture_country" required>
+                                    <option value="">Select Manufacture Country</option>
+                                </select>
+                                <div class="form-text">Where goods were manufactured</div>
+                            </div>
+                        </div>
+
+                        <!-- Transport Mode -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-shipping-fast me-2 text-info"></i>Mode of Transport *
+                                </label>
+                                <div class="btn-group w-100" role="group" aria-label="Transport mode">
+                                    <input type="radio" class="btn-check" name="transport_mode" id="transport_air" value="Air" required>
+                                    <label class="btn btn-outline-primary" for="transport_air">
+                                        <i class="fas fa-plane me-2"></i>Air
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="transport_mode" id="transport_sea" value="Sea" required>
+                                    <label class="btn btn-outline-primary" for="transport_sea">
+                                        <i class="fas fa-ship me-2"></i>Sea
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="transport_mode" id="transport_land" value="Land" required>
+                                    <label class="btn btn-outline-primary" for="transport_land">
+                                        <i class="fas fa-truck me-2"></i>Land
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="shipment_date" class="form-label fw-bold">
+                                    <i class="fas fa-calendar me-2 text-secondary"></i>Shipment Date *
+                                </label>
+                                <input type="date" class="form-control" id="shipment_date" name="shipment_date" required>
+                                <div class="form-text">Expected or actual shipment date</div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden Document Type Field - Always Country Specific -->
+                        <input type="hidden" name="document_type" value="country_specific">
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search me-2"></i>Generate Shipping Documents Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    
+    // Initialize Select2 for all country dropdowns
+    $('#import_country, #export_country, #manufacture_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+    
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('shipment_date').value = today;
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Debug: Check if Select2 values are being captured
+    const importCountry = $('#import_country').val();
+    const exportCountry = $('#export_country').val();
+    const manufactureCountry = $('#manufacture_country').val();
+    
+    console.log('Debug - Form values before submission:');
+    console.log('Import country:', importCountry);
+    console.log('Export country:', exportCountry);
+    console.log('Manufacture country:', manufactureCountry);
+    
+    // Validate required fields
+    if (!importCountry || !exportCountry || !manufactureCountry) {
+        alert('Please select all three countries before submitting.');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    
+    // Debug: Log all form data
+    console.log('Debug - FormData entries:');
+    for (let [key, value] of formData.entries()) {
+        console.log(key + ': ' + value);
+    }
+    
+    // Convert date to dd/MM/YYYY format
+    const shipmentDate = formData.get('shipment_date');
+    if (shipmentDate) {
+        const dateObj = new Date(shipmentDate);
+        const formattedDate = String(dateObj.getDate()).padStart(2, '0') + '/' + 
+                            String(dateObj.getMonth() + 1).padStart(2, '0') + '/' + 
+                            dateObj.getFullYear();
+        formData.set('shipment_date', formattedDate);
+    }
+    
+    // Submit form directly - centralized loading page will handle loading state
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            // Redirect to the centralized loading page
+            window.location.href = data.redirect_url;
+        } else {
+            console.error('No redirect URL in response');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+});
+</script>
+
+<style>
+.btn-check:checked + .btn {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+}
+</style>
+{% endblock %}

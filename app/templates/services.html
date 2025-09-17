@@ -188,16 +188,6 @@
                         </div>
                         {% endif %}
                     </div>
-                    
-                    <!-- Financial Reports (Placeholder) -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Financial Reports')">
-                            <i class="fas fa-chart-bar service-icon"></i>
-                            <h5>Financial Reports</h5>
-                            <p>Access company financial information and credit reports</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -232,14 +222,24 @@
                         {% endif %}
                     </div>
 
-                    <!-- Shipping Documents (Placeholder) -->
+                    <!-- Shipping Documents -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Shipping Documents')">
-                            <i class="fas fa-file-invoice service-icon"></i>
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.service_form', service_type='shipping-documents') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-file-contract service-icon"></i>
+                                <h5>Shipping Documents</h5>
+                                <p>Find required documents for importing and exporting goods between countries</p>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-file-contract service-icon"></i>
                             <h5>Shipping Documents</h5>
-                            <p>Generate and manage shipping documentation</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
+                            <p>Find required documents for importing and exporting goods between countries</p>
+                            <i class="fas fa-lock lock-icon"></i>
                         </div>
+                        {% endif %}
                     </div>
                     
                     <!-- Import Controls (Placeholder) -->
