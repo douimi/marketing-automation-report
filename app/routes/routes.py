@@ -421,8 +421,32 @@ def start_country_information():
                 
             except Exception as e:
                 current_app.logger.error(f"Country information generation failed: {e}", exc_info=True)
-                reports_cache[report_id]['status'] = 'error'
-                reports_cache[report_id]['error_message'] = str(e)
+                # Even if there's an error, try to provide some basic data structure so the page isn't empty
+                try:
+                    # Attempt to provide minimal fallback data
+                    country_name = form_data.get('destination_country_name', 'Unknown Country')
+                    fallback_data = {
+                        'donnees1_text': f'<div id="donnees1"><div class="titre-donnees"><span class="sous-titre-encart">Country:</span> {country_name}</div><div class="titre-donnees"><span class="sous-titre-encart">Status:</span> Data could not be retrieved</div></div>',
+                        'donnees2_text': f'<div id="donnees2"><div class="titre-donnees"><span class="sous-titre-encart">Note:</span> Please try again later or contact support</div></div>',
+                        'trade_table': [{"Indicator": "Status", "Value": "Data retrieval failed", "Year": "N/A"}]
+                    }
+                    from ..services.data_processor import MarketDataProcessor
+                    data_processor = MarketDataProcessor()
+                    service_data = {
+                        'market_data': data_processor.parse_raw_data(fallback_data),
+                        'openai_intro': f"We apologize, but information for {country_name} could not be retrieved at this time.",
+                        'openai_conclusion': "Please try again later or contact our support team for assistance."
+                    }
+                    reports_cache[report_id].update({
+                        'form_data': form_data,
+                        'status': 'complete',  # Mark as complete so the page displays
+                        'error_message': f"Data retrieval failed: {str(e)}",
+                        **service_data
+                    })
+                except Exception as fallback_error:
+                    current_app.logger.error(f"Fallback data generation also failed: {fallback_error}")
+                    reports_cache[report_id]['status'] = 'error'
+                    reports_cache[report_id]['error_message'] = str(e)
             finally:
                 if report_service:
                     report_service.close_driver()
@@ -560,8 +584,37 @@ def country_service(country_code, service_type):
             
         except Exception as e:
             current_app.logger.error(f"Country service generation failed: {e}", exc_info=True)
-            reports_cache[report_id]['status'] = 'error'
-            reports_cache[report_id]['error_message'] = str(e)
+            # Even if there's an error, try to provide some basic data structure so the page isn't empty
+            try:
+                # Attempt to provide minimal fallback data
+                country_name = form_data.get('destination_country_name', 'Unknown Country')
+                if service_type == 'general-presentation':
+                    fallback_data = {
+                        'donnees1_text': f'<div id="donnees1"><div class="titre-donnees"><span class="sous-titre-encart">Country:</span> {country_name}</div><div class="titre-donnees"><span class="sous-titre-encart">Status:</span> Data could not be retrieved</div></div>',
+                        'donnees2_text': f'<div id="donnees2"><div class="titre-donnees"><span class="sous-titre-encart">Note:</span> Please try again later or contact support</div></div>',
+                        'trade_table': [{"Indicator": "Status", "Value": "Data retrieval failed", "Year": "N/A"}]
+                    }
+                    from ..services.data_processor import MarketDataProcessor
+                    data_processor = MarketDataProcessor()
+                    service_data = {
+                        'market_data': data_processor.parse_raw_data(fallback_data),
+                        'openai_intro': f"We apologize, but information for {country_name} could not be retrieved at this time.",
+                        'openai_conclusion': "Please try again later or contact our support team for assistance."
+                    }
+                else:
+                    # For other service types, provide empty service data
+                    service_data = {}
+                
+                reports_cache[report_id].update({
+                    'form_data': form_data,
+                    'status': 'complete',  # Mark as complete so the page displays
+                    'error_message': f"Data retrieval failed: {str(e)}",
+                    **service_data
+                })
+            except Exception as fallback_error:
+                current_app.logger.error(f"Fallback data generation also failed: {fallback_error}")
+                reports_cache[report_id]['status'] = 'error'
+                reports_cache[report_id]['error_message'] = str(e)
         finally:
             if report_service:
                 report_service.close_driver()

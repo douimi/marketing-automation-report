@@ -175,9 +175,40 @@ def scrape_santander_country_data(driver, formatted_country_name):
         page_title = driver.title
         print(f"Current URL during error: {current_url}")
         print(f"Page title during error: {page_title}")
+        
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for country data: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            # Get the original country name from the formatted name
+            country_name = formatted_country_name.replace('-', ' ').title()
+            
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_country_general_information(country_name, None)
+            
+            print(f"ChatGPT fallback completed for {country_name}")
+            print(f"Generated data keys: {list(generated_data.keys()) if isinstance(generated_data, dict) else 'Not a dict'}")
+            
+            # Always return the generated data, even if it's a fallback structure
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+            # Return a minimal fallback structure if ChatGPT completely fails
+            country_name = formatted_country_name.replace('-', ' ').title()
+            return {
+                'donnees1_text': f'<div id="donnees1"><div class="titre-donnees"><span class="sous-titre-encart">Country:</span> {country_name}</div><div class="titre-donnees"><span class="sous-titre-encart">Status:</span> All data sources failed</div></div>',
+                'donnees2_text': f'<div id="donnees2"><div class="titre-donnees"><span class="sous-titre-encart">Note:</span> Unable to retrieve data for {country_name}</div></div>',
+                'trade_table': [
+                    {"Indicator": "Status", "Value": "All data sources failed", "Year": "N/A"}
+                ]
+            }
+            
+        # If both scraping and ChatGPT fail, return error
         if "page not found" in page_title.lower() or "error 404" in driver.page_source.lower():
-            return {"error": f"Error: Page not found for country {formatted_country_name} at {target_url}."}
-        return {"error": f"Error scraping Santander data for {formatted_country_name}. Details: {str(e)}"}
+            return {"error": f"Error: Page not found for country {formatted_country_name} at {target_url}. ChatGPT fallback also failed."}
+        return {"error": f"Error scraping Santander data for {formatted_country_name}. ChatGPT fallback also failed. Details: {str(e)}"}
 
 
 def scrape_santander_economic_political_outline(driver, formatted_country_name):
@@ -373,6 +404,24 @@ def scrape_santander_operating_a_business(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Operating a Business for {formatted_country_name}: {e}")
+        
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Operating a Business: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            # Get the original country name from the formatted name
+            country_name = formatted_country_name.replace('-', ' ').title()
+            
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_operating_business_data(country_name)
+            
+            print(f"Successfully generated Operating a Business data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Operating a Business for {formatted_country_name}: {str(e)}'}
 
 
@@ -442,6 +491,21 @@ def scrape_santander_tax_system(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Tax System for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Tax System: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_tax_system_data(country_name)
+            
+            print(f"Successfully generated Tax System data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Tax System for {formatted_country_name}: {str(e)}'}
 
 
@@ -507,6 +571,21 @@ def scrape_santander_legal_environment(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Legal Environment for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Legal Environment: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_legal_environment_data(country_name)
+            
+            print(f"Successfully generated Legal Environment data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Legal Environment for {formatted_country_name}: {str(e)}'}
 
 
@@ -582,6 +661,21 @@ def scrape_santander_foreign_investment(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Foreign Investment for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Foreign Investment: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_foreign_investment_data(country_name)
+            
+            print(f"Successfully generated Foreign Investment data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Foreign Investment for {formatted_country_name}: {str(e)}'}
 
 
@@ -643,6 +737,21 @@ def scrape_santander_business_practices(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Business Practices for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Business Practices: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_business_practices_data(country_name)
+            
+            print(f"Successfully generated Business Practices data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Business Practices for {formatted_country_name}: {str(e)}'}
 
 
@@ -708,6 +817,21 @@ def scrape_santander_entry_requirements(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Entry Requirements for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Entry Requirements: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_entry_requirements_data(country_name)
+            
+            print(f"Successfully generated Entry Requirements data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Entry Requirements for {formatted_country_name}: {str(e)}'}
 
 
@@ -783,6 +907,21 @@ def scrape_santander_practical_information(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Practical Information for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Practical Information: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_practical_information_data(country_name)
+            
+            print(f"Successfully generated Practical Information data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Practical Information for {formatted_country_name}: {str(e)}'}
 
 
@@ -856,6 +995,21 @@ def scrape_santander_living_in_country(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Living in the Country for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Living in the Country: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_living_in_country_data(country_name)
+            
+            print(f"Successfully generated Living in the Country data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Living in the Country for {formatted_country_name}: {str(e)}'}
 
 
@@ -1103,6 +1257,21 @@ def scrape_santander_reaching_consumers(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Reaching the Consumer for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Reaching the Consumer: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_reaching_consumers_data(country_name)
+            
+            print(f"Successfully generated Reaching the Consumer data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Reaching the Consumer for {formatted_country_name}: {str(e)}'}
 
 
@@ -1185,6 +1354,21 @@ def scrape_santander_distributing_product(driver, formatted_country_name):
         }
     except Exception as e:
         print(f"Error scraping Santander Distributing a Product for {formatted_country_name}: {e}")
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for Distributing a Product: {formatted_country_name}")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            
+            country_name = formatted_country_name.replace('-', ' ').title()
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_distributing_product_data(country_name)
+            
+            print(f"Successfully generated Distributing a Product data using ChatGPT for {country_name}")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
         return {'error': f'Error scraping Distributing a Product for {formatted_country_name}: {str(e)}'}
 
 

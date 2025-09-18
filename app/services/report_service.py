@@ -41,10 +41,45 @@ def get_country_name_from_code(country_code, countries_config=None):
     country = config_service.find_country_by_code(country_code)
     return country.get("name") if country else None
 
+def try_chatgpt_fallback(service_name, country_name, fallback_method_name):
+    """Helper function to try ChatGPT fallback for any service."""
+    try:
+        print(f"Attempting ChatGPT fallback for {service_name}: {country_name}")
+        from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+        fallback_service = ChatGPTFallbackService()
+        
+        # Get the appropriate fallback method
+        fallback_method = getattr(fallback_service, fallback_method_name)
+        generated_data = fallback_method(country_name)
+        
+        print(f"Successfully generated {service_name} data using ChatGPT for {country_name}")
+        return generated_data
+    except Exception as fallback_error:
+        print(f"ChatGPT fallback for {service_name} failed: {fallback_error}")
+        return None
+
 class ReportGenerationService:
     def __init__(self):
         self.driver = None
         self._initialize_driver()
+
+    def _is_data_empty(self, data, key_fields):
+        """Check if the scraped data is empty or contains only minimal content."""
+        if not isinstance(data, dict):
+            return True
+        
+        # Check if all key fields are empty or contain only minimal HTML
+        for field in key_fields:
+            if field in data:
+                content = data[field]
+                if content and isinstance(content, str):
+                    # Remove HTML tags and whitespace to check actual content
+                    from bs4 import BeautifulSoup
+                    text_content = BeautifulSoup(content, 'html.parser').get_text(strip=True)
+                    if text_content and len(text_content) > 10:  # Has meaningful content
+                        return False
+        
+        return True  # All key fields are empty or have minimal content
 
     def _initialize_driver(self):
         """Initializes the Selenium WebDriver."""
@@ -288,9 +323,15 @@ class ReportGenerationService:
     def generate_openai_conclusion(self, market_data, form_data):
         """Generate a concise market analysis conclusion using OpenAI."""
         try:
+            # Check if this is a sector-specific analysis or general country information
+            sector_focus = ""
+            if form_data.get('sector'):
+                sector_focus = f", focusing on the {form_data['sector']} sector"
+            elif form_data.get('service_type') == 'general-presentation':
+                sector_focus = " for general market overview"
+            
             prompt = f"""
-            As a market analysis expert, provide a concise and structured analysis for {form_data['destination_country_name']}'s market, 
-            focusing on the {form_data['sector']} sector. Base your analysis on this market data:
+            As a market analysis expert, provide a concise and structured analysis for {form_data['destination_country_name']}'s market{sector_focus}. Base your analysis on this market data:
 
             {market_data}
 
@@ -312,8 +353,7 @@ class ReportGenerationService:
             Total response should not exceed 300 words.
             """
 
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market analysis expert providing concise, actionable insights."},
@@ -324,8 +364,6 @@ class ReportGenerationService:
             )
 
             return response.choices[0].message.content
-            """
-            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI conclusion: {str(e)}")
             return ""
@@ -340,8 +378,7 @@ class ReportGenerationService:
 
             Focus on the country's global relevance, economic profile, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries to executives."},
@@ -351,8 +388,6 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
-            """
-            return ""
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI introduction: {str(e)}")
             return ""
@@ -367,8 +402,7 @@ class ReportGenerationService:
 
             Focus on the country's economic and political profile, recent trends, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' economic and political context to executives."},
@@ -378,8 +412,7 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political introduction: {str(e)}")
             return ""
@@ -405,8 +438,8 @@ class ReportGenerationService:
 
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
-            """
-                        response = openai.chat.completions.create(
+
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a market and political analysis expert providing concise, actionable insights."},
@@ -416,8 +449,7 @@ class ReportGenerationService:
                 max_tokens=400
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI eco-political insights: {str(e)}")
             return ""
@@ -432,8 +464,7 @@ class ReportGenerationService:
 
             Focus on the country's trade position, key partners, and any unique characteristics. Do not include lists or bullet points. Keep it under 120 words.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing countries' trade profiles to executives."},
@@ -443,8 +474,7 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade introduction: {str(e)}")
             return ""
@@ -470,8 +500,7 @@ class ReportGenerationService:
 
             Keep each section brief and focused. Avoid general statements and focus on specific, data-backed insights. Total response should not exceed 250 words.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade analysis expert providing concise, actionable insights."},
@@ -481,8 +510,7 @@ class ReportGenerationService:
                 max_tokens=400
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI trade insights: {str(e)}")
             return ""
@@ -502,8 +530,7 @@ class ReportGenerationService:
 
             Focus on the main trends, key partners, and any notable patterns. Do not include lists or bullet points. Keep it under 120 words.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional business analyst introducing trade flows to executives."},
@@ -513,8 +540,7 @@ class ReportGenerationService:
                 max_tokens=200
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows introduction: {str(e)}")
             return ""
@@ -533,8 +559,7 @@ class ReportGenerationService:
 
             Use bullet points. Focus on practical, data-driven advice and highlight any key risks or opportunities.
             """
-            """
-                        response = openai.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trade flows expert providing concise, actionable insights."},
@@ -544,8 +569,7 @@ class ReportGenerationService:
                 max_tokens=300
             )
             return response.choices[0].message.content
-            """
-            return ""
+
         except Exception as e:
             current_app.logger.error(f"Error generating OpenAI flows insights: {str(e)}")
             return ""
@@ -590,9 +614,22 @@ class ReportGenerationService:
             
             print(f"Scraping Operating a Business for {formatted_country_name}...")
             scraped_data = scrape_santander_operating_a_business(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['legal_section', 'active_population_section', 'working_conditions_section'])):
+                print(f"Operating a Business data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Operating a Business", destination_country_name, "generate_operating_business_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Operating a Business scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Operating a Business", destination_country_name, "generate_operating_business_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Operating a Business scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_tax_system(self, destination_country_code, countries_config, login_required=True):
@@ -616,9 +653,22 @@ class ReportGenerationService:
             
             print(f"Scraping Tax System for {formatted_country_name}...")
             scraped_data = scrape_santander_tax_system(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['corporate_taxes_section', 'accounting_rules_section', 'consumption_taxes_section'])):
+                print(f"Tax System data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Tax System", destination_country_name, "generate_tax_system_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Tax System scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Tax System", destination_country_name, "generate_tax_system_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Tax System scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_legal_environment(self, destination_country_code, countries_config, login_required=True):
@@ -642,9 +692,22 @@ class ReportGenerationService:
             
             print(f"Scraping Legal Environment for {formatted_country_name}...")
             scraped_data = scrape_santander_legal_environment(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['business_contract_section', 'intellectual_property_section', 'legal_framework_section'])):
+                print(f"Legal Environment data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Legal Environment", destination_country_name, "generate_legal_environment_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Legal Environment scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Legal Environment", destination_country_name, "generate_legal_environment_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Legal Environment scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_foreign_investment(self, destination_country_code, countries_config, login_required=True):
@@ -668,9 +731,22 @@ class ReportGenerationService:
             
             print(f"Scraping Foreign Investment for {formatted_country_name}...")
             scraped_data = scrape_santander_foreign_investment(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['fdi_figures_section', 'why_invest_section', 'protection_section'])):
+                print(f"Foreign Investment data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Foreign Investment", destination_country_name, "generate_foreign_investment_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Foreign Investment scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Foreign Investment", destination_country_name, "generate_foreign_investment_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Foreign Investment scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_business_practices(self, destination_country_code, countries_config, login_required=True):
@@ -694,9 +770,22 @@ class ReportGenerationService:
             
             print(f"Scraping Business Practices for {formatted_country_name}...")
             scraped_data = scrape_santander_business_practices(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['business_culture_section', 'opening_hours_section'])):
+                print(f"Business Practices data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Business Practices", destination_country_name, "generate_business_practices_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Business Practices scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Business Practices", destination_country_name, "generate_business_practices_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Business Practices scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_entry_requirements(self, destination_country_code, countries_config, login_required=True):
@@ -720,9 +809,22 @@ class ReportGenerationService:
             
             print(f"Scraping Entry Requirements for {formatted_country_name}...")
             scraped_data = scrape_santander_entry_requirements(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['passport_visa_section', 'customs_taxes_section', 'health_section'])):
+                print(f"Entry Requirements data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Entry Requirements", destination_country_name, "generate_entry_requirements_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Entry Requirements scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Entry Requirements", destination_country_name, "generate_entry_requirements_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Entry Requirements scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_practical_information(self, destination_country_code, countries_config, login_required=True):
@@ -746,9 +848,22 @@ class ReportGenerationService:
             
             print(f"Scraping Practical Information for {formatted_country_name}...")
             scraped_data = scrape_santander_practical_information(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['eating_out_section', 'getting_around_section', 'time_section'])):
+                print(f"Practical Information data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Practical Information", destination_country_name, "generate_practical_information_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Practical Information scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Practical Information", destination_country_name, "generate_practical_information_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Practical Information scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_living_in_country(self, destination_country_code, countries_config, login_required=True):
@@ -772,9 +887,22 @@ class ReportGenerationService:
             
             print(f"Scraping Living in the Country for {formatted_country_name}...")
             scraped_data = scrape_santander_living_in_country(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['expatriates_section', 'ranking_section', 'renting_section'])):
+                print(f"Living in the Country data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Living in the Country", destination_country_name, "generate_living_in_country_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Living in the Country scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Living in the Country", destination_country_name, "generate_living_in_country_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Living in the Country scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_reaching_consumers(self, destination_country_code, countries_config, login_required=True):
@@ -800,9 +928,22 @@ class ReportGenerationService:
             
             print(f"Scraping Reaching the Consumer for {formatted_country_name}...")
             scraped_data = scrape_santander_reaching_consumers(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['consumer_profile_section', 'marketing_opportunities_section'])):
+                print(f"Reaching the Consumer data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Reaching the Consumer", destination_country_name, "generate_reaching_consumers_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Reaching the Consumer scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Reaching the Consumer", destination_country_name, "generate_reaching_consumers_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Reaching the Consumer scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_distributing_product(self, destination_country_code, countries_config, login_required=True):
@@ -828,9 +969,22 @@ class ReportGenerationService:
             
             print(f"Scraping Distributing a Product for {formatted_country_name}...")
             scraped_data = scrape_santander_distributing_product(self.driver, formatted_country_name)
+            
+            # Check if scraped data contains an error or is empty and try ChatGPT fallback
+            if isinstance(scraped_data, dict) and ('error' in scraped_data or self._is_data_empty(scraped_data, ['distribution_section', 'distance_selling_section'])):
+                print(f"Distributing a Product data is missing or empty for {destination_country_name}, triggering ChatGPT fallback")
+                fallback_data = try_chatgpt_fallback("Distributing a Product", destination_country_name, "generate_distributing_product_data")
+                if fallback_data:
+                    return fallback_data
+            
             return scraped_data
         except Exception as e:
             print(f"An error occurred during Distributing a Product scraping: {e}")
+            # Try ChatGPT fallback as last resort
+            fallback_data = try_chatgpt_fallback("Distributing a Product", destination_country_name, "generate_distributing_product_data")
+            if fallback_data:
+                return fallback_data
+            
             return {"error": f"Error during Distributing a Product scraping for {destination_country_name}: {str(e)}"}
 
     def generate_santander_identify_suppliers(self, destination_country_code, countries_config, login_required=True):

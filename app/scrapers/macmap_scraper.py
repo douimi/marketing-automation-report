@@ -159,4 +159,43 @@ def scrape_macmap_market_access_conditions(driver, reporter_iso3n, partner_iso3n
         }
     except Exception as e:
         print(f"Error scraping MacMap Market Access Conditions: {e}")
-        return {'error': f'Error scraping MacMap Market Access Conditions: {str(e)}'} 
+        
+        # Try ChatGPT fallback when scraping fails
+        try:
+            print(f"Attempting ChatGPT fallback for market access conditions")
+            from ..services.chatgpt_fallback_service import ChatGPTFallbackService
+            from flask import current_app
+            
+            # Get country and product information for the fallback
+            countries_config = current_app.config.get('COUNTRIES', [])
+            products_config = current_app.config.get('PRODUCTS', [])
+            
+            # Find country names from ISO codes
+            exporting_country = "Unknown"
+            importing_country = "Unknown"
+            for country in countries_config:
+                if country.get('iso3n') == reporter_iso3n:
+                    exporting_country = country.get('name', 'Unknown')
+                if country.get('iso3n') == partner_iso3n:
+                    importing_country = country.get('name', 'Unknown')
+            
+            # Find product description from HS6 code
+            product_description = product_hs6
+            for product in products_config:
+                if product.get('hs6') == product_hs6:
+                    product_description = product.get('description', product_hs6)
+                    break
+            
+            fallback_service = ChatGPTFallbackService()
+            generated_data = fallback_service.generate_market_access_conditions(
+                exporting_country, importing_country, product_description, product_hs6
+            )
+            
+            print(f"Successfully generated market access conditions using ChatGPT")
+            return generated_data
+            
+        except Exception as fallback_error:
+            print(f"ChatGPT fallback also failed: {fallback_error}")
+        
+        # If both scraping and ChatGPT fail, return error
+        return {'error': f'Error scraping MacMap Market Access Conditions: {str(e)}. ChatGPT fallback also failed.'} 
