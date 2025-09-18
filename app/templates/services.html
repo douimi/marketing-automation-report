@@ -274,6 +274,7 @@
                     
                     <!-- HS Customs Classification -->
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.hs_customs_classification') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-tags service-icon"></i>
@@ -281,6 +282,14 @@
                                 <p>Find correct HS codes for your products</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-tags service-icon"></i>
+                            <h5>HS Customs Classification</h5>
+                            <p>Find correct HS codes for your products</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -303,6 +312,7 @@
                 </div>
                 <div class="row g-3">
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.export_price_calculator') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-calculator service-icon"></i>
@@ -310,8 +320,17 @@
                                 <p>Calculate optimal export pricing strategies</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-calculator service-icon"></i>
+                            <h5>Export Price Calculator</h5>
+                            <p>Calculate optimal export pricing strategies</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.measurement_converter') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-ruler service-icon"></i>
@@ -319,8 +338,17 @@
                                 <p>Convert between different measurement units</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-ruler service-icon"></i>
+                            <h5>Measurement Converter</h5>
+                            <p>Convert between different measurement units</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.currency_converter') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-dollar-sign service-icon"></i>
@@ -328,6 +356,14 @@
                                 <p>Real-time currency conversion and rates</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-dollar-sign service-icon"></i>
+                            <h5>Currency Converter</h5>
+                            <p>Real-time currency conversion and rates</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -424,6 +460,7 @@
                         {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.business_trips') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-plane service-icon"></i>
@@ -431,8 +468,17 @@
                                 <p>Plan effective international business travel</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-plane service-icon"></i>
+                            <h5>Business Trips</h5>
+                            <p>Plan effective international business travel</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.trademark_protection') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-trademark service-icon"></i>
@@ -440,8 +486,17 @@
                                 <p>Protect your brand in international markets</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-trademark service-icon"></i>
+                            <h5>Trademark Protection</h5>
+                            <p>Protect your brand in international markets</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.patent_protection') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-lightbulb service-icon"></i>
@@ -449,8 +504,17 @@
                                 <p>Secure intellectual property rights globally</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-lightbulb service-icon"></i>
+                            <h5>Patent Protection</h5>
+                            <p>Secure intellectual property rights globally</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
+                        {% if current_user.is_authenticated %}
                         <a href="{{ url_for('main.emerging_markets') }}" class="service-link">
                             <div class="service-card">
                                 <i class="fas fa-globe-americas service-icon"></i>
@@ -458,6 +522,14 @@
                                 <p>Navigate opportunities in emerging economies</p>
                             </div>
                         </a>
+                        {% else %}
+                        <div class="service-card locked-card" onclick="showLoginPrompt()">
+                            <i class="fas fa-globe-americas service-icon"></i>
+                            <h5>Exporting to Emerging Markets</h5>
+                            <p>Navigate opportunities in emerging economies</p>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

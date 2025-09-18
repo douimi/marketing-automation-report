@@ -1147,6 +1147,10 @@ def start_report():
                     reports_cache[report_id]['status'] = 'error'
                     reports_cache[report_id]['error_message'] = 'Failed to initialize Selenium WebDriver.'
                     return
+                
+                # Get countries config from service
+                config_service = current_app.config.get('CONFIG_SERVICE')
+                countries_config = config_service.get_countries()
                 # Scrape Santander General Presentation
                 try:
                     raw_santander_data = report_service.generate_santander_report_data(

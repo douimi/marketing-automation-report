@@ -59,7 +59,7 @@ class ReportGenerationService:
         
         chrome_options = Options()
         # Comprehensive headless settings for containers
-        chrome_options.add_argument("--headless=new")  # Enable headless mode
+        #chrome_options.add_argument("--headless=new")  # Enable headless mode
         chrome_options.add_argument("--no-sandbox")  # Required for Docker
         chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
         chrome_options.add_argument("--disable-gpu")  # Disable GPU acceleration
