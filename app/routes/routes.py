@@ -315,6 +315,26 @@ def api_cost_explanation(component):
     except Exception as e:
         return jsonify({'error': f'Error fetching explanation: {str(e)}'}), 500
 
+@main_bp.route('/business-trips')
+def business_trips():
+    """Display the Business Trips page."""
+    return render_template('business_trips.html')
+
+@main_bp.route('/trademark-protection')
+def trademark_protection():
+    """Display the Trademark Protection page."""
+    return render_template('trademark_protection.html')
+
+@main_bp.route('/patent-protection')
+def patent_protection():
+    """Display the Patent Protection page."""
+    return render_template('patent_protection.html')
+
+@main_bp.route('/emerging-markets')
+def emerging_markets():
+    """Display the Exporting to Emerging Markets page."""
+    return render_template('emerging_markets.html')
+
 @main_bp.route('/industry-information')
 @login_required
 def industry_information():

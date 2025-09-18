@@ -424,52 +424,40 @@
                         {% endif %}
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Trade Show Preparation')">
-                            <i class="fas fa-calendar-alt service-icon"></i>
-                            <h5>Preparing for a Professional Trade Show</h5>
-                            <p>Maximize your trade show participation</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.business_trips') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-plane service-icon"></i>
+                                <h5>Business Trips</h5>
+                                <p>Plan effective international business travel</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Business Trips')">
-                            <i class="fas fa-plane service-icon"></i>
-                            <h5>Business Trips</h5>
-                            <p>Plan effective international business travel</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.trademark_protection') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-trademark service-icon"></i>
+                                <h5>Trademark Protection</h5>
+                                <p>Protect your brand in international markets</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Trademark Protection')">
-                            <i class="fas fa-trademark service-icon"></i>
-                            <h5>Trademark Protection</h5>
-                            <p>Protect your brand in international markets</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.patent_protection') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-lightbulb service-icon"></i>
+                                <h5>Patent Protection</h5>
+                                <p>Secure intellectual property rights globally</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Patent Protection')">
-                            <i class="fas fa-lightbulb service-icon"></i>
-                            <h5>Patent Protection</h5>
-                            <p>Secure intellectual property rights globally</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Emerging Markets')">
-                            <i class="fas fa-globe-americas service-icon"></i>
-                            <h5>Exporting to Emerging Markets</h5>
-                            <p>Navigate opportunities in emerging economies</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-card placeholder-card" onclick="showComingSoon('Marketing Overseas')">
-                            <i class="fas fa-bullhorn service-icon"></i>
-                            <h5>Marketing and Selling Overseas</h5>
-                            <p>Develop effective international marketing strategies</p>
-                            <span class="badge bg-secondary">Coming Soon</span>
-                        </div>
+                        <a href="{{ url_for('main.emerging_markets') }}" class="service-link">
+                            <div class="service-card">
+                                <i class="fas fa-globe-americas service-icon"></i>
+                                <h5>Exporting to Emerging Markets</h5>
+                                <p>Navigate opportunities in emerging economies</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
