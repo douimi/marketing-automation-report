@@ -1,98 +1,614 @@
 {% extends "base.html" %}
 
+{% block title %}Login - Trade Intelligence Platform{% endblock %}
 {% block content %}
-<div class="login-container">
-    <div class="login-box">
-        <div class="text-center mb-4">
-            <h1 class="h3">Market Analysis Portal</h1>
-            <p class="text-muted">Please sign in to continue</p>
+
+<!-- Login Section -->
+<section class="login-section">
+    <div class="login-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" action="{{ url_for('auth.login') }}">
-            <div class="form-group mb-3">
-                <label for="username" class="form-label">Username</label>
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-            </div>
-
-            <div class="form-group mb-4">
-                <label for="password" class="form-label">Password</label>
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 mb-3">
-                <i class="fas fa-sign-in-alt me-2"></i>Sign In
-            </button>
-
-            <div class="text-center">
-                <p class="text-muted mb-0">
-                    Don't have an account? 
-                    <a href="{{ url_for('auth.register') }}" class="text-decoration-none">Register here</a>
-                </p>
-            </div>
-        </form>
     </div>
-</div>
+
+    <div class="container compact-container">
+        <div class="login-card">
+            <div class="login-content">
+                <div class="brand-section">
+                    <div class="brand-container">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Indatex Logo" class="login-logo-img">
+                        <div class="brand-text">
+                            <h1 class="login-brand-name"></h1>
+                            <span class="login-subtitle">Market Analysis Portal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-main-content">
+                    <h2 class="login-title">Access your <span class="highlight-text">global trade intelligence</span></h2>
+                    <p class="login-subtext">Enter your credentials to continue</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} login-alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('auth.login') }}" class="login-form">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password">
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 login-btn">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </button>
+
+                    <div class="text-center register-prompt">
+                        <p class="text-muted mb-0">
+                            Don't have an account? 
+                            <a href="{{ url_for('auth.register') }}" class="register-link">Register here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="login-visual">
+                <div class="security-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span>Secure Login</span>
+                </div>
+                
+                <div class="visual-container">
+                    <div class="globe-container">
+                        <div class="globe">
+                            <div class="globe-inner">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floating-icons">
+                        <div class="icon-item" style="--delay: 0s; --x: 20px; --y: -20px;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="icon-item" style="--delay: 0.5s; --x: -25px; --y: 15px;">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="icon-item" style="--delay: 1s; --x: 15px; --y: 25px;">
+                            <i class="fas fa-analytics"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <style>
-.login-container {
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Login Section */
+.login-section {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 1rem;
+    color: var(--white);
+    overflow: hidden;
+    padding: 2rem 0;
 }
 
-.login-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 400px;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1000px;
+    padding: 0 2rem;
+}
+
+.login-card {
+    display: flex;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    max-height: 550px;
+}
+
+/* Login Content */
+.login-content {
+    flex: 1;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.login-logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.alert {
+    color: white !important;
+}
+.login-brand-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--white);
+    margin: 0;
+    line-height: 1;
+}
+
+.login-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+/* Main Content */
+.login-main-content {
+    margin-bottom: 1.5rem;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+    color: var(--white);
+}
+
+.login-subtext {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 400;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+/* Alert Messages */
+.login-alert {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+/* Login Form */
+.login-form {
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.input-group:focus-within {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
 .input-group-text {
-    background-color: #f8f9fa;
-    border-right: none;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
 }
 
-.input-group .form-control {
-    border-left: none;
+.form-control {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    padding: 0.75rem 1rem 0.75rem 0;
+    height: auto;
+    font-size: 0.95rem;
 }
 
-.input-group .form-control:focus {
-    border-color: #dee2e6;
+.form-control:focus {
+    background: transparent;
+    color: var(--white);
     box-shadow: none;
 }
 
-.btn-primary {
-    background-color: #2c3e50;
-    border-color: #2c3e50;
-    padding: 0.75rem;
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.btn-primary:hover {
-    background-color: #1a252f;
-    border-color: #1a252f;
+.password-toggle {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.75rem 1rem 0.75rem 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.password-toggle:hover {
+    color: var(--white);
+}
+
+/* Login Button */
+.login-btn {
+    border-radius: 10px;
+    padding: 0.875rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+.register-prompt {
+    margin-top: 1.5rem;
+}
+
+.register-link {
+    color: var(--secondary-orange);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.register-link:hover {
+    color: var(--secondary-red);
+    text-decoration: underline;
+}
+
+/* Login Visual */
+.login-visual {
+    flex: 0 0 45%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    padding: 2rem;
+}
+
+.security-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+}
+
+.badge-icon {
+    color: var(--success);
+}
+
+.visual-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.globe-container {
+    position: relative;
+    z-index: 2;
+}
+
+.globe {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: pulse 3s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.2);
+}
+
+.globe-inner i {
+    font-size: 2.5rem;
+    color: var(--white);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.2); }
+    70% { box-shadow: 0 0 0 15px rgba(124, 58, 237, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+.floating-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.icon-item {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1rem;
+    animation: float-icon 6s ease-in-out infinite;
+    animation-delay: var(--delay);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-item:nth-child(1) { top: 20%; left: 30%; }
+.icon-item:nth-child(2) { top: 60%; left: 20%; }
+.icon-item:nth-child(3) { top: 50%; left: 70%; }
+
+@keyframes float-icon {
+    0%, 100% { 
+        transform: translateY(0px) translateX(0px); 
+    }
+    33% { 
+        transform: translateY(var(--y)) translateX(var(--x)); 
+    }
+    66% { 
+        transform: translateY(calc(var(--y) * -0.5)) translateX(calc(var(--x) * -0.5)); 
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .login-card {
+        flex-direction: column;
+        max-height: none;
+    }
+    
+    .login-visual {
+        flex: none;
+        height: 200px;
+        order: -1;
+    }
+    
+    .visual-container {
+        height: 150px;
+    }
+    
+    .globe {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .globe-inner i {
+        font-size: 1.75rem;
+    }
+    
+    .icon-item {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .login-content {
+        padding: 1.5rem;
+    }
+    
+    .login-title {
+        font-size: 1.25rem;
+    }
+    
+    .brand-container {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .security-badge {
+        top: 1rem;
+        right: 1rem;
+    }
+    
+    .login-visual {
+        padding: 1.5rem;
+    }
 }
 </style>
-{% endblock %} 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Password visibility toggle
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        
+        if (passwordToggle && passwordInput) {
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
+        
+        // Add animation to form elements on focus
+        const formInputs = document.querySelectorAll('.form-control');
+        
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+                this.parentElement.style.boxShadow = '0 6px 20px rgba(255, 255, 255, 0.15)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+    });
+</script>
+
+{% endblock %}

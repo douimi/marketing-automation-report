@@ -3,115 +3,126 @@
 {% block title %}{{ service.title }} - Market Research Service{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <!-- Back to Services -->
-    <div class="mb-4">
-        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Services
-        </a>
-    </div>
-
-    <!-- Service Header -->
-    <div class="text-center mb-5">
-        <div class="service-icon-large mb-3">
-            <i class="{{ service.icon }}"></i>
+<section class="service-section">
+    <div class="service-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
-        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
-        <p class="lead text-muted">{{ service.description }}</p>
     </div>
 
-    <!-- Form Card -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">
-                        <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
-                        <input type="hidden" name="service_type" value="{{ service_type }}">
-                        
-                        <div class="mb-4">
-                            <label for="destination_country" class="form-label">
-                                <i class="fas fa-flag me-2"></i>Target Country
-                            </label>
-                            <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
-                                <option value="" disabled selected>Select Target Country</option>
-                            </select>
-                            <div class="form-text">Select the country where you want to find trade shows</div>
-                        </div>
+    <div class="container compact-container">
+        <!-- Back to Services -->
+        <div class="mb-4">
+            <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-back">
+                <i class="fas fa-arrow-left me-2"></i>Back to Services
+            </a>
+        </div>
 
-                        <div class="mb-4">
-                            <label for="sector" class="form-label">
-                                <i class="fas fa-industry me-2"></i>Industry Sector
-                            </label>
-                            <select class="form-select" id="sector" name="sector" required>
-                                <option value="" disabled selected>Select Industry Sector</option>
-                                {% for sector in sectors %}
-                                    <option value="{{ sector.name }}">{{ sector.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="form-text">Choose your industry sector to find relevant events</div>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <!-- Service Header -->
+        <div class="text-center mb-5">
+            <div class="service-icon-large mb-3">
+                <i class="{{ service.icon }}"></i>
             </div>
+            <h1 class="service-title">{{ service.title }}</h1>
+            <p class="service-description">{{ service.description }}</p>
         </div>
-    </div>
 
-    <!-- Service Features -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <h4 class="text-center mb-4">What You'll Get</h4>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <h6>Event Listings</h6>
-                        <p class="text-muted small">Comprehensive list of upcoming trade shows</p>
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="service-card">
+                    <div class="service-card-header">
+                        <h3 class="mb-0">
+                            <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
+                        </h3>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <h6>Location Details</h6>
-                        <p class="text-muted small">Venue information and contact details</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <h6>Event Dates</h6>
-                        <p class="text-muted small">Precise timing and duration information</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <h6>Direct Links</h6>
-                        <p class="text-muted small">Links to official event websites</p>
+                    <div class="service-card-body">
+                        <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                            <input type="hidden" name="service_type" value="{{ service_type }}">
+                            
+                            <div class="form-group">
+                                <label for="destination_country" class="form-label">
+                                    <i class="fas fa-flag me-2"></i>Target Country
+                                </label>
+                                <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
+                                    <option value="" disabled selected>Select Target Country</option>
+                                </select>
+                                <div class="form-text">Select the country where you want to find trade shows</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sector" class="form-label">
+                                    <i class="fas fa-industry me-2"></i>Industry Sector
+                                </label>
+                                <select class="form-select" id="sector" name="sector" required>
+                                    <option value="" disabled selected>Select Industry Sector</option>
+                                    {% for sector in sectors %}
+                                        <option value="{{ sector.name }}">{{ sector.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Choose your industry sector to find relevant events</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary w-100 service-btn">
+                                    <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Service Features -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-4 service-features-title">What You'll Get</h4>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h6>Event Listings</h6>
+                            <p class="text-muted small">Comprehensive list of upcoming trade shows</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h6>Location Details</h6>
+                            <p class="text-muted small">Venue information and contact details</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h6>Event Dates</h6>
+                            <p class="text-muted small">Precise timing and duration information</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <h6>Direct Links</h6>
+                            <p class="text-muted small">Links to official event websites</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
 <!-- Select2 CSS/JS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -181,16 +192,119 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
     .catch(error => {
         console.error('Error:', error);
         alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
-        loadingOverlay.remove();
     });
 });
 </script>
 
 <style>
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Service Section */
+.service-section {
+    position: relative;
+    min-height: 100vh;
+    color: var(--white);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.service-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1000px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+/* Back Button */
+.btn-outline-back {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--white);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+}
+
+.btn-outline-back:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: var(--white);
+}
+
+/* Service Header */
 .service-icon-large {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -198,66 +312,130 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
     color: white;
     font-size: 2rem;
     margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.card {
-    border: none;
-    border-radius: 15px;
+.service-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.service-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Service Card */
+.service-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.card-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+.service-card-header {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
     padding: 1.5rem;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1.25rem;
 }
 
-.card-body {
+.service-card-body {
     padding: 2rem;
 }
 
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
 .form-label {
-    font-weight: 500;
-    color: #2c3e50;
+    font-weight: 600;
+    color: var(--white);
     margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
 }
 
 .form-select {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    color: var(--white);
     padding: 0.75rem;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    width: 100%;
 }
 
 .form-select:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--white);
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    border: none;
+.form-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* Service Button */
+.service-btn {
+    border-radius: 10px;
     padding: 1rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    transition: var(--transition);
+    font-size: 1rem;
 }
 
-.btn-primary:hover {
+.service-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Service Features */
+.service-features-title {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .feature-box {
     padding: 1.5rem;
-    border-radius: 10px;
-    background: #f8f9fa;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
     height: 100%;
+    transition: var(--transition);
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .feature-icon {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -265,32 +443,74 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
     color: white;
     font-size: 1.2rem;
     margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+.feature-box h6 {
+    color: var(--white);
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
+}
+
+.feature-box p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Select2 Customization */
+.select2-container--default .select2-selection--single {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    height: auto;
+    padding: 0.5rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--white);
+    line-height: 1.5;
+    padding-left: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
 }
 
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+}
+
+.select2-dropdown {
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--white);
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.select2-container--default .select2-results__option[aria-selected=true]:hover {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
+    .service-title {
+        font-size: 2rem;
     }
     
-    .card-body {
+    .service-description {
+        font-size: 1rem;
+    }
+    
+    .service-card-body {
         padding: 1.5rem;
     }
     
-    .display-5 {
-        font-size: 2rem;
+    .feature-box {
+        margin-bottom: 1rem;
     }
 }
 </style>

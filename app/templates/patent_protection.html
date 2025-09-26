@@ -1,774 +1,395 @@
 {% extends "base.html" %}
-
 {% block title %}Patent Protection - Indatex Academy{% endblock %}
-
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <!-- Hero Section -->
-            <div class="bg-primary text-white py-5 mb-4">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h1 class="display-4 fw-bold mb-3">
-                                <i class="fas fa-lightbulb me-3"></i>Patent Protection
-                            </h1>
-                            <p class="lead mb-0">Secure your inventions and innovations globally</p>
-                            <p class="mt-2 mb-0">
-                                <small>
-                                    <i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Protecting a Patent
-                                </small>
-                            </p>
-                        </div>
-                        <div class="col-md-4 text-md-end">
-                            <div class="bg-white bg-opacity-25 rounded p-3">
-                                <h5 class="mb-2">Quick Navigation</h5>
-                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                                    <a href="#patent" class="btn btn-sm btn-outline-light">
-                                        <i class="fas fa-question-circle"></i> What is it?
-                                    </a>
-                                    <a href="#international" class="btn btn-sm btn-outline-light">
-                                        <i class="fas fa-globe"></i> Register
-                                    </a>
-                                    <a href="#start" class="btn btn-sm btn-outline-light">
-                                        <i class="fas fa-search"></i> Check First
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-body p-5">
-                                <!-- Introduction -->
-                                <div class="mb-5">
-                                    <p class="lead text-muted mb-4">
-                                        If a company or a physical person authors a previously inexistent technical invention, they have the right to request an exclusivity of use and a protection for their creation. No invention is indeed safe from theft or from different types of counterfeiting.
-                                    </p>
-                                    <div class="alert alert-info" role="alert">
-                                        <h5 class="alert-heading">
-                                            <i class="fas fa-shield-alt me-2"></i>Exclusive Rights
-                                        </h5>
-                                        <p class="mb-0">Filing a patent allows its owner to possess exclusive rights to his invention for a determined period of time.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Quick Links -->
-                                <div class="row mb-5" id="ancres">
-                                    <div class="col-12">
-                                        <div class="d-flex flex-wrap gap-3 justify-content-center p-3 bg-light rounded">
-                                            <a href="#patent" class="btn btn-outline-primary">
-                                                <i class="fas fa-question-circle me-2"></i>What is a patent?
-                                            </a>
-                                            <a href="#international" class="btn btn-outline-primary">
-                                                <i class="fas fa-globe me-2"></i>How to register internationally?
-                                            </a>
-                                            <a href="#start" class="btn btn-outline-primary">
-                                                <i class="fas fa-search me-2"></i>What to check before you start?
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Section 1: What is a patent? -->
-                                <section id="patent" class="mb-5">
-                                    <div class="section-header mb-4">
-                                        <h2 class="text-primary">
-                                            <i class="fas fa-question-circle me-3"></i>What is a patent?
-                                        </h2>
-                                        <hr class="border-primary border-2 opacity-50" style="width: 100px;">
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card border-0 bg-light mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-primary mb-3">
-                                                        <i class="fas fa-gavel me-2"></i>A legal protection tool
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        A patent is an exclusive right granted by the State for a limited period of time and concerning a novel invention which involves an inventive step and is capable of industrial application.
-                                                    </p>
-                                                    <p class="mb-0">
-                                                        Filing a patent allows its author to have an exclusive right to his or her invention. Whether an individual or a legal entity, the inventor is the only one to decide on the use of his invention or indeed on his own exclusive use it. <strong>He is entitled to authorize or prohibit the use of his invention.</strong>
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-success bg-opacity-10 border-success">
-                                                <div class="card-body">
-                                                    <h5 class="text-success mb-3">
-                                                        <i class="fas fa-chess-knight me-2"></i>A trade weapon
-                                                    </h5>
-                                                    <p class="mb-0">
-                                                        A patent is a strategic weapon allowing a company to strengthen its market position, especially in innovative sectors, to capitalize on its invention by limiting its use by other parties, to benefit from the sources of income represented by the sale of use licences and to defend itself against the competition from similar inventions or from counterfeiting.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-end mt-3">
-                                        <a href="#ancres" class="btn btn-sm btn-outline-secondary">
-                                            <i class="fas fa-arrow-up me-1"></i>Return to top
-                                        </a>
-                                    </div>
-                                </section>
-
-                                <!-- Section 2: How to register internationally -->
-                                <section id="international" class="mb-5">
-                                    <div class="section-header mb-4">
-                                        <h2 class="text-primary">
-                                            <i class="fas fa-globe me-3"></i>How to register a patent internationally?
-                                        </h2>
-                                        <hr class="border-primary border-2 opacity-50" style="width: 100px;">
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card border-0 bg-warning bg-opacity-10 border-warning mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-warning mb-3">
-                                                        <i class="fas fa-exclamation-triangle me-2"></i>Your needs
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        Patent is a territorial right and only grants you rights in the country where it has been filed. However, <a href="https://www.wipo.int/treaties/en/ip/paris/" target="_blank" class="text-decoration-none">the Paris Convention for the Protection of Industrial Property</a>, signed on March 20, 1883 in Paris, established a union between the contracting states.
-                                                    </p>
-                                                    <p class="mb-3">
-                                                        Based on this convention, the nationals of any contracting state enjoy the same rights in the matter of industrial property as those of others states party to the Convention. The <a href="http://www.wipo.int/treaties/en/notifications/paris/treaty_paris_1.html" target="_blank" class="text-decoration-none">list of the contracting member countries is available on the WIPO website</a>.
-                                                    </p>
-                                                    <p class="mb-0">
-                                                        <strong>There are several methods of filing a patent in a foreign country.</strong> Firstly, it is useful to decide in how many countries should your patent be filed. Based on this, you will choose the most appropriate method.
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-info bg-opacity-10 border-info mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-info mb-3">
-                                                        <i class="fas fa-map-marker-alt me-2"></i>Filing locally
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        It is preferable that you file at the national intellectual property office of your target country. <a href="https://www.wipo.int/directory/en/urls.jsp" target="_blank" class="text-decoration-none">The World Intellectual Property Organisation offers a directory of local intellectual property offices</a> from all over the world.
-                                                    </p>
-                                                    <div class="alert alert-warning mb-0" role="alert">
-                                                        <h6 class="alert-heading">
-                                                            <i class="fas fa-exclamation-circle me-2"></i>Limitations
-                                                        </h6>
-                                                        <p class="mb-0">
-                                                            This solution is only possible for a very limited number of countries, since it represents significant financial cost and requires numerous administrative procedures, as well as a translation of the patent into each of the national languages.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-success bg-opacity-10 border-success mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-success mb-3">
-                                                        <i class="fas fa-users me-2"></i>Regional filing
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        You wish to file your patent in several countries belonging to the same regional intellectual property organisation. Filing with a regional office is a simpler alternative to the previous one.
-                                                    </p>
-                                                    <p class="mb-3">
-                                                        The application must only be filed once, in a limited number of languages and it is valid either for all the member countries of this organisation, or only for some of them, depending on your needs.
-                                                    </p>
-                                                    <div class="alert alert-info mb-0" role="alert">
-                                                        <h6 class="alert-heading">
-                                                            <i class="fas fa-info-circle me-2"></i>Validation Required
-                                                        </h6>
-                                                        <p class="mb-0">
-                                                            However, the targeted states must validate your request in order for it to become effective.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-primary bg-opacity-10 border-primary">
-                                                <div class="card-body">
-                                                    <h5 class="text-primary mb-3">
-                                                        <i class="fas fa-globe-americas me-2"></i>International filing
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        The targeted countries are numerous are spread out throughout the whole world. In this case, you have the possibility to use an international procedure, which can lead to the filing of several national or international patents.
-                                                    </p>
-                                                    <div class="alert alert-primary mb-3" role="alert">
-                                                        <h6 class="alert-heading">
-                                                            <i class="fas fa-handshake me-2"></i>Patent Cooperation Treaty (PCT)
-                                                        </h6>
-                                                        <p class="mb-2">
-                                                            This procedure is based on the <a href="http://www.wipo.int/treaties/en/registration/pct/index.html" target="_blank" class="text-decoration-none">Patent Cooperation Treaty</a> and concerns <a href="http://www.wipo.int/treaties/en/ShowResults.jsp?lang=en&treaty_id=6" target="_blank" class="text-decoration-none">the countries party to it</a>.
-                                                        </p>
-                                                        <p class="mb-0">
-                                                            The application must be filed in a single language at the intellectual property office of your own country, which will then transmit it to the <a href="https://www.wipo.int/portal/en/" target="_blank" class="text-decoration-none">WIPO</a>.
-                                                        </p>
-                                                    </div>
-                                                    <div class="alert alert-warning mb-0" role="alert">
-                                                        <h6 class="alert-heading">
-                                                            <i class="fas fa-cogs me-2"></i>National Registration Process
-                                                        </h6>
-                                                        <p class="mb-0">
-                                                            The registration at the national level is completed upon the filing of translations of the patent application in each of the chosen countries' national language, by the payment of the required fees and by the appointment of a local representative.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-end mt-3">
-                                        <a href="#ancres" class="btn btn-sm btn-outline-secondary">
-                                            <i class="fas fa-arrow-up me-1"></i>Return to top
-                                        </a>
-                                    </div>
-                                </section>
-
-                                <!-- Section 3: What to check before you start -->
-                                <section id="start" class="mb-5">
-                                    <div class="section-header mb-4">
-                                        <h2 class="text-primary">
-                                            <i class="fas fa-search me-3"></i>What to check before you start?
-                                        </h2>
-                                        <hr class="border-primary border-2 opacity-50" style="width: 100px;">
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card border-0 bg-info bg-opacity-10 border-info mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-info mb-3">
-                                                        <i class="fas fa-lightbulb me-2"></i>The innovative step
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        In order to be patentable, an invention must meet specific criteria: <strong>it must show an element of novelty, an inventive step and must have potential industrial application.</strong>
-                                                    </p>
-                                                    <p class="mb-0">
-                                                        For more information, see the <a href="http://www.wipo.int/patents/en/faq_patents.html" target="_blank" class="text-decoration-none">WIPO's definition of a patent</a>.
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-danger bg-opacity-10 border-danger mb-4">
-                                                <div class="card-body">
-                                                    <h5 class="text-danger mb-3">
-                                                        <i class="fas fa-search me-2"></i>Novelty
-                                                    </h5>
-                                                    <p class="mb-3">
-                                                        You must also check that the invention for which you are seeking a patent has not already been described by someone else before you. Most intellectual property offices offer a patent research facility directly on their website.
-                                                    </p>
-                                                    <p class="mb-3">
-                                                        <strong>You can use the different services of the WIPO:</strong>
-                                                    </p>
-                                                    <div class="row">
-                                                        <div class="col-md-4 mb-3">
-                                                            <div class="d-flex align-items-start">
-                                                                <i class="fas fa-search text-primary me-2 mt-1"></i>
-                                                                <div>
-                                                                    <h6 class="mb-1">Search Engine</h6>
-                                                                    <p class="small mb-0">
-                                                                        <a href="https://patentscope.wipo.int/search/en/advancedSearch.jsf;jsessionid=DF8F0E38F0D12890FC3E61F22E277ACD.wapp1nC" target="_blank" class="text-decoration-none">WIPO's International Patent Applications search engine</a>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3">
-                                                            <div class="d-flex align-items-start">
-                                                                <i class="fas fa-database text-primary me-2 mt-1"></i>
-                                                                <div>
-                                                                    <h6 class="mb-1">Collections Platform</h6>
-                                                                    <p class="small mb-0">
-                                                                        <a href="http://www.wipo.int/patentscope/search/en/search.jsf" target="_blank" class="text-decoration-none">International and National Patent Collections platform</a>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3">
-                                                            <div class="d-flex align-items-start">
-                                                                <i class="fas fa-link text-primary me-2 mt-1"></i>
-                                                                <div>
-                                                                    <h6 class="mb-1">National Engines</h6>
-                                                                    <p class="small mb-0">
-                                                                        <a href="http://www.wipo.int/patentscope/en/national_databases.html" target="_blank" class="text-decoration-none">List of links to national search engines</a>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card border-0 bg-warning bg-opacity-10 border-warning">
-                                                <div class="card-body">
-                                                    <h5 class="text-warning mb-3">
-                                                        <i class="fas fa-dollar-sign me-2"></i>The budget
-                                                    </h5>
-                                                    <p class="mb-0">
-                                                        Filing a patent application represents a financial cost, as well as extra workload (administrative management of the applications, monitoring of counterfeits, legal protection of your patent rights). <strong>Make sure you have the financial and human resources necessary to monitor your patent or your patent portfolio.</strong>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-end mt-3">
-                                        <a href="#ancres" class="btn btn-primary">
-                                            <i class="fas fa-arrow-up me-2"></i>Return to top
-                                        </a>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sidebar -->
-                    <div class="col-lg-4">
-                        <!-- Key Takeaways -->
-                        <div class="card shadow border-0 mb-4">
-                            <div class="card-header bg-primary text-white">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-key me-2"></i>Key Takeaways
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="takeaway-item mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <i class="fas fa-check-circle text-success me-2 mt-1"></i>
-                                        <small>Patent grants exclusive rights for limited time</small>
-                                    </div>
-                                </div>
-                                <div class="takeaway-item mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <i class="fas fa-check-circle text-success me-2 mt-1"></i>
-                                        <small>Strategic weapon for market positioning</small>
-                                    </div>
-                                </div>
-                                <div class="takeaway-item mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <i class="fas fa-exclamation-circle text-warning me-2 mt-1"></i>
-                                        <small><strong>Patent is a territorial right</strong></small>
-                                    </div>
-                                </div>
-                                <div class="takeaway-item mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <i class="fas fa-exclamation-circle text-warning me-2 mt-1"></i>
-                                        <small><strong>Must be novel, inventive, and industrially applicable</strong></small>
-                                    </div>
-                                </div>
-                                <div class="takeaway-item">
-                                    <div class="d-flex align-items-start">
-                                        <i class="fas fa-dollar-sign text-info me-2 mt-1"></i>
-                                        <small><strong>Consider budget and resources</strong> for monitoring</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Filing Methods -->
-                        <div class="card shadow border-0 mb-4">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0">
-                                    <i class="fas fa-clipboard-list me-2"></i>Filing Methods
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="filing-method mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <div class="badge bg-info me-2 mt-1">1</div>
-                                        <div>
-                                            <h6 class="mb-1">Local Filing</h6>
-                                            <small class="text-muted">National IP offices - limited countries</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="filing-method mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <div class="badge bg-success me-2 mt-1">2</div>
-                                        <div>
-                                            <h6 class="mb-1">Regional Filing</h6>
-                                            <small class="text-muted">Regional IP organizations - simpler process</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="filing-method">
-                                    <div class="d-flex align-items-start">
-                                        <div class="badge bg-primary me-2 mt-1">3</div>
-                                        <div>
-                                            <h6 class="mb-1">International Filing</h6>
-                                            <small class="text-muted">PCT System - worldwide coverage</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Patentability Criteria -->
-                        <div class="card shadow border-0 mb-4">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0">
-                                    <i class="fas fa-tasks me-2"></i>Patentability Criteria
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="requirement-item mb-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="novelty">
-                                        <label class="form-check-label small" for="novelty">
-                                            <strong>Novelty</strong> - Not previously described
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="requirement-item mb-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inventive">
-                                        <label class="form-check-label small" for="inventive">
-                                            <strong>Inventive Step</strong> - Non-obvious innovation
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="requirement-item">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="industrial">
-                                        <label class="form-check-label small" for="industrial">
-                                            <strong>Industrial Application</strong> - Practical utility
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Important Resources -->
-                        <div class="card shadow border-0">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0">
-                                    <i class="fas fa-external-link-alt me-2"></i>Important Resources
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item mb-3">
-                                    <a href="https://www.wipo.int/portal/en/" target="_blank" class="text-decoration-none">
-                                        <div class="d-flex align-items-start">
-                                            <i class="fas fa-globe text-primary me-2 mt-1"></i>
-                                            <div>
-                                                <h6 class="mb-1">WIPO</h6>
-                                                <small class="text-muted">World Intellectual Property Organization</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="resource-item mb-3">
-                                    <a href="http://www.wipo.int/treaties/en/registration/pct/index.html" target="_blank" class="text-decoration-none">
-                                        <div class="d-flex align-items-start">
-                                            <i class="fas fa-handshake text-primary me-2 mt-1"></i>
-                                            <div>
-                                                <h6 class="mb-1">PCT System</h6>
-                                                <small class="text-muted">Patent Cooperation Treaty</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="resource-item mb-3">
-                                    <a href="https://patentscope.wipo.int/search/en/advancedSearch.jsf" target="_blank" class="text-decoration-none">
-                                        <div class="d-flex align-items-start">
-                                            <i class="fas fa-search text-primary me-2 mt-1"></i>
-                                            <div>
-                                                <h6 class="mb-1">PATENTSCOPE</h6>
-                                                <small class="text-muted">Search international patents</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="resource-item">
-                                    <a href="https://www.wipo.int/treaties/en/ip/paris/" target="_blank" class="text-decoration-none">
-                                        <div class="d-flex align-items-start">
-                                            <i class="fas fa-balance-scale text-primary me-2 mt-1"></i>
-                                            <div>
-                                                <h6 class="mb-1">Paris Convention</h6>
-                                                <small class="text-muted">Industrial property protection</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="patent-hero-section">
+<div class="converter-background">
+<div class="gradient-overlay"></div>
+<div class="floating-particles">
+{% for i in range(6) %}
+<div class="particle particle-{{ i+1 }}"></div>
+{% endfor %}
 </div>
-
-<script>
-// Smooth scrolling for anchor links
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle smooth scrolling for all anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Add animation to cards on scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    });
-
-    document.querySelectorAll('.card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
-
-    // Highlight active section in navigation
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    });
-
-    // External link tracking
-    document.querySelectorAll('a[target="_blank"]').forEach(link => {
-        link.addEventListener('click', function() {
-            console.log('External link clicked:', this.href);
-        });
-    });
-
-    console.log('Patent Protection page initialized');
-});
-</script>
-
+</div>
+<div class="container compact-container">
+<div class="hero-content">
+<h1 class="hero-title"><i class="fas fa-lightbulb me-3"></i>Patent Protection</h1>
+<p class="hero-subtitle">Secure your inventions and innovations globally</p>
+<p class="hero-stats"><small><i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Protecting a Patent</small></p>
+<div class="quick-nav-wrapper">
+<a href="#patent" class="quick-nav-item"><i class="fas fa-question-circle"></i> What is it?</a>
+<a href="#international" class="quick-nav-item"><i class="fas fa-globe"></i> Register</a>
+<a href="#start" class="quick-nav-item"><i class="fas fa-search"></i> Check First</a>
+</div>
+</div>
+</div>
+</section>
+<div class="quick-nav-section">
+<div class="container">
+<div class="quick-nav-wrapper" id="ancres">
+<a href="#patent" class="quick-nav-item"><i class="fas fa-question-circle"></i> What is a patent?</a>
+<a href="#international" class="quick-nav-item"><i class="fas fa-globe"></i> How to register internationally?</a>
+<a href="#start" class="quick-nav-item"><i class="fas fa-search"></i> What to check before you start?</a>
+</div>
+</div>
+</div>
+<div class="converter-main-content">
+<div class="container compact-container">
+<div class="row">
+<div class="col-lg-8">
+<div class="converter-card">
+<div class="card-body">
+<div class="mb-5">
+<p class="section-description">If a company or individual authors a novel technical invention, they can request exclusive use and protection. No invention is safe from theft or counterfeiting without a patent.</p>
+<div class="info-card alert-info">
+<div class="info-icon"><i class="fas fa-shield-alt"></i></div>
+<div class="info-content">
+<h4>Exclusive Rights</h4>
+<p>Filing a patent grants its owner exclusive rights to their invention for a set period.</p>
+</div>
+</div>
+</div>
+<section class="converter-section" id="patent">
+<div class="section-header">
+<div class="section-icon-wrapper">
+<div class="section-icon"><i class="fas fa-question-circle"></i></div>
+</div>
+<div class="section-content">
+<h2 class="section-title">What is a patent?</h2>
+</div>
+</div>
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-gavel"></i></div>
+<div class="info-content">
+<h4>A legal protection tool</h4>
+<p>A patent is an exclusive right granted by the state for a limited period, covering a novel invention with an inventive step and industrial application.</p>
+<p>Filing a patent allows the inventor, whether an individual or entity, to control the invention’s use, authorizing or prohibiting others from using it.</p>
+</div>
+</div>
+<div class="info-card alert-success">
+<div class="info-icon"><i class="fas fa-chess-knight"></i></div>
+<div class="info-content">
+<h4>A trade weapon</h4>
+<p>A patent strengthens market position in innovative sectors, limits use by competitors, generates income through licensing, and protects against counterfeiting and similar inventions.</p>
+</div>
+</div>
+<div class="text-end mt-3">
+<a href="#ancres" class="btn-action"><i class="fas fa-arrow-up me-1"></i>Return to top</a>
+</div>
+</section>
+<section class="converter-section" id="international">
+<div class="section-header">
+<div class="section-icon-wrapper">
+<div class="section-icon"><i class="fas fa-globe"></i></div>
+</div>
+<div class="section-content">
+<h2 class="section-title">How to register a patent internationally?</h2>
+</div>
+</div>
+<div class="info-card alert-warning">
+<div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+<div class="info-content">
+<h4>Your needs</h4>
+<p>Patents are territorial, granting rights only in the country of filing. The <a href="https://www.wipo.int/treaties/en/ip/paris/" target="_blank">Paris Convention</a> (March 20, 1883) ensures equal rights across member states. See the <a href="http://www.wipo.int/treaties/en/notifications/paris/treaty_paris_1.html" target="_blank">list of member countries</a>.</p>
+<p><strong>Choose a filing method based on the number of countries targeted.</strong></p>
+</div>
+</div>
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+<div class="info-content">
+<h4>Filing locally</h4>
+<p>File at the national intellectual property office of the target country. <a href="https://www.wipo.int/directory/en/urls.jsp" target="_blank">WIPO’s directory</a> lists global IP offices.</p>
+<div class="info-card alert-warning">
+<div class="info-icon"><i class="fas fa-exclamation-circle"></i></div>
+<div class="info-content">
+<h4>Limitations</h4>
+<p>This method is costly due to translations, administrative procedures, and is practical only for a few countries.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="info-card alert-success">
+<div class="info-icon"><i class="fas fa-users"></i></div>
+<div class="info-content">
+<h4>Regional filing</h4>
+<p>File with a regional IP organization for multiple countries in one application, using limited languages, valid for all or select member countries based on your needs.</p>
+<div class="info-card alert-info">
+<div class="info-icon"><i class="fas fa-info-circle"></i></div>
+<div class="info-content">
+<h4>Validation Required</h4>
+<p>Targeted states must validate the application for it to take effect.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="info-card alert-primary">
+<div class="info-icon"><i class="fas fa-globe-americas"></i></div>
+<div class="info-content">
+<h4>International filing</h4>
+<p>For multiple countries worldwide, use the <a href="http://www.wipo.int/treaties/en/registration/pct/index.html" target="_blank">Patent Cooperation Treaty (PCT)</a>, covering <a href="http://www.wipo.int/treaties/en/ShowResults.jsp?lang=en&treaty_id=6" target="_blank">member countries</a>.</p>
+<div class="info-card alert-primary">
+<div class="info-icon"><i class="fas fa-handshake"></i></div>
+<div class="info-content">
+<h4>Patent Cooperation Treaty (PCT)</h4>
+<p>File in one language at your national IP office, which transmits to <a href="https://www.wipo.int/portal/en/" target="_blank">WIPO</a>.</p>
+</div>
+</div>
+<div class="info-card alert-warning">
+<div class="info-icon"><i class="fas fa-cogs"></i></div>
+<div class="info-content">
+<h4>National Registration Process</h4>
+<p>Complete registration with translations in each country’s language, payment of fees, and appointment of a local representative.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="text-end mt-3">
+<a href="#ancres" class="btn-action"><i class="fas fa-arrow-up me-1"></i>Return to top</a>
+</div>
+</section>
+<section class="converter-section" id="start">
+<div class="section-header">
+<div class="section-icon-wrapper">
+<div class="section-icon"><i class="fas fa-search"></i></div>
+</div>
+<div class="section-content">
+<h2 class="section-title">What to check before you start?</h2>
+</div>
+</div>
+<div class="info-card alert-info">
+<div class="info-icon"><i class="fas fa-lightbulb"></i></div>
+<div class="info-content">
+<h4>The innovative step</h4>
+<p>An invention must be novel, involve an inventive step, and have industrial application. See <a href="http://www.wipo.int/patents/en/faq_patents.html" target="_blank">WIPO’s patent definition</a>.</p>
+</div>
+</div>
+<div class="info-card alert-danger">
+<div class="info-icon"><i class="fas fa-search"></i></div>
+<div class="info-content">
+<h4>Novelty</h4>
+<p>Ensure the invention hasn’t been described previously. Check using WIPO’s services:</p>
+<div class="row">
+<div class="col-md-4 mb-3">
+<div class="d-flex align-items-start">
+<i class="fas fa-search text-success me-2 mt-1"></i>
+<div>
+<h6 class="mb-1">Search Engine</h6>
+<p class="small mb-0"><a href="https://patentscope.wipo.int/search/en/advancedSearch.jsf" target="_blank">WIPO’s International Patent Applications</a></p>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-3">
+<div class="d-flex align-items-start">
+<i class="fas fa-database text-success me-2 mt-1"></i>
+<div>
+<h6 class="mb-1">Collections Platform</h6>
+<p class="small mb-0"><a href="http://www.wipo.int/patentscope/search/en/search.jsf" target="_blank">International and National Patent Collections</a></p>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-3">
+<div class="d-flex align-items-start">
+<i class="fas fa-link text-success me-2 mt-1"></i>
+<div>
+<h6 class="mb-1">National Engines</h6>
+<p class="small mb-0"><a href="http://www.wipo.int/patentscope/en/national_databases.html" target="_blank">List of national search engines</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-card alert-warning">
+<div class="info-icon"><i class="fas fa-dollar-sign"></i></div>
+<div class="info-content">
+<h4>The budget</h4>
+<p>Filing a patent involves costs for applications, administration, counterfeit monitoring, and legal protection. Ensure sufficient financial and human resources.</p>
+</div>
+</div>
+<div class="text-end mt-3">
+<a href="#ancres" class="btn-action"><i class="fas fa-arrow-up me-1"></i>Return to top</a>
+</div>
+</section>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-key"></i></div>
+<div class="info-content">
+<h4>Key Takeaways</h4>
+<ul class="info-list">
+<li><i class="fas fa-check"></i> Patent grants exclusive rights for limited time</li>
+<li><i class="fas fa-check"></i> Strategic weapon for market positioning</li>
+<li><i class="fas fa-exclamation"></i> <strong>Patent is a territorial right</strong></li>
+<li><i class="fas fa-exclamation"></i> <strong>Must be novel, inventive, and industrially applicable</strong></li>
+<li><i class="fas fa-dollar-sign"></i> <strong>Consider budget and resources</strong> for monitoring</li>
+</ul>
+</div>
+</div>
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-clipboard-list"></i></div>
+<div class="info-content">
+<h4>Filing Methods</h4>
+<div class="filing-method"><span class="badge bg-info me-2">1</span><h6>Local Filing</h6><small>National IP offices - limited countries</small></div>
+<div class="filing-method"><span class="badge bg-success me-2">2</span><h6>Regional Filing</h6><small>Regional IP organizations - simpler process</small></div>
+<div class="filing-method"><span class="badge bg-primary me-2">3</span><h6>International Filing</h6><small>PCT System - worldwide coverage</small></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-tasks"></i></div>
+<div class="info-content">
+<h4>Patentability Criteria</h4>
+<div class="requirement-item"><input class="form-check-input" type="checkbox" id="novelty"><label class="form-check-label" for="novelty"><strong>Novelty</strong> - Not previously described</label></div>
+<div class="requirement-item"><input class="form-check-input" type="checkbox" id="inventive"><label class="form-check-label" for="inventive"><strong>Inventive Step</strong> - Non-obvious innovation</label></div>
+<div class="requirement-item"><input class="form-check-input" type="checkbox" id="industrial"><label class="form-check-label" for="industrial"><strong>Industrial Application</strong> - Practical utility</label></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-icon"><i class="fas fa-external-link-alt"></i></div>
+<div class="info-content">
+<h4>Important Resources</h4>
+<ul class="info-list">
+<li><i class="fas fa-check"></i> <a href="https://www.wipo.int/portal/en/" target="_blank">WIPO</a>: World Intellectual Property Organization</li>
+<li><i class="fas fa-check"></i> <a href="http://www.wipo.int/treaties/en/registration/pct/index.html" target="_blank">PCT System</a>: Patent Cooperation Treaty</li>
+<li><i class="fas fa-check"></i> <a href="https://patentscope.wipo.int/search/en/advancedSearch.jsf" target="_blank">PATENTSCOPE</a>: Search international patents</li>
+<li><i class="fas fa-check"></i> <a href="https://www.wipo.int/treaties/en/ip/paris/" target="_blank">Paris Convention</a>: Industrial property protection</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <style>
-/* Section styling */
-.section-header h2 {
-    font-weight: 700;
-    margin-bottom: 1rem;
+:root{--primary-blue:#1f2937;--primary-purple:#7c3aed;--secondary-orange:#f59e0b;--secondary-red:#ef4444;--dark-bg:#0f172a;--light-bg:#f8fafc;--white:#ffffff;--text-dark:#1e293b;--text-muted:#64748b;--success:#10b981;--border-color:rgba(255,255,255,0.1);--shadow:0 4px 6px -1px rgba(0,0,0,0.1);--shadow-lg:0 25px 50px -12px rgba(0,0,0,0.25);--transition:all 0.3s ease;--glass-bg:rgba(255,255,255,0.05);--glass-border:rgba(255,255,255,0.1);--hover-purple:#6d28d9}
+.patent-hero-section{position:relative;min-height:50vh;display:flex;align-items:center;color:var(--white);overflow:hidden;padding:3rem 0 1rem}
+.converter-background{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;background:linear-gradient(135deg,var(--dark-bg) 0%,#1e3a8a 100%)}
+.gradient-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%,rgba(124,58,237,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(239,68,68,0.1) 0%,transparent 50%),radial-gradient(circle at 40% 80%,rgba(16,185,129,0.1) 0%,transparent 50%);z-index:1}
+.floating-particles{position:absolute;width:100%;height:100%;z-index:2}
+.particle{position:absolute;width:4px;height:4px;background:rgba(255,255,255,0.5);border-radius:50%;animation:float 6s ease-in-out infinite}
+.particle-1{top:15%;left:10%;animation-delay:0s}
+.particle-2{top:65%;left:15%;animation-delay:2s}
+.particle-3{top:25%;right:20%;animation-delay:4s}
+.particle-4{top:75%;right:25%;animation-delay:1s}
+.particle-5{top:50%;left:5%;animation-delay:3s}
+.particle-6{top:35%;right:5%;animation-delay:5s}
+@keyframes float{0%,100%{transform:translateY(0px) translateX(0px);opacity:0.6}50%{transform:translateY(-15px) translateX(10px);opacity:1}}
+.compact-container{max-width:1200px;padding:0 1.5rem;position:relative;z-index:3}
+.hero-content{text-align:center;margin-bottom:2rem}
+.hero-title{font-size:3rem;font-weight:800;margin-bottom:1rem;color:var(--white);line-height:1.1}
+.hero-subtitle{font-size:1.1rem;color:rgba(255,255,255,0.8);max-width:600px;margin:0 auto 1.5rem;font-weight:300}
+.hero-stats{margin-top:1.5rem;color:rgba(255,255,255,0.7)}
+.quick-nav-section{background:var(--glass-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:1rem 0;position:sticky;top:0;z-index:100}
+.quick-nav-wrapper{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.quick-nav-item{display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;border-radius:50px;background:rgba(255,255,255,0.1);color:var(--secondary-orange);text-decoration:none;transition:var(--transition);border:1px solid var(--glass-border);font-weight:500}
+.quick-nav-item:hover{background:var(--hover-purple);color:var(--white);text-decoration:none;transform:translateY(-2px);box-shadow:var(--shadow)}
+.quick-nav-item.active{background:var(--secondary-orange);color:var(--white);border-color:var(--secondary-orange)}
+.quick-nav-item i{font-size:1rem}
+.converter-main-content{background:var(--dark-bg);color:var(--white);padding:2rem 0;position:relative;z-index:2}
+.converter-section{margin-bottom:4rem;scroll-margin-top:100px}
+.section-header{display:flex;align-items:flex-start;gap:2rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border-color)}
+.section-icon-wrapper{flex-shrink:0}
+.section-icon{width:70px;height:70px;background:linear-gradient(135deg,var(--secondary-orange),var(--secondary-red));border-radius:20px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.8rem;box-shadow:var(--shadow)}
+.section-content h2{font-size:2.2rem;font-weight:700;color:var(--white);margin-bottom:0.5rem}
+.section-description{font-size:1rem;color:rgba(255,255,255,0.7);margin:0}
+.converter-card{background:var(--glass-bg);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:20px;padding:2rem;box-shadow:var(--shadow);transition:var(--transition)}
+.converter-card:hover{box-shadow:var(--shadow-lg);border-color:var(--secondary-orange)}
+.btn-action{background:rgba(255,255,255,0.1);border:1px solid var(--glass-border);border-radius:8px;color:var(--white);padding:0.5rem 1rem;font-size:0.9rem;transition:var(--transition);cursor:pointer;text-decoration:none}
+.btn-action:hover{background:var(--secondary-orange);transform:translateY(-1px)}
+.info-card{background:var(--glass-bg);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:20px;padding:1.5rem;margin-bottom:1.5rem;transition:var(--transition)}
+.info-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--secondary-orange)}
+.info-card.alert-info{border-left:4px solid var(--success)}
+.info-card.alert-warning{border-left:4px solid var(--secondary-red)}
+.info-card.alert-primary{border-left:4px solid var(--primary-purple)}
+.info-card.alert-success{border-left:4px solid var(--success)}
+.info-card.alert-danger{border-left:4px solid var(--secondary-red)}
+.info-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--secondary-orange),var(--secondary-red));border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.3rem;margin-bottom:1rem}
+.info-content h4{font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:1rem}
+.info-content p{color:rgba(255,255,255,0.8);margin-bottom:1rem;line-height:1.5}
+.info-content a{color:var(--secondary-orange);text-decoration:none}
+.info-content a:hover{color:var(--hover-purple)}
+.info-list{list-style:none;padding:0;margin:0}
+.info-list li{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0;color:rgba(255,255,255,0.8)}
+.info-list li i{color:var(--success);font-size:0.8rem}
+.filing-method{padding:0.5rem 0;border-bottom:1px solid var(--border-color)}
+.filing-method:last-child{border-bottom:none}
+.filing-method h6{font-size:1rem;color:var(--white);margin-bottom:0.25rem}
+.filing-method small{font-size:0.8rem;color:rgba(255,255,255,0.6)}
+.badge{font-size:0.7rem;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.requirement-item{padding:0.25rem 0}
+.form-check-input:checked{background-color:var(--success);border-color:var(--success)}
+.form-check-label{font-size:0.9rem;color:rgba(255,255,255,0.8)}
+.form-check-label strong{font-weight:700;color:var(--white)}
+@media (max-width:992px){
+.hero-title{font-size:2.2rem}
+.quick-nav-wrapper{gap:0.5rem;justify-content:flex-start;overflow-x:auto;padding-bottom:0.8rem}
+.quick-nav-item{flex-shrink:0;padding:0.5rem 1rem}
+.section-header{flex-direction:column;text-align:center;gap:1rem}
+.section-icon{width:50px;height:50px;font-size:1.3rem}
+.section-content h2{font-size:1.6rem}
 }
-
-/* Takeaway styling */
-.takeaway-item {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f0f0f0;
+@media (max-width:768px){
+.patent-hero-section{padding:2rem 0 0.5rem}
+.hero-title{font-size:1.8rem}
+.hero-subtitle{font-size:1rem}
+.converter-card{padding:1rem}
 }
-
-.takeaway-item:last-child {
-    border-bottom: none;
+@media (max-width:576px){
+.info-card{padding:1rem}
 }
-
-/* Filing method styling */
-.filing-method {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.filing-method:last-child {
-    border-bottom: none;
-}
-
-/* Requirement styling */
-.requirement-item {
-    padding: 0.25rem 0;
-}
-
-.form-check-input:checked {
-    background-color: #198754;
-    border-color: #198754;
-}
-
-/* Resource items styling */
-.resource-item {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #f0f0f0;
-    transition: all 0.2s ease;
-}
-
-.resource-item:last-child {
-    border-bottom: none;
-}
-
-.resource-item:hover {
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    padding-left: 0.75rem;
-}
-
-.resource-item a:hover {
-    color: #0d6efd !important;
-}
-
-/* Active navigation link */
-a.active {
-    background-color: #0d6efd !important;
-    color: white !important;
-    border-color: #0d6efd !important;
-}
-
-/* Card hover effects */
-.card {
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-/* External link styling */
-a[target="_blank"]::after {
-    content: " ↗";
-    font-size: 0.8em;
-    opacity: 0.7;
-}
-
-/* Badge styling for filing methods */
-.badge {
-    font-size: 0.7rem;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-/* Alert styling */
-.alert {
-    border-left: 4px solid;
-}
-
-.alert-info {
-    border-left-color: #0dcaf0;
-}
-
-.alert-warning {
-    border-left-color: #ffc107;
-}
-
-.alert-primary {
-    border-left-color: #0d6efd;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .display-4 {
-        font-size: 2rem;
-    }
-    
-    .card-body.p-5 {
-        padding: 2rem !important;
-    }
-    
-    .section-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .d-flex.flex-wrap.gap-3 {
-        gap: 1rem !important;
-    }
-}
-
-/* Print styles */
-@media print {
-    .btn, .card-header, .bg-primary {
-        color: #000 !important;
-        background: #fff !important;
-    }
-    
-    .card {
-        border: 1px solid #ddd !important;
-        box-shadow: none !important;
-    }
-    
-    a[target="_blank"]::after {
-        content: " (" attr(href) ")";
-    }
-}
-
-/* Animation keyframes */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.card {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-/* Scroll indicator */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Color coding for different filing methods */
-.bg-info.bg-opacity-10 {
-    background-color: rgba(13, 202, 240, 0.1) !important;
-}
-
-.bg-success.bg-opacity-10 {
-    background-color: rgba(25, 135, 84, 0.1) !important;
-}
-
-.bg-primary.bg-opacity-10 {
-    background-color: rgba(13, 110, 253, 0.1) !important;
-}
-
-.bg-warning.bg-opacity-10 {
-    background-color: rgba(255, 193, 7, 0.1) !important;
-}
-
-.bg-danger.bg-opacity-10 {
-    background-color: rgba(220, 53, 69, 0.1) !important;
-}
-
-/* Strategic weapon highlight */
-.text-success {
-    font-weight: 600;
-}
-
-/* Patent criteria emphasis */
-.text-info strong,
-.text-danger strong,
-.text-warning strong {
-    font-weight: 700;
+@media print{
+.btn-action,.info-card,.converter-card,.quick-nav-section,.hero-section{background:#fff;color:#000;border-color:#ddd}
+a[target="_blank"]::after{content:" (" attr(href) ")"}
 }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+anchor.addEventListener('click',function(e){
+e.preventDefault();
+const target=document.querySelector(this.getAttribute('href'));
+if(target){
+target.scrollIntoView({behavior:'smooth',block:'start'});
+}
+});
+});
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.style.opacity='1';
+entry.target.style.transform='translateY(0)';
+}
+});
+});
+document.querySelectorAll('.info-card').forEach(card=>{
+card.style.opacity='0';
+card.style.transform='translateY(20px)';
+card.style.transition='opacity 0.6s ease, transform 0.6s ease';
+observer.observe(card);
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('a[href^="#"]');
+window.addEventListener('scroll',()=>{
+let current='';
+sections.forEach(section=>{
+const sectionTop=section.offsetTop;
+if(scrollY>=(sectionTop-200)){
+current=section.getAttribute('id');
+}
+});
+navLinks.forEach(link=>{
+link.classList.remove('active');
+if(link.getAttribute('href')==='#'+current){
+link.classList.add('active');
+}
+});
+});
+document.querySelectorAll('a[target="_blank"]').forEach(link=>{
+link.addEventListener('click',function(){
+console.log('External link clicked:',this.href);
+});
+});
+console.log('Patent Protection page initialized');
+});
+</script>
 {% endblock %}

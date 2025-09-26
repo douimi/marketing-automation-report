@@ -3,143 +3,176 @@
 {% block title %}{{ service.title }} - Market Research Service{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <!-- Back to Services -->
-    <div class="mb-4">
-        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Services
-        </a>
-    </div>
 
-    <!-- Service Header -->
-    <div class="text-center mb-5">
-        <div class="service-icon-large mb-3">
-            <i class="{{ service.icon }}"></i>
+<section class="service-hero-section">
+    <div class="converter-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
-        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
-        <p class="lead text-muted">{{ service.description }}</p>
     </div>
-
-    <!-- Service Form -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-lg">
-                <div class="card-body p-5">
-                    <h3 class="card-title mb-4 text-center">Search Parameters</h3>
-                    
-                    <form id="serviceForm" action="{{ url_for('main.start_individual_service') }}" method="POST">
-                        <input type="hidden" name="service_type" value="{{ service_type }}">
-                        
-                        <!-- Entity Name Input -->
-                        <div class="mb-4">
-                            <label for="entity_name" class="form-label fw-bold">
-                                <i class="fas fa-building text-primary me-2"></i>Entity Name
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" 
-                                   class="form-control form-control-lg" 
-                                   id="entity_name" 
-                                   name="entity_name" 
-                                   placeholder="Enter company or vessel name to search..."
-                                   required>
-                            <div class="form-text">
-                                Enter the name of the company or vessel you want to search for in blacklist databases.
-                            </div>
-                        </div>
-
-                        <!-- Service Features -->
-                        <div class="mb-4">
-                            <h5 class="mb-3">
-                                <i class="fas fa-list-check text-success me-2"></i>What you'll get:
-                            </h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Comprehensive blacklist search
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Multiple sanctions databases
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Entity details and links
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Blacklisting authorities
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Real-time data access
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check text-success me-2"></i>
-                                            Detailed compliance information
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Important Notice -->
-                        <div class="alert alert-warning mb-4">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>Important:</strong> This search will check multiple sanctions and blacklist databases. 
-                            Results should be verified independently for compliance purposes.
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-search me-2"></i>Search Blacklist Databases
-                            </button>
-                        </div>
-                    </form>
+    <div class="container compact-container">
+        <!-- Back Button -->
+        <div class="back-nav">
+            <a href="{{ url_for('main.services_page') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Services</span>
+            </a>
+        </div>
+        
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="{{ service.icon }} fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">{{ service.title }}</h1>
+                    <p class="hero-subtitle">{{ service.description }}</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Service Information -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <div class="card bg-light border-0">
-                <div class="card-body p-4">
-                    <h5 class="card-title">
-                        <i class="fas fa-info-circle text-primary me-2"></i>About This Service
-                    </h5>
-                    <p class="card-text">
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="content-grid">
+            <!-- Info Section -->
+            <div class="info-sidebar">
+                <div class="info-card alert-info">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-list-check"></i></div>
+                        <h4 class="info-title">What you'll get:</h4>
+                    </div>
+                    <div class="features-container">
+                        <div class="features-column">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Comprehensive blacklist search</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Multiple sanctions databases</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Entity details and links</span>
+                            </div>
+                        </div>
+                        <div class="features-column">
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Blacklisting authorities</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Real-time data access</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>Detailed compliance information</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Details Card -->
+                <div class="service-details-card">
+                    <div class="details-header">
+                        <div class="details-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="details-title">Service Details</h4>
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h6>Data Sources</h6>
+                                <p>Multiple government and international sanctions databases</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h6>Processing Time</h6>
+                                <p>Results typically available within 30-60 seconds</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="detail-content">
+                                <h6>Compliance</h6>
+                                <p>Supports international trade compliance requirements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title">Search Parameters</h3>
+                            <p class="form-subtitle">Enter the entity details to search multiple sanctions and blacklist databases</p>
+                        </div>
+
+                        <form id="serviceForm" action="{{ url_for('main.start_individual_service') }}" method="POST">
+                            <input type="hidden" name="service_type" value="{{ service_type }}">
+                            
+                            <!-- Entity Name Input -->
+                            <div class="form-group">
+                                <label for="entity_name" class="form-label">
+                                    <i class="fas fa-building me-2"></i>Entity Name *
+                                </label>
+                                <input type="text" 
+                                       class="form-control form-control-enhanced" 
+                                       id="entity_name" 
+                                       name="entity_name" 
+                                       placeholder="Enter company or vessel name to search..."
+                                       required>
+                                <div class="form-text">
+                                    Enter the name of the company or vessel you want to search for in blacklist databases.
+                                </div>
+                            </div>
+
+                            <!-- Important Notice -->
+                            <div class="warning-card">
+                                <div class="warning-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="warning-content">
+                                    <h6>Important Notice</h6>
+                                    <p>This search will check multiple sanctions and blacklist databases. Results should be verified independently for compliance purposes.</p>
+                                </div>
+                            </div>
+
+                            <div class="submit-section">
+                                <button type="submit" class="btn-action btn-lg">
+                                    <i class="fas fa-search me-2"></i>Search Blacklist Databases
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- About Service Card -->
+                <div class="about-service-card">
+                    <div class="about-header">
+                        <div class="about-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="about-title">About This Service</h4>
+                    </div>
+                    <p class="about-description">
                         Our Blacklisted Companies and Vessels service provides comprehensive access to sanctions and blacklist databases 
                         from various countries and international organizations. This tool helps you perform due diligence checks on 
                         potential business partners, suppliers, or customers to ensure compliance with international trade regulations.
                     </p>
-                    <div class="row mt-3">
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">
-                                <i class="fas fa-database text-primary me-2"></i>Data Sources
-                            </h6>
-                            <p class="small mb-0">Multiple government and international sanctions databases</p>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">
-                                <i class="fas fa-clock text-primary me-2"></i>Processing Time
-                            </h6>
-                            <p class="small mb-0">Results typically available within 30-60 seconds</p>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">
-                                <i class="fas fa-shield-alt text-primary me-2"></i>Compliance
-                            </h6>
-                            <p class="small mb-0">Supports international trade compliance requirements</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -168,4 +201,664 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
     }, 500);
 });
 </script>
+
+<style>
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --mauve: #c084fc;
+    --dark-orange: #ea580c;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --border-color: rgba(255,255,255,0.1);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.25);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --glass-bg: rgba(30, 41, 59, 0.8);
+    --glass-border: rgba(255,255,255,0.1);
+    --hover-purple: #6d28d9;
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 35vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+    padding: 3rem 0;
+}
+
+.converter-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 50%, var(--primary-purple) 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(192, 132, 252, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+.compact-container {
+    max-width: 1400px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.back-nav {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: var(--secondary-orange);
+    color: var(--white);
+    transform: translateX(-2px);
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.service-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--dark-orange));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+}
+
+.hero-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--white), var(--mauve));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+.converter-main-content {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 4rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.info-sidebar {
+    position: sticky;
+    top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: var(--transition);
+    border-left: 4px solid var(--success);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--mauve), var(--primary-purple));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.info-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.features-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.features-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    background: rgba(245, 158, 11, 0.1);
+    transform: translateX(5px);
+}
+
+.feature-item i {
+    color: var(--success);
+    font-size: 0.9rem;
+}
+
+.feature-item span {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Service Details Card */
+.service-details-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: var(--transition);
+    border-left: 4px solid var(--mauve);
+}
+
+.service-details-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.details-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--dark-orange));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.details-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.detail-item:hover {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.detail-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--mauve), var(--primary-purple));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.detail-content h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+}
+
+.detail-content p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 0;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.card-body {
+    padding: 3rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+}
+
+.form-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 2.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+}
+
+.form-label i {
+    color: var(--secondary-orange);
+}
+
+.form-control-enhanced {
+    width: 100%;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--glass-border);
+    border-radius: 16px;
+    color: var(--white);
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.form-control-enhanced:focus {
+    outline: none;
+    border-color: var(--secondary-orange);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-control-enhanced::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+/* Warning Card */
+.warning-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+}
+
+.warning-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--warning), var(--dark-orange));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.warning-content h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.warning-content p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.submit-section {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--dark-orange));
+    border: none;
+    border-radius: 16px;
+    color: var(--white);
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+}
+
+.btn-action.btn-lg {
+    padding: 1.25rem 3rem;
+    font-size: 1.1rem;
+}
+
+.btn-action::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);
+}
+
+.btn-action:hover::before {
+    left: 100%;
+}
+
+.btn-action:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* About Service Card */
+.about-service-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-purple);
+}
+
+.about-service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.about-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-purple), var(--hover-purple));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.about-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.about-description {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content-grid {
+        grid-template-columns: 350px 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .info-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2.3rem;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-sidebar {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-body {
+        padding: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .service-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .features-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .details-grid {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .converter-card, .info-card, .service-details-card, .about-service-card {
+        margin: 0 -0.5rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .info-card, .service-details-card, .about-service-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+
 {% endblock %}

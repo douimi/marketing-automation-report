@@ -1,623 +1,1540 @@
 {% extends "base.html" %}
 
-{% block title %}Measurement Converter{% endblock %}
+{% block title %}HS Customs Classification{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <!-- Hero Section -->
-            <div class="bg-primary text-white py-5 mb-4">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h1 class="display-4 fw-bold mb-3">
-                                <i class="fas fa-ruler me-3"></i>Measurement Converter
-                            </h1>
-                            <p class="lead mb-0">Convert between different measurement units with precision</p>
-                            <p class="mt-2 mb-0">
-                                <small>
-                                    Length • Mass • Volume • Area • Temperature
-                                </small>
-                            </p>
-                        </div>
-                        <div class="col-md-4 text-md-end">
-                            <div class="bg-white bg-opacity-25 rounded p-3">
-                                <h5 class="mb-2">Quick Convert</h5>
-                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('length')">Length</button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('mass')">Mass</button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="switchCategory('volume')">Volume</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section class="classification-hero-section">
+    <div class="classification-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title">HS Customs <span class="highlight-text">Classification</span></h1>
+            <p class="hero-subtitle">Search and find the correct Harmonized System (HS) codes for your products</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">6,927</span>
+                    <span class="stat-label">Total Codes</span>
                 </div>
-            </div>
-
-            <!-- Main Converter Section -->
-            <div class="container mb-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-header bg-light text-center py-4">
-                                <h3 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Unit Conversion</h3>
-                                <p class="text-muted mb-0">Convert between metric, imperial, and other measurement systems</p>
-                            </div>
-                            <div class="card-body p-4">
-                                <!-- Category Selection -->
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <div class="category-selector">
-                                            {% for category in categories %}
-                                            <button class="btn btn-outline-primary category-btn" 
-                                                    data-category="{{ category.id }}"
-                                                    onclick="selectCategory('{{ category.id }}')">
-                                                <i class="fas {{ category.icon }} me-2"></i>
-                                                {{ category.name }}
-                                            </button>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Conversion Forms -->
-                                {% for category in categories %}
-                                <div class="conversion-section" id="section-{{ category.id }}" style="display: none;">
-                                    <div class="section-header mb-4">
-                                        <h4 class="text-primary">
-                                            <i class="fas {{ category.icon }} me-2"></i>
-                                            Convert a {{ category.name.lower() }}:
-                                        </h4>
-                                    </div>
-                                    
-                                    <div class="conversion-row">
-                                        <div class="conversion-input">
-                                            <input type="number" 
-                                                   class="form-control value-input" 
-                                                   id="value-{{ category.id }}"
-                                                   placeholder="Enter value"
-                                                   step="any"
-                                                   oninput="autoConvert('{{ category.id }}')">
-                                        </div>
-                                        
-                                        <div class="conversion-from">
-                                            <select class="form-select unit-select" 
-                                                    id="from-{{ category.id }}"
-                                                    onchange="autoConvert('{{ category.id }}')">
-                                                <optgroup label="Popular Units">
-                                                    {% for unit in units_by_category[category.id] %}
-                                                    {% if unit.popular %}
-                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                                <optgroup label="All Units">
-                                                    {% for unit in units_by_category[category.id] %}
-                                                    {% if not unit.popular %}
-                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="conversion-equals">
-                                            <button class="btn btn-primary swap-btn" 
-                                                    onclick="swapUnits('{{ category.id }}')"
-                                                    title="Swap units">
-                                                <i class="fas fa-exchange-alt"></i>
-                                            </button>
-                                        </div>
-                                        
-                                        <div class="conversion-result">
-                                            <input type="text" 
-                                                   class="form-control result-input" 
-                                                   id="result-{{ category.id }}"
-                                                   placeholder="Result"
-                                                   readonly>
-                                        </div>
-                                        
-                                        <div class="conversion-to">
-                                            <select class="form-select unit-select" 
-                                                    id="to-{{ category.id }}"
-                                                    onchange="autoConvert('{{ category.id }}')">
-                                                <optgroup label="Popular Units">
-                                                    {% for unit in units_by_category[category.id] %}
-                                                    {% if unit.popular %}
-                                                    <option value="{{ unit.code }}" 
-                                                            {% if loop.index == 2 %}selected{% endif %}>
-                                                        {{ unit.name }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                                <optgroup label="All Units">
-                                                    {% for unit in units_by_category[category.id] %}
-                                                    {% if not unit.popular %}
-                                                    <option value="{{ unit.code }}">{{ unit.name }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Conversion Result Display -->
-                                    <div class="conversion-details mt-4" id="details-{{ category.id }}" style="display: none;">
-                                        <div class="alert alert-info border-0 shadow-sm">
-                                            <h6 class="alert-heading">
-                                                <i class="fas fa-calculator me-2"></i>Conversion Details
-                                            </h6>
-                                            <p class="mb-1" id="formula-{{ category.id }}">-</p>
-                                            <small class="text-muted">
-                                                <i class="fas fa-clock me-1"></i>
-                                                <span id="timestamp-{{ category.id }}">-</span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-
-                                <!-- Loading Indicator -->
-                                <div id="loadingIndicator" class="text-center py-4 d-none">
-                                    <div class="spinner-border text-primary" role="status">
-                                        <span class="visually-hidden">Converting...</span>
-                                    </div>
-                                    <p class="mt-2 text-muted">Converting measurement...</p>
-                                </div>
-
-                                <!-- Error Message -->
-                                <div id="errorMessage" class="d-none">
-                                    <div class="alert alert-danger border-0 shadow-sm">
-                                        <h5 class="alert-heading">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>Conversion Error
-                                        </h5>
-                                        <p class="mb-0" id="errorText">An error occurred during conversion.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">95</span>
+                    <span class="stat-label">Chapters</span>
                 </div>
-            </div>
-
-            <!-- Information Section -->
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body text-center">
-                                <i class="fas fa-ruler text-primary mb-3" style="font-size: 2.5rem;"></i>
-                                <h5 class="card-title text-primary">Length</h5>
-                                <p class="card-text">Metric, imperial, nautical, and astronomical units</p>
-                                <small class="text-muted">mm, cm, m, km, in, ft, yd, mi</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body text-center">
-                                <i class="fas fa-weight text-success mb-3" style="font-size: 2.5rem;"></i>
-                                <h5 class="card-title text-success">Mass/Weight</h5>
-                                <p class="card-text">Metric, imperial, and specialty weight units</p>
-                                <small class="text-muted">mg, g, kg, oz, lb, tons</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body text-center">
-                                <i class="fas fa-flask text-info mb-3" style="font-size: 2.5rem;"></i>
-                                <h5 class="card-title text-info">Volume</h5>
-                                <p class="card-text">Liquid, dry, and cubic measurements</p>
-                                <small class="text-muted">ml, l, fl oz, gal, m³, ft³</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body text-center">
-                                <i class="fas fa-square text-warning mb-3" style="font-size: 2.5rem;"></i>
-                                <h5 class="card-title text-warning">Area</h5>
-                                <p class="card-text">Surface area and land measurements</p>
-                                <small class="text-muted">m², ft², acres, hectares</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="card border-0 shadow">
-                            <div class="card-body text-center">
-                                <i class="fas fa-thermometer-half text-danger mb-3" style="font-size: 2.5rem;"></i>
-                                <h5 class="card-title text-danger">Temperature</h5>
-                                <p class="card-text">All major temperature scales with precise formulas</p>
-                                <small class="text-muted">°C, °F, K, °R, °Ré</small>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">20</span>
+                    <span class="stat-label">Sections</span>
                 </div>
             </div>
         </div>
     </div>
+</section>
+
+<!-- Quick Navigation -->
+<div class="quick-nav-section">
+    <div class="container">
+        <div class="quick-nav-wrapper">
+            <a href="#search" class="quick-nav-item">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+            </a>
+            <a href="#browse" class="quick-nav-item">
+                <i class="fas fa-list"></i>
+                <span>Browse</span>
+            </a>
+            <a href="#info" class="quick-nav-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Information</span>
+            </a>
+            <a href="#stats" class="quick-nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistics</span>
+            </a>
+        </div>
+    </div>
 </div>
 
-<script>
-// Global variables
-let currentCategory = 'length';
-let conversionTimeout = {};
-
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    // Select the first category by default
-    selectCategory('length');
-    console.log('Measurement Converter initialized');
-});
-
-// Category selection
-function selectCategory(category) {
-    currentCategory = category;
-    
-    // Hide all sections
-    document.querySelectorAll('.conversion-section').forEach(section => {
-        section.style.display = 'none';
-    });
-    
-    // Show selected section
-    document.getElementById(`section-${category}`).style.display = 'block';
-    
-    // Update button states
-    document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.classList.remove('btn-primary');
-        btn.classList.add('btn-outline-primary');
-    });
-    
-    document.querySelector(`[data-category="${category}"]`).classList.remove('btn-outline-primary');
-    document.querySelector(`[data-category="${category}"]`).classList.add('btn-primary');
-    
-    // Clear previous results
-    document.getElementById(`value-${category}`).value = '';
-    document.getElementById(`result-${category}`).value = '';
-    document.getElementById(`details-${category}`).style.display = 'none';
-    
-    hideError();
-}
-
-// Switch category from quick buttons
-function switchCategory(category) {
-    selectCategory(category);
-}
-
-// Auto-convert when values change
-function autoConvert(category) {
-    clearTimeout(conversionTimeout[category]);
-    conversionTimeout[category] = setTimeout(() => {
-        convertMeasurement(category);
-    }, 300);
-}
-
-// Main conversion function
-async function convertMeasurement(category) {
-    const value = parseFloat(document.getElementById(`value-${category}`).value);
-    const fromUnit = document.getElementById(`from-${category}`).value;
-    const toUnit = document.getElementById(`to-${category}`).value;
-    
-    if (!value || isNaN(value)) {
-        document.getElementById(`result-${category}`).value = '';
-        document.getElementById(`details-${category}`).style.display = 'none';
-        return;
-    }
-    
-    if (fromUnit === toUnit) {
-        document.getElementById(`result-${category}`).value = value.toString();
-        updateConversionDetails(category, {
-            original_value: value,
-            converted_value: value,
-            formula: `${value} = ${value} (same unit)`,
-            timestamp: new Date().toISOString()
-        });
-        return;
-    }
-    
-    showLoading();
-    hideError();
-    
-    try {
-        const response = await fetch('/api/convert-measurement', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                value: value,
-                from_unit: fromUnit,
-                to_unit: toUnit,
-                category: category
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            displayResult(category, data);
-        } else {
-            showError(data.error || 'Conversion failed');
-        }
-    } catch (error) {
-        showError('Network error. Please check your connection and try again.');
-        console.error('Conversion error:', error);
-    } finally {
-        hideLoading();
-    }
-}
-
-// Display conversion result
-function displayResult(category, data) {
-    const resultInput = document.getElementById(`result-${category}`);
-    
-    // Format the result appropriately
-    let formattedResult;
-    const convertedValue = data.converted_value;
-    
-    if (Math.abs(convertedValue) >= 1000000) {
-        formattedResult = convertedValue.toExponential(4);
-    } else if (Math.abs(convertedValue) >= 1000) {
-        formattedResult = convertedValue.toFixed(2);
-    } else if (Math.abs(convertedValue) >= 1) {
-        formattedResult = convertedValue.toFixed(4);
-    } else if (Math.abs(convertedValue) >= 0.0001) {
-        formattedResult = convertedValue.toFixed(6);
-    } else {
-        formattedResult = convertedValue.toExponential(4);
-    }
-    
-    resultInput.value = formattedResult;
-    updateConversionDetails(category, data);
-}
-
-// Update conversion details
-function updateConversionDetails(category, data) {
-    document.getElementById(`formula-${category}`).textContent = data.formula || '-';
-    document.getElementById(`timestamp-${category}`).textContent = 
-        new Date(data.timestamp).toLocaleString() || '-';
-    document.getElementById(`details-${category}`).style.display = 'block';
-}
-
-// Swap units
-function swapUnits(category) {
-    const fromSelect = document.getElementById(`from-${category}`);
-    const toSelect = document.getElementById(`to-${category}`);
-    const valueInput = document.getElementById(`value-${category}`);
-    const resultInput = document.getElementById(`result-${category}`);
-    
-    // Swap the select values
-    const fromValue = fromSelect.value;
-    const toValue = toSelect.value;
-    
-    fromSelect.value = toValue;
-    toSelect.value = fromValue;
-    
-    // Swap the input values if result has a value
-    if (resultInput.value && !isNaN(parseFloat(resultInput.value))) {
-        valueInput.value = resultInput.value;
-        autoConvert(category);
-    }
-}
-
-// Utility functions
-function showLoading() {
-    document.getElementById('loadingIndicator').classList.remove('d-none');
-}
-
-function hideLoading() {
-    document.getElementById('loadingIndicator').classList.add('d-none');
-}
-
-function showError(message) {
-    document.getElementById('errorText').textContent = message;
-    document.getElementById('errorMessage').classList.remove('d-none');
-}
-
-function hideError() {
-    document.getElementById('errorMessage').classList.add('d-none');
-}
-
-// Toast notification system
-function showToast(message, type = 'info') {
-    const toastHtml = `
-        <div class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'} border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : type === 'success' ? 'check' : 'info-circle'} me-2"></i>
-                    ${message}
+<div class="classification-main-content">
+    <div class="container compact-container">
+        <!-- Search Section -->
+        <section class="search-section" id="search">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                <div class="section-content">
+                    <h2 class="section-title">Search HS Codes</h2>
+                    <p class="section-description">Find products by name or search by HS code</p>
+                </div>
             </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', toastHtml);
-    
-    const toastElement = document.querySelector('.toast:last-child');
-    const toast = new bootstrap.Toast(toastElement, {
-        autohide: true,
-        delay: 3000
-    });
-    toast.show();
-    
-    toastElement.addEventListener('hidden.bs.toast', function() {
-        toastElement.remove();
-    });
-}
-</script>
+            
+            <div class="search-card">
+                <div class="search-input-group">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" 
+                           class="search-input" 
+                           id="searchInput" 
+                           placeholder="Enter product name (e.g., 'horses', 'cattle') or HS code (e.g., '0101', '0102.21')"
+                           autocomplete="off">
+                    <div class="search-actions">
+                        <button class="search-action-btn" onclick="clearSearch()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="search-action-btn" onclick="showChapterBrowser()">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="search-examples">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Search examples: "live animals", "meat", "chemicals", "0101" (HS4), "0101.21" (HS6)</span>
+                </div>
+                
+                <!-- Chapter Filter -->
+                <div id="chapterFilter" class="chapter-filter d-none">
+                    <div class="filter-header">
+                        <h5>Filter by Chapter</h5>
+                        <button class="filter-close" onclick="hideChapterFilter()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="chapter-buttons" id="chapterButtons">
+                        <!-- Chapter buttons will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div id="searchResults" class="search-results d-none">
+                <div class="results-header">
+                    <h3>Search Results</h3>
+                    <div class="results-controls">
+                        <span id="resultsCount" class="results-count">0 results</span>
+                        <div class="results-actions">
+                            <button class="results-action-btn" onclick="toggleGrouping()">
+                                <i class="fas fa-layer-group"></i>
+                                <span id="groupingText">Group by Chapter</span>
+                            </button>
+                            <button class="results-action-btn" onclick="exportResults()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="resultsList" class="results-list">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+
+            <!-- No Results -->
+            <div id="noResults" class="no-results d-none">
+                <div class="no-results-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>No results found</h4>
+                <p>Try different keywords or browse chapters</p>
+                <button class="btn-browse" onclick="showChapterBrowser()">
+                    <i class="fas fa-list me-2"></i>Browse Chapters
+                </button>
+            </div>
+        </section>
+
+        <!-- Browse Section -->
+        <section class="browse-section" id="browse">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Browse by Chapter</h2>
+                    <p class="section-description">Explore the HS classification system systematically</p>
+                </div>
+            </div>
+            
+            <div id="chapterBrowser" class="chapter-browser">
+                <div class="browser-header">
+                    <h3>Browse Chapters</h3>
+                    <button class="browser-close" onclick="hideChapterBrowser()">
+                        <i class="fas fa-times"></i> Close Browser
+                    </button>
+                </div>
+                <div id="chapterList" class="chapter-grid">
+                    <!-- Chapter list will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Section -->
+        <section class="info-section" id="info">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">About HS Codes</h2>
+                    <p class="section-description">Learn about the Harmonized System classification</p>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>HS Classification System</h4>
+                        <p>The Harmonized Commodity Description and Coding System (HS) is an internationally standardized system of names and numbers to classify traded products.</p>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> Sections: 20 major categories</li>
+                            <li><i class="fas fa-check"></i> Chapters: 95 chapters (HS2)</li>
+                            <li><i class="fas fa-check"></i> Headings: 1,220 headings (HS4)</li>
+                            <li><i class="fas fa-check"></i> Subheadings: 5,592 subheadings (HS6)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Search Tips</h4>
+                        <ul class="info-list">
+                            <li><i class="fas fa-arrow-right"></i> Use specific product names for better results</li>
+                            <li><i class="fas fa-arrow-right"></i> Try different synonyms or related terms</li>
+                            <li><i class="fas fa-arrow-right"></i> Search by HS code if you know it</li>
+                            <li><i class="fas fa-arrow-right"></i> Browse chapters for systematic exploration</li>
+                            <li><i class="fas fa-arrow-right"></i> Use filters to narrow down results</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section" id="stats">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Database Statistics</h2>
+                    <p class="section-description">Complete HS classification database overview</p>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>6,927</h3>
+                        <p>Total HS Codes</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>95</h3>
+                        <p>Chapters</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>1,220</h3>
+                        <p>HS4 Headings</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>5,592</h3>
+                        <p>HS6 Subheadings</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Load HS Codes Data from external file -->
+<script src="{{ url_for('static', filename='hs_codes_data.js') }}"></script>
 
 <style>
-/* Category selector */
-.category-selector {
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --hover-purple: #6d28d9;
+}
+
+/* HS Classification Hero Section */
+.classification-hero-section {
+    position: relative;
+    min-height: 50vh;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+    padding: 3rem 0 1rem;
+}
+
+.classification-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+/* Hero Content */
+.hero-content {
+    text-align: center;
     margin-bottom: 2rem;
 }
 
-.category-btn {
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.category-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Conversion rows */
-.conversion-row {
-    display: grid;
-    grid-template-columns: 1fr 2fr auto 1fr 2fr;
-    gap: 1rem;
-    align-items: center;
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 15px;
-    border: 2px solid #e9ecef;
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
     margin-bottom: 1rem;
+    color: var(--white);
+    line-height: 1.1;
 }
 
-.conversion-input input,
-.conversion-result input {
+.highlight-text {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.hero-subtitle {
     font-size: 1.1rem;
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
     text-align: center;
-    border: 2px solid #dee2e6;
-    border-radius: 10px;
-    padding: 0.75rem;
 }
 
-.conversion-input input:focus,
-.conversion-result input:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-orange);
 }
 
-.conversion-from select,
-.conversion-to select {
-    border: 2px solid #dee2e6;
-    border-radius: 10px;
-    padding: 0.75rem;
-    font-size: 0.95rem;
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.swap-btn {
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
+.stat-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Navigation */
+.quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-orange);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--glass-border);
+    font-weight: 500;
+}
+
+.quick-nav-item:hover {
+    background: var(--hover-purple);
+    color: var(--white);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.quick-nav-item i {
+    font-size: 1rem;
+}
+
+/* Classification Main Content */
+.classification-main-content {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Section Styling */
+.search-section, .browse-section, .info-section, .stats-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.section-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
+    color: white;
+    font-size: 1.8rem;
+    box-shadow: var(--shadow);
 }
 
-.swap-btn:hover {
-    transform: rotate(180deg);
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-
-/* Section headers */
-.section-header h4 {
-    font-weight: 600;
+.section-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
     margin-bottom: 0.5rem;
 }
 
-/* Cards */
-.card {
-    transition: all 0.3s ease;
+.section-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
-.card:hover {
+/* Search Card */
+.search-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.search-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.search-input-group:focus-within {
+    border-color: var(--secondary-orange);
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.search-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2rem;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-actions {
+    display: flex;
+}
+
+.search-action-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-orange);
+}
+
+.search-examples {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Chapter Filter */
+.chapter-filter {
+    margin-top: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.filter-header h5 {
+    margin: 0;
+    color: var(--white);
+}
+
+.filter-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.filter-close:hover {
+    color: var(--secondary-orange);
+}
+
+.chapter-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.chapter-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: var(--white);
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.chapter-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--secondary-orange);
+}
+
+.chapter-button.active {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: var(--secondary-orange);
+    color: var(--secondary-orange);
+}
+
+/* Search Results */
+.search-results {
+    margin-top: 2rem;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.results-header h3 {
+    margin: 0;
+    color: var(--white);
+}
+
+.results-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.results-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.results-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.results-action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.results-action-btn:hover {
+    background: var(--secondary-orange);
+    transform: translateY(-1px);
+}
+
+.results-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.result-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.result-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--secondary-orange);
+    transform: translateY(-2px);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.result-code {
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-orange);
+}
+
+.result-badges {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.result-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-section {
+    background: rgba(30, 41, 59, 0.5);
+    color: var(--white);
+}
+
+.badge-chapter {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+}
+
+.badge-hs4 {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--secondary-orange);
+}
+
+.badge-hs6 {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.result-description {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.result-meta {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    margin-top: 2rem;
+}
+
+.no-results-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+}
+
+.no-results h4 {
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+}
+
+.btn-browse {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-browse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+}
+
+/* Chapter Browser */
+.chapter-browser {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.browser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.browser-header h3 {
+    margin: 0;
+    color: var(--white);
+}
+
+.browser-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.browser-close:hover {
+    background: var(--secondary-orange);
+}
+
+.chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.chapter-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.chapter-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--secondary-orange);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-lg);
 }
 
-/* Loading animation */
-.spinner-border {
-    width: 2rem;
-    height: 2rem;
+.chapter-card h4 {
+    color: var(--secondary-orange);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .conversion-row {
-        grid-template-columns: 1fr;
+.chapter-card p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.chapter-stats {
+    display: flex;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.chapter-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Info Section */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.info-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.info-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.info-list li i {
+    color: var(--success);
+    font-size: 0.8rem;
+}
+
+/* Stats Section */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: var(--secondary-orange);
+    font-size: 1.5rem;
+}
+
+.stat-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary-orange);
+    margin-bottom: 0.5rem;
+}
+
+.stat-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-stats {
         gap: 1rem;
-        text-align: center;
     }
     
-    .swap-btn {
-        justify-self: center;
-        transform: rotate(90deg);
+    .chapter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
     
-    .category-selector {
+    .info-grid, .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .classification-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
         flex-direction: column;
-        align-items: center;
+        gap: 0.8rem;
     }
     
-    .category-btn {
+    .stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    
+    .quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .section-content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .results-controls {
         width: 100%;
-        max-width: 200px;
+        justify-content: space-between;
     }
     
-    .display-4 {
-        font-size: 2rem;
+    .chapter-buttons {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 576px) {
-    .conversion-row {
+    .search-card, .chapter-browser, .info-card, .stat-card {
         padding: 1rem;
     }
     
-    .card-body {
+    .result-item {
         padding: 1rem;
+    }
+    
+    .result-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .result-badges {
+        flex-wrap: wrap;
+    }
+}
+</style>
+
+<script>
+// Global variables
+let searchTimeout;
+let currentResults = [];
+let isGrouped = false;
+let currentChapterFilter = null;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('searchInput').focus();
+    populateChapterButtons();
+    console.log(`Loaded ${hsCodesData.length} HS codes`);
+});
+
+// Search input event listeners
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        performSearch(this.value.trim());
+    }, 300);
+});
+
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        clearTimeout(searchTimeout);
+        performSearch(this.value.trim());
+    }
+});
+
+// Main search function
+function performSearch(query) {
+    const resultsDiv = document.getElementById('searchResults');
+    const noResultsDiv = document.getElementById('noResults');
+    const resultsList = document.getElementById('resultsList');
+    const resultsCount = document.getElementById('resultsCount');
+    const chapterBrowser = document.getElementById('chapterBrowser');
+    
+    // Hide chapter browser if open
+    chapterBrowser.classList.add('d-none');
+    
+    if (!query) {
+        resultsDiv.classList.add('d-none');
+        noResultsDiv.classList.add('d-none');
+        return;
+    }
+    
+    const results = searchHSCodes(query);
+    currentResults = results;
+    
+    if (results.length > 0) {
+        resultsCount.textContent = `${results.length} result${results.length > 1 ? 's' : ''}`;
+        displayResults(results);
+        resultsDiv.classList.remove('d-none');
+        noResultsDiv.classList.add('d-none');
+    } else {
+        resultsDiv.classList.add('d-none');
+        noResultsDiv.classList.remove('d-none');
     }
 }
 
-/* Custom animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+// Search algorithm
+function searchHSCodes(query) {
+    const lowerQuery = query.toLowerCase();
+    
+    let results = hsCodesData.filter(item => {
+        // Search by code (remove dots for comparison)
+        if (item.code.replace(/\./g, '').toLowerCase().includes(lowerQuery.replace(/\./g, ''))) {
+            return true;
+        }
+        
+        // Search by description
+        if (item.description.toLowerCase().includes(lowerQuery)) {
+            return true;
+        }
+        
+        return false;
+    });
+    
+    // Apply chapter filter if active
+    if (currentChapterFilter) {
+        results = results.filter(item => item.chapter === currentChapterFilter);
+    }
+    
+    // Sort results: exact code matches first, then by code
+    return results.sort((a, b) => {
+        const aCodeMatch = a.code.toLowerCase().startsWith(lowerQuery.toLowerCase());
+        const bCodeMatch = b.code.toLowerCase().startsWith(lowerQuery.toLowerCase());
+        
+        if (aCodeMatch && !bCodeMatch) return -1;
+        if (bCodeMatch && !aCodeMatch) return 1;
+        
+        return a.code.localeCompare(b.code);
+    });
 }
 
-.conversion-section {
-    animation: fadeIn 0.3s ease;
+// Display search results
+function displayResults(results) {
+    const resultsList = document.getElementById('resultsList');
+    
+    if (isGrouped) {
+        displayGroupedResults(results);
+    } else {
+        resultsList.innerHTML = results.map(item => createResultCard(item)).join('');
+    }
 }
 
-.alert {
-    animation: fadeIn 0.3s ease;
+// Display results grouped by chapter
+function displayGroupedResults(results) {
+    const resultsList = document.getElementById('resultsList');
+    const grouped = {};
+    
+    results.forEach(item => {
+        const chapter = item.chapter || 'Other';
+        if (!grouped[chapter]) {
+            grouped[chapter] = [];
+        }
+        grouped[chapter].push(item);
+    });
+    
+    let html = '';
+    Object.keys(grouped).sort().forEach(chapter => {
+        const chapterItems = grouped[chapter];
+        const chapterInfo = hsCodesData.find(item => item.code === chapter && item.level === 'chapter');
+        const chapterTitle = chapterInfo ? chapterInfo.description : chapter;
+        
+        html += `
+            <div class="chapter-group">
+                <div class="chapter-header">
+                    <h4>Chapter ${chapter}: ${chapterTitle}</h4>
+                    <span class="results-count">${chapterItems.length} items</span>
+                </div>
+                <div class="chapter-results">
+                    ${chapterItems.map(item => createResultCard(item)).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    resultsList.innerHTML = html;
 }
 
-/* Result highlighting */
-.result-input {
-    background-color: #e3f2fd !important;
-    color: #1976d2 !important;
-    font-weight: 600 !important;
+// Create individual result card
+function createResultCard(item) {
+    const levelBadge = getLevelBadge(item.level);
+    const levelClass = getLevelClass(item.level);
+    
+    return `
+        <div class="result-item" onclick="selectResult('${item.code}')">
+            <div class="result-header">
+                <div class="result-code">${item.code}</div>
+                <div class="result-badges">
+                    ${levelBadge}
+                    ${item.chapter ? `<span class="result-badge badge-chapter">Ch. ${item.chapter}</span>` : ''}
+                    ${item.section ? `<span class="result-badge badge-section">Sec. ${item.section}</span>` : ''}
+                </div>
+            </div>
+            <div class="result-description">${item.description}</div>
+            <div class="result-meta">${getLevelDescription(item.level)}</div>
+        </div>
+    `;
 }
 
-/* Unit select styling */
-.unit-select optgroup {
-    font-weight: 600;
-    color: #495057;
+// Utility functions for badges and descriptions
+function getLevelBadge(level) {
+    switch(level) {
+        case 'section':
+            return '<span class="result-badge badge-section">Section</span>';
+        case 'chapter':
+            return '<span class="result-badge badge-chapter">Chapter</span>';
+        case 'hs4':
+            return '<span class="result-badge badge-hs4">HS4</span>';
+        case 'hs6':
+            return '<span class="result-badge badge-hs6">HS6</span>';
+        default:
+            return '<span class="result-badge">Other</span>';
+    }
 }
 
-.unit-select option {
-    padding: 0.5rem;
+function getLevelClass(level) {
+    switch(level) {
+        case 'section':
+            return 'section';
+        case 'chapter':
+            return 'chapter';
+        case 'hs4':
+            return 'hs4';
+        case 'hs6':
+            return 'hs6';
+        default:
+            return 'other';
+    }
 }
-</style>
+
+function getLevelDescription(level) {
+    switch(level) {
+        case 'section':
+            return 'Major product category';
+        case 'chapter':
+            return 'Product category group';
+        case 'hs4':
+            return 'Product heading';
+        case 'hs6':
+            return 'Product subheading';
+        default:
+            return 'Classification item';
+    }
+}
+
+// Chapter browser functionality
+function populateChapterButtons() {
+    const chapters = hsCodesData.filter(item => item.level === 'chapter').sort((a, b) => a.code.localeCompare(b.code));
+    const chapterButtons = document.getElementById('chapterButtons');
+    
+    chapterButtons.innerHTML = chapters.map(chapter => `
+        <button class="chapter-button" onclick="filterByChapter('${chapter.code}')">
+            <strong>${chapter.code}</strong>: ${chapter.description}
+        </button>
+    `).join('');
+}
+
+function showChapterBrowser() {
+    const chapterBrowser = document.getElementById('chapterBrowser');
+    const chapterList = document.getElementById('chapterList');
+    
+    // Hide other sections
+    document.getElementById('searchResults').classList.add('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+    
+    const chapters = hsCodesData.filter(item => item.level === 'chapter').sort((a, b) => a.code.localeCompare(b.code));
+    
+    chapterList.innerHTML = chapters.map(chapter => {
+        const hs4Count = hsCodesData.filter(item => item.chapter === chapter.code && item.level === 'hs4').length;
+        const hs6Count = hsCodesData.filter(item => item.chapter === chapter.code && item.level === 'hs6').length;
+        
+        return `
+            <div class="chapter-card" onclick="exploreChapter('${chapter.code}')">
+                <h4>Chapter ${chapter.code}</h4>
+                <p>${chapter.description}</p>
+                <div class="chapter-stats">
+                    <span><i class="fas fa-layer-group"></i> ${hs4Count} headings</span>
+                    <span><i class="fas fa-tag"></i> ${hs6Count} subheadings</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    chapterBrowser.classList.remove('d-none');
+}
+
+function hideChapterBrowser() {
+    document.getElementById('chapterBrowser').classList.add('d-none');
+}
+
+function exploreChapter(chapterCode) {
+    currentChapterFilter = chapterCode;
+    document.getElementById('searchInput').value = '';
+    
+    const chapterItems = hsCodesData.filter(item => item.chapter === chapterCode);
+    currentResults = chapterItems;
+    
+    document.getElementById('resultsCount').textContent = `${chapterItems.length} items in Chapter ${chapterCode}`;
+    displayResults(chapterItems);
+    
+    document.getElementById('chapterBrowser').classList.add('d-none');
+    document.getElementById('searchResults').classList.remove('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+}
+
+function filterByChapter(chapterCode) {
+    currentChapterFilter = currentChapterFilter === chapterCode ? null : chapterCode;
+    
+    // Update button states
+    const buttons = document.querySelectorAll('.chapter-button');
+    buttons.forEach(btn => {
+        if (btn.textContent.includes(chapterCode)) {
+            btn.classList.toggle('active', currentChapterFilter === chapterCode);
+        }
+    });
+    
+    // Re-run search with filter
+    const query = document.getElementById('searchInput').value.trim();
+    if (query) {
+        performSearch(query);
+    }
+}
+
+function showChapterFilter() {
+    document.getElementById('chapterFilter').classList.remove('d-none');
+}
+
+function hideChapterFilter() {
+    document.getElementById('chapterFilter').classList.add('d-none');
+    currentChapterFilter = null;
+    
+    // Reset button states
+    const buttons = document.querySelectorAll('.chapter-button');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+}
+
+// UI helper functions
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchResults').classList.add('d-none');
+    document.getElementById('noResults').classList.add('d-none');
+    document.getElementById('chapterBrowser').classList.add('d-none');
+    document.getElementById('searchInput').focus();
+    currentResults = [];
+    currentChapterFilter = null;
+    hideChapterFilter();
+}
+
+function toggleGrouping() {
+    isGrouped = !isGrouped;
+    document.getElementById('groupingText').textContent = isGrouped ? 'List View' : 'Group by Chapter';
+    
+    if (currentResults.length > 0) {
+        displayResults(currentResults);
+    }
+}
+
+function selectResult(code) {
+    // In a real application, this would show detailed information
+    // For now, we'll just show an alert
+    const item = hsCodesData.find(item => item.code === code);
+    if (item) {
+        alert(`Selected: ${item.code} - ${item.description}\n\nLevel: ${item.level}\nChapter: ${item.chapter || 'N/A'}\nSection: ${item.section || 'N/A'}`);
+    }
+}
+
+function exportResults() {
+    if (currentResults.length === 0) {
+        alert('No results to export');
+        return;
+    }
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+        + "Code,Description,Level,Chapter,Section\n"
+        + currentResults.map(item => 
+            `"${item.code}","${item.description.replace(/"/g, '""')}","${item.level}","${item.chapter || ''}","${item.section || ''}"`
+        ).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "hs_codes_search_results.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
 {% endblock %}

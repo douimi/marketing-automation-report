@@ -4,180 +4,527 @@
 {% block service_icon %}fas fa-ban{% endblock %}
 
 {% block report_content %}
-<!-- Search Parameters -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title mb-3">
-                    <i class="fas fa-search text-primary me-2"></i>Search Parameters
-                </h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>Entity Name:</strong> 
-                        {% if blacklisted_companies_data.search_params and blacklisted_companies_data.search_params.entity_name %}
-                            {{ blacklisted_companies_data.search_params.entity_name }}
-                        {% elif blacklisted_companies_data.entity_name %}
-                            {{ blacklisted_companies_data.entity_name }}
-                        {% elif form_data and form_data.entity_name %}
-                            {{ form_data.entity_name }}
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Results Summary -->
-{% if blacklisted_companies_data and blacklisted_companies_data.results_summary %}
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>{{ blacklisted_companies_data.results_summary }}
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Error Handling -->
-{% if blacklisted_companies_data and blacklisted_companies_data.error %}
-<div class="row">
-    <div class="col-12">
-        <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            <strong>Error:</strong> {{ blacklisted_companies_data.error }}
-        </div>
-    </div>
-</div>
-{% elif blacklisted_companies_data %}
-<!-- Results Statistics -->
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card bg-primary text-white">
-            <div class="card-body text-center">
-                <i class="fas fa-ban fa-2x mb-2"></i>
-                <h4>{{ blacklisted_companies_data.total_entities or 0 }}</h4>
-                <p class="mb-0">Blacklisted Entities</p>
-            </div>
-        </div>
-    </div>
-    {% if blacklisted_companies_data.pagination and blacklisted_companies_data.pagination.has_pagination %}
-    <div class="col-md-3">
-        <div class="card bg-info text-white">
-            <div class="card-body text-center">
-                <i class="fas fa-file-alt fa-2x mb-2"></i>
-                <h4>{{ blacklisted_companies_data.pagination.total_pages or 1 }}</h4>
-                <p class="mb-0">Total Pages</p>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-</div>
-
-<!-- Blacklisted Entities List -->
-{% if blacklisted_companies_data.blacklisted_entities %}
-<div class="row">
-    <div class="col-12">
-        <h4 class="mb-4">
-            <i class="fas fa-list text-primary me-2"></i>Blacklisted Entities
-        </h4>
-        
-        <div class="row">
-            {% for entity in blacklisted_companies_data.blacklisted_entities %}
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger">
-                            <i class="fas fa-ban me-2"></i>{{ entity.name }}
-                        </h5>
-                        
-                        {% if entity.blacklisted_by %}
-                        <div class="mb-3">
-                            <strong class="text-muted">Blacklisted by:</strong>
-                            <span class="badge bg-danger">{{ entity.blacklisted_by }}</span>
-                        </div>
-                        {% endif %}
-                        
-                        {% if entity.url %}
-                        <div class="mb-3">
-                            <strong class="text-muted">Details:</strong>
-                            <a href="{{ entity.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                <i class="fas fa-external-link-alt me-1"></i>View Details
-                            </a>
-                        </div>
-                        {% endif %}
-                        
-                        {% if entity.data_entity %}
-                        <div class="mb-2">
-                            <small class="text-muted">Entity ID: {{ entity.data_entity }}</small>
-                        </div>
-                        {% endif %}
-                        
-                        {% if entity.tracking_id %}
-                        <div class="mb-2">
-                            <small class="text-muted">Tracking: {{ entity.tracking_id }}</small>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+<section class="report-hero-section">
+    <div class="converter-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
             {% endfor %}
         </div>
     </div>
-</div>
-{% else %}
-<div class="row">
-    <div class="col-12">
-        <div class="alert alert-warning">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            No blacklisted entities found for the selected country.
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title"><i class="fas fa-ban me-3"></i>Blacklisted Companies and Vessels</h1>
+            <p class="hero-subtitle">Identify restricted entities to ensure compliance</p>
+            <p class="hero-stats"><small><i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Compliance Check</small></p>
         </div>
     </div>
-</div>
-{% endif %}
+</section>
 
-<!-- Pagination Info -->
-{% if blacklisted_companies_data and blacklisted_companies_data.pagination and blacklisted_companies_data.pagination.has_pagination %}
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            <strong>Note:</strong> This data shows results from page 1. There are {{ blacklisted_companies_data.pagination.total_pages }} total pages available.
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Search Parameters -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="fas fa-search text-success me-2"></i>Search Parameters
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-card alert-info">
+                                    <div class="info-icon"><i class="fas fa-building"></i></div>
+                                    <div class="info-content">
+                                        <h4>Entity Name</h4>
+                                        <p>
+                                            {% if blacklisted_companies_data.search_params and blacklisted_companies_data.search_params.entity_name %}
+                                                {{ blacklisted_companies_data.search_params.entity_name }}
+                                            {% elif blacklisted_companies_data.entity_name %}
+                                                {{ blacklisted_companies_data.entity_name }}
+                                            {% elif form_data and form_data.entity_name %}
+                                                {{ form_data.entity_name }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endif %}
 
-{% else %}
-<!-- No Data Available -->
-<div class="row">
-    <div class="col-12">
-        <div class="alert alert-warning">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            No blacklisted companies data is available. Please try generating the report again.
+        <!-- Results Summary -->
+        {% if blacklisted_companies_data and blacklisted_companies_data.results_summary %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="info-card alert-info">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="info-content">
+                        <p>{{ blacklisted_companies_data.results_summary }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endif %}
+        {% endif %}
 
-<!-- Disclaimer -->
-<div class="row mt-5">
-    <div class="col-12">
-        <div class="card border-warning">
-            <div class="card-body">
-                <h6 class="card-title text-warning">
-                    <i class="fas fa-exclamation-triangle me-2"></i>Important Disclaimer
-                </h6>
-                <p class="card-text small mb-0">
-                    This information is provided for informational purposes only. The blacklist data is sourced from various government and international organizations. 
-                    Users should verify this information independently and consult with legal professionals before making business decisions. 
-                    The accuracy and completeness of this data cannot be guaranteed.
-                </p>
+        <!-- Error Handling -->
+        {% if blacklisted_companies_data and blacklisted_companies_data.error %}
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card alert-danger">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <h4>Error</h4>
+                        <p>{{ blacklisted_companies_data.error }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif blacklisted_companies_data %}
+        <!-- Results Statistics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="info-card alert-primary">
+                    <div class="info-icon"><i class="fas fa-ban"></i></div>
+                    <div class="info-content text-center">
+                        <h4>{{ blacklisted_companies_data.total_entities or 0 }}</h4>
+                        <p class="mb-0">Blacklisted Entities</p>
+                    </div>
+                </div>
+            </div>
+            {% if blacklisted_companies_data.pagination and blacklisted_companies_data.pagination.has_pagination %}
+            <div class="col-md-3">
+                <div class="info-card alert-success">
+                    <div class="info-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="info-content text-center">
+                        <h4>{{ blacklisted_companies_data.pagination.total_pages or 1 }}</h4>
+                        <p class="mb-0">Total Pages</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Blacklisted Entities List -->
+        {% if blacklisted_companies_data.blacklisted_entities %}
+        <div class="row">
+            <div class="col-12">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <h4 class="mb-4">
+                            <i class="fas fa-list text-success me-2"></i>Blacklisted Entities
+                        </h4>
+                        <div class="row">
+                            {% for entity in blacklisted_companies_data.blacklisted_entities %}
+                            <div class="col-md-6 mb-4">
+                                <div class="info-card alert-danger h-100">
+                                    <div class="info-content">
+                                        <h5 class="card-title text-danger">
+                                            <i class="fas fa-ban me-2"></i>{{ entity.name }}
+                                        </h5>
+                                        {% if entity.blacklisted_by %}
+                                        <div class="mb-3">
+                                            <strong class="text-muted">Blacklisted by:</strong>
+                                            <span class="badge bg-danger">{{ entity.blacklisted_by }}</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if entity.url %}
+                                        <div class="mb-3">
+                                            <a href="{{ entity.url }}" target="_blank" class="btn-action">
+                                                <i class="fas fa-external-link-alt me-1"></i>View Details
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                        {% if entity.data_entity %}
+                                        <div class="mb-2">
+                                            <small class="text-muted">Entity ID: {{ entity.data_entity }}</small>
+                                        </div>
+                                        {% endif %}
+                                        {% if entity.tracking_id %}
+                                        <div class="mb-2">
+                                            <small class="text-muted">Tracking: {{ entity.tracking_id }}</small>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card alert-warning">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <p>No blacklisted entities found for the selected country.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Pagination Info -->
+        {% if blacklisted_companies_data and blacklisted_companies_data.pagination and blacklisted_companies_data.pagination.has_pagination %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="info-card alert-info">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="info-content">
+                        <p><strong>Note:</strong> This data shows results from page 1. There are {{ blacklisted_companies_data.pagination.total_pages }} total pages available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <!-- No Data Available -->
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card alert-warning">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <p>No blacklisted companies data is available. Please try generating the report again.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Disclaimer -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="info-card alert-warning">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <h4>Important Disclaimer</h4>
+                        <p class="small mb-0">
+                            This information is provided for informational purposes only. The blacklist data is sourced from various government and international organizations. 
+                            Users should verify this information independently and consult with legal professionals before making business decisions. 
+                            The accuracy and completeness of this data cannot be guaranteed.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --white: #ffffff;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --hover-purple: #6d28d9;
+}
+
+.report-hero-section {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+    padding: 3rem 0 1rem;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 50%, var(--primary-purple) 100%);
+}
+
+.converter-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 90% 30%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+}
+
+.particle-1 { top: 10%; left: 15%; animation-delay: 0s; }
+.particle-2 { top: 70%; left: 20%; animation-delay: 1.5s; }
+.particle-3 { top: 30%; right: 15%; animation-delay: 3s; }
+.particle-4 { top: 80%; right: 20%; animation-delay: 4.5s; }
+.particle-5 { top: 40%; left: 5%; animation-delay: 2.5s; }
+.particle-6 { top: 60%; right: 5%; animation-delay: 5.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+    50% { transform: translateY(-20px) translateX(15px); opacity: 1; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--white);
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--white), var(--secondary-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.converter-main-content {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.info-card.alert-info {
+    border-left: 4px solid var(--success);
+}
+
+.info-card.alert-warning {
+    border-left: 4px solid var(--secondary-red);
+}
+
+.info-card.alert-primary {
+    border-left: 4px solid var(--primary-purple);
+}
+
+.info-card.alert-success {
+    border-left: 4px solid var(--success);
+}
+
+.info-card.alert-danger {
+    border-left: 4px solid var(--secondary-red);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.info-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.info-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.btn-action {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background: var(--secondary-orange);
+    transform: translateY(-1px);
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, var(--secondary-red), var(--hover-purple));
+    color: var(--white);
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.text-danger {
+    color: var(--secondary-red) !important;
+}
+
+.text-success {
+    color: var(--success) !important;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .report-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .converter-card {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card {
+        padding: 1rem;
+    }
+}
+
+@media print {
+    .btn-action, .info-card, .converter-card, .report-hero-section {
+        background: #fff;
+        color: #000;
+        border-color: #ddd;
+    }
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // External link tracking
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Blacklisted Companies and Vessels page initialized');
+});
+</script>
 {% endblock %}

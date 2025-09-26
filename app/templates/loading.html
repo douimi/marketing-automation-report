@@ -3,146 +3,411 @@
 {% block title %}Generating Your Report{% endblock %}
 
 {% block content %}
-<div class="loading-container">
-    <div class="loading-content text-center">
-        <div class="progress-indicator">
-            <div class="circle-loader" id="mainLoader">
-                <div class="checkmark draw"></div>
-            </div>
-        </div>
-        
-        <h1 class="mt-4 mb-3">Generating Your Report</h1>
-        
-        <div class="progress-steps">
-            <div class="step" id="step1">
-                <div class="step-icon">
-                    <i class="fas fa-globe-americas"></i>
-                </div>
-                <div class="step-content">
-                    <h3>Market Data</h3>
-                    <p class="step-status">Gathering market information...</p>
-                </div>
-            </div>
-            
-            <div class="step" id="step2">
-                <div class="step-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="step-content">
-                    <h3>Analysis</h3>
-                    <p class="step-status">Processing market indicators...</p>
-                </div>
-            </div>
-            
-            <div class="step" id="step3">
-                <div class="step-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <div class="step-content">
-                    <h3>AI Insights</h3>
-                    <p class="step-status">Generating recommendations...</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="loading-message mt-4">
-            <p class="lead">Please wait while we prepare your comprehensive market analysis</p>
-            <p class="text-muted">This usually takes about 3-5 minutes</p>
+<section class="loading-section">
+    <div class="loading-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
     </div>
-</div>
+
+    <div class="container loading-container">
+        <div class="loading-card">
+            <div class="loading-header">
+                <div class="brand-section">
+                    <div class="brand-container">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Indatex Logo" class="loading-logo-img">
+                        <div class="brand-text">
+                            <h1 class="loading-brand-name">Trade Intelligence</h1>
+                            <span class="loading-subtitle">Market Analysis Portal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading-title-section">
+                    <div class="title-decoration">
+                        <div class="decoration-line left-line"></div>
+                        <div class="title-badge">
+                            <div class="loader" id="mainLoader">
+                                <div class="inner one"></div>
+                                <div class="inner two"></div>
+                                <div class="inner three"></div>
+                                <div class="checkmark draw"></div>
+                            </div>
+                        </div>
+                        <div class="decoration-line right-line"></div>
+                    </div>
+                    <h1 class="loading-main-title">Generating Your Report</h1>
+                    <p class="loading-subtitle-text">Please wait while we prepare your comprehensive market analysis</p>
+                </div>
+            </div>
+
+            <div class="loading-content">
+                <div class="progress-steps">
+                    <div class="step" id="step1">
+                        <div class="step-icon">
+                            <div class="step-icon-bg">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Market Data Collection</h3>
+                            <p class="step-status">Gathering market information...</p>
+                            <div class="step-progress">
+                                <div class="step-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step2">
+                        <div class="step-icon">
+                            <div class="step-icon-bg">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Data Analysis</h3>
+                            <p class="step-status">Processing market indicators...</p>
+                            <div class="step-progress">
+                                <div class="step-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step3">
+                        <div class="step-icon">
+                            <div class="step-icon-bg">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>AI Insights Generation</h3>
+                            <p class="step-status">Generating recommendations...</p>
+                            <div class="step-progress">
+                                <div class="step-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading-message">
+                    <div class="message-content">
+                        <div class="message-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <p class="message-text">This usually takes about 3-5 minutes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-visual">
+                <div class="visual-container">
+                    <div class="data-flow">
+                        <div class="flow-item" style="--delay: 0s;">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="flow-item" style="--delay: 0.5s;">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="flow-item" style="--delay: 1s;">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="flow-item" style="--delay: 1.5s;">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="loading-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">250M+</div>
+                        <div class="stat-label">Data Points</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">180+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <style>
-.loading-container {
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Loading Section */
+.loading-section {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--white);
+    overflow: hidden;
+    padding: 2rem 0;
 }
 
-.loading-content {
-    background: white;
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 90%;
+.loading-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
 }
 
-.progress-steps {
-    margin: 3rem 0;
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
 }
 
-.step {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-    opacity: 0.5;
-    transition: all 0.3s ease;
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 
-.step.active {
-    opacity: 1;
-}
-
-.step.completed {
-    opacity: 1;
-}
-
-.step-icon {
-    width: 50px;
-    height: 50px;
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    background: #2c3e50;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.loading-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.loading-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Loading Header */
+.loading-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 1.5rem;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-.step-icon i {
-    color: white;
-    font-size: 1.5rem;
+.loading-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
-.step-content {
-    flex: 1;
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.step-content h3 {
+.loading-brand-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--white);
     margin: 0;
-    font-size: 1.2rem;
-    color: #2c3e50;
+    line-height: 1;
 }
 
-.step-status {
-    margin: 0;
-    color: #666;
+.loading-subtitle {
     font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
 }
 
-.circle-loader {
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    border-left-color: #2c3e50;
-    animation: loader-spin 1.2s infinite linear;
+/* Loading Title Section */
+.loading-title-section {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.title-badge {
+    margin: 0 20px;
     position: relative;
+    z-index: 2;
+}
+
+.loading-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.loading-subtitle-text {
+    font-size: 1rem;
+    color: #c7d2fe;
+    margin: 0;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+/* 3D Loader */
+.loader {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    perspective: 800px;
     display: inline-block;
     vertical-align: top;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
 }
 
-.load-complete {
-    -webkit-animation: none;
-    animation: none;
-    border-color: #2c3e50;
-    transition: border 500ms ease-out;
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;  
+}
+
+.inner.one {
+    left: 0%;
+    top: 0%;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #EFEFFA;
+}
+
+.inner.two {
+    right: 0%;
+    top: 0%;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #EFEFFA;
+}
+
+.inner.three {
+    right: 0%;
+    bottom: 0%;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #EFEFFA;
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+.load-complete .inner {
+    animation: none !important;
+    border-color: var(--success) !important;
+    transition: border-color 500ms ease-out;
 }
 
 .checkmark {
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
 }
 
 .checkmark.draw:after {
@@ -154,81 +419,579 @@
 
 .checkmark:after {
     opacity: 1;
-    height: 40px;
-    width: 20px;
+    height: 25px;
+    width: 12px;
     transform-origin: left top;
-    border-right: 3px solid #2c3e50;
-    border-top: 3px solid #2c3e50;
+    border-right: 3px solid var(--success);
+    border-top: 3px solid var(--success);
     content: '';
-    left: 28px;
-    top: 38px;
+    left: 18px;
+    top: 24px;
     position: absolute;
 }
 
-@keyframes loader-spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 @keyframes checkmark {
-    0% {
-        height: 0;
-        width: 0;
-        opacity: 1;
-    }
-    20% {
-        height: 0;
-        width: 20px;
-        opacity: 1;
-    }
-    40% {
-        height: 40px;
-        width: 20px;
-        opacity: 1;
-    }
-    100% {
-        height: 40px;
-        width: 20px;
-        opacity: 1;
-    }
+    0% { height: 0; width: 0; opacity: 1; }
+    20% { height: 0; width: 12px; opacity: 1; }
+    40% { height: 25px; width: 12px; opacity: 1; }
+    100% { height: 25px; width: 12px; opacity: 1; }
 }
 
-.error-message {
-    color: #dc3545;
-    margin-top: 1rem;
-    display: none;
+/* Loading Content */
+.loading-content {
+    display: flex;
+    flex: 1;
+    padding: 0 2rem 2rem;
 }
 
-/* Add animation for steps */
+.progress-steps {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    opacity: 0.4;
+    transition: var(--transition);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step.completed {
+    opacity: 1;
+}
+
+.step.completed .step-icon-bg {
+    background: linear-gradient(135deg, var(--success), #34d399);
+}
+
+.step.completed .step-icon-bg i {
+    animation: bounce 0.6s ease;
+}
+
+.step:nth-child(1) { animation-delay: 0.2s; }
+.step:nth-child(2) { animation-delay: 0.4s; }
+.step:nth-child(3) { animation-delay: 0.6s; }
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
     }
     to {
-        opacity: 1;
+        opacity: 0.4;
         transform: translateY(0);
     }
 }
 
-.step {
-    animation: fadeInUp 0.5s ease-out forwards;
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-3px); }
+    60% { transform: translateY(-2px); }
 }
 
-.step:nth-child(1) { animation-delay: 0.2s; }
-.step:nth-child(2) { animation-delay: 0.4s; }
-.step:nth-child(3) { animation-delay: 0.6s; }
+.step-icon {
+    margin-right: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.step-icon-bg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-purple), var(--secondary-orange));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.step-icon-bg i {
+    color: var(--white);
+    font-size: 1.2rem;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: var(--white);
+    font-weight: 700;
+}
+
+.step-status {
+    margin: 0 0 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.step-progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.step-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.step.active .step-progress-bar {
+    animation: progressFill 2s ease-in-out forwards;
+}
+
+.step.completed .step-progress-bar {
+    width: 100%;
+    background: var(--success);
+}
+
+@keyframes progressFill {
+    0% { width: 0%; }
+    100% { width: 75%; }
+}
+
+/* Loading Message */
+.loading-message {
+    flex: 0 0 auto;
+    margin-top: 2rem;
+}
+
+.message-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+.message-icon {
+    color: var(--secondary-orange);
+    font-size: 1.1rem;
+}
+
+.message-text {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Loading Visual */
+.loading-visual {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    padding: 2rem;
+    border-left: 1px solid var(--glass-border);
+}
+
+.visual-container {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.data-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.flow-item {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1rem;
+    animation: flowPulse 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes flowPulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+}
+
+.loading-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+.stat-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+/* Error and Warning Styles */
+.alert {
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fecaca;
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fde68a;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .loading-content {
+        flex-direction: column;
+        padding: 0 2rem 2rem;
+    }
+    
+    .progress-steps {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .loading-visual {
+        flex: none;
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+        padding: 2rem;
+    }
+    
+    .visual-container {
+        width: 100%;
+        max-width: 400px;
+        height: 120px;
+    }
+    
+    .loading-stats {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .loading-section {
+        padding: 1rem 0;
+    }
+    
+    .loading-container {
+        padding: 0 1rem;
+    }
+    
+    .loading-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .loading-content {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .loading-visual {
+        padding: 1.5rem;
+    }
+    
+    .brand-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .loading-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .loading-subtitle-text {
+        font-size: 0.9rem;
+    }
+    
+    .loader {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .decoration-line {
+        width: 40px;
+    }
+    
+    .step {
+        margin-bottom: 1.5rem;
+    }
+    
+    .step-icon {
+        margin-right: 1rem;
+    }
+    
+    .step-icon-bg {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .step-icon-bg i {
+        font-size: 1.1rem;
+    }
+    
+    .step-content h3 {
+        font-size: 1rem;
+    }
+    
+    .step-status {
+        font-size: 0.85rem;
+    }
+    
+    .data-flow {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .flow-item {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .loading-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .stat-item {
+        padding: 0.75rem 0.25rem;
+    }
+    
+    .stat-number {
+        font-size: 1.1rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .loading-header {
+        padding: 1rem;
+    }
+    
+    .loading-content {
+        padding: 0 1rem 1rem;
+    }
+    
+    .loading-visual {
+        padding: 1rem;
+    }
+    
+    .loading-main-title {
+        font-size: 1.25rem;
+    }
+    
+    .loading-subtitle-text {
+        font-size: 0.85rem;
+    }
+    
+    .loader {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+    
+    .step-icon-bg {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .step-icon-bg i {
+        font-size: 1rem;
+    }
+    
+    .step-content h3 {
+        font-size: 0.95rem;
+    }
+    
+    .loading-stats {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .stat-item {
+        padding: 0.5rem;
+    }
+    
+    .message-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .message-text {
+        font-size: 0.85rem;
+    }
+}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
 <script>
 let pollInterval = null;
 let pollStart = Date.now();
 let warningShown = false;
 let warningMs = 300000; // 5 minutes
+let currentStep = 1;
+let stepTimers = [];
+
+function simulateProgress() {
+    // Simulate step progression
+    const steps = document.querySelectorAll('.step');
+    
+    // Step 1: Market Data (active immediately)
+    if (currentStep >= 1) {
+        steps[0].classList.add('active');
+        
+        setTimeout(() => {
+            steps[0].classList.add('completed');
+            steps[0].classList.remove('active');
+            currentStep = 2;
+            
+            // Step 2: Analysis
+            if (currentStep >= 2) {
+                steps[1].classList.add('active');
+                
+                setTimeout(() => {
+                    steps[1].classList.add('completed');
+                    steps[1].classList.remove('active');
+                    currentStep = 3;
+                    
+                    // Step 3: AI Insights
+                    if (currentStep >= 3) {
+                        steps[2].classList.add('active');
+                    }
+                }, 45000); // 45 seconds for step 2
+            }
+        }, 30000); // 30 seconds for step 1
+    }
+}
+
+function updateStepStatus(step, status) {
+    const stepElement = document.getElementById(`step${step}`);
+    const statusElement = stepElement.querySelector('.step-status');
+    
+    const messages = {
+        1: {
+            active: 'Gathering market information...',
+            completed: 'Market data collected successfully'
+        },
+        2: {
+            active: 'Processing market indicators...',
+            completed: 'Analysis completed successfully'
+        },
+        3: {
+            active: 'Generating recommendations...',
+            completed: 'AI insights generated successfully'
+        }
+    };
+    
+    if (messages[step] && messages[step][status]) {
+        statusElement.textContent = messages[step][status];
+    }
+}
+
 function pollStatus() {
     // Add cache-busting param
     const url = '/check_status?_=' + new Date().getTime();
@@ -242,7 +1005,26 @@ function pollStatus() {
             console.log('Status data:', data);
             if (data.status === 'complete') {
                 console.log('Report complete, redirecting to:', data.redirect_url);
-                window.location.href = data.redirect_url;
+                
+                // Complete all steps
+                const steps = document.querySelectorAll('.step');
+                steps.forEach((step, index) => {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                    updateStepStatus(index + 1, 'completed');
+                });
+                
+                // Show completion loader
+                const mainLoader = document.getElementById('mainLoader');
+                mainLoader.classList.add('load-complete');
+                const checkmark = mainLoader.querySelector('.checkmark');
+                checkmark.style.display = 'block';
+                
+                // Redirect after animation
+                setTimeout(() => {
+                    window.location.href = data.redirect_url;
+                }, 1500);
+                
             } else if (data.status === 'error') {
                 console.log('Error status:', data.message);
                 showError(data.message || 'An error occurred.');
@@ -260,35 +1042,123 @@ function pollStatus() {
             showError('Network error. <button id="retryBtn" class="btn btn-primary mt-2">Try Again</button>');
         });
 }
+
 function showError(msg) {
     clearInterval(pollInterval);
+    stepTimers.forEach(timer => clearTimeout(timer));
+    
     const loadingMessage = document.querySelector('.loading-message');
     loadingMessage.innerHTML = `
         <div class="alert alert-danger">
-            <h5>Error</h5>
-            <p>${msg}</p>
-            <button id="retryBtn" class="btn btn-primary">Try Again</button>
-            <a href="/" class="btn btn-secondary ms-2">Go Home</a>
+            <h5 style="margin-bottom: 0.5rem; color: #fecaca;">Error Occurred</h5>
+            <p style="margin-bottom: 1rem;">${msg}</p>
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <button id="retryBtn" class="btn btn-primary">Try Again</button>
+                <a href="/" class="btn btn-secondary">Go Home</a>
+            </div>
         </div>
     `;
+    
     const btn = document.getElementById('retryBtn');
-    if (btn) btn.onclick = function() {
-        loadingMessage.innerHTML = '<p class="lead">Retrying...</p>';
-        pollInterval = setInterval(pollStatus, 2000);
-    };
+    if (btn) {
+        btn.onclick = function() {
+            loadingMessage.innerHTML = `
+                <div class="message-content">
+                    <div class="message-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <p class="message-text">Retrying... Please wait</p>
+                </div>
+            `;
+            pollStart = Date.now();
+            warningShown = false;
+            currentStep = 1;
+            
+            // Reset steps
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                updateStepStatus(index + 1, 'active');
+            });
+            
+            // Reset loader
+            const mainLoader = document.getElementById('mainLoader');
+            mainLoader.classList.remove('load-complete');
+            const checkmark = mainLoader.querySelector('.checkmark');
+            checkmark.style.display = 'none';
+            
+            // Restart simulation and polling
+            simulateProgress();
+            pollInterval = setInterval(pollStatus, 2000);
+        };
+    }
 }
+
 function showWarning(msg) {
     let warningDiv = document.getElementById('loading-warning');
     if (!warningDiv) {
         warningDiv = document.createElement('div');
         warningDiv.id = 'loading-warning';
-        warningDiv.className = 'alert alert-warning mt-3';
+        warningDiv.className = 'alert alert-warning';
+        warningDiv.style.margin = '1rem 0';
         document.querySelector('.loading-content').appendChild(warningDiv);
     }
-    warningDiv.innerHTML = msg;
+    warningDiv.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>${msg}</span>
+        </div>
+    `;
 }
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Start progress simulation
+    simulateProgress();
+    
+    // Start polling
     pollInterval = setInterval(pollStatus, 2000);
+    
+    // Add hover effects to steps
+    const steps = document.querySelectorAll('.step');
+    steps.forEach(step => {
+        step.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('completed')) {
+                this.style.transform = 'translateX(5px)';
+            }
+        });
+        
+        step.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+        });
+    });
+    
+    // Add pulse effect to active steps
+    setInterval(() => {
+        const activeStep = document.querySelector('.step.active');
+        if (activeStep) {
+            const icon = activeStep.querySelector('.step-icon-bg');
+            icon.style.animation = 'none';
+            setTimeout(() => {
+                icon.style.animation = 'pulse 2s ease-in-out infinite';
+            }, 10);
+        }
+    }, 3000);
 });
+
+// Add CSS for pulse animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0%, 100% { 
+            transform: scale(1);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+        50% { 
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+        }
+    }
+`;
+document.head.appendChild(style);
 </script>
-{% endblock %} 
+{% endblock %}

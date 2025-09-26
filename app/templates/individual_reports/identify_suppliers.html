@@ -3,268 +3,719 @@
 {% block title %}Identify a Supplier - {{ form_data.destination_country_name }}{% endblock %}
 
 {% block content %}
-<div class="container-xl my-4">
-    <!-- Header -->
-    <div class="mb-4">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
-                <span class="country-flag me-2"><i class="fas fa-search fa-2x text-accent"></i></span>
-                <div>
-                    <h1 class="h2 fw-bold mb-1">Identify a Supplier</h1>
-                    <div class="d-flex flex-wrap gap-3 align-items-center">
-                        <span><i class="fas fa-flag me-1"></i> {{ form_data.destination_country_name }}</span>
-                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex gap-2">
-                <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2">
+<section class="supplier-hero-section">
+    <div class="converter-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title"><i class="fas fa-search me-3"></i>Identify a Supplier</h1>
+            <p class="hero-subtitle">Find reliable suppliers in {{ form_data.destination_country_name }}</p>
+            <p class="hero-stats"><small><i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Supplier Identification</small></p>
+            <div class="d-flex flex-wrap gap-2 justify-content-center mt-3">
+                <button onclick="window.print()" class="btn-action">
                     <i class="fas fa-file-pdf me-2"></i>Export PDF
                 </button>
-                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary px-4 py-2">
+                <a href="{{ url_for('main.services_page') }}" class="btn-action">
                     <i class="fas fa-arrow-left me-2"></i>Back to Services
                 </a>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Service Navigation -->
-    <nav class="service-nav mb-4 p-3 bg-light rounded shadow-sm">
-        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
-            <span class="fw-bold text-muted">Related Services:</span>
-            <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-sm btn-outline-primary">General Presentation</a>
-            <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="btn btn-sm btn-outline-primary">Trade Shows</a>
-            <a href="{{ url_for('main.form_page') }}" class="btn btn-sm btn-primary">Complete Report</a>
-        </div>
-    </nav>
-
-    <!-- Error Display -->
-    {% if supplier_data.error %}
-    <div class="alert alert-danger">
-        <i class="fas fa-exclamation-triangle me-2"></i>
-        <strong>Error:</strong> {{ supplier_data.error }}
-    </div>
-    {% else %}
-
-    <!-- Production Types Section -->
-    {% if supplier_data.production_types_section %}
-    <section class="report-section mb-4">
-        <div class="section-header">
-            <i class="fas fa-industry section-icon"></i>Types of Production
-        </div>
-        <div class="section-content">
-            {{ supplier_data.production_types_section|safe }}
-        </div>
-    </section>
-    {% endif %}
-
-
-
-    <!-- Marketplaces Section -->
-    {% if supplier_data.marketplaces_section %}
-    <section class="report-section mb-4">
-        <div class="section-header">
-            <i class="fas fa-shopping-cart section-icon"></i>Online Marketplaces
-        </div>
-        <div class="section-content">
-            {{ supplier_data.marketplaces_section|safe }}
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Trade Shows Section -->
-    {% if supplier_data.trade_shows_section %}
-    <section class="report-section mb-4">
-        <div class="section-header">
-            <i class="fas fa-calendar-alt section-icon"></i>Trade Shows & Events
-        </div>
-        <div class="section-content">
-            {{ supplier_data.trade_shows_section|safe }}
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Manufacturers Section -->
-    {% if supplier_data.manufacturers_section %}
-    <section class="report-section mb-4">
-        <div class="section-header">
-            <i class="fas fa-cogs section-icon"></i>Types of Manufacturers
-        </div>
-        <div class="section-content">
-            {{ supplier_data.manufacturers_section|safe }}
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Complete Data Section (if individual sections are empty) -->
-    {% if supplier_data.main_module_section and not (supplier_data.production_types_section or supplier_data.marketplaces_section or supplier_data.trade_shows_section or supplier_data.manufacturers_section) %}
-    <section class="report-section mb-4">
-        <div class="section-header">
-            <i class="fas fa-search section-icon"></i>Supplier Identification Information
-        </div>
-        <div class="section-content">
-            {{ supplier_data.main_module_section|safe }}
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Data Sources and Update Information -->
-    <div class="card mb-4 border-muted">
-        <div class="card-body">
-            <h6 class="card-title mb-3"><i class="fas fa-info-circle me-2"></i>Data Information</h6>
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-2"><strong>Data Source:</strong> Santander Trade Portal</p>
-                    <p class="mb-2"><strong>Service Type:</strong> Supplier Identification Analysis</p>
-                </div>
-                <div class="col-md-6">
-                    {% if supplier_data.update_date %}
-                    <p class="mb-2"><strong>Last Update:</strong> {{ supplier_data.update_date }}</p>
-                    {% endif %}
-                    <p class="mb-0"><strong>Generated:</strong> {{ datetime.now().strftime('%Y-%m-%d %H:%M UTC') }}</p>
-                </div>
-            </div>
+<div class="quick-nav-section">
+    <div class="container">
+        <div class="quick-nav-wrapper">
+            <a href="#production-types" class="quick-nav-item"><i class="fas fa-industry"></i> Production Types</a>
+            <a href="#marketplaces" class="quick-nav-item"><i class="fas fa-shopping-cart"></i> Marketplaces</a>
+            <a href="#trade-shows" class="quick-nav-item"><i class="fas fa-calendar-alt"></i> Trade Shows</a>
+            <a href="#manufacturers" class="quick-nav-item"><i class="fas fa-cogs"></i> Manufacturers</a>
         </div>
     </div>
-
-    {% endif %}
-
-    <!-- Raw Data Debug (only shown in development) -->
-    {% if config.DEBUG and supplier_data.raw_html %}
-    <div class="mt-5">
-        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#rawDataCollapse" aria-expanded="false" aria-controls="rawDataCollapse">
-            <i class="fas fa-code me-1"></i>Show Raw Data (Debug)
-        </button>
-        <div class="collapse mt-3" id="rawDataCollapse">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="mb-0">Raw HTML Data</h6>
-                </div>
-                <div class="card-body">
-                    <pre class="small text-muted">{{ supplier_data.raw_html|e }}</pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
 
-<!-- Custom styles for this report -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Error Display -->
+        {% if supplier_data.error %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="info-card alert-danger">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <h4>Error</h4>
+                        <p>{{ supplier_data.error }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+
+        <!-- Production Types Section -->
+        {% if supplier_data.production_types_section %}
+        <section class="converter-section" id="production-types">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon"><i class="fas fa-industry"></i></div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Types of Production</h2>
+                </div>
+            </div>
+            <div class="converter-card">
+                <div class="card-body">
+                    {{ supplier_data.production_types_section|safe }}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Marketplaces Section -->
+        {% if supplier_data.marketplaces_section %}
+        <section class="converter-section" id="marketplaces">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon"><i class="fas fa-shopping-cart"></i></div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Online Marketplaces</h2>
+                </div>
+            </div>
+            <div class="converter-card">
+                <div class="card-body">
+                    {{ supplier_data.marketplaces_section|safe }}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Trade Shows Section -->
+        {% if supplier_data.trade_shows_section %}
+        <section class="converter-section" id="trade-shows">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Trade Shows & Events</h2>
+                </div>
+            </div>
+            <div class="converter-card">
+                <div class="card-body">
+                    {{ supplier_data.trade_shows_section|safe }}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Manufacturers Section -->
+        {% if supplier_data.manufacturers_section %}
+        <section class="converter-section" id="manufacturers">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon"><i class="fas fa-cogs"></i></div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Types of Manufacturers</h2>
+                </div>
+            </div>
+            <div class="converter-card">
+                <div class="card-body">
+                    {{ supplier_data.manufacturers_section|safe }}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Complete Data Section (if individual sections are empty) -->
+        {% if supplier_data.main_module_section and not (supplier_data.production_types_section or supplier_data.marketplaces_section or supplier_data.trade_shows_section or supplier_data.manufacturers_section) %}
+        <section class="converter-section" id="main-module">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon"><i class="fas fa-search"></i></div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Supplier Identification Information</h2>
+                </div>
+            </div>
+            <div class="converter-card">
+                <div class="card-body">
+                    {{ supplier_data.main_module_section|safe }}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Data Sources and Update Information -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="info-content">
+                        <h4>Data Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>Data Source:</strong> Santander Trade Portal</p>
+                                <p class="mb-2"><strong>Service Type:</strong> Supplier Identification Analysis</p>
+                            </div>
+                            <div class="col-md-6">
+                                {% if supplier_data.update_date %}
+                                <p class="mb-2"><strong>Last Update:</strong> {{ supplier_data.update_date }}</p>
+                                {% endif %}
+                                <p class="mb-0"><strong>Generated:</strong> {{ datetime.now().strftime('%Y-%m-%d %H:%M UTC') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <!-- Raw Data Debug (only shown in development) -->
+        {% if config.DEBUG and supplier_data.raw_html %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <button class="btn-action btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#rawDataCollapse" aria-expanded="false" aria-controls="rawDataCollapse">
+                    <i class="fas fa-code me-1"></i>Show Raw Data (Debug)
+                </button>
+                <div class="collapse mt-3" id="rawDataCollapse">
+                    <div class="info-card">
+                        <div class="info-content">
+                            <h4>Raw HTML Data</h4>
+                            <pre class="small text-muted">{{ supplier_data.raw_html|e }}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Related Services -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-link"></i></div>
+                    <div class="info-content">
+                        <h4>Related Services</h4>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn-action">General Presentation</a>
+                            <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="btn-action">Trade Shows</a>
+                            <a href="{{ url_for('main.form_page') }}" class="btn-action primary">Complete Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --white: #ffffff;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --hover-purple: #6d28d9;
+}
+
+.supplier-hero-section {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+    padding: 3rem 0 1rem;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 50%, var(--primary-purple) 100%);
+}
+
+.converter-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 90% 30%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+}
+
+.particle-1 { top: 10%; left: 15%; animation-delay: 0s; }
+.particle-2 { top: 70%; left: 20%; animation-delay: 1.5s; }
+.particle-3 { top: 30%; right: 15%; animation-delay: 3s; }
+.particle-4 { top: 80%; right: 20%; animation-delay: 4.5s; }
+.particle-5 { top: 40%; left: 5%; animation-delay: 2.5s; }
+.particle-6 { top: 60%; right: 5%; animation-delay: 5.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+    50% { transform: translateY(-20px) translateX(15px); opacity: 1; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--white);
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--white), var(--secondary-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-orange);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--glass-border);
+    font-weight: 500;
+}
+
+.quick-nav-item:hover {
+    background: var(--hover-purple);
+    color: var(--white);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.quick-nav-item.active {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    color: var(--white);
+    border-color: var(--secondary-orange);
+}
+
+.quick-nav-item i {
+    font-size: 1rem;
+}
+
+.converter-main-content {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.converter-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.section-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    box-shadow: var(--shadow);
+}
+
+.section-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.info-card.alert-danger {
+    border-left: 4px solid var(--secondary-red);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.info-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.info-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.btn-action {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background: var(--secondary-orange);
+    transform: translateY(-1px);
+}
+
+.btn-action.primary {
+    background: var(--primary-purple);
+    border-color: var(--primary-purple);
+}
+
+.btn-action.primary:hover {
+    background: var(--hover-purple);
+}
+
+.section-content table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    color: var(--white);
+}
+
+.section-content table th,
+.section-content table td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.section-content table th {
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+}
+
+.section-content dl.informations {
+    margin-bottom: 1.5rem;
+}
+
+.section-content dl.informations dt {
+    font-weight: 600;
+    color: var(--primary-purple);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-content dl.informations dd {
+    margin-left: 0;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.section-content h2 {
+    color: var(--primary-purple);
+    border-bottom: 2px solid var(--primary-purple);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+}
+
+.section-content h2:first-child {
+    margin-top: 0;
+}
+
+.section-content select {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.5rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    background: var(--glass-bg);
+    color: var(--white);
+}
+
+.section-content .mb-3 {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem !important;
+    border-left: 4px solid var(--primary-purple);
+}
+
+.section-content .notes-grey {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    .quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
     .section-header {
-        background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-info) 100%);
-        color: white;
-        padding: 1rem;
-        border-radius: 0.5rem 0.5rem 0 0;
-        font-weight: 600;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        margin-bottom: 0;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
     }
-    
     .section-icon {
-        margin-right: 0.75rem;
-        font-size: 1.2rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
     }
-    
-    .section-content {
-        background: white;
-        border: 1px solid #dee2e6;
-        border-top: none;
-        border-radius: 0 0 0.5rem 0.5rem;
-        padding: 1.5rem;
-    }
-    
-    .section-content table {
-        width: 100%;
-        margin-bottom: 1rem;
-        border-collapse: collapse;
-    }
-    
-    .section-content table th,
-    .section-content table td {
-        padding: 0.75rem;
-        border: 1px solid #dee2e6;
-        text-align: left;
-    }
-    
-    .section-content table th {
-        background-color: #f8f9fa;
-        font-weight: 600;
-    }
-    
-    .section-content dl.informations {
-        margin-bottom: 1.5rem;
-    }
-    
-    .section-content dl.informations dt {
-        font-weight: 600;
-        color: var(--bs-primary);
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .section-content dl.informations dd {
-        margin-left: 0;
-        margin-bottom: 1rem;
-        line-height: 1.6;
-    }
-    
     .section-content h2 {
-        color: var(--bs-primary);
-        border-bottom: 2px solid var(--bs-primary);
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
-        margin-top: 1.5rem;
+        font-size: 1.6rem;
     }
-    
-    .section-content h2:first-child {
-        margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    .supplier-hero-section {
+        padding: 2rem 0 0.5rem;
     }
-    
-    .section-content select {
-        width: 100%;
-        max-width: 500px;
-        padding: 0.5rem;
-        border: 1px solid #dee2e6;
-        border-radius: 0.25rem;
-        margin-bottom: 1rem;
+    .hero-title {
+        font-size: 1.8rem;
     }
-    
-    .section-content .mb-3 {
-        background: #f8f9fa;
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .converter-card {
         padding: 1rem;
-        border-radius: 0.25rem;
-        margin-bottom: 1rem !important;
-        border-left: 4px solid var(--bs-primary);
     }
-    
-    .section-content .notes-grey {
-        color: #6c757d;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
+}
+
+@media (max-width: 576px) {
+    .info-card {
+        padding: 1rem;
     }
-    
-    .service-nav {
-        border-left: 4px solid var(--bs-primary);
+}
+
+@media print {
+    .btn-action, .info-card, .converter-card, .quick-nav-section, .supplier-hero-section {
+        background: #fff;
+        color: #000;
+        border-color: #ddd;
     }
-    
-    @media print {
-        .service-nav,
-        .btn,
-        .collapse {
-            display: none !important;
-        }
-        
-        .section-content {
-            border: none;
-            box-shadow: none;
-        }
-        
-        .section-content select {
-            display: none;
-        }
+    .section-content select {
+        display: none;
     }
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card, .converter-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Highlight active section
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // External link tracking
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Identify a Supplier page initialized');
+});
+</script>
 {% endblock %}

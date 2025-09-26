@@ -13,7 +13,7 @@ body {
     min-height: 100vh;
 }
 .report-section, .eco-pol-card, .trade-card {
-    background: #f6f8fc;
+    background: #1B1931;
     border: 1.5px solid var(--border-color);
     border-radius: 0.7rem;
     box-shadow: 0 2px 8px rgba(44,62,80,0.04);
@@ -92,15 +92,6 @@ body {
 }
 .eco-pol-table tr:last-child, .trade-card tr:last-child, .report-section tr:last-child {
     border-bottom: none;
-}
-.eco-pol-table tbody tr:nth-child(even), .trade-card tbody tr:nth-child(even), .report-section tbody tr:nth-child(even) {
-    background: #f6f8fc;
-}
-.eco-pol-table tbody tr:nth-child(odd), .trade-card tbody tr:nth-child(odd), .report-section tbody tr:nth-child(odd) {
-    background: #fff;
-}
-.eco-pol-table tbody tr:hover, .trade-card tbody tr:hover, .report-section tbody tr:hover {
-    background: #eaf1fb;
 }
 @media (max-width: 991px) {
     .report-section, .eco-pol-card, .trade-card { padding: 1rem; }

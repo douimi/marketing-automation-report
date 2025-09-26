@@ -3,1166 +3,1413 @@
 {% block title %}Market Analysis Report - {{ form_data.destination_country_name }}{% endblock %}
 
 {% block content %}
-<div class="container-xl my-4">
-    <!-- Header -->
-    <div class="mb-4">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
-                <span class="country-flag me-2"><i class="fas fa-flag fa-2x text-accent"></i></span>
-                <div>
-                    <h1 class="h2 fw-bold mb-1">{{ form_data.destination_country_name }}</h1>
-                    <div class="d-flex flex-wrap gap-3 align-items-center">
-                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
-                        <span><i class="fas fa-industry"></i> {{ form_data.sector }}</span>
-                    </div>
-                </div>
-            </div>
-            <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2 me-2">
-                <i class="fas fa-file-pdf me-2"></i>Export PDF
-            </button>
-            <button id="exportWordBtn" class="btn btn-outline-primary px-4 py-2">
-                <i class="fas fa-file-word me-2"></i>Export Word
-            </button>
+<section class="report-section">
+    <div class="report-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
     </div>
 
-    <!-- Report Index Navigation -->
-    <nav class="report-index mb-4 p-3 bg-light rounded shadow-sm">
-        <h5 class="mb-3"><i class="fas fa-list-ul"></i> Report Index</h5>
-        <ul class="nav flex-wrap gap-2">
-            <li class="nav-item"><a class="nav-link" href="#country-profile">General Presentation</a></li>
-            <li class="nav-item"><a class="nav-link" href="#economic-political-outline">Economic and Political Outline</a></li>
-            <li class="nav-item"><a class="nav-link" href="#operating-a-business">Operating a Business</a></li>
-            <li class="nav-item"><a class="nav-link" href="#tax-system">Tax System</a></li>
-            <li class="nav-item"><a class="nav-link" href="#legal-environment">Legal Environment</a></li>
-            <li class="nav-item"><a class="nav-link" href="#foreign-investment">Foreign Investment</a></li>
-            <li class="nav-item"><a class="nav-link" href="#business-practices">Business Practices</a></li>
-            <li class="nav-item"><a class="nav-link" href="#entry-requirements">Entry Requirements</a></li>
-            <li class="nav-item"><a class="nav-link" href="#practical-information">Practical Information</a></li>
-            <li class="nav-item"><a class="nav-link" href="#living-in-country">Living in the Country</a></li>
-            <li class="nav-item"><a class="nav-link" href="#foreign-trade-in-figures">Foreign Trade in Figures</a></li>
-        </ul>
-    </nav>
-
-    <!-- General Presentation Section -->
-    <section class="report-section mb-4" id="country-profile">
-        <div class="section-header"><i class="fas fa-info-circle section-icon"></i>General Presentation</div>
-        <div class="section-intro">{{ openai_intro|plain_text }}</div>
-        <div class="section-content">
-            <div class="stat-row">
-                {% set facts = [
-                    ('Capital', market_data.capital, 'fa-landmark'),
-                    ('Population', market_data.total_population, 'fa-users'),
-                    ('Area', market_data.area ~ ' km²', 'fa-map'),
-                    ('Currency', market_data.national_currency, 'fa-money-bill-wave'),
-                    ('HDI', market_data.hdi, 'fa-chart-line'),
-                    ('Urban Population', market_data.urban_population, 'fa-city'),
-                    ('Density', market_data.density, 'fa-layer-group'),
-                    ('Type of Economy', market_data.type_of_economy, 'fa-briefcase')
-                ] %}
-                {% for label, value, icon in facts if value %}
-                <div class="stat-block">
-                    <div class="stat-icon mb-1"><i class="fas {{ icon }} fa-lg"></i></div>
-                    <div class="stat-label">{{ label }}</div>
-                    <div class="stat-value">{{ value }}</div>
-                </div>
-                {% endfor %}
-            </div>
-            <ul class="list-unstyled mb-0">
-                {% if market_data.type_of_state %}<li><b>Type of State:</b> {{ market_data.type_of_state }}</li>{% endif %}
-                {% if market_data.ethnic_origins %}<li><b>Ethnic Origins:</b> {{ market_data.ethnic_origins }}</li>{% endif %}
-                {% if market_data.population_of_main_metropolitan_areas %}<li><b>Main Metropolitan Areas:</b> {{ market_data.population_of_main_metropolitan_areas }}</li>{% endif %}
-                {% if market_data.official_language %}<li><b>Official Language:</b> {{ market_data.official_language }}</li>{% endif %}
-                {% if market_data.other_languages_spoken %}<li><b>Other Languages Spoken:</b> {{ market_data.other_languages_spoken }}</li>{% endif %}
-                {% if market_data.business_languages %}<li><b>Business Language(s):</b> {{ market_data.business_languages }}</li>{% endif %}
-                {% if market_data.religion %}<li><b>Religion:</b> {{ market_data.religion }}</li>{% endif %}
-            </ul>
-            <!-- Foreign Trade in Figures Table (moved here) -->
-            <div class="mt-4">
-                <h4 class="mb-3"><i class="fas fa-exchange-alt section-icon"></i>Foreign Trade in Figures</h4>
-                {% if market_data.trade_table and market_data.trade_table|length > 0 %}
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle table-striped">
-                        <thead class="table-accent">
-                            <tr>
-                                <th>Foreign Trade Indicators</th>
-                                <th>2019</th>
-                                <th>2020</th>
-                                <th>2021</th>
-                                <th>2022</th>
-                                <th>2023</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in market_data.trade_table %}
-                            <tr>
-                                {% if row is mapping %}
-                                    <td>{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</td>
-                                    <td>{{ row.get('2019', '') }}</td>
-                                    <td>{{ row.get('2020', '') }}</td>
-                                    <td>{{ row.get('2021', '') }}</td>
-                                    <td>{{ row.get('2022', '') }}</td>
-                                    <td>{{ row.get('2023', '') }}</td>
-                                {% else %}
-                                    <td>{{ row[0] if row|length > 0 else '' }}</td>
-                                    <td>{{ row[1] if row|length > 1 else '' }}</td>
-                                    <td>{{ row[2] if row|length > 2 else '' }}</td>
-                                    <td>{{ row[3] if row|length > 3 else '' }}</td>
-                                    <td>{{ row[4] if row|length > 4 else '' }}</td>
-                                    <td>{{ row[5] if row|length > 5 else '' }}</td>
-                                {% endif %}
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                    <p>No trade data available.</p>
-                {% endif %}
-                {% if trade_insights %}
-                <div class="section-insights">{{ trade_insights|plain_text }}</div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="section-insights">{{ openai_conclusion|plain_text }}</div>
-    </section>
-
-    <!-- Economic and Political Outline Section -->
-    <section class="report-section mb-4" id="economic-political-outline">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-balance-scale"></i></span>Economic and Political Outline</div>
-            <!-- Stack cards vertically instead of two columns -->
-            <div class="mb-3">
-                <div class="trade-card p-3 mb-3">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-chart-area"></i></span>
-                        <h5 class="mb-0">Economic Overview</h5>
-                    </div>
-                    {% if eco_outline_overview %}
-                    <div class="mb-2">
-                        {% for para in eco_outline_overview.split('\n') if para.strip() %}
-                            <div class="mb-2">{{ para|safe }}</div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    {% if eco_outline_main_sectors %}
-                    <div class="mb-2">
-                        <strong>Main Sectors:</strong>
-                        <ul class="mb-2 d-flex flex-wrap justify-content-center gap-3 main-sectors-list" style="list-style:none; padding:0; margin:0;">
-                            {% for sector in eco_outline_main_sectors.split('\n') if sector.strip() %}
-                                <li class="main-sector-item px-3 py-2">{{ sector|safe }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
-                    <div class="d-flex flex-wrap gap-2">
-                        {% if eco_outline_economic_freedom %}
-                        <div class="eco-pol-stat-block flex-fill mb-2">
-                            <div class="fw-bold mb-1"><i class="fas fa-unlock-alt"></i> Economic Freedom</div>
-                            {{ eco_outline_economic_freedom|safe }}
+    <div class="container compact-container my-4">
+        <div class="report-card">
+            <!-- Header -->
+            <div class="report-header mb-4">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3 mb-3 mb-md-0">
+                        <span class="country-flag me-2"><i class="fas fa-flag fa-2x"></i></span>
+                        <div>
+                            <h1 class="report-title">{{ form_data.destination_country_name }}</h1>
+                            <div class="d-flex flex-wrap gap-3 align-items-center text-muted">
+                                <span><i class="fas fa-calendar me-1"></i>{{ datetime.now().strftime('%B %d, %Y') }}</span>
+                                <span><i class="fas fa-industry me-1"></i>{{ form_data.sector }}</span>
+                            </div>
                         </div>
-                        {% endif %}
-                        {% if eco_outline_business_env %}
-                        <div class="eco-pol-stat-block flex-fill mb-2">
-                            <div class="fw-bold mb-1"><i class="fas fa-briefcase"></i> Business Env. Rank</div>
-                            {{ eco_outline_business_env|safe }}
-                        </div>
-                        {% endif %}
                     </div>
-                </div>
-                <div class="trade-card p-3 mb-3">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-landmark"></i></span>
-                        <h5 class="mb-0">Political Overview</h5>
-                    </div>
-                    {% if political_outline %}
-                    <div class="mb-2">
-                        {% for para in political_outline.split('\n') if para.strip() %}
-                            <div class="mb-2">{{ para|safe }}</div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <div class="d-flex flex-wrap gap-2">
-                        {% if political_press_freedom %}
-                        <div class="eco-pol-stat-block flex-fill mb-2">
-                            <div class="fw-bold mb-1"><i class="fas fa-newspaper"></i> Press Freedom</div>
-                            {{ political_press_freedom|safe }}
-                        </div>
-                        {% endif %}
-                        {% if political_freedom %}
-                        <div class="eco-pol-stat-block flex-fill mb-2">
-                            <div class="fw-bold mb-1"><i class="fas fa-user-shield"></i> Political Freedom</div>
-                            {{ political_freedom|safe }}
-                        </div>
-                        {% endif %}
+                    <div class="d-flex gap-2">
+                        <button onclick="window.print()" class="btn btn-primary px-4 py-2">
+                            <i class="fas fa-file-pdf me-2"></i>Export PDF
+                        </button>
+                        <button id="exportWordBtn" class="btn btn-primary px-4 py-2">
+                            <i class="fas fa-file-word me-2"></i>Export Word
+                        </button>
                     </div>
                 </div>
             </div>
-            <!-- Full-width tables below the cards -->
-            {% if eco_outline_main_indicators_table %}
-            <div class="mt-3">
-                <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Main Economic Indicators</h5>
-                <div class="eco-pol-table table-scroll table-responsive">{{ eco_outline_main_indicators_table|safe }}</div>
-            </div>
-            {% endif %}
-            {% if eco_outline_breakdown_table %}
-            <div class="mt-3">
-                <h5 class="mb-2"><i class="fas fa-table section-icon"></i> Economic Breakdown</h5>
-                <div class="eco-pol-table table-scroll table-responsive">{{ eco_outline_breakdown_table|safe }}</div>
-            </div>
-            {% endif %}
-            {% if eco_political_insights %}
-            <div class="eco-pol-insight mt-3">{{ eco_political_insights|plain_text }}</div>
-            {% endif %}
-        </div>
-    </section>
 
-    <!-- Operating a Business Section (NEW) -->
-    <section class="report-section mb-4" id="operating-a-business">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-briefcase"></i></span>Operating a Business</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key aspects of operating a business in this country, including legal forms, labor, and HR.</div> #}
-            <div class="section-content">
-                {% if operating_a_business_data.legal_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-gavel"></i></span>
-                        <h5 class="mb-0">Legal Forms of Companies & Business Setup Procedures</h5>
-                    </div>
-                    <div class="santander-html">{{ operating_a_business_data.legal_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if operating_a_business_data.active_population_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
-                        <h5 class="mb-0">Active Population in Figures</h5>
-                    </div>
-                    <div class="santander-html">{{ operating_a_business_data.active_population_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if operating_a_business_data.working_conditions_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
-                        <h5 class="mb-0">Working Conditions</h5>
-                    </div>
-                    <div class="santander-html">{{ operating_a_business_data.working_conditions_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if operating_a_business_data.cost_of_labour_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-dollar-sign"></i></span>
-                        <h5 class="mb-0">Cost of Labour</h5>
-                    </div>
-                    <div class="santander-html">{{ operating_a_business_data.cost_of_labour_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if operating_a_business_data.management_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-user-tie"></i></span>
-                        <h5 class="mb-0">Management of Human Resources</h5>
-                    </div>
-                    <div class="santander-html">{{ operating_a_business_data.management_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-            {% if operating_a_business_data.update_date %}
-            <div class="text-end text-muted small">Last updated: {{ operating_a_business_data.update_date }}</div>
-            {% endif %}
-        </div>
-    </section>
-
-    <!-- Tax System Section (NEW) -->
-    <section class="report-section mb-4" id="tax-system">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-file-invoice-dollar"></i></span>Tax System</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key aspects of the tax system, including corporate, individual, and consumption taxes.</div> #}
-            <div class="section-content">
-                {% if tax_system_data.corporate_taxes_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-building"></i></span>
-                        <h5 class="mb-0">Corporate Taxes</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.corporate_taxes_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if tax_system_data.accounting_rules_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-book"></i></span>
-                        <h5 class="mb-0">Accounting Rules</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.accounting_rules_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if tax_system_data.consumption_taxes_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-shopping-cart"></i></span>
-                        <h5 class="mb-0">Consumption Taxes</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.consumption_taxes_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if tax_system_data.individual_taxes_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-user"></i></span>
-                        <h5 class="mb-0">Individual Taxes</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.individual_taxes_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if tax_system_data.double_taxation_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-globe"></i></span>
-                        <h5 class="mb-0">Double Taxation Treaties</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.double_taxation_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if tax_system_data.sources_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-info-circle"></i></span>
-                        <h5 class="mb-0">Sources of Fiscal Information</h5>
-                    </div>
-                    <div class="santander-html">{{ tax_system_data.sources_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Legal Environment Section (NEW) -->
-    <section class="report-section mb-4" id="legal-environment">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-balance-scale"></i></span>Legal Environment</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key aspects of the legal environment, including contracts, IP, and dispute resolution.</div> #}
-            <div class="section-content">
-                {% if legal_environment_data.business_contract_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-file-contract"></i></span>
-                        <h5 class="mb-0">Business Contract</h5>
-                    </div>
-                    <div class="santander-html">{{ legal_environment_data.business_contract_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if legal_environment_data.intellectual_property_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-lightbulb"></i></span>
-                        <h5 class="mb-0">Intellectual Property</h5>
-                    </div>
-                    <div class="santander-html">{{ legal_environment_data.intellectual_property_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if legal_environment_data.legal_framework_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-university"></i></span>
-                        <h5 class="mb-0">Legal Framework of Business</h5>
-                    </div>
-                    <div class="santander-html">{{ legal_environment_data.legal_framework_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if legal_environment_data.dispute_resolution_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-handshake"></i></span>
-                        <h5 class="mb-0">International Dispute Resolution</h5>
-                    </div>
-                    <div class="santander-html">{{ legal_environment_data.dispute_resolution_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Foreign Investment Section (NEW) -->
-    <section class="report-section mb-4" id="foreign-investment">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-globe-americas"></i></span>Foreign Investment</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key aspects of foreign investment, including FDI figures, protection, and opportunities.</div> #}
-            <div class="section-content">
-                {% if foreign_investment_data.fdi_figures_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-chart-line"></i></span>
-                        <h5 class="mb-0">FDI in Figures</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.fdi_figures_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.why_invest_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-question-circle"></i></span>
-                        <h5 class="mb-0">What to Consider if You Invest</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.why_invest_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.protection_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-shield-alt"></i></span>
-                        <h5 class="mb-0">Protection of Foreign Investment</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.protection_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.administrative_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-tasks"></i></span>
-                        <h5 class="mb-0">Administrative Procedures</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.administrative_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.office_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-building"></i></span>
-                        <h5 class="mb-0">Office Real Estate and Land Ownership</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.office_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.aid_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-hand-holding-usd"></i></span>
-                        <h5 class="mb-0">Investment Aid</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.aid_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.opportunities_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-lightbulb"></i></span>
-                        <h5 class="mb-0">Investment Opportunities</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.opportunities_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.sectors_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-industry"></i></span>
-                        <h5 class="mb-0">Sectors Where Investment Opportunities Are Fewer</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.sectors_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if foreign_investment_data.finding_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-search"></i></span>
-                        <h5 class="mb-0">Finding Assistance or Further Information</h5>
-                    </div>
-                    <div class="santander-html">{{ foreign_investment_data.finding_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Practices Section (NEW) -->
-    <section class="report-section mb-4" id="business-practices">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-handshake"></i></span>Business Practices</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key aspects of business culture and working hours in this country.</div> #}
-            <div class="section-content">
-                {% if business_practices_data.business_culture_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
-                        <h5 class="mb-0">Business Culture</h5>
-                    </div>
-                    <div class="santander-html">{{ business_practices_data.business_culture_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if business_practices_data.opening_hours_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
-                        <h5 class="mb-0">Opening Hours</h5>
-                    </div>
-                    <div class="santander-html">{{ business_practices_data.opening_hours_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Entry Requirements Section (NEW) -->
-    <section class="report-section mb-4" id="entry-requirements">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-id-card"></i></span>Entry Requirements</div>
-            {# Optional: Section introduction or summary here #}
-            {# <div class="section-intro mb-3">Key entry requirements for travelers, including visas, customs, health, and safety.</div> #}
-            <div class="section-content">
-                {% if entry_requirements_data.passport_visa_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-id-card"></i></span>
-                        <h5 class="mb-0">Passport and Visa Requirements</h5>
-                    </div>
-                    <div class="santander-html">{{ entry_requirements_data.passport_visa_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if entry_requirements_data.customs_taxes_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-box-open"></i></span>
-                        <h5 class="mb-0">Taxes and Restrictions On Persons When Going Through Customs</h5>
-                    </div>
-                    <div class="santander-html">{{ entry_requirements_data.customs_taxes_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if entry_requirements_data.health_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-notes-medical"></i></span>
-                        <h5 class="mb-0">Health Precautions</h5>
-                    </div>
-                    <div class="santander-html">{{ entry_requirements_data.health_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if entry_requirements_data.safety_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-shield-alt"></i></span>
-                        <h5 class="mb-0">Safety Conditions</h5>
-                    </div>
-                    <div class="santander-html">{{ entry_requirements_data.safety_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Practical Information Section (NEW) -->
-    <section class="report-section mb-4" id="practical-information">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-info"></i></span>Practical Information</div>
-            <div class="section-content">
-                {% if practical_information_data.eating_out_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-utensils"></i></span>
-                        <h5 class="mb-0">Eating Out</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.eating_out_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.getting_around_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-bus"></i></span>
-                        <h5 class="mb-0">Getting Around</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.getting_around_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.time_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
-                        <h5 class="mb-0">Time and Time Difference</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.time_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.climate_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-cloud-sun"></i></span>
-                        <h5 class="mb-0">Climate</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.climate_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.electrical_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-bolt"></i></span>
-                        <h5 class="mb-0">Electrical Standards and Measurement Systems</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.electrical_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.paying_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-credit-card"></i></span>
-                        <h5 class="mb-0">Paying</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.paying_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.speaking_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-language"></i></span>
-                        <h5 class="mb-0">Speaking</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.speaking_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.emergency_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-ambulance"></i></span>
-                        <h5 class="mb-0">Emergency Numbers</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.emergency_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if practical_information_data.communications_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-wifi"></i></span>
-                        <h5 class="mb-0">Communications</h5>
-                    </div>
-                    <div class="santander-html">{{ practical_information_data.communications_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Living in the Country Section (NEW) -->
-    <section class="report-section mb-4" id="living-in-country">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-home"></i></span>Living in the Country</div>
-            <div class="section-content">
-                {% if living_in_country_data.expatriates_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
-                        <h5 class="mb-0">Communities of Expatriates</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.expatriates_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.ranking_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-city"></i></span>
-                        <h5 class="mb-0">Ranking of Cities</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.ranking_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.renting_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-home"></i></span>
-                        <h5 class="mb-0">Renting an Apartment</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.renting_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.school_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-graduation-cap"></i></span>
-                        <h5 class="mb-0">School System</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.school_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.health_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-hospital"></i></span>
-                        <h5 class="mb-0">Health System</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.health_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.tourism_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-map-marked-alt"></i></span>
-                        <h5 class="mb-0">Tourism and Culture</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.tourism_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.individual_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-user-shield"></i></span>
-                        <h5 class="mb-0">Individual and Civic Freedoms</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.individual_section|safe }}</div>
-                </div>
-                {% endif %}
-                {% if living_in_country_data.religion_section %}
-                <div class="trade-card p-3 mb-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <span class="trade-card-icon me-2"><i class="fas fa-praying-hands"></i></span>
-                        <h5 class="mb-0">Religion</h5>
-                    </div>
-                    <div class="santander-html">{{ living_in_country_data.religion_section|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Foreign Trade in Figures Section -->
-    <section class="report-section mb-4" id="foreign-trade-in-figures">
-        <div class="eco-pol-card">
-            <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-exchange-alt"></i></span>Foreign Trade in Figures</div>
-            <!-- Sticky sub-navigation for quick jumps -->
-            <nav class="trade-subnav mb-4 sticky-top bg-white py-2 px-2 rounded shadow-sm" style="z-index:2;top:70px;">
-                <div class="d-flex flex-wrap gap-3 justify-content-center">
-                    <a href="#trade-partners" class="trade-nav-link"><i class="fas fa-users"></i> Partners</a>
-                    <a href="#trade-products" class="trade-nav-link"><i class="fas fa-box"></i> Products</a>
-                    <a href="#trade-services" class="trade-nav-link"><i class="fas fa-shipping-fast"></i> Services</a>
-                    <a href="#trade-exchange" class="trade-nav-link"><i class="fas fa-coins"></i> Exchange Rate</a>
-                    <a href="#trade-monetary" class="trade-nav-link"><i class="fas fa-chart-bar"></i> Monetary</a>
-                </div>
+            <!-- Report Index Navigation -->
+            <nav class="report-index mb-4 p-3 rounded shadow-sm">
+                <h5 class="mb-3"><i class="fas fa-list-ul me-2"></i>Report Index</h5>
+                <ul class="nav flex-wrap gap-2">
+                    <li class="nav-item"><a class="nav-link" href="#country-profile">General Presentation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#economic-political-outline">Economic and Political Outline</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#operating-a-business">Operating a Business</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tax-system">Tax System</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#legal-environment">Legal Environment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#foreign-investment">Foreign Investment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#business-practices">Business Practices</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#entry-requirements">Entry Requirements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#practical-information">Practical Information</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#living-in-country">Living in the Country</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#foreign-trade-in-figures">Foreign Trade in Figures</a></li>
+                </ul>
             </nav>
-            <div class="section-content">
-                {% if intro_text %}
-                <div class="mb-3">{{ intro_text|safe }}</div>
-                {% endif %}
-                <!-- Partners Card -->
-                <div id="trade-partners" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="trade-card-icon me-2"><i class="fas fa-users fa-lg text-secondary"></i></span>
-                        <h4 class="mb-0">Main Trade Partners</h4>
-                    </div>
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            {% if main_customers_table %}
-                            <h5 class="mb-2"><i class="fas fa-arrow-up section-icon"></i> Main Export Partners</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_customers_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            {% if main_suppliers_table %}
-                            <h5 class="mb-2"><i class="fas fa-arrow-down section-icon"></i> Main Import Partners</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_suppliers_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <!-- Products Card -->
-                <div id="trade-products" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="trade-card-icon me-2"><i class="fas fa-box fa-lg text-secondary"></i></span>
-                        <h4 class="mb-0">Main Products</h4>
-                    </div>
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            {% if main_export_products_table %}
-                            <h5 class="mb-2"><i class="fas fa-box-open section-icon"></i> Products Exported</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_export_products_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            {% if main_import_products_table %}
-                            <h5 class="mb-2"><i class="fas fa-boxes section-icon"></i> Products Imported</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_import_products_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <!-- Services Card -->
-                <div id="trade-services" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="trade-card-icon me-2"><i class="fas fa-shipping-fast fa-lg text-secondary"></i></span>
-                        <h4 class="mb-0">Main Services</h4>
-                    </div>
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            {% if main_export_services_table %}
-                            <h5 class="mb-2"><i class="fas fa-shipping-fast section-icon"></i> Services Exported</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_export_services_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6">
-                            {% if main_import_services_table %}
-                            <h5 class="mb-2"><i class="fas fa-truck-loading section-icon"></i> Services Imported</h5>
-                            <div class="eco-pol-table table-responsive mb-3">{{ main_import_services_table|safe }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <!-- Exchange Rate Card -->
-                {% if exchange_rate_dl %}
-                <div id="trade-exchange" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="trade-card-icon me-2"><i class="fas fa-coins fa-lg text-secondary"></i></span>
-                        <h4 class="mb-0">Exchange Rate System</h4>
-                    </div>
-                    <div class="eco-pol-table table-responsive mb-3">{{ exchange_rate_dl|safe }}</div>
-                </div>
-                {% endif %}
-                <!-- Monetary Indicators Card -->
-                {% if monetary_indicators_table %}
-                <div id="trade-monetary" class="trade-card mb-4 p-4 rounded shadow-sm bg-white">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="trade-card-icon me-2"><i class="fas fa-chart-bar fa-lg text-secondary"></i></span>
-                        <h4 class="mb-0">Monetary Indicators</h4>
-                    </div>
-                    <div class="eco-pol-table table-responsive mb-3">{{ monetary_indicators_table|safe }}</div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
 
-    <!-- Import/Export Flows Section -->
-    <section class="report-section mb-4" id="import-export-flows">
-        <div class="section-header"><i class="fas fa-random section-icon"></i>Import/Export Flows</div>
-        {% if flows_intro %}
-        <div class="section-intro mb-3">{{ flows_intro|plain_text }}</div>
-        {% endif %}
-        <div class="section-content">
-            <div class="mb-4">
-                <canvas id="flowsChart" height="120"></canvas>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-arrow-up"></i></span>
-                            <h5 class="mb-0">Export Flows</h5>
+            <!-- General Presentation Section -->
+            <section class="report-section mb-4" id="country-profile">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-info-circle me-2"></i>General Presentation</div>
+                    <div class="section-content">
+                        <div class="section-intro mb-3">{{ openai_intro|plain_text }}</div>
+                        <div class="stat-row">
+                            {% set facts = [
+                                ('Capital', market_data.capital, 'fa-landmark'),
+                                ('Population', market_data.total_population, 'fa-users'),
+                                ('Area', market_data.area ~ ' km²', 'fa-map'),
+                                ('Currency', market_data.national_currency, 'fa-money-bill-wave'),
+                                ('HDI', market_data.hdi, 'fa-chart-line'),
+                                ('Urban Population', market_data.urban_population, 'fa-city'),
+                                ('Density', market_data.density, 'fa-layer-group'),
+                                ('Type of Economy', market_data.type_of_economy, 'fa-briefcase')
+                            ] %}
+                            {% for label, value, icon in facts if value %}
+                            <div class="stat-block">
+                                <div class="stat-icon mb-2"><i class="fas {{ icon }} fa-lg"></i></div>
+                                <div class="stat-label">{{ label }}</div>
+                                <div class="stat-value">{{ value }}</div>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% if flows_data.export_table_html %}
-                        <div class="eco-pol-table table-scroll table-responsive" id="export-flows-table">{{ flows_data.export_table_html|safe }}</div>
-                        {% else %}
-                        <p>No export flow data available.</p>
-                        {% endif %}
+                        <ul class="list-unstyled mb-3">
+                            {% if market_data.type_of_state %}<li><strong>Type of State:</strong> {{ market_data.type_of_state }}</li>{% endif %}
+                            {% if market_data.ethnic_origins %}<li><strong>Ethnic Origins:</strong> {{ market_data.ethnic_origins }}</li>{% endif %}
+                            {% if market_data.population_of_main_metropolitan_areas %}<li><strong>Main Metropolitan Areas:</strong> {{ market_data.population_of_main_metropolitan_areas }}</li>{% endif %}
+                            {% if market_data.official_language %}<li><strong>Official Language:</strong> {{ market_data.official_language }}</li>{% endif %}
+                            {% if market_data.other_languages_spoken %}<li><strong>Other Languages Spoken:</strong> {{ market_data.other_languages_spoken }}</li>{% endif %}
+                            {% if market_data.business_languages %}<li><strong>Business Language(s):</strong> {{ market_data.business_languages }}</li>{% endif %}
+                            {% if market_data.religion %}<li><strong>Religion:</strong> {{ market_data.religion }}</li>{% endif %}
+                        </ul>
+                        <!-- Foreign Trade in Figures Table -->
+                        <div class="mt-4">
+                            <h4 class="mb-3"><i class="fas fa-exchange-alt me-2"></i>Foreign Trade in Figures</h4>
+                            {% if market_data.trade_table and market_data.trade_table|length > 0 %}
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Foreign Trade Indicators</th>
+                                            <th>2019</th>
+                                            <th>2020</th>
+                                            <th>2021</th>
+                                            <th>2022</th>
+                                            <th>2023</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in market_data.trade_table %}
+                                        <tr>
+                                            {% if row is mapping %}
+                                                <td>{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</td>
+                                                <td>{{ row.get('2019', '') }}</td>
+                                                <td>{{ row.get('2020', '') }}</td>
+                                                <td>{{ row.get('2021', '') }}</td>
+                                                <td>{{ row.get('2022', '') }}</td>
+                                                <td>{{ row.get('2023', '') }}</td>
+                                            {% else %}
+                                                <td>{{ row[0] if row|length > 0 else '' }}</td>
+                                                <td>{{ row[1] if row|length > 1 else '' }}</td>
+                                                <td>{{ row[2] if row|length > 2 else '' }}</td>
+                                                <td>{{ row[3] if row|length > 3 else '' }}</td>
+                                                <td>{{ row[4] if row|length > 4 else '' }}</td>
+                                                <td>{{ row[5] if row|length > 5 else '' }}</td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                <p>No trade data available.</p>
+                            {% endif %}
+                            {% if trade_insights %}
+                            <div class="section-insights mt-3">{{ trade_insights|plain_text }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="section-insights mt-3">{{ openai_conclusion|plain_text }}</div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-arrow-down"></i></span>
-                            <h5 class="mb-0">Import Flows</h5>
-                        </div>
-                        {% if flows_data.import_table_html %}
-                        <div class="eco-pol-table table-scroll table-responsive" id="import-flows-table">{{ flows_data.import_table_html|safe }}</div>
-                        {% else %}
-                        <p>No import flow data available.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% if flows_insights %}
-        <div class="eco-pol-insight mt-3">{{ flows_insights|plain_text }}</div>
-        {% endif %}
-    </section>
+            </section>
 
-    <!-- Trade Shows Section -->
-    <section class="report-section mb-4" id="trade-shows">
-        <div class="section-header"><i class="fas fa-calendar-alt section-icon"></i>Trade Shows</div>
-        <div class="section-content">
-            {% if trade_shows_data and trade_shows_data|length > 0 %}
-            <div class="row g-4">
-                {% for show in trade_shows_data %}
-                <div class="col-md-6">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-calendar"></i></span>
-                            <h5 class="mb-0">
-                                {% if show.url %}
-                                    <a href="{{ show.url }}" target="_blank" rel="noopener" class="text-decoration-underline">{{ show.name }}</a>
-                                {% else %}
-                                    {{ show.name }}
+            <!-- Economic and Political Outline Section -->
+            <section class="report-section mb-4" id="economic-political-outline">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-balance-scale me-2"></i>Economic and Political Outline</div>
+                    <div class="section-content">
+                        <div class="mb-3">
+                            <div class="trade-card p-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="trade-card-icon me-2"><i class="fas fa-chart-area"></i></span>
+                                    <h5 class="mb-0">Economic Overview</h5>
+                                </div>
+                                {% if eco_outline_overview %}
+                                <div class="mb-2">
+                                    {% for para in eco_outline_overview.split('\n') if para.strip() %}
+                                        <div class="mb-2">{{ para|safe }}</div>
+                                    {% endfor %}
+                                </div>
                                 {% endif %}
-                            </h5>
+                                {% if eco_outline_main_sectors %}
+                                <div class="mb-2">
+                                    <strong>Main Sectors:</strong>
+                                    <ul class="mb-2 d-flex flex-wrap justify-content-center gap-3 main-sectors-list" style="list-style:none; padding:0; margin:0;">
+                                        {% for sector in eco_outline_main_sectors.split('\n') if sector.strip() %}
+                                            <li class="main-sector-item px-3 py-2">{{ sector|safe }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% if eco_outline_economic_freedom %}
+                                    <div class="eco-pol-stat-block flex-fill mb-2">
+                                        <div class="fw-bold mb-1"><i class="fas fa-unlock-alt me-1"></i>Economic Freedom</div>
+                                        {{ eco_outline_economic_freedom|safe }}
+                                    </div>
+                                    {% endif %}
+                                    {% if eco_outline_business_env %}
+                                    <div class="eco-pol-stat-block flex-fill mb-2">
+                                        <div class="fw-bold mb-1"><i class="fas fa-briefcase me-1"></i>Business Env. Rank</div>
+                                        {{ eco_outline_business_env|safe }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="trade-card p-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="trade-card-icon me-2"><i class="fas fa-landmark"></i></span>
+                                    <h5 class="mb-0">Political Overview</h5>
+                                </div>
+                                {% if political_outline %}
+                                <div class="mb-2">
+                                    {% for para in political_outline.split('\n') if para.strip() %}
+                                        <div class="mb-2">{{ para|safe }}</div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% if political_press_freedom %}
+                                    <div class="eco-pol-stat-block flex-fill mb-2">
+                                        <div class="fw-bold mb-1"><i class="fas fa-newspaper me-1"></i>Press Freedom</div>
+                                        {{ political_press_freedom|safe }}
+                                    </div>
+                                    {% endif %}
+                                    {% if political_freedom %}
+                                    <div class="eco-pol-stat-block flex-fill mb-2">
+                                        <div class="fw-bold mb-1"><i class="fas fa-user-shield me-1"></i>Political Freedom</div>
+                                        {{ political_freedom|safe }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-1"><strong>Location:</strong> {{ show.location }}</div>
-                        <div class="mb-1"><strong>Date:</strong> {{ show.date }}</div>
-                        <div class="mb-1"><strong>Description:</strong> {{ show.description }}</div>
-                        <div class="mb-1"><strong>Sectors:</strong> {{ show.sectors }}</div>
+                        {% if eco_outline_main_indicators_table %}
+                        <div class="mt-3">
+                            <h5 class="mb-2"><i class="fas fa-table me-2"></i>Main Economic Indicators</h5>
+                            <div class="table-responsive">{{ eco_outline_main_indicators_table|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if eco_outline_breakdown_table %}
+                        <div class="mt-3">
+                            <h5 class="mb-2"><i class="fas fa-table me-2"></i>Economic Breakdown</h5>
+                            <div class="table-responsive">{{ eco_outline_breakdown_table|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if eco_political_insights %}
+                        <div class="section-insights mt-3">{{ eco_political_insights|plain_text }}</div>
+                        {% endif %}
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <p>No trade shows found for the selected sector and country.</p>
-            {% endif %}
-        </div>
-    </section>
+            </section>
 
-    <!-- Market Access Conditions Section (MacMap) -->
-    <section class="report-section mb-4" id="market-access-conditions">
-        <div class="eco-pol-header"><span class="eco-pol-icon"><i class="fas fa-door-open"></i></span>Market Access Conditions</div>
-        {% if macmap_intro %}
-        <div class="section-intro mb-3">{{ macmap_intro|plain_text }}</div>
-        {% endif %}
-        <div class="section-content">
-            <div class="row g-4">
-                <div class="col-lg-4 mb-3">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-flag"></i></span>
-                            <h5 class="mb-0">Exporting Country</h5>
+            <!-- Operating a Business Section -->
+            <section class="report-section mb-4" id="operating-a-business">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-briefcase me-2"></i>Operating a Business</div>
+                    <div class="section-content">
+                        {% if operating_a_business_data.legal_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-gavel"></i></span>
+                                <h5 class="mb-0">Legal Forms of Companies & Business Setup Procedures</h5>
+                            </div>
+                            <div class="santander-html">{{ operating_a_business_data.legal_section|safe }}</div>
                         </div>
-                        <div>{{ macmap_data.overview.exporting_country or 'N/A' }}</div>
+                        {% endif %}
+                        {% if operating_a_business_data.active_population_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
+                                <h5 class="mb-0">Active Population in Figures</h5>
+                            </div>
+                            <div class="santander-html">{{ operating_a_business_data.active_population_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if operating_a_business_data.working_conditions_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
+                                <h5 class="mb-0">Working Conditions</h5>
+                            </div>
+                            <div class="santander-html">{{ operating_a_business_data.working_conditions_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if operating_a_business_data.cost_of_labour_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-dollar-sign"></i></span>
+                                <h5 class="mb-0">Cost of Labour</h5>
+                            </div>
+                            <div class="santander-html">{{ operating_a_business_data.cost_of_labour_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if operating_a_business_data.management_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-user-tie"></i></span>
+                                <h5 class="mb-0">Management of Human Resources</h5>
+                            </div>
+                            <div class="santander-html">{{ operating_a_business_data.management_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if operating_a_business_data.update_date %}
+                        <div class="text-end text-muted small">Last updated: {{ operating_a_business_data.update_date }}</div>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="col-lg-4 mb-3">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-flag-checkered"></i></span>
-                            <h5 class="mb-0">Importing Country</h5>
-                        </div>
-                        <div>{{ macmap_data.overview.importing_country or 'N/A' }}</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-3">
-                    <div class="trade-card p-3 h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="trade-card-icon me-2"><i class="fas fa-box"></i></span>
-                            <h5 class="mb-0">Product</h5>
-                        </div>
-                        <div>{{ macmap_data.overview.product or form_data.product_name or 'Product not specified' }}</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Customs Tariffs -->
-            <div class="mt-4">
-                <h5 class="mb-2"><i class="fas fa-percent section-icon"></i> Customs Tariffs</h5>
-                {% if macmap_data.customs_tariffs and macmap_data.customs_tariffs|length > 0 %}
-                <div class="eco-pol-table table-responsive mb-3">
-                    <table class="table table-hover align-middle table-striped">
-                        <thead class="table-accent">
-                            <tr>
-                                <th>Tariff Regime</th>
-                                <th>Applied Tariff</th>
-                                <th>AVE</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for tariff in macmap_data.customs_tariffs %}
-                            <tr>
-                                <td>{{ tariff.tariff_regime }}</td>
-                                <td>{{ tariff.applied_tariff }}</td>
-                                <td>{{ tariff.ave }}</td>
-                                <td>{{ tariff.note }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                    <p>No customs tariff data available.</p>
-                {% endif %}
-            </div>
-            <!-- Trade Remedies -->
-            <div class="mt-4">
-                <h5 class="mb-2"><i class="fas fa-gavel section-icon"></i> Trade Remedies</h5>
-                {% if macmap_data.trade_remedies_message %}
-                    <div class="section-insights">{{ macmap_data.trade_remedies_message }}</div>
-                {% else %}
-                    <p>No trade remedies data available.</p>
-                {% endif %}
-            </div>
-            <!-- Regulatory Requirements -->
-            <div class="mt-4">
-                <h5 class="mb-2"><i class="fas fa-clipboard-check section-icon"></i> Regulatory Requirements</h5>
-                {% if macmap_data.regulatory_requirements and macmap_data.regulatory_requirements|length > 0 %}
-                <div class="eco-pol-table table-responsive mb-3">
-                    <table class="table table-hover align-middle table-striped">
-                        <thead class="table-accent">
-                            <tr>
-                                <th>Code</th>
-                                <th>Description</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for req in macmap_data.regulatory_requirements %}
-                            <tr>
-                                <td>{{ req.code }}</td>
-                                <td>{{ req.description }}</td>
-                                <td>{{ req.count }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% else %}
-                    <p>No regulatory requirements data available.</p>
-                {% endif %}
-            </div>
-            {% if macmap_data.source_info %}
-            <div class="mt-3 text-muted small">{{ macmap_data.source_info }}</div>
-            {% endif %}
-        </div>
-        {% if macmap_insights %}
-        <div class="eco-pol-insight mt-3">{{ macmap_insights|plain_text }}</div>
-        {% endif %}
-    </section>
+            </section>
 
-    {# Add more sections here as needed, following the same structure: #}
-    {#
-    <section class="report-section mb-4" id="new-section">
-        <div class="section-header"><i class="fas fa-some-icon section-icon"></i>Section Title</div>
-        <div class="section-intro">Section introduction or summary.</div>
-        <div class="section-content">Main content here.</div>
-        <div class="section-insights">Section insights or conclusion.</div>
-    </section>
-    #}
-</div>
+            <!-- Tax System Section -->
+            <section class="report-section mb-4" id="tax-system">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-file-invoice-dollar me-2"></i>Tax System</div>
+                    <div class="section-content">
+                        {% if tax_system_data.corporate_taxes_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-building"></i></span>
+                                <h5 class="mb-0">Corporate Taxes</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.corporate_taxes_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if tax_system_data.accounting_rules_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-book"></i></span>
+                                <h5 class="mb-0">Accounting Rules</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.accounting_rules_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if tax_system_data.consumption_taxes_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-shopping-cart"></i></span>
+                                <h5 class="mb-0">Consumption Taxes</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.consumption_taxes_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if tax_system_data.individual_taxes_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-user"></i></span>
+                                <h5 class="mb-0">Individual Taxes</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.individual_taxes_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if tax_system_data.double_taxation_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-globe"></i></span>
+                                <h5 class="mb-0">Double Taxation Treaties</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.double_taxation_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if tax_system_data.sources_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-info-circle"></i></span>
+                                <h5 class="mb-0">Sources of Fiscal Information</h5>
+                            </div>
+                            <div class="santander-html">{{ tax_system_data.sources_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Legal Environment Section -->
+            <section class="report-section mb-4" id="legal-environment">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-balance-scale me-2"></i>Legal Environment</div>
+                    <div class="section-content">
+                        {% if legal_environment_data.business_contract_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-file-contract"></i></span>
+                                <h5 class="mb-0">Business Contract</h5>
+                            </div>
+                            <div class="santander-html">{{ legal_environment_data.business_contract_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if legal_environment_data.intellectual_property_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-lightbulb"></i></span>
+                                <h5 class="mb-0">Intellectual Property</h5>
+                            </div>
+                            <div class="santander-html">{{ legal_environment_data.intellectual_property_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if legal_environment_data.legal_framework_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-university"></i></span>
+                                <h5 class="mb-0">Legal Framework of Business</h5>
+                            </div>
+                            <div class="santander-html">{{ legal_environment_data.legal_framework_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if legal_environment_data.dispute_resolution_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-handshake"></i></span>
+                                <h5 class="mb-0>International Dispute Resolution</h5>
+                            </div>
+                            <div class="santander-html">{{ legal_environment_data.dispute_resolution_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Foreign Investment Section -->
+            <section class="report-section mb-4" id="foreign-investment">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-globe-americas me-2"></i>Foreign Investment</div>
+                    <div class="section-content">
+                        {% if foreign_investment_data.fdi_figures_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-chart-line"></i></span>
+                                <h5 class="mb-0">FDI in Figures</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.fdi_figures_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.why_invest_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-question-circle"></i></span>
+                                <h5 class="mb-0">What to Consider if You Invest</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.why_invest_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.protection_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-shield-alt"></i></span>
+                                <h5 class="mb-0">Protection of Foreign Investment</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.protection_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.administrative_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-tasks"></i></span>
+                                <h5 class="mb-0">Administrative Procedures</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.administrative_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.office_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-building"></i></span>
+                                <h5 class="mb-0">Office Real Estate and Land Ownership</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.office_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.aid_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-hand-holding-usd"></i></span>
+                                <h5 class="mb-0">Investment Aid</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.aid_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.opportunities_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-lightbulb"></i></span>
+                                <h5 class="mb-0">Investment Opportunities</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.opportunities_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.sectors_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-industry"></i></span>
+                                <h5 class="mb-0">Sectors Where Investment Opportunities Are Fewer</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.sectors_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if foreign_investment_data.finding_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-search"></i></span>
+                                <h5 class="mb-0">Finding Assistance or Further Information</h5>
+                            </div>
+                            <div class="santander-html">{{ foreign_investment_data.finding_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business Practices Section -->
+            <section class="report-section mb-4" id="business-practices">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-handshake me-2"></i>Business Practices</div>
+                    <div class="section-content">
+                        {% if business_practices_data.business_culture_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
+                                <h5 class="mb-0">Business Culture</h5>
+                            </div>
+                            <div class="santander-html">{{ business_practices_data.business_culture_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if business_practices_data.opening_hours_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
+                                <h5 class="mb-0">Opening Hours</h5>
+                            </div>
+                            <div class="santander-html">{{ business_practices_data.opening_hours_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Entry Requirements Section -->
+            <section class="report-section mb-4" id="entry-requirements">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-id-card me-2"></i>Entry Requirements</div>
+                    <div class="section-content">
+                        {% if entry_requirements_data.passport_visa_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-id-card"></i></span>
+                                <h5 class="mb-0">Passport and Visa Requirements</h5>
+                            </div>
+                            <div class="santander-html">{{ entry_requirements_data.passport_visa_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if entry_requirements_data.customs_taxes_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-box-open"></i></span>
+                                <h5 class="mb-0">Taxes and Restrictions On Persons When Going Through Customs</h5>
+                            </div>
+                            <div class="santander-html">{{ entry_requirements_data.customs_taxes_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if entry_requirements_data.health_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-notes-medical"></i></span>
+                                <h5 class="mb-0">Health Precautions</h5>
+                            </div>
+                            <div class="santander-html">{{ entry_requirements_data.health_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if entry_requirements_data.safety_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-shield-alt"></i></span>
+                                <h5 class="mb-0">Safety Conditions</h5>
+                            </div>
+                            <div class="santander-html">{{ entry_requirements_data.safety_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Practical Information Section -->
+            <section class="report-section mb-4" id="practical-information">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-info me-2"></i>Practical Information</div>
+                    <div class="section-content">
+                        {% if practical_information_data.eating_out_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-utensils"></i></span>
+                                <h5 class="mb-0">Eating Out</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.eating_out_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.getting_around_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-bus"></i></span>
+                                <h5 class="mb-0">Getting Around</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.getting_around_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.time_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-clock"></i></span>
+                                <h5 class="mb-0">Time and Time Difference</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.time_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.climate_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-cloud-sun"></i></span>
+                                <h5 class="mb-0">Climate</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.climate_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.electrical_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-bolt"></i></span>
+                                <h5 class="mb-0">Electrical Standards and Measurement Systems</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.electrical_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.paying_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-credit-card"></i></span>
+                                <h5 class="mb-0">Paying</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.paying_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.speaking_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-language"></i></span>
+                                <h5 class="mb-0">Speaking</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.speaking_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.emergence_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-ambulance"></i></span>
+                                <h5 class="mb-0">Emergency Numbers</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.emergency_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if practical_information_data.communications_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-wifi"></i></span>
+                                <h5 class="mb-0">Communications</h5>
+                            </div>
+                            <div class="santander-html">{{ practical_information_data.communications_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Living in the Country Section -->
+            <section class="report-section mb-4" id="living-in-country">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-home me-2"></i>Living in the Country</div>
+                    <div class="section-content">
+                        {% if living_in_country_data.expatriates_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-users"></i></span>
+                                <h5 class="mb-0">Communities of Expatriates</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.expatriates_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.ranking_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-city"></i></span>
+                                <h5 class="mb-0">Ranking of Cities</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.ranking_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.renting_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-home"></i></span>
+                                <h5 class="mb-0">Renting an Apartment</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.renting_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.school_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-graduation-cap"></i></span>
+                                <h5 class="mb-0">School System</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.school_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.health_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-hospital"></i></span>
+                                <h5 class="mb-0">Health System</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.health_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.tourism_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-map-marked-alt"></i></span>
+                                <h5 class="mb-0">Tourism and Culture</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.tourism_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.individual_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-user-shield"></i></span>
+                                <h5 class="mb-0">Individual and Civic Freedoms</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.individual_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if living_in_country_data.religion_section %}
+                        <div class="trade-card p-3 mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="trade-card-icon me-2"><i class="fas fa-praying-hands"></i></span>
+                                <h5 class="mb-0">Religion</h5>
+                            </div>
+                            <div class="santander-html">{{ living_in_country_data.religion_section|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Foreign Trade in Figures Section -->
+            <section class="report-section mb-4" id="foreign-trade-in-figures">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-exchange-alt me-2"></i>Foreign Trade in Figures</div>
+                    <nav class="trade-subnav mb-4 sticky-top py-2 px-2 rounded">
+                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                            <a href="#trade-partners" class="trade-nav-link"><i class="fas fa-users me-1"></i>Partners</a>
+                            <a href="#trade-products" class="trade-nav-link"><i class="fas fa-box me-1"></i>Products</a>
+                            <a href="#trade-services" class="trade-nav-link"><i class="fas fa-shipping-fast me-1"></i>Services</a>
+                            <a href="#trade-exchange" class="trade-nav-link"><i class="fas fa-coins me-1"></i>Exchange Rate</a>
+                            <a href="#trade-monetary" class="trade-nav-link"><i class="fas fa-chart-bar me-1"></i>Monetary</a>
+                        </div>
+                    </nav>
+                    <div class="section-content">
+                        {% if intro_text %}
+                        <div class="mb-3">{{ intro_text|safe }}</div>
+                        {% endif %}
+                        <div id="trade-partners" class="trade-card mb-4 p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="trade-card-icon me-2"><i class="fas fa-users fa-lg"></i></span>
+                                <h4 class="mb-0">Main Trade Partners</h4>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    {% if main_customers_table %}
+                                    <h5 class="mb-2"><i class="fas fa-arrow-up me-2"></i>Main Export Partners</h5>
+                                    <div class="table-responsive mb-3">{{ main_customers_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% if main_suppliers_table %}
+                                    <h5 class="mb-2"><i class="fas fa-arrow-down me-2"></i>Main Import Partners</h5>
+                                    <div class="table-responsive mb-3">{{ main_suppliers_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="trade-products" class="trade-card mb-4 p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="trade-card-icon me-2"><i class="fas fa-box fa-lg"></i></span>
+                                <h4 class="mb-0">Main Products</h4>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    {% if main_export_products_table %}
+                                    <h5 class="mb-2"><i class="fas fa-box-open me-2"></i>Products Exported</h5>
+                                    <div class="table-responsive mb-3">{{ main_export_products_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% if main_import_products_table %}
+                                    <h5 class="mb-2"><i class="fas fa-boxes me-2"></i>Products Imported</h5>
+                                    <div class="table-responsive mb-3">{{ main_import_products_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="trade-services" class="trade-card mb-4 p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="trade-card-icon me-2"><i class="fas fa-shipping-fast fa-lg"></i></span>
+                                <h4 class="mb-0">Main Services</h4>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    {% if main_export_services_table %}
+                                    <h5 class="mb-2"><i class="fas fa-shipping-fast me-2"></i>Services Exported</h5>
+                                    <div class="table-responsive mb-3">{{ main_export_services_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% if main_import_services_table %}
+                                    <h5 class="mb-2"><i class="fas fa-truck-loading me-2"></i>Services Imported</h5>
+                                    <div class="table-responsive mb-3">{{ main_import_services_table|safe }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if exchange_rate_dl %}
+                        <div id="trade-exchange" class="trade-card mb-4 p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="trade-card-icon me-2"><i class="fas fa-coins fa-lg"></i></span>
+                                <h4 class="mb-0">Exchange Rate System</h4>
+                            </div>
+                            <div class="table-responsive mb-3">{{ exchange_rate_dl|safe }}</div>
+                        </div>
+                        {% endif %}
+                        {% if monetary_indicators_table %}
+                        <div id="trade-monetary" class="trade-card mb-4 p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="trade-card-icon me-2"><i class="fas fa-chart-bar fa-lg"></i></span>
+                                <h4 class="mb-0">Monetary Indicators</h4>
+                            </div>
+                            <div class="table-responsive mb-3">{{ monetary_indicators_table|safe }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Import/Export Flows Section -->
+            <section class="report-section mb-4" id="import-export-flows">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-random me-2"></i>Import/Export Flows</div>
+                    <div class="section-content">
+                        {% if flows_intro %}
+                        <div class="section-intro mb-3">{{ flows_intro|plain_text }}</div>
+                        {% endif %}
+                        <div class="mb-4">
+                            <canvas id="flowsChart" height="120"></canvas>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-arrow-up"></i></span>
+                                        <h5 class="mb-0">Export Flows</h5>
+                                    </div>
+                                    {% if flows_data.export_table_html %}
+                                    <div class="table-responsive" id="export-flows-table">{{ flows_data.export_table_html|safe }}</div>
+                                    {% else %}
+                                    <p>No export flow data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-arrow-down"></i></span>
+                                        <h5 class="mb-0">Import Flows</h5>
+                                    </div>
+                                    {% if flows_data.import_table_html %}
+                                    <div class="table-responsive" id="import-flows-table">{{ flows_data.import_table_html|safe }}</div>
+                                    {% else %}
+                                    <p>No import flow data available.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if flows_insights %}
+                        <div class="section-insights mt-3">{{ flows_insights|plain_text }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trade Shows Section -->
+            <section class="report-section mb-4" id="trade-shows">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-calendar-alt me-2"></i>Trade Shows</div>
+                    <div class="section-content">
+                        {% if trade_shows_data and trade_shows_data|length > 0 %}
+                        <div class="row g-4">
+                            {% for show in trade_shows_data %}
+                            <div class="col-md-6">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-calendar"></i></span>
+                                        <h5 class="mb-0">
+                                            {% if show.url %}
+                                                <a href="{{ show.url }}" target="_blank" rel="noopener" class="text-decoration-underline">{{ show.name }}</a>
+                                            {% else %}
+                                                {{ show.name }}
+                                            {% endif %}
+                                        </h5>
+                                    </div>
+                                    <div class="mb-1"><strong>Location:</strong> {{ show.location }}</div>
+                                    <div class="mb-1"><strong>Date:</strong> {{ show.date }}</div>
+                                    <div class="mb-1"><strong>Description:</strong> {{ show.description }}</div>
+                                    <div class="mb-1"><strong>Sectors:</strong> {{ show.sectors }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p>No trade shows found for the selected sector and country.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Access Conditions Section -->
+            <section class="report-section mb-4" id="market-access-conditions">
+                <div class="section-card">
+                    <div class="section-header"><i class="fas fa-door-open me-2"></i>Market Access Conditions</div>
+                    <div class="section-content">
+                        {% if macmap_intro %}
+                        <div class="section-intro mb-3">{{ macmap_intro|plain_text }}</div>
+                        {% endif %}
+                        <div class="row g-4">
+                            <div class="col-lg-4 mb-3">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-flag"></i></span>
+                                        <h5 class="mb-0">Exporting Country</h5>
+                                    </div>
+                                    <div>{{ macmap_data.overview.exporting_country or 'N/A' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-flag-checkered"></i></span>
+                                        <h5 class="mb-0">Importing Country</h5>
+                                    </div>
+                                    <div>{{ macmap_data.overview.importing_country or 'N/A' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <div class="trade-card p-3 h-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="trade-card-icon me-2"><i class="fas fa-box"></i></span>
+                                        <h5 class="mb-0">Product</h5>
+                                    </div>
+                                    <div>{{ macmap_data.overview.product or form_data.product_name or 'Product not specified' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="mb-2"><i class="fas fa-percent me-2"></i>Customs Tariffs</h5>
+                            {% if macmap_data.customs_tariffs and macmap_data.customs_tariffs|length > 0 %}
+                            <div class="table-responsive mb-3">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Tariff Regime</th>
+                                            <th>Applied Tariff</th>
+                                            <th>AVE</th>
+                                            <th>Note</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for tariff in macmap_data.customs_tariffs %}
+                                        <tr>
+                                            <td>{{ tariff.tariff_regime }}</td>
+                                            <td>{{ tariff.applied_tariff }}</td>
+                                            <td>{{ tariff.ave }}</td>
+                                            <td>{{ tariff.note }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                <p>No customs tariff data available.</p>
+                            {% endif %}
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="mb-2"><i class="fas fa-gavel me-2"></i>Trade Remedies</h5>
+                            {% if macmap_data.trade_remedies_message %}
+                                <div class="section-insights">{{ macmap_data.trade_remedies_message }}</div>
+                            {% else %}
+                                <p>No trade remedies data available.</p>
+                            {% endif %}
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="mb-2"><i class="fas fa-clipboard-check me-2"></i>Regulatory Requirements</h5>
+                            {% if macmap_data.regulatory_requirements and macmap_data.regulatory_requirements|length > 0 %}
+                            <div class="table-responsive mb-3">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for req in macmap_data.regulatory_requirements %}
+                                        <tr>
+                                            <td>{{ req.code }}</td>
+                                            <td>{{ req.description }}</td>
+                                            <td>{{ req.count }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                                <p>No regulatory requirements data available.</p>
+                            {% endif %}
+                        </div>
+                        {% if macmap_data.source_info %}
+                        <div class="mt-3 text-muted small">{{ macmap_data.source_info }}</div>
+                        {% endif %}
+                        {% if macmap_insights %}
+                        <div class="section-insights mt-3">{{ macmap_insights|plain_text }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
 <style>
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Report Section */
+.report-section {
+    position: relative;
+    min-height: 100vh;
+    color: #1B1931;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.report-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+}
+
+.report-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+}
+
+/* Report Header */
+.report-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Report Index */
+.report-index {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+.nav-link {
+    color: var(--white);
+    font-weight: 500;
+    padding: 0.4rem 1.1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #c7d2fe;
+}
+
+/* Section Card */
+.section-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.section-content {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.section-intro, .section-insights {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-block {
+    flex: 1 1 150px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--glass-border);
+}
+
+.stat-icon {
+    color: var(--secondary-orange);
+    font-size: 1.5rem;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: var(--white);
+}
+
+.stat-value {
+    color: #c7d2fe;
+}
+
+.trade-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
+
+.trade-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.trade-card-icon {
+    color: var(--secondary-orange);
+    font-size: 1.5rem;
+}
+
 .trade-subnav {
     position: sticky;
     top: 70px;
     z-index: 10;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
 }
-.trade-nav-link {
-    color: #2c3e50;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 0.4rem 1.1rem;
-    border-radius: 0.4rem;
-    transition: background 0.2s, color 0.2s;
+
+/* Table Styling */
+.table {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--white);
+    margin-bottom: 1rem;
+    width: 100%;
 }
-.trade-nav-link:hover, .trade-nav-link.active {
-    background: #eaf1fb;
-    color: #3498db;
+
+.table thead {
+    background: rgba(255, 255, 255, 0.1);
 }
-.trade-card {
-    background: #fff;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 0.7rem;
-    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
-    margin-bottom: 2rem;
+
+.table th, .table td {
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
 }
-.trade-card-icon {
-    color: #3498db;
-    font-size: 1.5rem;
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.03);
 }
-@media (max-width: 991px) {
-    .trade-card { padding: 1rem; }
+
+.table-hover tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
 }
-@media (max-width: 768px) {
-    .trade-card { padding: 0.7rem; }
-    .trade-subnav { top: 56px; }
+
+.table-responsive {
+    overflow-x: auto;
 }
+
+/* Santander HTML Content Styling */
 .santander-html {
-    font-family: 'Segoe UI', 'Arial', sans-serif !important;
-    font-size: 1rem;
-    color: #222 !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.7;
-    background: none;
 }
-.santander-html * {
-    font-family: inherit !important;
-    color: inherit !important;
-    background: none !important;
-    box-shadow: none !important;
-}
+
 .santander-html h1, .santander-html h2, .santander-html h3, .santander-html h4, .santander-html h5, .santander-html h6 {
-    color: #2c3e50 !important;
+    color: var(--white);
     font-weight: 600;
-    margin-top: 1.2em;
-    margin-bottom: 0.6em;
-    line-height: 1.2;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
 }
-.santander-html h1 { font-size: 2rem; }
-.santander-html h2 { font-size: 1.5rem; }
-.santander-html h3 { font-size: 1.25rem; }
-.santander-html h4 { font-size: 1.1rem; }
-.santander-html h5 { font-size: 1rem; }
-.santander-html h6 { font-size: 0.95rem; }
-.santander-html p, .santander-html dl, .santander-html ul, .santander-html ol, .santander-html table {
-    margin-bottom: 1.1rem;
+
+.santander-html p {
+    margin-bottom: 1rem;
 }
-.santander-html ul, .santander-html ol {
-    padding-left: 1.5rem;
-}
+
 .santander-html a {
-    color: #3498db !important;
+    color: var(--secondary-orange);
     text-decoration: underline;
-    transition: color 0.2s;
 }
+
 .santander-html a:hover {
-    color: #217dbb !important;
-    text-decoration: underline;
+    color: var(--secondary-red);
 }
+
 .santander-html table {
     width: 100%;
-    margin-bottom: 1rem;
-    background: #fff;
     border-collapse: collapse;
-    font-size: 1rem;
-}
-.santander-html table, .santander-html th, .santander-html td {
-    border: 1px solid #e2e8f0;
-}
-.santander-html th, .santander-html td {
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-}
-.santander-html tr:nth-child(even) {
-    background: #f8fafc;
-}
-.santander-html dl {
+    background: rgba(255, 255, 255, 0.05);
     margin-bottom: 1rem;
 }
-.santander-html dt {
+
+.santander-html table th, .santander-html table td {
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.santander-html table th {
+    background: rgba(255, 255, 255, 0.1);
     font-weight: 600;
-    margin-top: 0.5rem;
 }
-.santander-html dd {
-    margin-left: 0;
+
+.santander-html ul, .santander-html ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.santander-html li {
     margin-bottom: 0.5rem;
-    font-size: 1rem;
 }
-.santander-html blockquote {
-    border-left: 4px solid #e2e8f0;
-    margin: 1rem 0;
-    padding: 0.5rem 1rem;
-    color: #555;
-    background: #f8fafc;
+
+.santander-html strong {
+    color: var(--white);
+    font-weight: 600;
 }
-.santander-html hr {
-    border: none;
-    border-top: 1px solid #e2e8f0;
-    margin: 2rem 0;
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .report-card {
+        padding: 1.5rem;
+    }
+    
+    .report-title {
+        font-size: 1.75rem;
+    }
 }
-.santander-html img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0.5rem 0;
+
+@media (max-width: 768px) {
+    .report-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .report-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-header {
+        font-size: 1.25rem;
+    }
+    
+    .trade-subnav {
+        top: 56px;
+    }
+    
+    .stat-block {
+        flex: 1 1 calc(50% - 0.5rem);
+    }
 }
-.santander-html .marge-table {
-    display: none !important;
+
+@media (max-width: 576px) {
+    .report-card {
+        padding: 1rem;
+    }
+    
+    .report-title {
+        font-size: 1.25rem;
+    }
+    
+    .section-header {
+        font-size: 1.1rem;
+    }
+    
+    .stat-block {
+        flex: 1 1 100%;
+    }
+    
+    .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
 }
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 // Helper to parse flows table for time series data
@@ -1172,7 +1419,6 @@ function parseFlowsTimeSeries(tableId) {
     let years = [];
     let partners = [];
     let data = {};
-    // Try to get years from <thead>
     const thead = table.querySelector('thead');
     if (thead) {
         const ths = thead.querySelectorAll('th');
@@ -1182,7 +1428,6 @@ function parseFlowsTimeSeries(tableId) {
         }
     }
     const rows = Array.from(table.querySelectorAll('tbody tr'));
-    // If no <thead>, check if first row is header
     let startIdx = 0;
     if (years.length === 0 && rows.length > 0) {
         const firstRowCells = Array.from(rows[0].querySelectorAll('td, th'));
@@ -1191,7 +1436,7 @@ function parseFlowsTimeSeries(tableId) {
                 let year = firstRowCells[i].innerText.trim();
                 if (/^\d{4}$/.test(year)) years.push(year);
             }
-            startIdx = 1; // skip this row for data
+            startIdx = 1;
         }
     }
     for (let r = startIdx; r < rows.length; ++r) {
@@ -1209,14 +1454,12 @@ function parseFlowsTimeSeries(tableId) {
     }
     return {partners, years, data};
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     const exportSeries = parseFlowsTimeSeries('export-flows-table');
     const importSeries = parseFlowsTimeSeries('import-flows-table');
-    // Use the same years for both charts (union)
     const allYears = Array.from(new Set([...(exportSeries.years || []), ...(importSeries.years || [])])).sort();
-    // Prepare datasets for each partner (export and import)
     const datasets = [];
-    // Export partners
     exportSeries.partners.forEach((partner, idx) => {
         datasets.push({
             label: `Export: ${partner}`,
@@ -1230,7 +1473,6 @@ document.addEventListener('DOMContentLoaded', function() {
             spanGaps: true
         });
     });
-    // Import partners
     importSeries.partners.forEach((partner, idx) => {
         datasets.push({
             label: `Import: ${partner}`,
@@ -1259,46 +1501,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: { display: true, text: 'Import/Export Flows Evolution by Year' }
             },
             scales: {
-                x: { title: { display: true, text: 'Year' } },
-                y: { title: { display: true, text: 'Value' }, beginAtZero: true }
+                x: { 
+                    title: { display: true, text: 'Year' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                y: { 
+                    title: { display: true, text: 'Value' }, 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                }
             }
         }
     });
-});
-// Export as Word document
-function exportReportToWord(filename = 'report.doc') {
-    // Clone the report content
-    const content = document.querySelector('.container-xl').cloneNode(true);
-    // Add the logo at the top
-    const logo = document.createElement('div');
-    logo.textContent = 'Indatex';
-    logo.style.fontSize = '2rem';
-    logo.style.fontWeight = '700';
-    logo.style.color = '#2c3e50';
-    logo.style.textAlign = 'center';
-    logo.style.margin = '0 auto 24px auto';
-    content.insertBefore(logo, content.firstChild);
-    // Prepare HTML for Word
-    const html = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-        <head><meta charset='utf-8'><title>Exported Report</title></head>
-        <body>${content.innerHTML}</body>
-        </html>
-    `;
-    const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    setTimeout(() => {
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-    }, 0);
-}
-document.getElementById('exportWordBtn').addEventListener('click', function() {
-    exportReportToWord('Indegate_Market_Report.doc');
+
+    // Export as Word document
+    function exportReportToWord(filename = 'report.doc') {
+        const content = document.querySelector('.report-card').cloneNode(true);
+        const logo = document.createElement('div');
+        logo.textContent = 'Indatex';
+        logo.style.fontSize = '2rem';
+        logo.style.fontWeight = '700';
+        logo.style.color = '#ffffff';
+        logo.style.textAlign = 'center';
+        logo.style.margin = '0 auto 24px auto';
+        content.insertBefore(logo, content.firstChild);
+        const html = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head><meta charset='utf-8'><title>Exported Report</title></head>
+            <body>${content.innerHTML}</body>
+            </html>
+        `;
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+
+    document.getElementById('exportWordBtn').addEventListener('click', function() {
+        exportReportToWord('Indegate_Market_Report.doc');
+    });
 });
 </script>
-{% endblock %} 
+{% endblock %}

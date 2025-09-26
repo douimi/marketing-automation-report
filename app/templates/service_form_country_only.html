@@ -3,92 +3,174 @@
 {% block title %}{{ service.title }} - Market Research Service{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <!-- Back to Services -->
-    <div class="mb-4">
-        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Services
-        </a>
-    </div>
-
-    <!-- Service Header -->
-    <div class="text-center mb-5">
-        <div class="service-icon-large mb-3">
-            <i class="{{ service.icon }}"></i>
+<div class="service-page-wrapper">
+    <!-- Background Elements -->
+    <div class="background-overlay">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(8) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
         </div>
-        <h1 class="display-5 fw-bold text-primary mb-3">{{ service.title }}</h1>
-        <p class="lead text-muted">{{ service.description }}</p>
     </div>
 
-    <!-- Form Card -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">
-                        <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
-                        <input type="hidden" name="service_type" value="{{ service_type }}">
+    <!-- Hero Section -->
+    <section class="service-hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-70">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <div class="back-nav mb-4">
+                            <a href="{{ url_for('main.services_page') }}" class="back-link glass-card">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Back to Services</span>
+                            </a>
+                        </div>
                         
-                        <div class="mb-4">
-                            <label for="destination_country" class="form-label">
-                                <i class="fas fa-flag me-2"></i>Target Country
-                            </label>
-                            <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
-                                <option value="" disabled selected>Select Target Country</option>
-                            </select>
-                            <div class="form-text">Select the country you want to analyze</div>
+                        <div class="service-badge glass-card">
+                            <i class="{{ service.icon }}"></i>
+                            <span>{{ service.title }}</span>
                         </div>
+                        
+                        <h1 class="hero-title">Generate Comprehensive <span class="highlight-text">Market Research</span></h1>
+                        <p class="hero-subtitle">{{ service.description }}</p>
+                        
+                        <div class="hero-stats">
+                            <div class="stat-item glass-card">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Accuracy</div>
+                            </div>
+                            <div class="stat-item glass-card">
+                                <div class="stat-number">5min</div>
+                                <div class="stat-label">Generation Time</div>
+                            </div>
+                            <div class="stat-item glass-card">
+                                <div class="stat-number">180+</div>
+                                <div class="stat-label">Countries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-container glass-card">
+                        <div class="form-header">
+                            <h3>Start Your Analysis</h3>
+                            <p>Select your target market and generate insights in minutes</p>
+                        </div>
+                        
+                        <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}" class="research-form">
+                            <input type="hidden" name="service_type" value="{{ service_type }}">
+                            
+                            <div class="form-group">
+                                <label for="destination_country" class="form-label">
+                                    <i class="fas fa-globe-americas"></i>
+                                    Target Country
+                                </label>
+                                <div class="select-wrapper">
+                                    <select class="form-select" id="destination_country" name="destination_country" required>
+                                        <option value="" disabled selected>Choose your target market</option>
+                                    </select>
+                                </div>
+                                <div class="form-hint">Select the country you want to analyze for market opportunities</div>
+                            </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                            <button type="submit" class="generate-btn primary-gradient">
+                                <span class="btn-content">
+                                    <i class="fas fa-rocket"></i>
+                                    Generate Report
+                                </span>
+                                <div class="btn-loader">
+                                    <div class="spinner"></div>
+                                </div>
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Service Features -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <h4 class="text-center mb-4">What You'll Get</h4>
+    <!-- Features Section -->
+    <section class="service-features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Makes Our Reports Special</h2>
+                <p class="section-subtitle">Comprehensive analysis powered by real-time data and AI insights</p>
+            </div>
+
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon primary-gradient">
                             <i class="fas fa-chart-line"></i>
                         </div>
-                        <h6>Real-time Data</h6>
-                        <p class="text-muted small">Up-to-date information scraped from reliable sources</p>
+                        <h4>Real-Time Market Data</h4>
+                        <p>Access the latest market trends, consumer behavior, and economic indicators from trusted sources worldwide.</p>
+                        <div class="feature-highlight accent-gradient">Live Data</div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-file-export"></i>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon primary-gradient">
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <h6>Export Ready</h6>
-                        <p class="text-muted small">Download as PDF or Word document</p>
+                        <h4>AI-Powered Insights</h4>
+                        <p>Our advanced algorithms analyze complex market patterns to provide actionable business intelligence.</p>
+                        <div class="feature-highlight accent-gradient">Smart Analysis</div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-box text-center">
-                        <div class="feature-icon mb-3">
-                            <i class="fas fa-bolt"></i>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon primary-gradient">
+                            <i class="fas fa-file-contract"></i>
                         </div>
-                        <h6>Quick Generation</h6>
-                        <p class="text-muted small">Get your report in minutes, not hours</p>
+                        <h4>Professional Reports</h4>
+                        <p>Download beautifully formatted PDF and Word documents ready for presentations and decision-making.</p>
+                        <div class="feature-highlight accent-gradient">Export Ready</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="service-process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">From selection to insights in just a few simple steps</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step glass-card">
+                    <div class="step-number primary-gradient">01</div>
+                    <div class="step-content">
+                        <h4>Select Market</h4>
+                        <p>Choose your target country from our comprehensive database</p>
+                    </div>
+                </div>
+                
+                <div class="process-step glass-card">
+                    <div class="step-number primary-gradient">02</div>
+                    <div class="step-content">
+                        <h4>AI Analysis</h4>
+                        <p>Our system gathers and analyzes real-time market data</p>
+                    </div>
+                </div>
+                
+                <div class="process-step glass-card">
+                    <div class="step-number primary-gradient">03</div>
+                    <div class="step-content">
+                        <h4>Generate Report</h4>
+                        <p>Receive your comprehensive market research document</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- Select2 CSS/JS -->
@@ -122,7 +204,7 @@ $(document).ready(function() {
         minimumInputLength: 1,
         templateResult: formatCountry,
         templateSelection: formatCountrySelection,
-        placeholder: 'Select a country',
+        placeholder: 'Choose your target market',
         allowClear: true
     });
 });
@@ -130,7 +212,9 @@ $(document).ready(function() {
 document.getElementById('serviceForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Submit form directly - centralized loading page will handle loading state
+    const btn = this.querySelector('.generate-btn');
+    btn.classList.add('loading');
+    
     fetch(this.action, {
         method: 'POST',
         headers: {
@@ -146,126 +230,682 @@ document.getElementById('serviceForm').addEventListener('submit', function(e) {
     })
     .then(data => {
         if (data.redirect_url) {
-            // Redirect to the centralized loading page
             window.location.href = data.redirect_url;
         } else if (data.status === 'error') {
             alert('Error: ' + (data.message || 'An error occurred'));
+            btn.classList.remove('loading');
         } else {
             alert('Unexpected response format. Please try again.');
+            btn.classList.remove('loading');
         }
     })
     .catch(error => {
         console.error('Error:', error);
         alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+        btn.classList.remove('loading');
     });
 });
 </script>
 
 <style>
-.service-icon-large {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
-    margin: 0 auto;
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-.card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
+* {
+    box-sizing: border-box;
 }
 
-.card-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    padding: 1.5rem;
+.service-page-wrapper {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+    min-height: 100vh;
+    color: var(--white);
+    position: relative;
+    overflow-x: hidden;
 }
 
-.card-body {
-    padding: 2rem;
-}
-
-.form-label {
-    font-weight: 500;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
-}
-
-.form-select {
-    padding: 0.75rem;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-select:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    border: none;
-    padding: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
-}
-
-.feature-box {
-    padding: 1.5rem;
-    border-radius: 10px;
-    background: #f8f9fa;
-    height: 100%;
-}
-
-.feature-icon {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-    margin: 0 auto;
-}
-
-.loading-overlay {
-    position: fixed;
+.background-overlay {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
+    z-index: 0;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+.particle-7 { top: 80%; left: 80%; animation-delay: 1.5s; }
+.particle-8 { top: 25%; left: 70%; animation-delay: 3.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Hero Section */
+.service-hero-section {
+    padding: 4rem 0;
+    position: relative;
+    z-index: 3;
+}
+
+.min-vh-70 {
+    min-height: 70vh;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.back-link {
+    display: inline-flex;
     align-items: center;
-    z-index: 9999;
+    gap: 0.5rem;
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.back-link:hover {
+    color: var(--white);
+    transform: translateX(-4px);
+}
+
+.service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+
+.service-badge i {
+    font-size: 1.25rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin: 2rem 0 1rem;
+    letter-spacing: -0.02em;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    min-width: 120px;
+    transition: var(--transition);
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Form Container */
+.form-container {
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 20px 20px 0 0;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.form-select {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--secondary-orange);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.form-hint {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.5rem;
+}
+
+.primary-gradient {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+}
+
+.accent-gradient {
+    background: linear-gradient(135deg, var(--primary-purple), #6366f1);
+}
+
+.generate-btn {
+    width: 100%;
+    position: relative;
+    border: none;
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
+
+.generate-btn:active {
+    transform: translateY(0);
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: opacity 0.3s ease;
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.generate-btn.loading .btn-content {
+    opacity: 0;
+}
+
+.generate-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Features Section */
+.service-features-section {
+    padding: 5rem 0;
+    position: relative;
+    z-index: 3;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header .section-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+.section-header .section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin: 14px auto 0;
+    background: linear-gradient(90deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 2px;
+}
+
+.section-header .section-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 650px;
+    text-align: center;
+    line-height: 1.6;
+    font-weight: 500;
+    margin: 0.5rem auto 0;
+}
+
+.feature-card {
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: var(--transition);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary-orange), var(--secondary-red));
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-card h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.feature-highlight {
+    display: inline-block;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Process Section */
+.service-process-section {
+    padding: 5rem 0;
+    position: relative;
+    z-index: 3;
+}
+
+.process-timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary-orange), var(--secondary-red));
+    z-index: 1;
+}
+
+.process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    width: 30%;
+    transition: var(--transition);
+}
+
+.process-step:hover {
+    transform: translateY(-5px);
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.step-content h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.step-content p {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+/* Select2 Customization */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    height: auto !important;
+    padding: 0.75rem 1rem !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 0 !important;
+    color: var(--white) !important;
+    line-height: 1.5 !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--secondary-orange) !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1) !important;
+}
+
+.select2-dropdown {
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    background: var(--dark-bg) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.select2-container--default .select2-results__option--selected {
+    background-color: rgba(124, 58, 237, 0.2) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: var(--primary-purple) !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .process-timeline::before {
+        left: 5%;
+        right: 5%;
+    }
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
+    .service-hero-section {
+        padding: 2rem 0;
     }
     
-    .card-body {
+    .hero-title {
+        font-size: 2rem;
+        margin: 1.5rem 0 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-stats {
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .form-container {
+        margin-top: 2rem;
+        padding: 2rem;
+    }
+    
+    .process-timeline {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .process-timeline::before {
+        display: none;
+    }
+    
+    .process-step {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .section-header .section-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .form-container {
         padding: 1.5rem;
     }
     
-    .display-5 {
-        font-size: 2rem;
+    .service-features-section {
+        padding: 3rem 0;
+    }
+    
+    .service-process-section {
+        padding: 3rem 0;
+    }
+    
+    .stat-item {
+        min-width: 100px;
+        padding: 1rem 0.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
     }
 }
 </style>

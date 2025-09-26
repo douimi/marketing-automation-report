@@ -3,159 +3,359 @@
 {% block title %}My Profile{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">
-                        <i class="fas fa-user-circle me-2"></i>My Profile
-                    </h2>
-                </div>
-                <div class="card-body">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ category }}">{{ message }}</div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+<section class="profile-section">
+    <div class="profile-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="profile-info">
-                                <h5 class="text-muted mb-3">Personal Information</h5>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Full Name</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-user me-2 text-primary"></i>
-                                        {{ current_user.full_name or current_user.username.title() }}
+    <div class="container compact-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h2 class="mb-0">
+                            <i class="fas fa-user-circle me-2"></i>My Profile
+                        </h2>
+                    </div>
+                    <div class="profile-card-body">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} profile-alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-info">
+                                    <h5 class="info-section-title">Personal Information</h5>
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Full Name</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-user me-2"></i>
+                                            {{ current_user.full_name or current_user.username.title() }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Username</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-at me-2"></i>
+                                            {{ current_user.username }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Email</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-envelope me-2"></i>
+                                            {{ current_user.email or 'Not provided' }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Phone</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-phone me-2"></i>
+                                            {{ current_user.phone or 'Not provided' }}
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Username</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-at me-2 text-primary"></i>
-                                        {{ current_user.username }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="profile-info">
+                                    <h5 class="info-section-title">Business Information</h5>
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Company</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-building me-2"></i>
+                                            {{ current_user.company or 'Not provided' }}
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Email</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-envelope me-2 text-primary"></i>
-                                        {{ current_user.email or 'Not provided' }}
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Preferred Target Country</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-globe me-2"></i>
+                                            {% if current_user.preferred_target_country %}
+                                                {{ current_user.preferred_target_country }}
+                                            {% else %}
+                                                Not selected
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Phone</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-phone me-2 text-primary"></i>
-                                        {{ current_user.phone or 'Not provided' }}
+                                    
+                                    <div class="info-item">
+                                        <label class="info-label">Member Since</label>
+                                        <div class="info-value">
+                                            <i class="fas fa-calendar me-2"></i>
+                                            {% if current_user.created_at %}
+                                                {{ current_user.created_at[:10] }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="profile-info">
-                                <h5 class="text-muted mb-3">Business Information</h5>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Company</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-building me-2 text-primary"></i>
-                                        {{ current_user.company or 'Not provided' }}
-                                    </div>
-                                </div>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Preferred Target Country</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-globe me-2 text-primary"></i>
-                                        {% if current_user.preferred_target_country %}
-                                            {{ current_user.preferred_target_country }}
-                                        {% else %}
-                                            Not selected
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                
-                                <div class="info-item mb-3">
-                                    <label class="form-label text-muted">Member Since</label>
-                                    <div class="info-value">
-                                        <i class="fas fa-calendar me-2 text-primary"></i>
-                                        {% if current_user.created_at %}
-                                            {{ current_user.created_at[:10] }}
-                                        {% else %}
-                                            N/A
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="profile-actions">
+                            <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-primary profile-btn">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary profile-btn">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Services
+                            </a>
                         </div>
-                    </div>
-                    
-                    <hr class="my-4">
-                    
-                    <div class="text-center">
-                        <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-primary btn-lg me-3">
-                            <i class="fas fa-edit me-2"></i>Edit Profile
-                        </a>
-                        <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary btn-lg">
-                            <i class="fas fa-arrow-left me-2"></i>Back to Services
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <style>
-.info-item {
-    border-bottom: 1px solid #f0f0f0;
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Profile Section */
+.profile-section {
+    position: relative;
+    min-height: 100vh;
+    color: var(--white);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.profile-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1000px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.profile-card-header {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    padding: 1.5rem;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.profile-card-body {
+    padding: 2rem;
+}
+
+/* Profile Alert */
+.profile-alert {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+/* Profile Info */
+.profile-info {
+    margin-bottom: 1.5rem;
+}
+
+.info-section-title {
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.1rem;
+}
+
+.info-item {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .info-item:last-child {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.info-label {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
 }
 
 .info-value {
     font-weight: 500;
-    color: #2c3e50;
+    color: var(--white);
     padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
 }
 
-.profile-info h5 {
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
+.info-value i {
+    color: var(--secondary-orange);
+    width: 20px;
 }
 
-.card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
+/* Profile Actions */
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
-.card-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    border-bottom: none;
-    padding: 1.5rem;
+.profile-btn {
+    border-radius: 10px;
+    padding: 0.875rem 1.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 0.95rem;
 }
 
 .btn-primary {
-    background-color: #2c3e50;
-    border-color: #2c3e50;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+}
+.alert{
+    color:white !important;
 }
 
 .btn-primary:hover {
-    background-color: #1a252f;
-    border-color: #1a252f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+.btn-outline-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--white);
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .profile-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .profile-card-body {
+        padding: 1.5rem;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .profile-btn {
+        width: 100%;
+    }
 }
 </style>
 {% endblock %}

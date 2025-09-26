@@ -1,54 +1,105 @@
 {% extends "base.html" %}
-
 {% block title %}Home - Trade Intelligence Platform{% endblock %}
-
 {% block content %}
+
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="hero-overlay">
-        <div class="container">
-            <div class="row align-items-center min-vh-75">
-                <div class="col-lg-6">
-                    <div class="hero-content">
-                        <div class="brand-section mb-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <span class="hero-logo me-3" style="font-size: 2.5rem; font-weight: 700; color: white;">Indatex</span>
-                                <span class="hero-divider">|</span>
-                                <span class="hero-subtitle">Trade Intelligence</span>
-                            </div>
-                        </div>
-                        
-                        <h1 class="hero-title mb-3">Committed to the internationalization of global companies</h1>
-                        
-                        <div class="hero-cta-section">
-                            <h3 class="cta-title mb-3">Want to discover our content selection?</h3>
-                            <p class="cta-subtitle mb-4">Let us know about your country or area of interest to begin</p>
-                            <div class="alert alert-info mb-4" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 10px;">
-                                <i class="fas fa-gift me-2"></i>
-                                <strong>Free Sample:</strong> Try our General Presentation service for any country - no registration required!
-                            </div>
-                            
-                            <div class="search-form-container">
-                                <form id="homeCountryForm" action="{{ url_for('main.start_country_information') }}" method="POST">
-                                    <div class="input-group search-input-group">
-                                        <select class="form-select search-input" id="countrySearch" name="destination_country" required>
-                                            <option value="" disabled selected>Enter a target country</option>
-                                        </select>
-                                        <button class="btn btn-cta" type="submit">
-                                            <i class="fas fa-play me-2"></i>Get Free Report
-                                        </button>
-                                    </div>
-                                </form>
+    <div class="hero-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+            <div class="particle particle-6"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <div class="brand-section mb-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Indatex Logo" class="hero-logo-img me-3">
+                            <div class="brand-text">
                             </div>
                         </div>
                     </div>
+
+                    <div class="hero-main-content mb-5">
+                        <h1 class="hero-title">Committed to the <span class="highlight-text">internationalization</span> of global companies</h1>
+                    </div>
+
+                    <div class="hero-cta-section">
+                        <div class="cta-header mb-4">
+                            <h2 class="cta-title">Want to discover our content selection?</h2>
+                            <p class="cta-subtitle">Let us know about your country or area of interest to begin</p>
+                        </div>
+
+                        <div class="alert-card mb-4">
+                            <div class="alert-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="alert-content">
+                                <strong>Free Sample:</strong> Try our General Presentation service for any country - no registration required!
+                            </div>
+                        </div>
+                        <form id="homeCountryForm" action="{{ url_for('main.start_country_information') }}" method="POST" class="search-form">
+                            <div class="input-group">
+                                <select class="form-select" id="countrySearch" name="destination_country" required>
+                                    <option value="" disabled selected>Enter a target country</option>
+                                </select>
+                                <button class="btn btn-primary btn-cta" type="submit">
+                                    <i class="fas fa-rocket me-2"></i>Get Free Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                
-                <div class="col-lg-6">
-                    <div class="hero-image-container">
-                        <!-- Placeholder for hero image - you can replace with actual shipping/trade image -->
-                        <div class="hero-image-placeholder">
-                            <i class="fas fa-ship fa-8x text-white opacity-50"></i>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="globe-container">
+                        <div class="globe">
+                            <div class="globe-inner">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="orbit orbit-1">
+                            <div class="orbit-item">
+                                <i class="fas fa-ship"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="orbit orbit-2">
+                            <div class="orbit-item">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="orbit orbit-3">
+                            <div class="orbit-item">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-cards">
+                        <div class="data-card card-1">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Real-time Analytics</span>
+                        </div>
+                        <div class="data-card card-2">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Platform</span>
+                        </div>
+                        <div class="data-card card-3">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Monitoring</span>
                         </div>
                     </div>
                 </div>
@@ -57,61 +108,90 @@
     </div>
 </section>
 
-<!-- Why Choose Us Section -->
-<section class="why-choose-us-section py-5">
+<!-- Features Section -->
+<section class="features-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="why-choose-content">
-                    <h2 class="section-title mb-4">Why Choose Indatex for Your Global Expansion?</h2>
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <i class="fas fa-globe-americas"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h5>Comprehensive Market Intelligence</h5>
-                                <p>Access detailed market analysis, trade flows, and country-specific insights for over 200 destinations worldwide.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h5>Real-Time Data & Reports</h5>
-                                <p>Get up-to-date information on market conditions, trade regulations, and business opportunities as they develop.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h5>Expert-Verified Information</h5>
-                                <p>Our data is curated and verified by trade experts to ensure accuracy and reliability for your business decisions.</p>
-                            </div>
-                        </div>
+        <div class="section-header">
+            <div class="title-decoration">
+                <div class="decoration-line left-line"></div>
+                <div class="title-badge">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="decoration-line right-line"></div>
+            </div>
+            <h2 class="section-title">Why Work with Indatex?</h2>
+            <p class="section-subtitle">Your trusted partner for data-driven international expansion</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3>Comprehensive Market Intelligence</h3>
+                <p>Access detailed market analysis, trade flows, and country-specific insights for over 200 destinations worldwide.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Real-Time Data & Reports</h3>
+                <p>Get up-to-date information on market conditions, trade regulations, and business opportunities as they develop.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Expert-Verified Information</h3>
+                <p>Our data is curated and verified by trade experts to ensure accuracy and reliability for your business decisions.</p>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-number" data-count="200">0</div>
+                        <div class="stat-suffix">+</div>
+                    </div>
+                    <div class="stat-label">Countries Covered</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-map"></i>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">200+</div>
-                        <div class="stat-label">Countries Covered</div>
+
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-number" data-count="50">0</div>
+                        <div class="stat-suffix">K+</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Trade Reports Generated</div>
+                    <div class="stat-label">Trade Reports Generated</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-file-chart"></i>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">1000+</div>
-                        <div class="stat-label">Global Businesses Served</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-number" data-count="1000">0</div>
+                        <div class="stat-suffix">+</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Platform Availability</div>
+                    <div class="stat-label">Global Businesses Served</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-number">24</div>
+                        <div class="stat-suffix">/7</div>
+                    </div>
+                    <div class="stat-label">Platform Availability</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
                     </div>
                 </div>
             </div>
@@ -120,378 +200,824 @@
 </section>
 
 <!-- Testimonials Section -->
-<section class="testimonials-section py-5 bg-light">
+<section class="testimonials-section">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title">What Our Clients Say</h2>
+            <div class="title-decoration">
+                <div class="decoration-line left-line"></div>
+                <div class="title-badge">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="decoration-line right-line"></div>
+            </div>
+            <h2 class="section-title text-white">What Our Clients Say</h2>
             <p class="section-subtitle">Trusted by businesses worldwide for international market expansion</p>
         </div>
-        
+
         <div class="row g-4">
-            <!-- Testimonial 1 -->
             <div class="col-lg-4 col-md-6">
                 <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"Indatex's market intelligence helped us identify the perfect entry strategy for Southeast Asia. Their comprehensive reports saved us months of research time."</p>
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
                     </div>
+                    <p class="testimonial-text">"Indatex's market intelligence helped us identify the perfect entry strategy for Southeast Asia. Their comprehensive reports saved us months of research time."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
+                            <span>SC</span>
                         </div>
                         <div class="author-info">
-                            <h6 class="author-name">Sarah Chen</h6>
-                            <p class="author-title">Export Director, TechFlow Solutions</p>
+                            <h6>Sarah Chen</h6>
+                            <p>Export Director, TechFlow Solutions</p>
                             <div class="author-location">
-                                <i class="fas fa-map-marker-alt me-1"></i>Singapore
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Singapore</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Testimonial 2 -->
             <div class="col-lg-4 col-md-6">
                 <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"The trade compliance reports were invaluable for our European expansion. We avoided costly regulatory mistakes and entered new markets with confidence."</p>
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
                     </div>
+                    <p class="testimonial-text">"The trade compliance reports were invaluable for our European expansion. We avoided costly regulatory mistakes and entered new markets with confidence."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
+                            <span>MR</span>
                         </div>
                         <div class="author-info">
-                            <h6 class="author-name">Miguel Rodriguez</h6>
-                            <p class="author-title">International Sales Manager, AgriMax</p>
+                            <h6>Miguel Rodriguez</h6>
+                            <p>International Sales Manager, AgriMax</p>
                             <div class="author-location">
-                                <i class="fas fa-map-marker-alt me-1"></i>Madrid, Spain
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Madrid, Spain</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Testimonial 3 -->
             <div class="col-lg-4 col-md-6">
                 <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">"Outstanding platform! The country-specific business practices guide helped us navigate cultural nuances and establish strong partnerships in Japan."</p>
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
                     </div>
+                    <p class="testimonial-text">"Outstanding platform! The country-specific business practices guide helped us navigate cultural nuances and establish strong partnerships in Japan."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
+                            <span>ET</span>
                         </div>
                         <div class="author-info">
-                            <h6 class="author-name">Emma Thompson</h6>
-                            <p class="author-title">CEO, Nordic Innovations</p>
+                            <h6>Emma Thompson</h6>
+                            <p>CEO, Nordic Innovations</p>
                             <div class="author-location">
-                                <i class="fas fa-map-marker-alt me-1"></i>Stockholm, Sweden
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Stockholm, Sweden</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- CTA in Testimonials -->
+        
         <div class="text-center mt-5">
-            <h4 class="mb-3">Ready to Join Our Success Stories?</h4>
+            <h4 class="cta-heading">Ready to Join Our Success Stories?</h4>
             <div class="cta-buttons">
-                {% if not current_user.is_authenticated %}
                 <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-success btn-lg me-3">
                     <i class="fas fa-gift me-2"></i>Try Free Sample Report
                 </a>
-                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-join btn-lg">
                     <i class="fas fa-user-plus me-2"></i>Join Now
                 </a>
-                {% else %}
-                <a href="{{ url_for('main.services_page') }}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-chart-line me-2"></i>Explore All Services
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>
 </section>
 
 <!-- Footer Links Section -->
-<section class="footer-links-section py-5 bg-dark text-white">
+<section class="footer-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4">
-                <h5>Assistance</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light">FAQ</a></li>
-                    <li><a href="#" class="text-light">Contact us</a></li>
+                <h5 class="footer-heading">Assistance</h5>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Contact us</a></li>
                 </ul>
             </div>
             <div class="col-lg-4 mb-4">
-                <h5>Trade Compliance</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light">Terms of use</a></li>
-                    <li><a href="#" class="text-light">Data privacy</a></li>
-                    <li><a href="#" class="text-light">Cookies information</a></li>
+                <h5 class="footer-heading">Trade Compliance</h5>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Terms of use</a></li>
+                    <li><a href="#" class="footer-link">Data privacy</a></li>
+                    <li><a href="#" class="footer-link">Cookies information</a></li>
                 </ul>
             </div>
             <div class="col-lg-4 mb-4">
-                <h5>Discover Our Platform</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light">Our Company</a></li>
+                <h5 class="footer-heading">Discover Our Platform</h5>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Our Company</a></li>
                 </ul>
             </div>
         </div>
-        <hr class="my-4">
+        <hr class="footer-divider">
         <div class="text-center">
-            <p class="mb-0">&copy; Indegate - {{ current_year }}</p>
+            <p class="copyright">&copy; Indegate - <span id="current-year">2025</span></p>
         </div>
     </div>
 </section>
 
 <style>
-.hero-section {
-    background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.8)), 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%23134e8a"/><circle cx="200" cy="150" r="80" fill="%23ffffff" opacity="0.1"/><circle cx="800" cy="400" r="120" fill="%23ffffff" opacity="0.05"/><rect x="600" y="100" width="200" height="100" fill="%23ffffff" opacity="0.08"/></svg>');
-    background-size: cover;
-    background-position: center;
-    min-height: 80vh;
-    position: relative;
-    color: white;
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-.hero-overlay {
+/* Reset and Base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+/* Hero Section */
+.hero-section {
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     z-index: 2;
 }
 
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Hero Section Layout Fixes */
+.hero-section .container {
+    max-width: 1400px;
+    padding: 0 2rem;
+}
+
+.hero-section .row {
+    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-section .col-lg-6 {
+    flex: 0 0 auto;
+    width: 45%;
+    max-width: 550px;
+}
+
 .hero-content {
+    position: relative;
+    z-index: 2;
     padding: 2rem 0;
 }
 
-.hero-logo {
-    height: 50px;
+/* Updated Brand Section */
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.hero-logo-img {
+    height: 48px;
     width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.brand-text {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.hero-brand-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
 }
 
 .hero-divider {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 300;
-    color: white;
-    margin: 0 1rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .hero-subtitle {
-    font-size: 1.8rem;
-    font-weight: 500;
-    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.01em;
+}
+
+/* Updated Main Title */
+.hero-main-content {
+    margin-bottom: 3rem;
 }
 
 .hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--white);
+    letter-spacing: -0.025em;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+}
+
+/* Updated CTA Section */
+.hero-cta-section {
+    margin-top: 2.5rem;
+}
+
+.cta-header {
     margin-bottom: 2rem;
 }
 
 .cta-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
 }
 
 .cta-subtitle {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
-.search-form-container {
-    max-width: 500px;
-}
-
-.search-input-group {
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.search-input {
-    border: none;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 50px 0 0 50px;
-}
-
-.search-input:focus {
-    box-shadow: none;
-    border: none;
-}
-
-.btn-cta {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-weight: 600;
-    border-radius: 0 50px 50px 0;
-    transition: all 0.3s ease;
-}
-
-.btn-cta:hover {
-    background: #c0392b;
-    color: white;
-    transform: translateY(-1px);
-}
-
-.hero-image-container {
+.alert-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-}
-
-.hero-image-placeholder {
-    text-align: center;
-    padding: 3rem;
-}
-
-.min-vh-75 {
-    min-height: 75vh;
-}
-
-/* Why Choose Us Section */
-.why-choose-us-section {
-    background: #f8f9fa;
-}
-
-.section-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-}
-
-.section-subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 2rem;
-}
-
-.feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.feature-item {
-    display: flex;
-    align-items: flex-start;
     gap: 1rem;
+    backdrop-filter: blur(10px);
 }
 
-.feature-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    border-radius: 15px;
+.alert-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: white;
     flex-shrink: 0;
 }
 
-.feature-content h5 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+.alert-content {
+    color: var(--white);
+    font-weight: 500;
 }
 
-.feature-content p {
-    color: #666;
+.search-form .input-group {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.search-form .input-group:focus-within {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for country select text visibility */
+.search-form .form-select {
+    background: transparent;
+    border: none;
+    color: var(--white) !important;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+    flex: 1;
+}
+
+.search-form .form-select:focus {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white) !important;
+    box-shadow: none;
+}
+
+.search-form .form-select option {
+    background: var(--dark-bg);
+    color: var(--white) !important;
+}
+
+.search-form .btn {
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    transition: var(--transition);
+}
+
+.search-form .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Hero Visual Improvements */
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    z-index: 2;
+}
+
+.globe-container {
+    position: relative;
+    width: 180px;
+    height: 180px;
+}
+
+.globe {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.globe-inner i {
+    font-size: 3rem;
+    color: var(--white);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Improved Orbit Styling */
+.orbit {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-style: dashed;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+}
+
+.orbit-1 {
+    width: 250px;
+    height: 250px;
+    margin: -125px 0 0 -125px;
+    animation: rotate 25s linear infinite;
+}
+
+.orbit-2 {
+    width: 320px;
+    height: 320px;
+    margin: -160px 0 0 -160px;
+    animation: rotate 35s linear infinite reverse;
+}
+
+.orbit-3 {
+    width: 390px;
+    height: 390px;
+    margin: -195px 0 0 -195px;
+    animation: rotate 45s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.orbit-item {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 0.9rem;
+    top: -16px;
+    left: -16px;
+}
+
+/* Improved Data Cards Positioning */
+.data-cards {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.data-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+}
+
+.data-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Position cards on orbit lines with dots */
+.card-1 {
+    top: 10%;
+    right: -20px;
+}
+
+.card-1::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-orange);
+    border-radius: 50%;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+}
+
+.card-2 {
+    bottom: 20%;
+    left: -80px;
+}
+
+.card-2::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+.card-3 {
+    top: 45%;
+    right: -90px;
+}
+
+.card-3::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-red);
+    border-radius: 50%;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+
+.data-card i {
+    color: var(--primary-blue);
+    font-size: 1rem;
+}
+
+/* === Features Section === */
+.features-section {
+    padding: 100px 0;
+    background: transparent;
+}
+
+/* Section Header */
+.features-section .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.title-badge {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.title-badge i {
+    font-size: 1.2rem;
+    color: var(--white);
+}
+
+/* Title Styling */
+.features-section .section-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+    text-align: center;
+}
+
+/* Subtitle Styling (under title) */
+.features-section .section-subtitle {
+    font-size: 1.15rem;
+    color: #c7d2fe;
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.6;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.feature-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--white);
+    font-size: 1.8rem;
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+}
+
+.feature-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
     line-height: 1.6;
     margin: 0;
 }
 
-/* Stats Grid */
+/* Stats Grid Styling */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
 }
 
 .stat-card {
-    background: white;
-    border-radius: 15px;
+    background: var(--glass-bg);
+    border-radius: 16px;
     padding: 2rem 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--glass-border);
     transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(12px);
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-content {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 0.5rem;
 }
 
 .stat-number {
     font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--white);
+}
+
+.stat-suffix {
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #3498db;
-    margin-bottom: 0.5rem;
+    color: var(--secondary-orange);
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: #666;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.stat-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.2);
 }
 
 /* Testimonials Section */
 .testimonials-section {
-    background: #f8f9fa;
+    padding: 100px 0;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    color: var(--white);
+}
+
+.testimonials-section .section-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
 }
 
 .testimonial-card {
-    background: white;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
     padding: 2rem;
     height: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
 }
 
 .testimonial-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.testimonial-content {
-    flex: 1;
-    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .quote-icon {
     font-size: 2rem;
-    color: #3498db;
+    color: var(--secondary-orange);
     margin-bottom: 1rem;
 }
 
 .testimonial-text {
-    font-style: italic;
-    color: #555;
+    font-size: 1rem;
     line-height: 1.6;
-    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    font-style: italic;
 }
 
 .testimonial-author {
@@ -499,124 +1025,297 @@
     align-items: center;
     gap: 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid var(--border-color);
+}
+
+/* === Testimonials CTA Buttons === */
+.testimonials-section .cta-buttons .btn {
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+/* Primary CTA (Green) */
+.testimonials-section .cta-buttons .btn-success {
+    background: linear-gradient(135deg, var(--success), #059669);
+    border: none;
+    color: var(--white);
+}
+
+.testimonials-section .cta-buttons .btn-success:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669, var(--success));
+}
+
+/* Secondary CTA (Outline Light) */
+.testimonials-section .cta-buttons .btn-join {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    color: var(--white);
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    transition: all 0.3s ease;
+}
+
+.testimonials-section .cta-buttons .btn-join:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, var(--secondary-red), var(--secondary-orange));
 }
 
 .author-avatar {
-    font-size: 3rem;
-    color: #3498db;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
-.author-info {
-    flex: 1;
-}
-
-.author-name {
+.author-info h6 {
     font-size: 1rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0.25rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0 0 0.25rem 0;
 }
 
-.author-title {
+.author-info p {
     font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 0.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 0.25rem 0;
 }
 
 .author-location {
-    font-size: 0.8rem;
-    color: #888;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.cta-heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 2rem;
 }
 
 .cta-buttons {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.footer-links-section {
-    background: #2c3e50 !important;
+/* Footer Section */
+.footer-section {
+    background: var(--dark-bg);
+    padding: 60px 0 40px 0;
+    color: var(--white);
 }
 
-.footer-links-section a {
+.footer-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--secondary-orange);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: var(--transition);
+    font-size: 0.95rem;
 }
 
-.footer-links-section a:hover {
-    color: #3498db !important;
+.footer-link:hover {
+    color: var(--secondary-orange);
+    text-decoration: none;
 }
 
-@media (max-width: 768px) {
+.footer-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    margin: 2rem 0 1rem 0;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1400px) {
+    .hero-section .container {
+        max-width: 1200px;
+    }
+    
+    .hero-section .row {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-section .col-lg-6 {
+        width: 48%;
+    }
+    
+    .hero-visual {
+        height: 400px;
+    }
+    
+    .data-cards {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .stats-grid {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-section .row {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-section .col-lg-6 {
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .hero-visual {
+        height: 350px;
+    }
+    
     .hero-title {
+        font-size: 2.4rem;
+    }
+    
+    .hero-brand-name {
         font-size: 2rem;
     }
     
     .hero-subtitle {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
     
     .cta-title {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
     }
     
-    .search-input-group {
-        flex-direction: column;
-        border-radius: 10px;
-    }
-    
-    .search-input {
-        border-radius: 10px;
-        margin-bottom: 0.5rem;
-    }
-    
-    .btn-cta {
-        border-radius: 10px;
-        width: 100%;
-    }
-    
-    .hero-image-placeholder {
-        display: none;
-    }
-
-    /* Responsive adjustments for new sections */
     .section-title {
+        font-size: 2rem;
+    }
+    
+    .brand-text {
+        justify-content: center;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section .container {
+        padding: 0 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-brand-name {
         font-size: 1.8rem;
     }
     
-    .feature-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
+    .hero-subtitle {
+        font-size: 1.1rem;
     }
     
-    .feature-icon {
-        margin: 0 auto;
+    .cta-title {
+        font-size: 1.5rem;
+    }
+    
+    .hero-logo-img {
+        height: 40px;
+    }
+    
+    .hero-divider {
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+    }
+    
+    .brand-text {
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-divider {
+        display: none;
+    }
+    
+    .search-form .input-group {
+        flex-direction: column;
+        gap: 0.5rem;
+        border-radius: 16px;
+        padding: 12px;
+    }
+    
+    .search-form .form-select,
+    .search-form .btn {
+        border-radius: 12px;
+    }
+    
+    .hero-visual {
+        height: 300px;
+    }
+    
+    .data-cards {
+        display: none;
     }
     
     .stats-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .stat-card {
-        padding: 1.5rem 1rem;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
     }
     
     .testimonial-author {
         flex-direction: column;
         text-align: center;
-        gap: 0.5rem;
-    }
-    
-    .author-avatar {
-        font-size: 2.5rem;
+        gap: 0.75rem;
     }
     
     .cta-buttons {
@@ -624,131 +1323,210 @@
         align-items: center;
     }
     
-    .btn-lg {
+    .cta-buttons .btn {
         width: 100%;
         max-width: 300px;
     }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .features-section,
+    .testimonials-section {
+        padding: 60px 0;
+    }
+    
+    .hero-section .row {
+        gap: 1rem;
+    }
+    
+    .hero-main-content {
+        margin-bottom: 2rem;
+    }
+    
+    .hero-cta-section {
+        margin-top: 1.5rem;
+    }
 }
 
-/* Select2 custom styling for home page */
-.search-form-container .select2-container {
-    width: 100% !important;
-}
-
-.search-form-container .select2-container .select2-selection--single {
-    height: auto !important;
-    padding: 1rem 1.5rem !important;
-    border: none !important;
-    border-radius: 50px 0 0 50px !important;
-    font-size: 1rem !important;
-    background: white !important;
-}
-
-.search-form-container .select2-container .select2-selection--single .select2-selection__rendered {
-    padding: 0 !important;
-    color: #666 !important;
-}
-
-.search-form-container .select2-container--default .select2-selection--single .select2-selection__arrow {
-    right: 15px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-}
-
-.search-form-container .select2-dropdown {
-    border-radius: 10px !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-    background: white !important;
-}
-
-.search-form-container .select2-results__option {
-    color: #333 !important;
-    background: white !important;
-    padding: 10px 15px !important;
-}
-
-.search-form-container .select2-results__option--highlighted {
-    background: #3498db !important;
-    color: white !important;
-}
-
-.search-form-container .select2-results__option--selected {
-    background: #2c3e50 !important;
-    color: white !important;
-}
-
-/* Ensure dropdown text is always visible */
-.search-form-container .select2-results {
-    background: white !important;
-}
-
-.search-form-container .select2-results__options {
-    background: white !important;
-}
-
-@media (max-width: 768px) {
-    .search-form-container .select2-container .select2-selection--single {
-        border-radius: 10px !important;
-        margin-bottom: 0.5rem;
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-brand-name {
+        font-size: 1.6rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-title {
+        font-size: 1.4rem;
+    }
+    
+    .hero-logo-img {
+        height: 36px;
+    }
+    
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero-content {
+        padding: 1rem 0;
+    }
+    
+    .brand-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .cta-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .title-badge {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .title-badge i {
+        font-size: 1rem;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
     }
 }
 </style>
 
-<!-- Select2 CSS/JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    function formatCountry(country) {
-        if (country.loading) return country.text;
-        return $('<span>' + country.text + '</span>');
-    }
-    function formatCountrySelection(country) {
-        return country.text || country.id;
-    }
+    $(document).ready(function () {
+        function formatCountry(country) {
+            if (country.loading) return country.text;
+            return $('<span>' + country.text + '</span>');
+        }
+
+        function formatCountrySelection(country) {
+            return country.text || country.id;
+        }
+
+        $('#countrySearch').select2({
+            ajax: {
+                url: '/api/countries',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return { search: params.term };
+                },
+                processResults: function (data) {
+                    return { results: data.items };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            templateResult: formatCountry,
+            templateSelection: formatCountrySelection,
+            placeholder: 'Enter a target country',
+            allowClear: true,
+            dropdownParent: $('.search-form')
+        });
+
+        // Validate form before submit
+        $('#homeCountryForm').on('submit', function (e) {
+            const selectedCountry = $('#countrySearch').val();
+            if (!selectedCountry) {
+                e.preventDefault();
+                alert('Please select a country first.');
+            }
+        });
+    });
     
-    $('#countrySearch').select2({
-        ajax: {
-            url: '/api/countries',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return { search: params.term };
-            },
-            processResults: function (data) {
-                return { results: data.items };
-            },
-            cache: true
-        },
-        minimumInputLength: 1,
-        templateResult: formatCountry,
-        templateSelection: formatCountrySelection,
-        placeholder: 'Enter a target country',
-        allowClear: true,
-        dropdownParent: $('.search-form-container')
+    document.addEventListener('DOMContentLoaded', function() {
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number[data-count]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stats-container')) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe stats container
+        const statsContainer = document.querySelector('.stats-container');
+        if (statsContainer) {
+            observer.observe(statsContainer);
+        }
+         
+        // Set current year
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     });
-});
-
-// Handle form submission - just validate before submitting normally
-document.getElementById('homeCountryForm').addEventListener('submit', function(e) {
-    const selectedCountry = document.getElementById('countrySearch').value;
-    if (!selectedCountry) {
-        e.preventDefault();
-        alert('Please select a country first.');
-        return false;
-    }
-    // If validation passes, let the form submit normally (will redirect to loading page)
-});
-
-// Add current year to footer
-document.addEventListener('DOMContentLoaded', function() {
-    const yearElements = document.querySelectorAll('[data-year]');
-    yearElements.forEach(el => {
-        el.textContent = new Date().getFullYear();
-    });
-});
 </script>
+
 {% endblock %}

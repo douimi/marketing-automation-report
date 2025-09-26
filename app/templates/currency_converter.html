@@ -1,865 +1,1380 @@
 {% extends "base.html" %}
 
-{% block title %}Currency Converter{% endblock %}
+{% block title %}Business Trips - Indatex Academy{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <!-- Hero Section -->
-            <div class="bg-primary text-white py-5 mb-4">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h1 class="display-4 fw-bold mb-3">
-                                <i class="fas fa-dollar-sign me-3"></i>Currency Converter
-                            </h1>
-                            <p class="lead mb-0">Real-time currency conversion with live exchange rates</p>
-                            <p class="mt-2 mb-0">
-                                <small>
-                                    <i class="fas fa-circle text-{{ 'success' if api_status.status == 'online' else 'warning' }} me-1"></i>
-                                    {{ api_status.message }}
-                                    {% if api_status.last_updated %}
-                                    • Last updated: {{ api_status.last_updated }}
-                                    {% endif %}
-                                    • 180+ world currencies supported
-                                </small>
-                            </p>
-                        </div>
-                        <div class="col-md-4 text-md-end">
-                            <div class="bg-white bg-opacity-25 rounded p-3">
-                                <h5 class="mb-2">Quick Actions</h5>
-                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                                    <button class="btn btn-sm btn-outline-light" onclick="swapCurrencies()">
-                                        <i class="fas fa-exchange-alt"></i> Swap
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="showRatesTable()">
-                                        <i class="fas fa-table"></i> Rates Table
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-light" onclick="showCalculator()">
-                                        <i class="fas fa-calculator"></i> Calculator
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section class="trips-hero-section">
+    <div class="trips-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Business <span class="highlight-text">Trips</span></h1>
+            <p class="hero-subtitle">Master the art of professional business travel for export success</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Steps</span>
                 </div>
-            </div>
-
-            <!-- Main Converter Section -->
-            <div class="container mb-5">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="card shadow-lg border-0">
-                            <div class="card-header bg-light text-center py-4">
-                                <h3 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Currency Conversion</h3>
-                                <p class="text-muted mb-0">Convert between 180+ world currencies including cryptocurrencies</p>
-                            </div>
-                            <div class="card-body p-4">
-                                <!-- Converter Form -->
-                                <form id="converterForm" class="mb-4">
-                                    <div class="row g-3 align-items-end">
-                                        <!-- Amount Input -->
-                                        <div class="col-md-3">
-                                            <label for="amount" class="form-label fw-bold">Amount</label>
-                                            <div class="input-group input-group-lg">
-                                                <input type="number" 
-                                                       class="form-control" 
-                                                       id="amount" 
-                                                       placeholder="1.00"
-                                                       value="1"
-                                                       min="0.01" 
-                                                       step="0.01"
-                                                       required>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- From Currency -->
-                                        <div class="col-md-3">
-                                            <label for="fromCurrency" class="form-label fw-bold">From</label>
-                                            <select class="form-select form-select-lg" id="fromCurrency" required>
-                                                <optgroup label="Popular Currencies">
-                                                    {% for currency in currencies %}
-                                                    {% if currency.popular %}
-                                                    <option value="{{ currency.code }}" 
-                                                            {% if currency.code == 'USD' %}selected{% endif %}>
-                                                        {{ currency.code }} - {{ currency.name }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                                <optgroup label="All Currencies">
-                                                    {% for currency in currencies %}
-                                                    {% if not currency.popular %}
-                                                    <option value="{{ currency.code }}">
-                                                        {{ currency.code }} - {{ currency.name }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        
-                                        <!-- Swap Button -->
-                                        <div class="col-md-1 text-center">
-                                            <button type="button" class="btn btn-outline-primary btn-lg" onclick="swapCurrencies()">
-                                                <i class="fas fa-exchange-alt"></i>
-                                            </button>
-                                        </div>
-                                        
-                                        <!-- To Currency -->
-                                        <div class="col-md-3">
-                                            <label for="toCurrency" class="form-label fw-bold">To</label>
-                                            <select class="form-select form-select-lg" id="toCurrency" required>
-                                                <optgroup label="Popular Currencies">
-                                                    {% for currency in currencies %}
-                                                    {% if currency.popular %}
-                                                    <option value="{{ currency.code }}" 
-                                                            {% if currency.code == 'EUR' %}selected{% endif %}>
-                                                        {{ currency.code }} - {{ currency.name }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                                <optgroup label="All Currencies">
-                                                    {% for currency in currencies %}
-                                                    {% if not currency.popular %}
-                                                    <option value="{{ currency.code }}">
-                                                        {{ currency.code }} - {{ currency.name }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                        
-                                        <!-- Convert Button -->
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-primary btn-lg w-100">
-                                                <i class="fas fa-calculator me-2"></i>Convert
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <!-- Loading Indicator -->
-                                <div id="loadingIndicator" class="text-center py-4 d-none">
-                                    <div class="spinner-border text-primary" role="status">
-                                        <span class="visually-hidden">Converting...</span>
-                                    </div>
-                                    <p class="mt-2 text-muted">Converting currencies...</p>
-                                </div>
-
-                                <!-- Conversion Result -->
-                                <div id="conversionResult" class="d-none">
-                                    <div class="alert alert-success border-0 shadow-sm">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-8">
-                                                <h4 class="alert-heading mb-2">
-                                                    <span id="resultAmount">1.00</span> 
-                                                    <span id="resultFromCurrency">USD</span> = 
-                                                    <span id="resultConvertedAmount" class="text-primary">0.85</span> 
-                                                    <span id="resultToCurrency" class="text-primary">EUR</span>
-                                                </h4>
-                                                <p class="mb-1">
-                                                    Exchange Rate: <strong>1 <span id="resultFromCurrencyRate">USD</span> = <span id="resultExchangeRate">0.85</span> <span id="resultToCurrencyRate">EUR</span></strong>
-                                                </p>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-clock me-1"></i>
-                                                    Last updated: <span id="resultTimestamp">-</span>
-                                                </small>
-                                            </div>
-                                            <div class="col-md-4 text-md-end">
-                                                <div class="btn-group" role="group">
-                                                    <button class="btn btn-outline-success btn-sm" onclick="copyResult()">
-                                                        <i class="fas fa-copy"></i> Copy
-                                                    </button>
-                                                    <button class="btn btn-outline-primary btn-sm" onclick="shareResult()">
-                                                        <i class="fas fa-share"></i> Share
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Error Message -->
-                                <div id="errorMessage" class="d-none">
-                                    <div class="alert alert-danger border-0 shadow-sm">
-                                        <h5 class="alert-heading">
-                                            <i class="fas fa-exclamation-triangle me-2"></i>Conversion Error
-                                        </h5>
-                                        <p class="mb-0" id="errorText">An error occurred during conversion.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">2-4</span>
+                    <span class="stat-label">Meetings/Day</span>
                 </div>
-            </div>
-
-            <!-- Exchange Rates Table -->
-            <div id="ratesTableSection" class="container mb-5 d-none">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="card shadow border-0">
-                            <div class="card-header bg-light">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-table me-2"></i>Exchange Rates
-                                        <span id="ratesBaseCurrency" class="badge bg-primary ms-2">USD</span>
-                                    </h5>
-                                    <div>
-                                        <select class="form-select form-select-sm" id="ratesBaseCurrencySelect" onchange="updateRatesTable()">
-                                            <optgroup label="Popular">
-                                                {% for currency in currencies %}
-                                                {% if currency.popular %}
-                                                <option value="{{ currency.code }}" 
-                                                        {% if currency.code == 'USD' %}selected{% endif %}>
-                                                    {{ currency.code }}
-                                                </option>
-                                                {% endif %}
-                                                {% endfor %}
-                                            </optgroup>
-                                            <optgroup label="All">
-                                                {% for currency in currencies %}
-                                                {% if not currency.popular %}
-                                                <option value="{{ currency.code }}">
-                                                    {{ currency.code }}
-                                                </option>
-                                                {% endif %}
-                                                {% endfor %}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Currency</th>
-                                                <th>Code</th>
-                                                <th class="text-end">Rate</th>
-                                                <th class="text-end">1 Unit =</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="ratesTableBody">
-                                            <!-- Rates will be populated here -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Calculator -->
-            <div id="calculatorSection" class="container mb-5 d-none">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="card shadow border-0">
-                            <div class="card-header bg-light text-center">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-calculator me-2"></i>Quick Calculator
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="calculator-input">
-                                            <label class="form-label">Amount & Currency</label>
-                                            <div class="input-group">
-                                                <input type="number" class="form-control" id="calcAmount" placeholder="100" value="100">
-                                                <select class="form-select" id="calcFromCurrency">
-                                                    <optgroup label="Popular">
-                                                        {% for currency in currencies %}
-                                                        {% if currency.popular %}
-                                                        <option value="{{ currency.code }}" 
-                                                                {% if currency.code == 'USD' %}selected{% endif %}>
-                                                            {{ currency.code }}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                    </optgroup>
-                                                    <optgroup label="All">
-                                                        {% for currency in currencies %}
-                                                        {% if not currency.popular %}
-                                                        <option value="{{ currency.code }}">
-                                                            {{ currency.code }}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                    </optgroup>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="calculator-result">
-                                            <label class="form-label">Equals</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="calcResult" readonly placeholder="0.00">
-                                                <select class="form-select" id="calcToCurrency" onchange="quickCalculate()">
-                                                    <optgroup label="Popular">
-                                                        {% for currency in currencies %}
-                                                        {% if currency.popular %}
-                                                        <option value="{{ currency.code }}" 
-                                                                {% if currency.code == 'EUR' %}selected{% endif %}>
-                                                            {{ currency.code }}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                    </optgroup>
-                                                    <optgroup label="All">
-                                                        {% for currency in currencies %}
-                                                        {% if not currency.popular %}
-                                                        <option value="{{ currency.code }}">
-                                                            {{ currency.code }}
-                                                        </option>
-                                                        {% endif %}
-                                                        {% endfor %}
-                                                    </optgroup>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <button class="btn btn-primary" onclick="quickCalculate()">
-                                        <i class="fas fa-calculator me-2"></i>Calculate
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Information Section -->
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">
-                                    <i class="fas fa-info-circle me-2"></i>About Exchange Rates
-                                </h5>
-                                <p class="card-text">
-                                    Exchange rates fluctuate constantly based on market conditions, economic factors, and global events.
-                                </p>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Real-time rates from financial markets</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Updated every hour</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>180+ world currencies supported</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Cryptocurrencies included</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Precious metals pricing</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">
-                                    <i class="fas fa-lightbulb me-2"></i>Usage Tips
-                                </h5>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use the swap button for quick currency reversal</li>
-                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Check the rates table for multiple currencies</li>
-                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Use the calculator for quick estimates</li>
-                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Copy results for use in other applications</li>
-                                    <li><i class="fas fa-arrow-right text-primary me-2"></i>Rates are for reference only</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">
-                                    <i class="fas fa-chart-line me-2"></i>Market Status
-                                </h5>
-                                <div class="row text-center">
-                                    <div class="col-6">
-                                        <h4 class="text-success mb-0" id="statusIndicator">
-                                            <i class="fas fa-circle"></i>
-                                        </h4>
-                                        <small class="text-muted">API Status</small>
-                                    </div>
-                                    <div class="col-6">
-                                        <h4 class="text-info mb-0" id="currencyCount">180+</h4>
-                                        <small class="text-muted">Currencies</small>
-                                    </div>
-                                    <div class="col-12 mt-3">
-                                        <button class="btn btn-outline-primary btn-sm" onclick="refreshRates()">
-                                            <i class="fas fa-sync-alt me-1"></i>Refresh Rates
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Week Follow-up</span>
                 </div>
             </div>
         </div>
     </div>
+</section>
+
+<!-- Quick Navigation -->
+<div class="quick-nav-section">
+    <div class="container">
+        <div class="quick-nav-wrapper">
+            <a href="#depart" class="quick-nav-item">
+                <i class="fas fa-suitcase"></i>
+                <span>Preparation</span>
+            </a>
+            <a href="#surplace" class="quick-nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>On Site</span>
+            </a>
+            <a href="#suivi" class="quick-nav-item">
+                <i class="fas fa-tasks"></i>
+                <span>Follow-up</span>
+            </a>
+        </div>
+    </div>
 </div>
 
-<script>
-// Global variables
-let currentRates = {};
-let lastConversion = null;
-
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    // Set up event listeners
-    document.getElementById('converterForm').addEventListener('submit', handleConversion);
-    document.getElementById('amount').addEventListener('input', debounce(autoConvert, 500));
-    document.getElementById('fromCurrency').addEventListener('change', autoConvert);
-    document.getElementById('toCurrency').addEventListener('change', autoConvert);
-    
-    // Calculator event listeners
-    document.getElementById('calcAmount').addEventListener('input', debounce(quickCalculate, 500));
-    document.getElementById('calcFromCurrency').addEventListener('change', quickCalculate);
-    
-    // Perform initial conversion
-    autoConvert();
-    
-    console.log('Currency Converter initialized');
-});
-
-// Handle form submission
-function handleConversion(e) {
-    e.preventDefault();
-    convertCurrency();
-}
-
-// Main conversion function
-async function convertCurrency() {
-    const amount = parseFloat(document.getElementById('amount').value);
-    const fromCurrency = document.getElementById('fromCurrency').value;
-    const toCurrency = document.getElementById('toCurrency').value;
-    
-    if (!amount || amount <= 0) {
-        showError('Please enter a valid amount greater than 0');
-        return;
-    }
-    
-    showLoading();
-    hideError();
-    hideResult();
-    
-    try {
-        const response = await fetch('/api/convert-currency', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                amount: amount,
-                from_currency: fromCurrency,
-                to_currency: toCurrency
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            displayResult(data);
-            lastConversion = data;
-        } else {
-            showError(data.error || 'Conversion failed');
-        }
-    } catch (error) {
-        showError('Network error. Please check your connection and try again.');
-        console.error('Conversion error:', error);
-    } finally {
-        hideLoading();
-    }
-}
-
-// Auto-convert when values change
-function autoConvert() {
-    const amount = parseFloat(document.getElementById('amount').value);
-    if (amount && amount > 0) {
-        convertCurrency();
-    }
-}
-
-// Display conversion result
-function displayResult(data) {
-    document.getElementById('resultAmount').textContent = data.amount.toFixed(2);
-    document.getElementById('resultFromCurrency').textContent = data.from_currency;
-    document.getElementById('resultConvertedAmount').textContent = data.converted_amount.toFixed(2);
-    document.getElementById('resultToCurrency').textContent = data.to_currency;
-    document.getElementById('resultFromCurrencyRate').textContent = data.from_currency;
-    document.getElementById('resultExchangeRate').textContent = data.exchange_rate.toFixed(4);
-    document.getElementById('resultToCurrencyRate').textContent = data.to_currency;
-    document.getElementById('resultTimestamp').textContent = formatTimestamp(data.timestamp);
-    
-    showResult();
-}
-
-// Utility functions
-function showLoading() {
-    document.getElementById('loadingIndicator').classList.remove('d-none');
-}
-
-function hideLoading() {
-    document.getElementById('loadingIndicator').classList.add('d-none');
-}
-
-function showResult() {
-    document.getElementById('conversionResult').classList.remove('d-none');
-}
-
-function hideResult() {
-    document.getElementById('conversionResult').classList.add('d-none');
-}
-
-function showError(message) {
-    document.getElementById('errorText').textContent = message;
-    document.getElementById('errorMessage').classList.remove('d-none');
-}
-
-function hideError() {
-    document.getElementById('errorMessage').classList.add('d-none');
-}
-
-function formatTimestamp(timestamp) {
-    try {
-        return new Date(timestamp).toLocaleString();
-    } catch {
-        return timestamp;
-    }
-}
-
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Swap currencies
-function swapCurrencies() {
-    const fromSelect = document.getElementById('fromCurrency');
-    const toSelect = document.getElementById('toCurrency');
-    
-    const fromValue = fromSelect.value;
-    const toValue = toSelect.value;
-    
-    fromSelect.value = toValue;
-    toSelect.value = fromValue;
-    
-    autoConvert();
-}
-
-// Copy result to clipboard
-function copyResult() {
-    if (!lastConversion) return;
-    
-    const text = `${lastConversion.amount} ${lastConversion.from_currency} = ${lastConversion.converted_amount.toFixed(2)} ${lastConversion.to_currency}`;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        showToast('Result copied to clipboard!', 'success');
-    }).catch(() => {
-        showToast('Failed to copy to clipboard', 'error');
-    });
-}
-
-// Share result
-function shareResult() {
-    if (!lastConversion) return;
-    
-    const text = `${lastConversion.amount} ${lastConversion.from_currency} = ${lastConversion.converted_amount.toFixed(2)} ${lastConversion.to_currency}`;
-    const url = window.location.href;
-    
-    if (navigator.share) {
-        navigator.share({
-            title: 'Currency Conversion Result',
-            text: text,
-            url: url
-        });
-    } else {
-        copyResult();
-    }
-}
-
-// Show/hide rates table
-function showRatesTable() {
-    const section = document.getElementById('ratesTableSection');
-    const isVisible = !section.classList.contains('d-none');
-    
-    if (isVisible) {
-        section.classList.add('d-none');
-    } else {
-        section.classList.remove('d-none');
-        updateRatesTable();
-    }
-}
-
-// Update rates table
-async function updateRatesTable() {
-    const baseCurrency = document.getElementById('ratesBaseCurrencySelect').value;
-    document.getElementById('ratesBaseCurrency').textContent = baseCurrency;
-    
-    try {
-        const response = await fetch(`/api/exchange-rates/${baseCurrency}`);
-        const data = await response.json();
-        
-        if (response.ok && data.rates) {
-            populateRatesTable(data.rates, baseCurrency);
-            currentRates = data.rates;
-        } else {
-            showToast('Failed to load exchange rates', 'error');
-        }
-    } catch (error) {
-        showToast('Error loading exchange rates', 'error');
-        console.error('Rates error:', error);
-    }
-}
-
-// Populate rates table
-function populateRatesTable(rates, baseCurrency) {
-    const tbody = document.getElementById('ratesTableBody');
-    const currencies = {{ currencies|tojson }};
-    
-    tbody.innerHTML = '';
-    
-    // Add base currency
-    const baseRow = document.createElement('tr');
-    baseRow.innerHTML = `
-        <td><strong>${getCurrencyName(baseCurrency)}</strong></td>
-        <td><span class="badge bg-primary">${baseCurrency}</span></td>
-        <td class="text-end"><strong>1.0000</strong></td>
-        <td class="text-end">1.00 ${baseCurrency}</td>
-        <td class="text-center">
-            <button class="btn btn-sm btn-outline-primary" onclick="setConverterCurrency('${baseCurrency}', 'from')">
-                Use as From
-            </button>
-        </td>
-    `;
-    tbody.appendChild(baseRow);
-    
-    // Add other currencies
-    Object.entries(rates).forEach(([code, rate]) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${getCurrencyName(code)}</td>
-            <td><span class="badge bg-light text-dark">${code}</span></td>
-            <td class="text-end">${rate.toFixed(4)}</td>
-            <td class="text-end">${(1/rate).toFixed(4)} ${baseCurrency}</td>
-            <td class="text-center">
-                <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-primary" onclick="setConverterCurrency('${code}', 'from')">From</button>
-                    <button class="btn btn-outline-success" onclick="setConverterCurrency('${code}', 'to')">To</button>
+<div class="trips-main-content">
+    <div class="container compact-container">
+        <!-- Introduction Section -->
+        <section class="intro-section">
+            <div class="intro-card">
+                <div class="intro-icon">
+                    <i class="fas fa-plane"></i>
                 </div>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-}
-
-// Get currency name
-function getCurrencyName(code) {
-    const currencies = {{ currencies|tojson }};
-    const currency = currencies.find(c => c.code === code);
-    return currency ? currency.name : code;
-}
-
-// Set converter currency
-function setConverterCurrency(code, type) {
-    if (type === 'from') {
-        document.getElementById('fromCurrency').value = code;
-    } else {
-        document.getElementById('toCurrency').value = code;
-    }
-    autoConvert();
-    showToast(`${type === 'from' ? 'From' : 'To'} currency set to ${code}`, 'success');
-}
-
-// Show/hide calculator
-function showCalculator() {
-    const section = document.getElementById('calculatorSection');
-    section.classList.toggle('d-none');
-    
-    if (!section.classList.contains('d-none')) {
-        quickCalculate();
-    }
-}
-
-// Quick calculate
-async function quickCalculate() {
-    const amount = parseFloat(document.getElementById('calcAmount').value);
-    const fromCurrency = document.getElementById('calcFromCurrency').value;
-    const toCurrency = document.getElementById('calcToCurrency').value;
-    
-    if (!amount || amount <= 0) {
-        document.getElementById('calcResult').value = '';
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/convert-currency', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                amount: amount,
-                from_currency: fromCurrency,
-                to_currency: toCurrency
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            document.getElementById('calcResult').value = data.converted_amount.toFixed(2);
-        } else {
-            document.getElementById('calcResult').value = 'Error';
-        }
-    } catch (error) {
-        document.getElementById('calcResult').value = 'Error';
-        console.error('Calculator error:', error);
-    }
-}
-
-// Refresh rates
-async function refreshRates() {
-    showToast('Refreshing exchange rates...', 'info');
-    
-    // Clear cache by making a fresh request
-    try {
-        const response = await fetch('/api/exchange-rates/USD?refresh=true');
-        if (response.ok) {
-            showToast('Exchange rates refreshed!', 'success');
-            autoConvert();
-            if (!document.getElementById('ratesTableSection').classList.contains('d-none')) {
-                updateRatesTable();
-            }
-        } else {
-            showToast('Failed to refresh rates', 'error');
-        }
-    } catch (error) {
-        showToast('Error refreshing rates', 'error');
-        console.error('Refresh error:', error);
-    }
-}
-
-// Toast notification system
-function showToast(message, type = 'info') {
-    // Create toast element
-    const toastHtml = `
-        <div class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'} border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : type === 'success' ? 'check' : 'info-circle'} me-2"></i>
-                    ${message}
+                <div class="intro-content">
+                    <p class="lead-intro">
+                        Today the professional business trip is considered to be one of the most effective tools in export prospection. The business trip is a high cost investment; that is why business travel should be prepared meticulously, in order to avoid unnecessary expense.
+                    </p>
+                    <p class="intro-text">
+                        Good preparation can determine the success of the mission. It enables the company to have access to foreign markets, to seek new commercial partners and to draw up contracts with foreign firms.
+                    </p>
+                    <div class="alert-card">
+                        <div class="alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h5>Key Success Factors</h5>
+                            <p>The organisation of a professional business trip comprises three essential steps: preparing the departure, organisation on the spot and the follow up of the mission.</p>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
+        </section>
+
+        <!-- Main Steps Section -->
+        <div class="steps-container">
+            <!-- Step 1: Preparing your departure -->
+            <section class="step-section" id="depart">
+                <div class="step-header">
+                    <div class="step-number">
+                        <span>01</span>
+                    </div>
+                    <div class="step-content">
+                        <h2 class="step-title">Preparing your departure</h2>
+                        <p class="step-description">Essential preparations for a successful business trip</p>
+                    </div>
+                </div>
+                
+                <div class="step-cards">
+                    <div class="step-card">
+                        <div class="step-card-icon">
+                            <i class="fas fa-plane-departure"></i>
+                        </div>
+                        <div class="step-card-content">
+                            <h5>Transportation & Accommodation</h5>
+                            <p>You should book your plane ticket as quickly as possible, all the more so as some destinations do not have a regular service. Booking in advance allows you to ask travel agencies for quotations and to find the best value for money.</p>
+                            <p>Accommodation is as important as the journey. Indeed, booking your hotel should also be done in advance. You should know that during trade fairs, hotels are often full.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-card-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="step-card-content">
+                            <h5>Cultural Preparation</h5>
+                            <p>Before each departure, the traveler should find out about local customs by gathering practical information about his destination. He should adapt as much as possible to local customs. This information takes into account meal times, presents or even the way of dressing.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-card-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="step-card-content">
+                            <h5>Documentation & Legal Requirements</h5>
+                            <p>You should prepare sufficiently ahead of time the documents you will need on the spot (leaflets, catalogs, price lists). They should be translated into the language of the country (or at least into English).</p>
+                            <p>Do not wait till the last minute to check how long your passport is valid for, or to request visas and have the vaccinations done that are required for certain destinations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: On the spot -->
+            <section class="step-section" id="surplace">
+                <div class="step-header">
+                    <div class="step-number">
+                        <span>02</span>
+                    </div>
+                    <div class="step-content">
+                        <h2 class="step-title">On the spot</h2>
+                        <p class="step-description">Effective management during your business trip</p>
+                    </div>
+                </div>
+                
+                <div class="step-cards">
+                    <div class="step-card featured">
+                        <div class="step-card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="step-card-content">
+                            <h5>Time Management & Meetings</h5>
+                            <p>Once you are on the spot, the greater part of your time will be devoted to your various meetings. Above all you must confirm your meetings or give warning if you are late.</p>
+                            <p>An exporter must know how to manage his time so as not to get overwhelmed (and give prospective customers a bad impression). He must remain flexible and limit the number of meetings in a day.</p>
+                            <div class="highlight-box">
+                                <i class="fas fa-lightbulb"></i>
+                                <p><strong>It has generally been observed that 2 to 4 meetings can be held in one day.</strong> It is better to plan for a few more days in order to best manage your time and work on each contact thoroughly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Organizing a follow up -->
+            <section class="step-section" id="suivi">
+                <div class="step-header">
+                    <div class="step-number">
+                        <span>03</span>
+                    </div>
+                    <div class="step-content">
+                        <h2 class="step-title">Organizing a follow up</h2>
+                        <p class="step-description">Crucial steps after returning from your trip</p>
+                    </div>
+                </div>
+                
+                <div class="step-cards">
+                    <div class="step-card critical">
+                        <div class="step-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="step-card-content">
+                            <h5>Critical Success Factor</h5>
+                            <p><strong>The follow up is maybe the most important step of the mission.</strong> It amounts to giving concrete expression to and securing the various contacts set up abroad.</p>
+                            <p>As soon as he arrives back, an exporter should always thank his contacts personally and send them the documentation they requested or the information they were promised. A company which does not do this, risks wrecking its contacts immediately.</p>
+                            <div class="critical-alert">
+                                <div class="critical-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="critical-content">
+                                    <h6>Time-Critical Action</h6>
+                                    <p>The firm must capitalize on the results of the mission at once. <strong>A contact which is not reactivated in the week following the trip is considered to be a lost contact.</strong> This lost contact makes for a commercial failure and a loss of money.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    `;
-    
-    // Add toast to body
-    document.body.insertAdjacentHTML('beforeend', toastHtml);
-    
-    // Show toast
-    const toastElement = document.querySelector('.toast:last-child');
-    const toast = new bootstrap.Toast(toastElement, {
-        autohide: true,
-        delay: 3000
-    });
-    toast.show();
-    
-    // Remove toast element after it's hidden
-    toastElement.addEventListener('hidden.bs.toast', function() {
-        toastElement.remove();
-    });
-}
-</script>
+
+        <!-- Key Takeaways Section -->
+        <section class="takeaways-section">
+            <div class="section-header">
+                <h2 class="section-title">Key Takeaways</h2>
+                <p class="section-description">Essential points to remember for successful business trips</p>
+            </div>
+            
+            <div class="takeaways-grid">
+                <div class="takeaway-card">
+                    <div class="takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="takeaway-content">
+                        <h5>Advance Planning</h5>
+                        <p>Book transportation and accommodation well in advance, especially during trade fairs.</p>
+                    </div>
+                </div>
+                
+                <div class="takeaway-card">
+                    <div class="takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="takeaway-content">
+                        <h5>Cultural Awareness</h5>
+                        <p>Research local customs, meal times, and appropriate business etiquette.</p>
+                    </div>
+                </div>
+                
+                <div class="takeaway-card">
+                    <div class="takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="takeaway-content">
+                        <h5>Document Preparation</h5>
+                        <p>Prepare and translate all necessary documents before departure.</p>
+                    </div>
+                </div>
+                
+                <div class="takeaway-card">
+                    <div class="takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="takeaway-content">
+                        <h5>Meeting Management</h5>
+                        <p>Limit meetings to 2-4 per day for quality interactions and proper follow-up.</p>
+                    </div>
+                </div>
+                
+                <div class="takeaway-card critical">
+                    <div class="takeaway-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="takeaway-content">
+                        <h5>Immediate Follow-up</h5>
+                        <p><strong>Follow up within one week</strong> or risk losing the contact entirely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist Section -->
+        <section class="checklist-section">
+            <div class="checklist-card">
+                <div class="checklist-header">
+                    <h3><i class="fas fa-clipboard-list me-2"></i>Pre-Departure Checklist</h3>
+                    <p>Essential items to verify before your business trip</p>
+                </div>
+                
+                <div class="checklist-content">
+                    <div class="checklist-column">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="passport">
+                            <label for="passport">Check passport validity</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="visa">
+                            <label for="visa">Obtain necessary visas</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="vaccinations">
+                            <label for="vaccinations">Get required vaccinations</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="documents">
+                            <label for="documents">Prepare & translate documents</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-column">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="creditcard">
+                            <label for="creditcard">Verify credit card validity</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="license">
+                            <label for="license">Get international driver's license</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="currency">
+                            <label for="currency">Exchange local currency</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="insurance">
+                            <label for="insurance">Arrange travel insurance</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Topics Section -->
+        <section class="related-section">
+            <div class="section-header">
+                <h2 class="section-title">Related Academy Topics</h2>
+                <p class="section-description">Expand your knowledge with these related subjects</p>
+            </div>
+            
+            <div class="related-grid">
+                <a href="#" class="related-card">
+                    <div class="related-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="related-content">
+                        <h5>International Negotiations</h5>
+                        <p>Master the art of cross-cultural business negotiations</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="related-card">
+                    <div class="related-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="related-content">
+                        <h5>Cultural Business Etiquette</h5>
+                        <p>Understand business customs around the world</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="related-card">
+                    <div class="related-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="related-content">
+                        <h5>Export Documentation</h5>
+                        <p>Learn about essential export documents and procedures</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="related-card">
+                    <div class="related-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="related-content">
+                        <h5>Trade Show Preparation</h5>
+                        <p>Maximize your participation in international trade shows</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-background">
+                <div class="cta-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h3 class="cta-title">Ready to Master Business Travel?</h3>
+                            <p class="cta-subtitle">Apply these strategies to make your next business trip more productive and successful.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="cta-buttons">
+                                <a href="#depart" class="btn btn-cta-primary">
+                                    <i class="fas fa-suitcase me-2"></i>Start Planning
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
 <style>
-.calculator-input, .calculator-result {
-    background: #f8f9fa;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e9ecef;
+:root {
+    --primary-blue: #1f2937;
+    --primary-purple: #7c3aed;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --hover-purple: #6d28d9;
 }
 
-.card {
-    transition: all 0.3s ease;
+/* Business Trips Hero Section */
+.trips-hero-section {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    overflow: hidden;
+    padding: 3rem 0 1rem;
 }
 
-.card:hover {
+.trips-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e3a8a 100%);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+/* Hero Content */
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--white);
+    line-height: 1.1;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-orange);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Navigation */
+.quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-orange);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--glass-border);
+    font-weight: 500;
+}
+
+.quick-nav-item:hover {
+    background: var(--hover-purple);
+    color: var(--white);
+    text-decoration: none;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow);
 }
 
-.table th {
-    border-top: none;
+.quick-nav-item i {
+    font-size: 1rem;
+}
+
+/* Trips Main Content */
+.trips-main-content {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Introduction Section */
+.intro-section {
+    margin-bottom: 4rem;
+}
+
+.intro-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.intro-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.intro-content {
+    flex: 1;
+}
+
+.lead-intro {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.intro-text {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.alert-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.alert-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.alert-content h5 {
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
-.badge {
-    font-size: 0.8rem;
+.alert-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
 }
 
-.input-group-lg .form-control, .input-group-lg .form-select {
+/* Steps Container */
+.steps-container {
+    margin-bottom: 4rem;
+}
+
+/* Step Sections */
+.step-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.step-number {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.step-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+/* Step Cards */
+.step-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.step-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.step-card.featured {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.05));
+    border-color: var(--secondary-orange);
+}
+
+.step-card.critical {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    border-color: var(--secondary-red);
+}
+
+.step-card-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.step-card:hover .step-card-icon {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+}
+
+.step-card-icon i {
+    font-size: 1.3rem;
+    color: var(--secondary-orange);
+    transition: var(--transition);
+}
+
+.step-card:hover .step-card-icon i {
+    color: white;
+}
+
+.step-card.featured .step-card-icon {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+}
+
+.step-card.featured .step-card-icon i {
+    color: white;
+}
+
+.step-card.critical .step-card-icon {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.step-card.critical .step-card-icon i {
+    color: var(--secondary-red);
+}
+
+.step-card-content h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.step-card-content p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.highlight-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--secondary-orange);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.highlight-box i {
+    color: var(--secondary-orange);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.highlight-box p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.critical-alert {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--secondary-red);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.critical-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-red);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.critical-content h6 {
+    color: var(--secondary-red);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.critical-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Takeaways Section */
+.takeaways-section {
+    margin-bottom: 4rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.section-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.takeaways-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.takeaway-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: var(--transition);
+}
+
+.takeaway-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+}
+
+.takeaway-card.critical {
+    border-color: var(--secondary-red);
+}
+
+.takeaway-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.takeaway-card.critical .takeaway-icon {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--secondary-red);
+}
+
+.takeaway-content h5 {
     font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
 }
 
-/* Loading animation */
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
+.takeaway-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
 }
 
-/* Responsive design */
+/* Checklist Section */
+.checklist-section {
+    margin-bottom: 4rem;
+}
+
+.checklist-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.checklist-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.checklist-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.checklist-header p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.checklist-content {
+    display: flex;
+    gap: 2rem;
+}
+
+.checklist-column {
+    flex: 1;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.checklist-item:last-child {
+    border-bottom: none;
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checklist-item input[type="checkbox"]:checked {
+    background: var(--success);
+    border-color: var(--success);
+}
+
+.checklist-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checklist-item label {
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.checklist-item input[type="checkbox"]:checked + label {
+    color: var(--success);
+    text-decoration: line-through;
+}
+
+/* Related Section */
+.related-section {
+    margin-bottom: 4rem;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.related-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary-orange);
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-orange);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.related-card:hover .related-icon {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    color: white;
+}
+
+.related-content h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.related-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* CTA Section */
+.cta-section {
+    margin: 4rem 0 2rem;
+}
+
+.cta-background {
+    background: linear-gradient(135deg, var(--dark-bg), #1e3a8a);
+    border-radius: 24px;
+    padding: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.cta-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: white;
+}
+
+.cta-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+    background: linear-gradient(135deg, var(--secondary-orange), var(--secondary-red));
+    border: none;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-stats {
+        gap: 1rem;
+    }
+    
+    .step-cards, .takeaways-grid, .related-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+    }
+    
+    .step-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .cta-background {
+        padding: 2rem 1.5rem;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .checklist-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
-    .display-4 {
-        font-size: 2rem;
+    .trips-hero-section {
+        padding: 2rem 0 0.5rem;
     }
     
-    .btn-group .btn {
-        font-size: 0.75rem;
+    .hero-title {
+        font-size: 1.8rem;
     }
     
-    .table-responsive {
-        font-size: 0.9rem;
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    
+    .quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    
+    .step-cards, .takeaways-grid, .related-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .intro-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .step-content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .cta-background {
+        padding: 1.5rem 1rem;
+    }
+    
+    .cta-title {
+        font-size: 1.6rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
     }
 }
 
-/* Custom animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.alert {
-    animation: fadeIn 0.3s ease;
-}
-
-/* Status indicators */
-.text-success .fa-circle {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+@media (max-width: 576px) {
+    .step-card, .takeaway-card, .related-card {
+        padding: 1rem;
+    }
+    
+    .step-card-content h5, .takeaway-content h5, .related-content h5 {
+        font-size: 1rem;
+    }
+    
+    .step-card-content p, .takeaway-content p, .related-content p {
+        font-size: 0.8rem;
+    }
 }
 </style>
+
+<script>
+// Smooth scrolling for quick nav
+document.addEventListener('DOMContentLoaded', function() {
+    const quickNavItems = document.querySelectorAll('.quick-nav-item');
+    
+    quickNavItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerOffset = 120;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Add animation to cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.step-card, .takeaway-card, .related-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Highlight active section in navigation
+    const sections = document.querySelectorAll('.step-section');
+    const navLinks = document.querySelectorAll('.quick-nav-item');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Checklist functionality
+    const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.parentElement.classList.add('completed');
+            } else {
+                this.parentElement.classList.remove('completed');
+            }
+        });
+    });
+
+    console.log('Business Trips page initialized');
+});
+</script>
+
 {% endblock %}
