@@ -1,0 +1,338 @@
+/* Section-based report styles */
+:root {
+    --accent: #2c3e50;
+    --secondary: #3498db;
+    --white: #fff;
+    --gray-bg: #f8f9fa;
+    --border-color: #e2e8f0;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--gray-bg);
+    color: var(--accent);
+    min-height: 100vh;
+}
+.report-section, .eco-pol-card, .trade-card {
+    background: #1B1931;
+    border: 1.5px solid var(--border-color);
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+}
+.section-header, .eco-pol-header, .trade-card > .d-flex > .trade-card-icon + h4 {
+    display: flex;
+    align-items: center;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 1.1rem;
+}
+.section-header .section-icon, .eco-pol-header .eco-pol-icon, .trade-card-icon {
+    color: var(--secondary);
+    margin-right: 0.7rem;
+    font-size: 1.4rem;
+}
+.stat-row, .eco-pol-stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.stat-block, .eco-pol-stat-block {
+    min-width: 110px;
+    flex: 1 1 110px;
+    background: #eaf1fb;
+    border-radius: 0.4rem;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    color: var(--accent);
+    font-size: 1.05rem;
+}
+.section-intro, .eco-pol-insight {
+    font-size: 1.08rem;
+    color: #444;
+    margin-bottom: 1.1rem;
+}
+.section-insights, .eco-pol-insight {
+    background: #e3f6f5;
+    border-left: 4px solid var(--secondary);
+    padding: 1rem 1.2rem;
+    border-radius: 0.3rem;
+    color: var(--accent);
+    font-size: 1.09rem;
+    margin-top: 1.2rem;
+}
+/* Unified table style */
+.eco-pol-table, .trade-card .eco-pol-table, .report-section .eco-pol-table, .report-section table, .trade-card table {
+    background: #fff;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.2rem;
+    overflow-x: auto;
+}
+.eco-pol-table th, .trade-card th, .report-section th {
+    background: #f3f7fb;
+    color: var(--accent);
+    font-weight: 600;
+    border-bottom: 1.5px solid var(--border-color);
+}
+.eco-pol-table td, .eco-pol-table th, .trade-card td, .trade-card th, .report-section td, .report-section th {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+.eco-pol-table table, .trade-card table, .report-section table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+.eco-pol-table tr, .trade-card tr, .report-section tr {
+    border-bottom: 1px solid #e2e8f0;
+}
+.eco-pol-table tr:last-child, .trade-card tr:last-child, .report-section tr:last-child {
+    border-bottom: none;
+}
+@media (max-width: 991px) {
+    .report-section, .eco-pol-card, .trade-card { padding: 1rem; }
+    .stat-row, .eco-pol-stat-row { gap: 0.6rem; }
+}
+@media (max-width: 768px) {
+    .report-section, .eco-pol-card, .trade-card { padding: 0.7rem; }
+    .stat-row, .eco-pol-stat-row { flex-direction: column; gap: 0.5rem; }
+}
+@media print {
+    .report-section { box-shadow: none !important; border-radius: 0 !important; }
+    body { background: #fff !important; }
+}
+
+/* Economic and Political Outline Section */
+.eco-pol-card {
+    background: #f6f8fc;
+    border: 1.5px solid var(--border-color);
+    border-radius: 0.7rem;
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+}
+.eco-pol-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 1.1rem;
+}
+.eco-pol-header .eco-pol-icon {
+    margin-right: 0.7rem;
+    font-size: 1.4rem;
+}
+.eco-pol-stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.eco-pol-stat-block {
+    min-width: 110px;
+    flex: 1 1 110px;
+    background: #eaf1fb;
+    border-radius: 0.4rem;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    color: var(--accent);
+    font-size: 1.05rem;
+}
+.eco-pol-insight {
+    background: #e3f6f5;
+    border-left: 4px solid var(--secondary);
+    padding: 1rem 1.2rem;
+    border-radius: 0.3rem;
+    color: var(--accent);
+    font-size: 1.09rem;
+    margin-top: 1.2rem;
+}
+.eco-pol-table, .eco-pol-card .eco-pol-table {
+    background: #fff;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.2rem;
+    overflow-x: auto;
+    font-size: 1.04rem;
+}
+.eco-pol-table th, .eco-pol-card th {
+    background: #f3f7fb !important;
+    color: var(--accent) !important;
+    font-weight: 600;
+    border-bottom: 1.5px solid var(--border-color);
+    padding: 0.85rem 1.1rem;
+    font-size: 1.05rem;
+}
+.eco-pol-table td, .eco-pol-card td {
+    padding: 0.85rem 1.1rem;
+    vertical-align: middle;
+    font-size: 1.04rem;
+}
+.eco-pol-table table, .eco-pol-card table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+.eco-pol-table tr, .eco-pol-card tr {
+    border-bottom: 1px solid #e2e8f0;
+}
+.eco-pol-table tr:last-child, .eco-pol-card tr:last-child {
+    border-bottom: none;
+}
+.eco-pol-table tbody tr:nth-child(even), .eco-pol-card tbody tr:nth-child(even) {
+    background: #f6f8fc;
+}
+.eco-pol-table tbody tr:nth-child(odd), .eco-pol-card tbody tr:nth-child(odd) {
+    background: #fff;
+}
+.eco-pol-table tbody tr:hover, .eco-pol-card tbody tr:hover {
+    background: #eaf1fb;
+}
+/* Scrollable table for large tables in eco-pol-card */
+.eco-pol-table.table-scroll {
+    max-height: 320px;
+    overflow-y: auto;
+    display: block;
+}
+.eco-pol-table.table-scroll table {
+    min-width: 600px;
+}
+/* Reduce vertical spacing between cards and elements */
+.eco-pol-card .trade-card {
+    margin-bottom: 1.1rem;
+}
+.eco-pol-card .mb-2, .eco-pol-card .mb-3, .eco-pol-card .mb-4 {
+    margin-bottom: 0.7rem !important;
+}
+.eco-pol-card .mt-3 {
+    margin-top: 1rem !important;
+}
+@media (max-width: 991px) {
+    .eco-pol-card { padding: 1rem; }
+    .eco-pol-stat-row { gap: 0.6rem; }
+}
+@media (max-width: 768px) {
+    .eco-pol-card { padding: 0.7rem; }
+    .eco-pol-stat-row { flex-direction: column; gap: 0.5rem; }
+}
+
+/* Enhanced row separation for trade tables */
+.eco-pol-table table, .trade-card table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+.eco-pol-table tr, .trade-card tr {
+    border-bottom: 1px solid #e2e8f0;
+}
+.eco-pol-table tr:last-child, .trade-card tr:last-child {
+    border-bottom: none;
+}
+.eco-pol-table td, .eco-pol-table th, .trade-card td, .trade-card th {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+.eco-pol-table tbody tr:nth-child(even), .trade-card tbody tr:nth-child(even) {
+    background: #f6f8fc;
+}
+.eco-pol-table tbody tr:nth-child(odd), .trade-card tbody tr:nth-child(odd) {
+    background: #fff;
+}
+.eco-pol-table tbody tr:hover, .trade-card tbody tr:hover {
+    background: #eaf1fb;
+}
+
+/* --- Main Sectors List Styles --- */
+.main-sectors-list {
+    justify-content: center;
+    gap: 1.1rem 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.7rem;
+}
+.main-sector-item {
+    background: #eaf1fb;
+    border: 1px solid var(--border-color);
+    border-radius: 1.5rem;
+    padding: 0.6rem 1.3rem;
+    font-size: 1.05rem;
+    color: var(--accent);
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+    display: inline-block;
+    margin-bottom: 0.3rem;
+}
+@media (max-width: 600px) {
+    .main-sector-item {
+        font-size: 0.97rem;
+        padding: 0.5rem 0.7rem;
+    }
+    .main-sectors-list {
+        gap: 0.6rem 0.7rem;
+    }
+}
+/* --- End Main Sectors Styles --- */
+
+/* Report Index Navigation Styles */
+.report-index {
+    background: #fff;
+    border: 2px solid #111827;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+    margin-bottom: 2.2rem;
+}
+.report-index h5 {
+    color: #111827;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 0.01em;
+}
+.report-index ul.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.1rem;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    overflow-x: auto;
+}
+.report-index .nav-item {
+    margin-bottom: 0;
+}
+.report-index .nav-link {
+    display: inline-block;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 2rem;
+    padding: 0.55rem 1.3rem;
+    font-weight: 600;
+    font-size: 1.07rem;
+    border: 2px solid #2563eb;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, border 0.18s;
+    text-decoration: none;
+}
+.report-index .nav-link:hover, .report-index .nav-link:focus {
+    background: #3b82f6;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.13);
+    border-color: #3b82f6;
+    text-decoration: none;
+}
+@media (max-width: 600px) {
+    .report-index ul.nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 0.5rem;
+    }
+    .report-index .nav-link {
+        font-size: 0.98rem;
+        padding: 0.45rem 1rem;
+    }
+} 

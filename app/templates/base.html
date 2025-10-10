@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Market Analysis</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom App Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        :root {
+            /* Core Colors */
+            --primary-color: #4b5e8c;       /* Lighter slate blue (navbar bg) */
+            --primary-light: #6b7aab;       /* Lighter blue for hover/bg highlights */
+            --secondary-color: #6b7280;     /* Neutral gray (buttons, accents) */
+            --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+            --accent-color: #10b981;        /* Keep accent green for success messages */
+
+            /* Text Colors */
+            --text-color: #1e293b;          /* Dark text for light backgrounds */
+            --text-muted: #64748b;          /* Muted gray text */
+            --text-light: #f9fafb;          /* Light text for dark backgrounds */
+            
+            /* Backgrounds */
+            --bg-color: #f1f5f9;            /* Light gray for main background */
+            --bg-secondary: #e2e8f0;        /* Lighter gray for dropdowns, panels */
+            --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+
+            /* Borders and Shadows */
+            --border-color: rgba(0, 0, 0, 0.1); /* Subtle dark borders on light bg */
+            --border-light: rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+                        0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+                        0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+                        0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0; /* Remove default body margin */
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem; /* Reduced font size for header */
+            color: var(--text-light) !important;
+            text-decoration: none;
+            letter-spacing: -0.025em;
+            padding: 0;
+        }
+
+        .navbar-brand:hover {
+            color: var(--text-muted) !important;
+        }
+        
+        .navbar-nav {
+            gap: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            font-size: 13px; /* Reduced font size for nav links */
+            transition: all 0.2s ease;
+            padding: 10px 14px !important; /* Adjusted padding for smaller appearance */
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-color) !important;
+            background-color: var(--bg-secondary);
+            transform: translateY(-1px);
+        }
+
+        .nav-link i {
+            font-size: 13px; /* Adjusted icon size */
+            opacity: 0.8;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            padding: 8px 0;
+            margin-top: 8px;
+            min-width: 280px;
+            background: var(--bg-color);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            font-size: 13px; /* Reduced font size */
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            background: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-color);
+            transform: translateX(4px);
+        }
+
+        .dropdown-item i {
+            width: 16px;
+            color: var(--text-muted);
+            font-size: 13px; /* Reduced icon size */
+        }
+
+        .dropdown-divider {
+            margin: 8px 0;
+            border-color: var(--border-light);
+        }
+
+        /* Services Dropdown */
+        .services-dropdown-menu {
+            min-width: 320px;
+        }
+
+        .dropdown-header {
+            padding: 12px 20px 8px 20px !important;
+            font-size: 10px; /* Reduced font size */
+            font-weight: 600;
+            color: #000000; /* Changed to black for Quick Access */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: none;
+            border: none;
+        }
+
+        /* User Dropdown Styles */
+        .user-dropdown {
+            background: var(--bg-secondary) !important;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px 16px !important;
+            color: var(--text-color) !important;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            gap: 12px;
+        }
+
+        .user-dropdown:hover {
+            background: var(--bg-tertiary) !important;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-avatar {
+            font-size: 22px; /* Reduced icon size */
+            color: var(--secondary-color);
+        }
+
+        .user-info {
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 13px; /* Reduced font size */
+            color: var(--text-color);
+        }
+
+        .user-title {
+            font-size: 11px; /* Reduced font size */
+            color: var(--text-muted);
+        }
+
+        .user-dropdown-menu {
+            min-width: 320px;
+            margin-top: 12px;
+        }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px 12px 0 0;
+            margin: -8px -0 8px -0;
+        }
+
+        .user-avatar-large {
+            font-size: 36px; /* Slightly reduced icon size */
+            color: var(--secondary-color);
+            margin-right: 16px;
+        }
+
+        .dropdown-section-header {
+            padding: 8px 20px 4px 20px;
+            font-size: 10px; /* Reduced font size */
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--bg-tertiary);
+            margin: 8px 0;
+        }
+
+        .dropdown-item.text-danger {
+            color: #dc2626;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+
+        /* FIXED: Custom Language Dropdown Styles with corrected hover colors */
+        .language-dropdown {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px 14px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+            min-width: 120px;
+            font-weight: 500;
+            font-size: 13px; /* Reduced font size */
+            margin-left: 8px;
+        }
+
+        .language-dropdown:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--secondary-color);
+        }
+
+        .language-current-flag {
+            width: 24px;
+            height: 18px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 2px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .language-dropdown:hover .language-current-flag {
+            border-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .language-text {
+            color: var(--text-color);
+            font-size: 12px; /* Reduced font size */
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .language-arrow {
+            font-size: 9px; /* Reduced icon size */
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+            margin-left: auto;
+        }
+
+        .language-dropdown.active .language-arrow {
+            transform: rotate(180deg);
+        }
+
+        .language-dropdown-menu {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            padding: 8px 0;
+            margin-top: 8px;
+            min-width: 160px;
+            max-width: 200px;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .language-dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            gap: 12px;
+            font-size: 13px; /* Reduced font size */
+            font-weight: 500;
+            border: none;
+            background: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* FIXED: Correct hover color for language options */
+        .language-option:hover {
+            background: var(--primary-color) !important; /* Use primary color for hover */
+            color: var(--text-light) !important; /* White text on hover */
+            transform: translateX(4px);
+        }
+
+        .language-option.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--text-light);
+        }
+
+        .language-option.active:hover {
+            transform: translateX(6px);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color)) !important;
+        }
+
+        .language-flag {
+            width: 20px;
+            height: 15px;
+            border-radius: 3px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .language-option:hover .language-flag {
+            border-color: var(--text-light);
+            transform: scale(1.05);
+        }
+
+        .language-name {
+            font-size: 12px; /* Reduced font size */
+            letter-spacing: 0.3px;
+        }
+
+        .language-native {
+            font-size: 10px; /* Reduced font size */
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .language-option.active .language-native {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .language-option:hover .language-native {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            background: var(--bg-color);
+            margin-top: 56px; /* Match navbar height to eliminate white space */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 24px 0;
+            margin-top: auto;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 13px; /* Reduced font size */
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .toast {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            min-width: 300px;
+            background: var(--bg-color) !important;
+            color: var(--text-color) !important;
+            border: 1px solid var(--border-color);
+        }
+
+        .toast-body {
+            padding: 16px 20px;
+            font-size: 13px; /* Reduced font size */
+            font-weight: 500;
+        }
+
+        /* Loading Spinner */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+
+        .spinner-border {
+            color: var(--secondary-color);
+        }
+
+        .logo-img {
+            height: 36px;
+            width: auto;
+            display: block;
+        }
+
+        /* Hide GTranslate widget completely */
+        .gtranslate_wrapper, 
+        .gt_float_wrapper,
+        .gt-translate-widget {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 16px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .navbar-brand {
+                align-self: flex-start;
+                padding: 12px 0;
+                font-size: 1.2rem; /* Adjusted for mobile */
+            }
+
+            .logo-img {
+                height: 30px;
+            }
+
+            .navbar-toggler {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .main-content {
+                margin-top: 48px; /* Adjust for smaller navbar height on mobile */
+            }
+
+            .user-dropdown {
+                padding: 6px 12px !important;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .dropdown-menu {
+                min-width: 260px;
+            }
+
+            .user-dropdown-menu {
+                min-width: 280px;
+            }
+
+            .navbar-collapse {
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid var(--border-color);
+            }
+
+            .navbar-nav {
+                gap: 0;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                padding: 12px 0 !important;
+                justify-content: flex-start;
+                width: 100%;
+                font-size: 12px; /* Reduced font size for mobile */
+            }
+
+            .language-dropdown {
+                justify-content: center !important;
+                margin: 8px 0;
+                width: 100%;
+                font-size: 12px; /* Reduced font size for mobile */
+            }
+
+            .language-dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                margin: 8px 0;
+                box-shadow: none;
+                border: none;
+                background: var(--bg-secondary);
+            }
+        }
+
+        /* Additional utility classes */
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 13px; /* Reduced font size */
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-light);
+            border-color: var(--secondary-light);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px; /* Reduced font size */
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Navbar toggler for mobile */
+        .navbar-toggler {
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            background: var(--bg-secondary);
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* === Global Select2 Styling === */
+        .select2-container--default .select2-selection--single {
+            background: transparent !important;
+            border: none !important;
+            color: var(--text-light) !important;
+            padding: 4px 20px !important;
+            height: auto !important;
+            border-radius: 10px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: var(--text-light) !important;
+            padding-left: 0 !important;
+            padding-right: 20px !important;
+            line-height: 32px !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            right: 10px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: var(--text-light) transparent transparent transparent !important;
+        }
+
+        /* Dropdown Styling */
+        .select2-container--default .select2-dropdown {
+            background: var(--bg-color) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 12px !important;
+        }
+
+        .select2-container--default .select2-results__option {
+            color: var(--text-light) !important;
+            background: var(--bg-color) !important;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background: var(--primary-blue) !important;
+            color: var(--text-light) !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid navbar-container">
+            <!-- Brand / Logo -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img class="logo-img me-2" src="{{ url_for('static', filename='images/logo.png') }}" alt="Indatex">
+            </a>
+
+            <!-- Mobile Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav Links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.home') }}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-chart-line"></i> Market Services
+                        </a>
+                        <ul class="dropdown-menu services-dropdown-menu" aria-labelledby="servicesDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}">
+                                <i class="fas fa-chart-line"></i> All Services
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-header">Quick Access</li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#market-intelligence">
+                                <i class="fas fa-chart-line"></i> Market Intelligence
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#b2b-partners">
+                                <i class="fas fa-handshake"></i> B2B Partners
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#logistics">
+                                <i class="fas fa-truck"></i> Logistics
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#market-tools">
+                                <i class="fas fa-tools"></i> Market Tools
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('main.services_page') }}#academy">
+                                <i class="fas fa-graduation-cap"></i> Indatex Academy
+                            </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showComingSoon('Business Network')">
+                            <i class="fas fa-users"></i> Business Network
+                        </a>
+                    </li>
+
+                    {% if not current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">
+                                <i class="fas fa-user-plus"></i> Join Now
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <!-- Custom Language Selector -->
+                    <li class="nav-item">
+                        <div class="language-dropdown" id="languageDropdown">
+                            <img src="https://flagcdn.com/w40/us.png" alt="English" class="language-current-flag" id="currentFlag">
+                            <span class="language-text" id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down language-arrow"></i>
+                        </div>
+                        <div class="language-dropdown-menu" id="languageMenu">
+                            <button class="language-option active" data-lang="en" data-flag="https://flagcdn.com/w40/us.png">
+                                <img src="https://flagcdn.com/w40/us.png" alt="English" class="language-flag">
+                                <span class="language-name">English</span>
+                                <span class="language-native">EN</span>
+                            </button>
+                            <button class="language-option" data-lang="fr" data-flag="https://flagcdn.com/w40/fr.png">
+                                <img src="https://flagcdn.com/w40/fr.png" alt="French" class="language-flag">
+                                <span class="language-name">Français</span>
+                                <span class="language-native">FR</span>
+                            </button>
+                            <button class="language-option" data-lang="es" data-flag="https://flagcdn.com/w40/es.png">
+                                <img src="https://flagcdn.com/w40/es.png" alt="Spanish" class="language-flag">
+                                <span class="language-name">Español</span>
+                                <span class="language-native">ES</span>
+                            </button>
+                        </div>
+                    </li>
+
+                    {% if current_user.is_authenticated %}
+                        <!-- User Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-dropdown d-flex align-items-center" href="#" id="userDropdown" 
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle user-avatar"></i>
+                                <span class="user-info ms-2">Karim S</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu" aria-labelledby="userDropdown">
+                                <li class="dropdown-header">
+                                    <div class="user-profile-header">
+                                        <i class="fas fa-user-circle user-avatar-large"></i>
+                                        <div>
+                                            <div class="fw-bold">Karim S</div>
+                                            <div class="text-muted small">None</div>
+                                            <div class="text-muted small">Managing Director</div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="dropdown-section-header">Personal Details</li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}">
+                                    <i class="fas fa-user"></i> My Account
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="showComingSoon('Alerts')">
+                                    <i class="fas fa-bell"></i> My Alerts
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.edit_profile') }}">
+                                    <i class="fas fa-cog"></i> My Preferences
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="showComingSoon('Messages')">
+                                    <i class="fas fa-envelope"></i> Portal Messages
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hidden GTranslate container (completely hidden but functional) -->
+    <div class="gtranslate_wrapper"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; <span id="current-year"></span> Market Analysis Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FIXED: GTranslate Script with proper settings -->
+    <script>
+        window.gtranslateSettings = {
+            "default_language": "en",
+            "native_language_names": false,
+            "languages": ["en", "fr", "es"],
+            "wrapper_selector": ".gtranslate_wrapper",
+            "detect_browser_language": false,
+            "flag_size": 0,
+            "alt_flags": {"en": "usa"}
+        };
+    </script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
+
+    <!-- FIXED: Custom Scripts with corrected translation functionality, faster toast dismissal, and navbar scroll behavior -->
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Global variables
+        let currentLanguage = 'en';
+        let gtranslateReady = false;
+
+        const languageConfig = {
+            'en': { flag: 'https://flagcdn.com/w40/us.png', name: 'English', code: 'EN' },
+            'fr': { flag: 'https://flagcdn.com/w40/fr.png', name: 'Français', code: 'FR' },
+            'es': { flag: 'https://flagcdn.com/w40/es.png', name: 'Español', code: 'ES' }
+        };
+
+        // Navbar scroll behavior
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+        let isScrolling;
+
+        window.addEventListener('scroll', function() {
+            // Clear any existing timeout to prevent multiple executions
+            clearTimeout(isScrolling);
+
+            // Get current scroll position
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Show navbar when scrolling up, hide when scrolling down
+            if (currentScroll > lastScrollTop) {
+                // Scrolling down
+                navbar.classList.add('hidden');
+            } else {
+                // Scrolling up
+                navbar.classList.remove('hidden');
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Update last scroll position
+
+            // Add a small delay to prevent excessive class toggling
+            isScrolling = setTimeout(function() {
+                if (currentScroll <= 0) {
+                    navbar.classList.remove('hidden'); // Always show navbar at the top
+                }
+            }, 150);
+        });
+
+        // Show toast notification with reduced duration
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'info'} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.setAttribute('data-bs-autohide', 'true');
+            toast.setAttribute('data-bs-delay', '2000'); // Reduced to 2 seconds
+            
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+            
+            document.querySelector('.toast-container').appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            toast.addEventListener('hidden.bs.toast', () => {
+                toast.remove();
+            });
+        }
+
+        // FIXED: Enhanced GTranslate initialization
+        function initializeGTranslate() {
+            // Set initial cookie to English
+            document.cookie = `googtrans=/auto/en; path=/; domain=.${window.location.hostname}`;
+            
+            // Wait for GTranslate to load completely
+            let attempts = 0;
+            const maxAttempts = 15;
+            
+            const checkGTranslate = setInterval(() => {
+                attempts++;
+                
+                // Check if GTranslate is loaded
+                if (typeof window.doGTranslate === 'function' || document.querySelector('.gtranslate_wrapper iframe')) {
+                    clearInterval(checkGTranslate);
+                    gtranslateReady = true;
+                    console.log('GTranslate successfully loaded');
+                    
+                    // Hide any GTranslate float buttons that might appear
+                    const floatSwitchers = document.querySelectorAll('.gt_float_switcher');
+                    floatSwitchers.forEach(switcher => {
+                        switcher.style.display = 'none';
+                    });
+                    
+                    // Ensure our custom dropdown is in sync with GTranslate
+                    syncWithGTranslate();
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkGTranslate);
+                    console.log('GTranslate not loaded after maximum attempts');
+                    // Fallback: set cookie manually
+                    document.cookie = `googtrans=/auto/en; path=/; domain=.${window.location.hostname}`;
+                }
+            }, 500);
+        }
+
+        // Sync custom dropdown with GTranslate current language
+        function syncWithGTranslate() {
+            try {
+                // Try to detect current language from GTranslate cookie
+                const cookie = document.cookie.split('; ').find(row => row.startsWith('googtrans='));
+                let langCode = 'en'; // Default to English
+                if (cookie) {
+                    langCode = cookie.split('=')[1].split('/').pop();
+                }
+                
+                if (langCode && languageConfig[langCode]) {
+                    // Update custom dropdown to match GTranslate
+                    const currentFlag = document.getElementById('currentFlag');
+                    const currentLang = document.getElementById('currentLang');
+                    const languageOptions = document.querySelectorAll('.language-option');
+                    
+                    if (currentFlag) currentFlag.src = languageConfig[langCode].flag;
+                    if (currentLang) currentLang.textContent = languageConfig[langCode].code;
+                    
+                    languageOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        if (opt.getAttribute('data-lang') === langCode) {
+                            opt.classList.add('active');
+                        }
+                    });
+                    
+                    currentLanguage = langCode;
+                } else {
+                    // If no valid language is found, force English
+                    triggerGTranslate('en');
+                }
+            } catch (error) {
+                console.log('Could not sync with GTranslate:', error);
+                // Force English in case of error
+                triggerGTranslate('en');
+            }
+        }
+
+        // FIXED: Enhanced triggerGTranslate function
+        function triggerGTranslate(targetLang) {
+            if (!gtranslateReady) {
+                console.log('GTranslate not ready yet, waiting...');
+                setTimeout(() => triggerGTranslate(targetLang), 500);
+                return;
+            }
+
+            try {
+                // Use cookie-based approach for better reliability
+                document.cookie = `googtrans=/auto/${targetLang}; path=/; domain=.${window.location.hostname}`;
+                
+                // Trigger GTranslate if available
+                if (typeof window.doGTranslate === 'function') {
+                    window.doGTranslate(`en|${targetLang}`);
+                } else {
+                    // Fallback: try to find and trigger the GTranslate select
+                    const gtSelect = document.querySelector('.gtranslate_wrapper select, select.gt_selector');
+                    if (gtSelect) {
+                        gtSelect.value = targetLang;
+                        gtSelect.dispatchEvent(new Event('change'));
+                    } else {
+                        // Last resort: reload the page
+                        window.location.reload();
+                    }
+                }
+                
+                // Update current language
+                currentLanguage = targetLang;
+                
+            } catch (error) {
+                console.error('Error triggering GTranslate:', error);
+                // Fallback to page reload
+                window.location.reload();
+            }
+        }
+
+        // FIXED: Enhanced language dropdown initialization
+        function initializeLanguageDropdown() {
+            const dropdown = document.getElementById('languageDropdown');
+            const menu = document.getElementById('languageMenu');
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLang = document.getElementById('currentLang');
+
+            if (!dropdown || !menu || !currentFlag || !currentLang) {
+                console.error('Language dropdown elements not found');
+                return;
+            }
+
+            // Initialize with current language
+            currentFlag.src = languageConfig[currentLanguage].flag;
+            currentLang.textContent = languageConfig[currentLanguage].code;
+
+            // Toggle dropdown
+            dropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+                menu.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target) && !menu.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                    menu.classList.remove('show');
+                }
+            });
+
+            // Handle language selection
+            const languageOptions = menu.querySelectorAll('.language-option');
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const lang = this.getAttribute('data-lang');
+                    const flag = this.getAttribute('data-flag');
+
+                    if (lang === currentLanguage) {
+                        dropdown.classList.remove('active');
+                        menu.classList.remove('show');
+                        return;
+                    }
+
+                    // Update UI immediately
+                    currentLanguage = lang;
+                    currentFlag.src = flag;
+                    currentLang.textContent = languageConfig[lang].code;
+
+                    // Update active state
+                    languageOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Close dropdown
+                    dropdown.classList.remove('active');
+                    menu.classList.remove('show');
+
+                    // Trigger translation
+                    triggerGTranslate(lang);
+                    
+                    // Show toast notification with translated message
+                    const messages = {
+                        'en': `Language changed to ${languageConfig[lang].name}`,
+                        'fr': `Langue changée en ${languageConfig[lang].name}`,
+                        'es': `Idioma cambiado a ${languageConfig[lang].name}`
+                    };
+                    showToast(messages[lang] || messages['en'], 'success');
+                });
+            });
+        }
+
+        function showComingSoon(feature) {
+            const messages = {
+                'en': `${feature} feature is coming soon!`,
+                'fr': `La fonctionnalité ${feature} sera bientôt disponible !`,
+                'es': `¡La función ${feature} estará disponible pronto!`
+            };
+            showToast(messages[currentLanguage] || messages['en'], 'info');
+        }
+
+        // Initialize components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLanguageDropdown();
+            initializeGTranslate();
+
+            // Additional initialization functions
+            if (typeof initializeBootstrapComponents === 'function') {
+                initializeBootstrapComponents();
+            }
+            if (typeof setupDropdownHandlers === 'function') {
+                setupDropdownHandlers();
+            }
+            if (typeof setupSmoothScrolling === 'function') {
+                setupSmoothScrolling();
+            }
+        });
+
+        // Handle GTranslate integration after page load
+        window.addEventListener('load', function() {
+            // Additional GTranslate initialization after everything is loaded
+            setTimeout(function() {
+                // Hide any GTranslate elements that might appear
+                const gtWrappers = document.querySelectorAll('.gtranslate_wrapper');
+                gtWrappers.forEach(wrapper => {
+                    wrapper.style.display = 'none';
+                });
+                
+                // Final sync with GTranslate
+                syncWithGTranslate();
+                
+                console.log('GTranslate integration completed');
+            }, 1000);
+        });
+
+        // Handle potential GTranslate iframe loading
+        window.addEventListener('message', function(event) {
+            // Handle messages from GTranslate iframe if any
+            if (event.data && event.data.gt) {
+                console.log('GTranslate message received:', event.data);
+            }
+        });
+    </script>
+</body>
+</html>

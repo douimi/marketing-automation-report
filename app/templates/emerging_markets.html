@@ -1,0 +1,1286 @@
+{% extends "base.html" %}
+
+{% block title %}Exporting to Emerging Markets - Indatex Academy{% endblock %}
+
+{% block content %}
+<section class="emerging-markets-section">
+    <div class="emerging-markets-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container emerging-markets-container">
+        <div class="emerging-markets-card">
+            <!-- Header Section -->
+            <div class="emerging-markets-header">
+                <div class="brand-section">
+                    <div class="brand-container">
+                        <div class="brand-text">
+                            <h1 class="emerging-markets-brand-name">Indatex Academy</h1>
+                            <span class="emerging-markets-subtitle">Strategic Market Expansion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emerging-markets-title-section">
+                    <div class="title-decoration">
+                        <div class="decoration-line left-line"></div>
+                        <div class="title-badge">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="decoration-line right-line"></div>
+                    </div>
+                    <h1 class="emerging-markets-main-title">Exporting to <span class="highlight-text">Emerging Markets</span></h1>
+                    <p class="emerging-markets-subtitle-text">Navigate opportunities in high-growth economies</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="emerging-markets-navigation">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-target="understanding">Understanding Markets</button>
+                    <button class="nav-tab" data-target="strategies">Entry Strategies</button>
+                    <button class="nav-tab" data-target="challenges">Challenges & Solutions</button>
+                    <button class="nav-tab" data-target="key_takeaways">Key Takeaways</button>
+                </div>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="emerging-markets-content">
+                <!-- Understanding Emerging Markets Section -->
+                <div id="understanding" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-line"></i> Understanding Emerging Markets</h2>
+                    </div>
+                    <div class="section-body">
+                        <p class="lead">Emerging markets represent some of the fastest-growing economies in the world, offering tremendous opportunities for exporters. However, success in these markets requires careful planning, cultural sensitivity, and strategic adaptation.</p>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-rocket"></i>
+                                <h3>Growth Potential</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <p>Emerging markets are projected to account for over 60% of global GDP growth in the next decade, making them critical for long-term export success.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-globe"></i>
+                                <h3>Market Characteristics</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>High Growth Rates</h4>
+                                            <p>GDP growth typically 5-10% annually</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Growing Middle Class</h4>
+                                            <p>Increasing purchasing power and demand</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Digital Adoption</h4>
+                                            <p>Rapid technology and e-commerce growth</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Market Volatility</h4>
+                                            <p>Economic and political fluctuations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <h3>Key Emerging Market Regions</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Asia-Pacific</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> China & India</li>
+                                                <li><i class="fas fa-check"></i> Southeast Asia (ASEAN)</li>
+                                                <li><i class="fas fa-check"></i> Vietnam, Indonesia</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Latin America</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Brazil & Mexico</li>
+                                                <li><i class="fas fa-check"></i> Colombia, Peru</li>
+                                                <li><i class="fas fa-check"></i> Argentina, Chile</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Africa & Middle East</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> South Africa, Nigeria</li>
+                                                <li><i class="fas fa-check"></i> UAE, Saudi Arabia</li>
+                                                <li><i class="fas fa-check"></i> Kenya, Ghana</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-search"></i>
+                                <h3>Market Research Essentials</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Consumer Behavior: Local preferences, buying patterns, cultural influences</li>
+                                    <li><i class="fas fa-check"></i> Competitive Landscape: Local and international competitors, market share</li>
+                                    <li><i class="fas fa-check"></i> Regulatory Environment: Import/export rules, product standards</li>
+                                    <li><i class="fas fa-check"></i> Distribution Channels: Retail networks, e-commerce platforms</li>
+                                    <li><i class="fas fa-check"></i> Economic Indicators: Currency stability, inflation rates, trade agreements</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn-action" onclick="scrollToTop()"><i class="fas fa-arrow-up me-1"></i>Return to top</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entry Strategies Section -->
+                <div id="strategies" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chess"></i> Entry Strategies</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-rocket"></i>
+                                <h3>Direct Export</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Advantages</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Full control over operations</li>
+                                                <li><i class="fas fa-check"></i> Higher profit margins</li>
+                                                <li><i class="fas fa-check"></i> Direct customer relationships</li>
+                                                <li><i class="fas fa-check"></i> Brand control and positioning</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Challenges</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-exclamation"></i> Higher investment requirements</li>
+                                                <li><i class="fas fa-exclamation"></i> Complex logistics and compliance</li>
+                                                <li><i class="fas fa-exclamation"></i> Cultural and language barriers</li>
+                                                <li><i class="fas fa-exclamation"></i> Market entry risks</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-handshake"></i>
+                                <h3>Local Partnerships</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Distributors</h4>
+                                            <p>Local companies that buy and resell your products with established networks.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Agents</h4>
+                                            <p>Representatives who sell on your behalf for commission, providing market access.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-handshake"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Joint Ventures</h4>
+                                            <p>Strategic partnerships combining resources, sharing risks and profits.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <h3>Partner Selection Criteria</h3>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>Evaluate financial stability, market reputation, distribution network, and cultural fit.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-laptop"></i>
+                                <h3>Digital Market Entry</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>E-commerce Platforms</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Amazon, Alibaba, Mercado Libre</li>
+                                                <li><i class="fas fa-check"></i> Local platforms (Flipkart, Jumia)</li>
+                                                <li><i class="fas fa-check"></i> B2B marketplaces</li>
+                                                <li><i class="fas fa-check"></i> Social commerce channels</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-bullhorn"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Digital Marketing</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Search engine optimization (SEO)</li>
+                                                <li><i class="fas fa-check"></i> Social media marketing</li>
+                                                <li><i class="fas fa-check"></i> Influencer partnerships</li>
+                                                <li><i class="fas fa-check"></i> Content localization</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-cogs"></i>
+                                <h3>Product Adaptation Strategies</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-cube"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Standardization</h4>
+                                            <p>Maintain consistent product features for economies of scale and brand consistency.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-tools"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Adaptation</h4>
+                                            <p>Modify products to meet local preferences, regulations, and cultural requirements.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-balance-scale"></i>
+                                        <h3>Finding the Right Balance</h3>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>Consider local tastes, climate, regulations, and cultural sensitivities while maintaining core brand values.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn-action" onclick="scrollToTop()"><i class="fas fa-arrow-up me-1"></i>Return to top</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenges & Solutions Section -->
+                <div id="challenges" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Common Challenges & Solutions</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-balance-scale"></i>
+                                <h3>Regulatory & Compliance Challenges</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Common Issues</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-exclamation"></i> Complex import/export procedures</li>
+                                                <li><i class="fas fa-exclamation"></i> Changing regulations and policies</li>
+                                                <li><i class="fas fa-exclamation"></i> Product certification requirements</li>
+                                                <li><i class="fas fa-exclamation"></i> Intellectual property protection</li>
+                                                <li><i class="fas fa-exclamation"></i> Tax and customs compliance</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Solutions</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Engage local legal and regulatory experts</li>
+                                                <li><i class="fas fa-check"></i> Join trade associations and chambers</li>
+                                                <li><i class="fas fa-check"></i> Use government trade support services</li>
+                                                <li><i class="fas fa-check"></i> Invest in compliance management systems</li>
+                                                <li><i class="fas fa-check"></i> Build relationships with customs brokers</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-dollar-sign"></i>
+                                <h3>Financial & Currency Risks</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Risk Factors</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-exclamation"></i> Currency volatility and devaluation</li>
+                                                <li><i class="fas fa-exclamation"></i> Payment delays and defaults</li>
+                                                <li><i class="fas fa-exclamation"></i> Banking system limitations</li>
+                                                <li><i class="fas fa-exclamation"></i> Capital controls and restrictions</li>
+                                                <li><i class="fas fa-exclamation"></i> Inflation and economic instability</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Risk Mitigation</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Use letters of credit and trade finance</li>
+                                                <li><i class="fas fa-check"></i> Implement currency hedging strategies</li>
+                                                <li><i class="fas fa-check"></i> Diversify payment methods and timing</li>
+                                                <li><i class="fas fa-check"></i> Consider export credit insurance</li>
+                                                <li><i class="fas fa-check"></i> Price in stable currencies when possible</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-users"></i>
+                                <h3>Cultural & Communication Barriers</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Key Considerations</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-exclamation"></i> Language and communication styles</li>
+                                                <li><i class="fas fa-exclamation"></i> Business etiquette and protocols</li>
+                                                <li><i class="fas fa-exclamation"></i> Religious and cultural sensitivities</li>
+                                                <li><i class="fas fa-exclamation"></i> Decision-making processes</li>
+                                                <li><i class="fas fa-exclamation"></i> Relationship-building expectations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Best Practices</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Invest in cultural training and awareness</li>
+                                                <li><i class="fas fa-check"></i> Hire local talent and advisors</li>
+                                                <li><i class="fas fa-check"></i> Adapt marketing and communication</li>
+                                                <li><i class="fas fa-check"></i> Build long-term relationships</li>
+                                                <li><i class="fas fa-check"></i> Show respect for local customs</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-shipping-fast"></i>
+                                <h3>Logistics & Supply Chain Challenges</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Common Obstacles</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-exclamation"></i> Inadequate infrastructure</li>
+                                                <li><i class="fas fa-exclamation"></i> Complex distribution networks</li>
+                                                <li><i class="fas fa-exclamation"></i> Quality control and storage issues</li>
+                                                <li><i class="fas fa-exclamation"></i> Long lead times and delays</li>
+                                                <li><i class="fas fa-exclamation"></i> Limited technology integration</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Strategic Solutions</h4>
+                                            <ul class="feature-list compact-list">
+                                                <li><i class="fas fa-check"></i> Partner with established logistics providers</li>
+                                                <li><i class="fas fa-check"></i> Invest in local warehousing and distribution</li>
+                                                <li><i class="fas fa-check"></i> Implement supply chain visibility tools</li>
+                                                <li><i class="fas fa-check"></i> Build buffer inventory for critical markets</li>
+                                                <li><i class="fas fa-check"></i> Develop contingency plans and alternatives</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn-action" onclick="scrollToTop()"><i class="fas fa-arrow-up me-1"></i>Return to top</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Takeaways Section -->
+                <div id="key_takeaways" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-key"></i> Key Takeaways & Resources</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-trophy"></i>
+                                <h3>Success Factors</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Market Research: Deep understanding of local conditions</li>
+                                    <li><i class="fas fa-check"></i> Local Partnerships: Strategic alliances with market knowledge</li>
+                                    <li><i class="fas fa-check"></i> Cultural Adaptation: Respect for local customs and preferences</li>
+                                    <li><i class="fas fa-check"></i> Risk Management: Comprehensive mitigation strategies</li>
+                                    <li><i class="fas fa-check"></i> Long-term Commitment: Patience and sustained investment</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-calendar-alt"></i>
+                                <h3>Typical Entry Timeline</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Market Research: 3-6 months</li>
+                                    <li><i class="fas fa-check"></i> Strategy Development: 2-4 months</li>
+                                    <li><i class="fas fa-check"></i> Partner Selection: 3-6 months</li>
+                                    <li><i class="fas fa-check"></i> Market Launch: 2-3 months</li>
+                                    <li><i class="fas fa-check"></i> Scale & Optimize: Ongoing</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Risk Assessment Matrix</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Political Risk</h4>
+                                            <p>Medium</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Currency Risk</h4>
+                                            <p>High</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Regulatory Risk</h4>
+                                            <p>Medium-High</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-exclamation"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Market Risk</h4>
+                                            <p>Medium</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-external-link-alt"></i>
+                                <h3>Useful Resources</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <ul class="feature-list compact-list">
+                                    <li><i class="fas fa-check"></i> <a href="https://www.worldbank.org/" target="_blank">World Bank: Economic indicators and market data</a></li>
+                                    <li><i class="fas fa-check"></i> <a href="https://www.trademap.org/" target="_blank">ITC Trade Map: Trade statistics and market analysis</a></li>
+                                    <li><i class="fas fa-check"></i> <a href="https://www.wto.org/" target="_blank">Export Credit Agencies: Trade finance and insurance support</a></li>
+                                    <li><i class="fas fa-check"></i> <a href="https://www.iccwbo.org/" target="_blank">Trade Associations: Industry networks and market intelligence</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn-action" onclick="scrollToTop()"><i class="fas fa-arrow-up me-1"></i>Return to top</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+:root {
+    --primary-blue: #4b5e8c;
+    --primary-light: #6b7aab;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #f1f5f9;
+    --light-bg: #e2e8f0;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Emerging Markets Section */
+.emerging-markets-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.emerging-markets-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--dark-bg);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.emerging-markets-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.emerging-markets-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Emerging Markets Header */
+.emerging-markets-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.emerging-markets-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emerging-markets-brand-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0;
+    line-height: 1;
+}
+
+.emerging-markets-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Emerging Markets Title Section */
+.emerging-markets-title-section {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+}
+
+.title-badge {
+    margin: 0 20px;
+    position: relative;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+.title-badge i {
+    font-size: 1.5rem;
+    color: var(--white);
+}
+
+.emerging-markets-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.emerging-markets-subtitle-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Navigation Tabs */
+.emerging-markets-navigation {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.nav-tab {
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-tab:hover {
+    background: var(--primary-light);
+    color: var(--white);
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+/* Content Sections */
+.emerging-markets-content {
+    padding: 0 2rem 2rem;
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.section-header h2 i {
+    color: var(--primary-light);
+}
+
+.section-body {
+    color: var(--text-dark);
+}
+
+.section-body h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.section-body p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.section-body p.lead {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Info Cards */
+.info-card {
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.info-card-header {
+    background: rgba(75, 94, 140, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-card-header i {
+    font-size: 1.5rem;
+    color: var(--primary-light);
+}
+
+.info-card-header h3 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 1.25rem;
+}
+
+.info-card-body {
+    padding: 1.5rem;
+}
+
+.criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.criterion {
+    display: flex;
+    gap: 1rem;
+}
+
+.criterion-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.criterion-icon i {
+    color: var(--white);
+    font-size: 1.2rem;
+}
+
+.criterion-content h4 {
+    margin: 0 0 0.5rem;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+.criterion-content p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Feature List */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.feature-list li i {
+    color: var(--success);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.feature-list.compact-list {
+    margin: 0;
+}
+
+.feature-list.compact-list li {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+/* Button Action */
+.btn-action {
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-action:hover {
+    background: var(--primary-light);
+    color: var(--white);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .emerging-markets-content {
+        padding: 0 2rem 2rem;
+    }
+    
+    .criteria-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .emerging-markets-section {
+        padding: 1rem 0;
+    }
+    
+    .emerging-markets-container {
+        padding: 0 1rem;
+    }
+    
+    .emerging-markets-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .emerging-markets-content {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .emerging-markets-navigation {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-tabs {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+    }
+    
+    .brand-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .emerging-markets-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .emerging-markets-subtitle-text {
+        font-size: 0.9rem;
+    }
+    
+    .title-badge {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .title-badge i {
+        font-size: 1.2rem;
+    }
+    
+    .decoration-line {
+        width: 40px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-body h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .emerging-markets-header {
+        padding: 1rem;
+    }
+    
+    .emerging-markets-content {
+        padding: 0 1rem 1rem;
+    }
+    
+    .emerging-markets-navigation {
+        padding: 0 1rem;
+    }
+    
+    .emerging-markets-main-title {
+        font-size: 1.25rem;
+    }
+    
+    .emerging-markets-subtitle-text {
+        font-size: 0.85rem;
+    }
+    
+    .title-badge {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .title-badge i {
+        font-size: 1rem;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .section-body h3 {
+        font-size: 1.1rem;
+    }
+    
+    .criterion {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .criterion-icon {
+        margin: 0 auto;
+    }
+}
+
+@media print {
+    .emerging-markets-background, .floating-particles {
+        display: none;
+    }
+
+    .emerging-markets-section {
+        background: white;
+        color: black;
+    }
+
+    .emerging-markets-card, .nav-tab, .info-card, .criterion {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .nav-tab.active {
+        background: #ccc;
+        color: black;
+    }
+
+    .emerging-markets-main-title, .highlight-text {
+        background: none;
+        -webkit-text-fill-color: black;
+    }
+
+    .section-header h2, .section-body h3, .criterion-content h4 {
+        color: black;
+    }
+
+    .criterion-icon, .title-badge {
+        background: #ccc;
+        color: black;
+    }
+
+    .criterion-icon i, .title-badge i {
+        color: black;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab navigation functionality
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const contentSections = document.querySelectorAll('.content-section');
+    
+    navTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            
+            // Update active tab
+            navTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show target section
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === targetId) {
+                    section.classList.add('active');
+                }
+            });
+            
+            // Scroll to top of content
+            document.querySelector('.emerging-markets-content').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    
+    // Scroll to top function
+    window.scrollToTop = function() {
+        document.querySelector('.emerging-markets-content').scrollIntoView({ behavior: 'smooth' });
+    };
+    
+    // Intersection Observer for animation
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    const animatedElements = document.querySelectorAll('.content-section, .info-card, .criterion');
+    
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+});
+</script>
+{% endblock %}

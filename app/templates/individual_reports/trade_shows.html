@@ -1,0 +1,570 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Trade Shows - {{ form_data.destination_country_name|default('Unknown Country') }}
+{% endblock %}
+
+{% block content %}
+<!-- Service Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-calendar-alt fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Trade Shows</h1>
+                    <div class="hero-subtitle d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-flag me-1"></i>{{ form_data.destination_country_name|default('Unknown Country') }}</span>
+                        <span><i class="fas fa-industry me-1"></i>{{ form_data.sector|default('Unknown Sector') }}</span>
+                        <span><i class="fas fa-calendar me-1"></i>{{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="back-button mt-4 d-flex gap-2 justify-content-center">
+                <button onclick="window.print()" class="btn-action btn-outline"><i class="fas fa-file-pdf me-2"></i>Export PDF</button>
+                <a href="{{ url_for('main.services_page')|default('#') }}" class="btn-action btn-outline"><i class="fas fa-arrow-left me-2"></i>Back to Services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Service Navigation -->
+        <div class="info-card mb-4">
+            <div class="info-header">
+                <div class="info-icon"><i class="fas fa-link"></i></div>
+                <h4 class="info-title">Related Services</h4>
+            </div>
+            <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+                <a href="{{ url_for('main.service_form', service_type='general-presentation')|default('#') }}" class="btn-action btn-sm btn-outline">General Presentation</a>
+                <a href="{{ url_for('main.service_form', service_type='business-practices')|default('#') }}" class="btn-action btn-sm btn-outline">Business Practices</a>
+                <a href="{{ url_for('main.form_page')|default('#') }}" class="btn-action btn-sm">Complete Report</a>
+            </div>
+        </div>
+
+        <!-- Trade Shows Section -->
+        <div class="converter-card mb-4">
+            <div class="card-body">
+                <h4 class="mb-4">
+                    <i class="fas fa-calendar-alt me-2" style="color: var(--accent-color);"></i>
+                    Upcoming Trade Shows & Exhibitions
+                </h4>
+                {% if trade_shows_data and trade_shows_data|length > 0 %}
+                <!-- Results Summary -->
+                <div class="info-card alert-info mb-4">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="info-content">
+                        <p>Found <strong>{{ trade_shows_data|length }}</strong> relevant trade shows in {{ form_data.destination_country_name|default('Unknown Country') }} for the {{ form_data.sector|default('Unknown Sector') }} sector.</p>
+                    </div>
+                </div>
+
+                <!-- Trade Shows List -->
+                <div class="row">
+                    {% for show in trade_shows_data %}
+                    <div class="col-md-6 mb-4">
+                        <div class="info-card h-100">
+                            <div class="info-content">
+                                <h5 class="card-title mb-2">
+                                    {% if show.url %}
+                                    <a href="{{ show.url }}" target="_blank" rel="noopener" class="text-decoration-none">
+                                        {{ show.name|default('Unnamed Event') }}
+                                        <i class="fas fa-external-link-alt ms-1 small"></i>
+                                    </a>
+                                    {% else %}
+                                    {{ show.name|default('Unnamed Event') }}
+                                    {% endif %}
+                                </h5>
+                                <div class="trade-show-details">
+                                    {% if show.location %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-map-marker-alt me-2" style="color: var(--primary-color);"></i>
+                                        <strong>Location:</strong> {{ show.location }}
+                                    </div>
+                                    {% endif %}
+                                    {% if show.date %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock me-2" style="color: var(--accent-color);"></i>
+                                        <strong>Date:</strong> {{ show.date }}
+                                    </div>
+                                    {% endif %}
+                                    {% if show.description %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-info-circle me-2" style="color: var(--primary-light);"></i>
+                                        <strong>Description:</strong> {{ show.description }}
+                                    </div>
+                                    {% endif %}
+                                    {% if show.sectors %}
+                                    <div class="detail-item">
+                                        <i class="fas fa-industry me-2" style="color: #f59e0b;"></i>
+                                        <strong>Sectors:</strong> {{ show.sectors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if show.url %}
+                                <div class="mt-3">
+                                    <a href="{{ show.url }}" target="_blank" rel="noopener" class="btn-action btn-sm">
+                                        <i class="fas fa-external-link-alt me-1"></i>Visit Official Website
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Summary Stats -->
+                <div class="row mt-5">
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div class="stat-number">{{ trade_shows_data|length }}</div>
+                            <div class="stat-label">Total Events Found</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div class="stat-number">{{ form_data.sector|default('Unknown Sector') }}</div>
+                            <div class="stat-label">Target Sector</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div class="stat-number">{{ form_data.destination_country_name|default('Unknown Country') }}</div>
+                            <div class="stat-label">Market Location</div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="info-card alert-warning text-center">
+                    <div class="info-icon"><i class="fas fa-calendar-times"></i></div>
+                    <div class="info-content">
+                        <h4>No Trade Shows Found</h4>
+                        <p class="text-muted">We couldn't find any trade shows for the <strong>{{ form_data.sector|default('Unknown Sector') }}</strong> sector in <strong>{{ form_data.destination_country_name|default('Unknown Country') }}</strong> at this time.</p>
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a href="{{ url_for('main.service_form', service_type='trade-shows')|default('#') }}" class="btn-action btn-outline btn-sm">
+                                <i class="fas fa-search me-2"></i>Try Different Search
+                            </a>
+                            <a href="{{ url_for('main.services_page')|default('#') }}" class="btn-action btn-sm">
+                                <i class="fas fa-list me-2"></i>Browse Other Services
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="info-card text-center">
+            <div class="info-header">
+                <div class="info-icon"><i class="fas fa-chart-line"></i></div>
+                <h4 class="info-title">Planning to Attend?</h4>
+            </div>
+            <p class="text-muted mb-4">Get comprehensive market intelligence to maximize your trade show ROI.</p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{{ url_for('main.form_page')|default('#') }}" class="btn-action btn-lg">
+                    <i class="fas fa-chart-line me-2"></i>Get Complete Market Report
+                </a>
+                <a href="{{ url_for('main.service_form', service_type='business-practices')|default('#') }}" class="btn-action btn-outline btn-lg">
+                    <i class="fas fa-handshake me-2"></i>Learn Business Culture
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.hero-subtitle span {
+    font-size: 0.9rem;
+}
+
+.hero-subtitle i {
+    color: var(--accent-color);
+}
+
+.back-button .btn-action.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.back-button .btn-action.btn-outline:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card.alert-info {
+    border-left: 4px solid var(--primary-light);
+}
+
+.info-card.alert-warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.info-content h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.info-content p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.text-decoration-none {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.text-decoration-none:hover {
+    color: var(--primary-light);
+}
+
+.trade-show-details .detail-item {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-action.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.btn-action.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-action.btn-outline:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.btn-action.btn-lg {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 2rem 0;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+}
+
+@media print {
+    .converter-card, .info-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    .info-icon, .service-icon {
+        background: none;
+        color: #000;
+    }
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+    .btn-action, .back-button {
+        display: none;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // External link tracking
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Trade Shows page initialized');
+});
+</script>
+{% endblock %}

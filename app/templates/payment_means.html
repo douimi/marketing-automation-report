@@ -1,0 +1,1621 @@
+{% extends "base.html" %}
+
+{% block title %}International Payment Methods - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<section class="payment-methods-section">
+    <div class="payment-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container payment-container">
+        <div class="payment-card">
+            <!-- Header Section -->
+            <div class="payment-header">
+                <div class="brand-section">
+                    <div class="brand-container">
+                        <div class="brand-text">
+                            <h1 class="payment-brand-name">Trade Intelligence</h1>
+                            <span class="payment-subtitle">Market Analysis Portal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-title-section">
+                    <div class="title-decoration">
+                        <div class="decoration-line left-line"></div>
+                        <div class="title-badge">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="decoration-line right-line"></div>
+                    </div>
+                    <h1 class="payment-main-title">International Payment Methods</h1>
+                    <p class="payment-subtitle-text">Comprehensive guide to international payment instruments and methods</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="payment-navigation">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-target="introduction">Introduction</button>
+                    <button class="nav-tab" data-target="banknotes">Banknotes</button>
+                    <button class="nav-tab" data-target="personal_checks">Personal Checks</button>
+                    <button class="nav-tab" data-target="bank_checks">Bank Checks</button>
+                    <button class="nav-tab" data-target="payment_orders">Payment Orders</button>
+                    <button class="nav-tab" data-target="remittances">Remittances</button>
+                    <button class="nav-tab" data-target="documentary_credits">Documentary Credits</button>
+                </div>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="payment-content">
+                <!-- Introduction Section -->
+                <div id="introduction" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <p class="lead">Each commercial transaction may be subject to a different payment method depending on the amount of the operation, the collection period, the type of customer, the degree of relationship between buyer and seller, the country where the buyer is located, payment customs in the sector or country, etc.</p>
+                        
+                        <p>No company that exports regularly and to several countries always uses the same payment method. Therefore, it is important to have a good overview of all of them and their different nuances.</p>
+                        
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <h3>Payment Method Selection Criteria</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <div class="criteria-grid">
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-bolt"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Speed</h4>
+                                            <p>Often opposed to security - faster methods may be less secure.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Security</h4>
+                                            <p>Opposed to cost - the more secure, the more expensive.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-handshake"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Negotiating Power</h4>
+                                            <p>If we want to sell, sometimes we have to accept some unwanted risk if the buyer is not willing to assume the higher cost required for our security.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Buyer's Country</h4>
+                                            <p>Some countries with international payment difficulties may require additional precautions, regardless of our client's solvency.</p>
+                                        </div>
+                                    </div>
+                                    <div class="criterion">
+                                        <div class="criterion-icon">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <div class="criterion-content">
+                                            <h4>Financing</h4>
+                                            <p>Not all payment methods facilitate commercial operation financing equally, and often this is essential for the transaction to take place.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-note">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <strong>Note:</strong> To learn about locally available international payment methods, contact your Santander branch for more information.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banknotes Section -->
+                <div id="banknotes" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-money-bill-wave"></i> Foreign Banknotes</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <p>In the realm of International Commercial Operations, Foreign Bank Notes are barely used as a Payment Method due to the inherent disadvantages of Risks and Costs.</p>
+                        
+                        <div class="risk-cost-grid">
+                            <div class="risk-card">
+                                <div class="risk-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="risk-content">
+                                    <h3>Risks</h3>
+                                    <p>Counterfeiting, theft, loss, and exchange rate risks</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cost-card">
+                                <div class="cost-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="cost-content">
+                                    <h3>Costs</h3>
+                                    <p>Due to handling, transport, insurance, etc., exchanges become more expensive</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>Additionally, possible restrictions that may be present in Exchange Control regulations in some countries must be added.</p>
+                    </div>
+                </div>
+
+                <!-- Personal Check Section -->
+                <div id="personal_checks" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-invoice"></i> Personal Check</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <h3>Description</h3>
+                        <p>Issued by the holder of a current account in a credit institution against the funds deposited in it, and can be either nominative or bearer.</p>
+                        
+                        <div class="alert-warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4 style="color: var(--text-color);">Security Considerations</h4>
+                                <p>The exporter has no guarantee of collecting payment for the goods despite receiving the check, as this depends on:</p>
+                                <ul>
+                                    <li>The validity of the drawer's signature</li>
+                                    <li>The availability of sufficient funds in the account</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p>Collection of the personal check is subject to the laws of the importer's country, since not all countries allow payment abroad through this instrument. The personal check is used as an International Payment Method when there is great trust between the Exporter and the Importer.</p>
+                        
+                        <h3>Participating Parties</h3>
+                        <div class="parties-grid">
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user-edit"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Drawer</h4>
+                                    <p>Person who issues the check</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Drawee</h4>
+                                    <p>Physical or legal person who is the depositary of the drawer's funds (usually a financial institution)</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Holder</h4>
+                                    <p>Person who collects the check</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Operation Process</h3>
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <p>The Exporter (Seller) sends goods and documents to the Importer (Buyer)</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <p>The Importer (Buyer) sends the Exporter (Seller) a check in foreign currency when the agreed term arrives</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <p>Once the Exporter has the check, they will proceed to deposit it in their bank for collection management</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <p>The Exporter's Bank will manage its collection through the Paying Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <p>The Paying Bank will proceed, if applicable, to debit it from the Importer's account</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">6</div>
+                                <div class="step-content">
+                                    <p>The Paying Bank will credit it to the Exporter's Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">7</div>
+                                <div class="step-content">
+                                    <p>The amount will be credited to the Exporter</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank Check Section -->
+                <div id="bank_checks" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-university"></i> Bank Check</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <h3>Description</h3>
+                        <p>It is a document issued by a Bank, at the request of an Importer from that country, against itself or against another banking entity, normally located in a different country, and in favor of the exporter of the operation that originated the payment to be settled.</p>
+                        
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-check-circle"></i>
+                                <h3>Key Differences from Personal Check</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <p>While a personal check is issued by a person against their current account, a bank check is issued by the Issuing Bank against the current account it has with the Drawee Bank.</p>
+                                <p>For the exporter, bank discount is done with greater promptness and fluidity than with personal checks, especially if it involves a Bank of recognized solvency from a country without difficulties.</p>
+                            </div>
+                        </div>
+                        
+                        <p>Although there is no legal restriction, it is not advisable to issue them to bearer. This payment system, provided it is done after sending goods or providing services, implies great trust between the Exporter and the Importer.</p>
+                        
+                        <h3>Participating Parties</h3>
+                        <div class="parties-grid">
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Drawer</h4>
+                                    <p>The bank responsible for issuing the check against its own funds</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Drawee</h4>
+                                    <p>The correspondent bank of the Issuing Bank (not always exists)</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Importer</h4>
+                                    <p>The physical or legal person who requests the check issuance</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-receipt"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Holder</h4>
+                                    <p>The exporter of goods who will collect the check</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Operation Process</h3>
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <p>The Exporter (Seller) sends goods and documents to the Importer (Buyer)</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <p>The Importer (Buyer) makes a Bank Check request to their Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <p>The Issuing Bank debits their Client's account and sends them the Check</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <p>The Importer sends the Check to the Exporter</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <p>The Exporter sends the Check to the Paying Bank for management</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">6</div>
+                                <div class="step-content">
+                                    <p>The Paying Bank credits the Check to the Exporter</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">7</div>
+                                <div class="step-content">
+                                    <p>Simultaneously, the Paying Bank debits the operation amount from the Issuing Bank's account</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Orders Section -->
+                <div id="payment_orders" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-money-check-alt"></i> Payment Orders</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <h3>Description</h3>
+                        <p>It is the payment method by which the payer (importer) asks their bank to credit the beneficiary's account (exporter) through a second bank (correspondent bank) with a determined amount of money. The transfer must indicate the concept for which the payment is made.</p>
+                        
+                        <div class="info-card">
+                            <div class="info-card-header">
+                                <i class="fas fa-check-circle"></i>
+                                <h3>Advantages over Checks</h3>
+                            </div>
+                            <div class="info-card-body">
+                                <p>The advantages of using this payment method compared to checks consist of avoiding losses, signature falsification, etc.</p>
+                            </div>
+                        </div>
+                        
+                        <p>This payment/collection method is applied in international merchandise sales when there is great trust between the Exporter and the Importer, as the exporter continues to send goods and documents while waiting for the importer to fulfill their obligations.</p>
+                        
+                        <h3>Participating Parties</h3>
+                        <div class="parties-grid">
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Payer</h4>
+                                    <p>Physical or legal person who requests the issuing bank to issue the payment order</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Issuing Bank</h4>
+                                    <p>The bank that issues the payment order</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Paying Bank</h4>
+                                    <p>The bank that makes the payment, usually a correspondent of the issuing bank</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Beneficiary</h4>
+                                    <p>Physical or legal person who receives the payment</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Operation Process</h3>
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <p>The Exporter sends the Importer the goods and documents proving ownership</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <p>The Importer orders their Bank to issue the Transfer</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <p>The Issuing Bank proceeds to debit their client's account</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <p>The Issuing Bank sends the Transfer instructions to the Paying Bank, while crediting the amount</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <p>The Paying Bank pays the amount to the Exporter</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remittances Section -->
+                <div id="remittances" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-export"></i> Remittances</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <h3>Description</h3>
+                        <p>It is a banking operation by which the exporter entrusts a bank with the management of collecting financial documents (bills of exchange, promissory notes, checks...) and/or non-financial documents (invoices, shipping documents, phytosanitary control...), against acceptance or cash payment by the importer. Depending on whether the documents are financial or/and non-financial, the remittance will be simple or documentary.</p>
+                        
+                        <div class="alert-note">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <strong>Legal Framework:</strong> The legal framework is covered by the International Chamber of Commerce in the <a href="http://www.iccwbo.org/" target="_blank">UNIFORM RULES</a> relating to COLLECTIONS.
+                            </div>
+                        </div>
+                        
+                        <h3>Participating Parties</h3>
+                        <div class="parties-grid">
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Principal</h4>
+                                    <p>The exporter who takes the initiative in the operation and transfers financial and non-financial documents to their bank for collection management</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Remitting Bank</h4>
+                                    <p>The exporter's bank, to whom they entrust remittance collection management</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Collecting Bank</h4>
+                                    <p>Must be different from the remitting bank. Receives documents and presents them to the importer for acceptance or payment</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Drawee</h4>
+                                    <p>The importer to whom documents are presented for acceptance or payment</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Operation Process</h3>
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <p>The Exporter sends goods to the destination country's customs</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <p>The Exporter sends the Remitting Bank both financial and commercial documents</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <p>The Remitting Bank sends the documents to the Collecting Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <p>The Collecting Bank notifies the Importer</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <p>The Importer proceeds to payment or acceptance of an instrument in exchange for obtaining the documents</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">6</div>
+                                <div class="step-content">
+                                    <p>The Collecting Bank proceeds to reimburse the amount to the Remitting Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">7</div>
+                                <div class="step-content">
+                                    <p>The Remitting Bank credits the Exporter</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Simple Remittance Subsection -->
+                        <h3>Simple Remittance</h3>
+                        <p>In simple remittance, the exporter will directly send goods and commercial documents to the importer and, separately, through a financial institution will send financial documents, generally for acceptance or payment. The principal must provide precise and complete instructions regarding protest in case of non-payment or any other legal procedure that replaces it, as well as who bears commissions and expenses.</p>
+                        
+                        <div class="alert-warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Risk Considerations</h4>
+                                <p>From a risk perspective, this payment method requires the exporter to assume practically all risks, as they lose control over goods by directly sending commercial documents to the importer and assume the possibility that they reject acceptance or payment as well as possible difficulties derived from country risk.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Documentary Remittance Subsection -->
+                        <h3>Documentary Remittance</h3>
+                        <p>It is one in which the Exporter delivers to their Bank various commercial documents (invoices, shipping documents, phytosanitary control...) accompanied or not by a draft document (Bill, Promissory Note, Receipt,...) with instructions to deliver them to the foreign importer, through their Bank, against acceptance or payment of the draft document.</p>
+                        
+                        <div class="alert-note">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <h4>Important Consideration</h4>
+                                <p>It is important to consider that the exporter may find that the buyer rejects the goods, so even having possession of them, they will find themselves with goods located in a distant country and, consequently, with additional expenses for storage, transport costs in case of re-importation, and even loss or penalties for delays in clearance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documentary Credits Section -->
+                <div id="documentary_credits" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-contract"></i> Documentary Credits</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <h3>Description</h3>
+                        <p>Defined as any agreement, whatever its denomination or description, by which a bank (Issuing Bank) acting at the request and in accordance with the instructions of a Customer (Applicant) or in its own name:</p>
+                        
+                        <ul class="feature-list">
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Undertakes to make a payment to a third party (Beneficiary) or to their order, or to accept and pay bills of exchange (draft instruments) drawn by the Beneficiary</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Authorizes another bank to make the payment or to accept and pay such bills of exchange (draft instruments)</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check"></i>
+                                <span>Authorizes another bank to negotiate, against delivery of required documents, provided that the terms and conditions of the Credit are complied with</span>
+                            </li>
+                            <li class="highlighted">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Consequently, the Documentary Credit is the safest payment method both for the Exporter who knows in advance that if they comply with the conditions they will be paid, and for the Importer who knows they will only pay if the requested documents are correctly presented to them.</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="alert-note">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <strong>Legal Framework:</strong> The legal framework is covered by the International Chamber of Commerce and consists of the <a href="http://www.iccwbo.org/" target="_blank">UNIFORM CUSTOMS AND PRACTICE FOR DOCUMENTARY CREDITS</a>.
+                            </div>
+                        </div>
+                        
+                        <h3>Participating Parties</h3>
+                        <div class="parties-grid">
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Importer/Applicant</h4>
+                                    <p>The party requesting the documentary credit opening</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Exporter/Beneficiary</h4>
+                                    <p>The party who receives payment upon presenting the required documents</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Issuing Bank</h4>
+                                    <p>The bank that issues the documentary credit</p>
+                                </div>
+                            </div>
+                            <div class="party-card">
+                                <div class="party-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="party-content">
+                                    <h4>Advising Bank</h4>
+                                    <p>The bank that notifies the beneficiary of the credit opening</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Operation Process</h3>
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <p>Through a document, the Importer requests the Issuing Bank to open the Documentary Credit</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <p>The Bank, after the corresponding risk study, issues the Documentary Credit to the Beneficiary</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <p>The Advising Bank communicates the Documentary Credit opening to the Beneficiary</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <p>The Exporter ships the goods and has them arrive at the destination country</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <p>The Beneficiary delivers documents to the Advising Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">6</div>
+                                <div class="step-content">
+                                    <p>The Advising Bank sends the received documents to the Issuing Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">7</div>
+                                <div class="step-content">
+                                    <p>The Issuing Bank pays the Advising Bank</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">8</div>
+                                <div class="step-content">
+                                    <p>The Advising Bank credits the Beneficiary</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">9</div>
+                                <div class="step-content">
+                                    <p>The Issuing Bank will debit the Importer's account and deliver the documents</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="step-number">10</div>
+                                <div class="step-content">
+                                    <p>The Importer presents the documentation at customs and withdraws the goods</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;       /* Professional slate blue */
+    --primary-light: #6b7aab;       /* Lighter blue for highlights */
+    --secondary-color: #6b7280;     /* Neutral gray */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Success green */
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Payment Methods Section */
+.payment-methods-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.payment-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.payment-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.payment-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Payment Header */
+.payment-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.payment-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment-brand-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1;
+}
+
+.payment-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Payment Title Section */
+.payment-title-section {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+}
+
+.title-badge {
+    margin: 0 20px;
+    position: relative;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+}
+
+.title-badge i {
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+.payment-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.payment-subtitle-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Navigation Tabs */
+.payment-navigation {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.nav-tab {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-tab:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    box-shadow: var(--shadow-md);
+}
+
+/* Content Sections */
+.payment-content {
+    padding: 0 2rem 2rem;
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.section-header h2 i {
+  font-family: 'McLaren', cursive;
+  color: var(--primary-light);
+}
+
+
+.section-body {
+    color: var(--text-color);
+}
+
+.section-body h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.section-body p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.section-body p.lead {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Info Cards */
+.info-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin: 2rem 0;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card-header {
+    background: rgba(75, 94, 140, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-card-header i {
+    font-size: 1.5rem;
+    color: var(--primary-light);
+}
+
+.info-card-header h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.25rem;
+}
+
+.info-card-body {
+    padding: 1.5rem;
+}
+
+.criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.criterion {
+    display: flex;
+    gap: 1rem;
+}
+
+.criterion-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.criterion-icon i {
+    color: var(--text-light);
+    font-size: 1.2rem;
+}
+
+.criterion-content h4 {
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.criterion-content p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Alert Notes */
+.alert-note {
+    display: flex;
+    gap: 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.alert-note i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content strong {
+    color: var(--text-color);
+}
+
+.alert-content a {
+    color: var(--primary-light);
+    text-decoration: none;
+}
+
+.alert-content a:hover {
+    text-decoration: underline;
+}
+
+/* Alert Warning */
+.alert-warning {
+    display: flex;
+    gap: 1rem;
+    background: rgba(107, 122, 171, 0.1);
+    border: 1px solid rgba(107, 122, 171, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.alert-warning .alert-icon i {
+    color: var(--primary-light);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.alert-warning .alert-content h4 {
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.alert-warning .alert-content p {
+    margin: 0 0 0.5rem;
+}
+
+.alert-warning .alert-content ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+/* Risk/Cost Grid */
+.risk-cost-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.risk-card, .cost-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: var(--transition);
+}
+
+.risk-card {
+    border-left: 4px solid var(--primary-light);
+}
+
+.cost-card {
+    border-left: 4px solid var(--accent-color);
+}
+
+.risk-card:hover, .cost-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.risk-icon, .cost-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.risk-icon {
+    background: rgba(75, 94, 140, 0.2);
+}
+
+.risk-icon i {
+    color: var(--primary-light);
+    font-size: 1.2rem;
+}
+
+.cost-icon {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.cost-icon i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.risk-content h3, .cost-content h3 {
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.risk-content p, .cost-content p {
+    margin: 0;
+}
+
+/* Parties Grid */
+.parties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.party-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.party-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.party-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.party-icon i {
+    color: var(--text-light);
+    font-size: 1.5rem;
+}
+
+.party-content h4 {
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.party-content p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Process Flow */
+.process-flow {
+    margin: 2rem 0;
+}
+
+.flow-step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.flow-step:not(:last-child):after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 50px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
+    z-index: 1;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-weight: 700;
+    margin-right: 1.5rem;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.step-content p {
+    margin: 0;
+}
+
+/* Feature List */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.feature-list li i {
+    color: var(--accent-color);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.feature-list li.highlighted {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.feature-list li.highlighted i {
+    color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .payment-content {
+        padding: 0 2rem 2rem;
+    }
+    
+    .criteria-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .parties-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .payment-methods-section {
+        padding: 1rem 0;
+    }
+    
+    .payment-container {
+        padding: 0 1rem;
+    }
+    
+    .payment-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .payment-content {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .payment-navigation {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-tabs {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+    }
+    
+    .brand-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .payment-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .payment-subtitle-text {
+        font-size: 0.9rem;
+    }
+    
+    .title-badge {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .title-badge i {
+        font-size: 1.2rem;
+    }
+    
+    .decoration-line {
+        width: 40px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-body h3 {
+        font-size: 1.3rem;
+    }
+    
+    .parties-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-cost-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .flow-step {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .step-number {
+        margin-bottom: 1rem;
+    }
+    
+    .flow-step:not(:last-child):after {
+        left: 25px;
+        top: 50px;
+        height: calc(100% - 70px);
+    }
+}
+
+@media (max-width: 576px) {
+    .payment-header {
+        padding: 1rem;
+    }
+    
+    .payment-content {
+        padding: 0 1rem 1rem;
+    }
+    
+    .payment-navigation {
+        padding: 0 1rem;
+    }
+    
+    .payment-main-title {
+        font-size: 1.25rem;
+    }
+    
+    .payment-subtitle-text {
+        font-size: 0.85rem;
+    }
+    
+    .title-badge {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .title-badge i {
+        font-size: 1rem;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .section-body h3 {
+        font-size: 1.1rem;
+    }
+    
+    .criterion {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .criterion-icon {
+        margin: 0 auto;
+    }
+    
+    .alert-note, .alert-warning {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab navigation functionality
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const contentSections = document.querySelectorAll('.content-section');
+    
+    navTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            
+            // Update active tab
+            navTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show target section
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === targetId) {
+                    section.classList.add('active');
+                }
+            });
+            
+            // Scroll to top of content
+            document.querySelector('.payment-content').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    
+    // Add hover effects to interactive elements
+    const interactiveElements = document.querySelectorAll('.party-card, .criterion, .flow-step');
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

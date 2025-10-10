@@ -1,0 +1,150 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}Online Marketplaces{% endblock %}
+
+{% block report_icon %}fas fa-shopping-cart{% endblock %}
+
+{% block report_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% if online_marketplaces_data.error %}
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ online_marketplaces_data.error }}
+                </div>
+            {% else %}
+                <!-- Search Summary -->
+                {% if online_marketplaces_data.results_summary %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-search section-icon"></i>Search Results
+                    </div>
+                    <div class="section-content">
+                        <div class="alert alert-info">
+                            <h5 class="mb-0">{{ online_marketplaces_data.results_summary }}</h5>
+                        </div>
+                        {% if online_marketplaces_data.country_name %}
+                        <div class="search-params mb-3">
+                            <small class="text-muted">
+                                <strong>Search Parameters:</strong>
+                                Industry: {{ online_marketplaces_data.search_params.industry_name }}, 
+                                Country: {{ online_marketplaces_data.search_params.country_name }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Online Marketplaces -->
+                {% if online_marketplaces_data.marketplaces %}
+                <section class="report-section mb-4">
+                    <div class="section-header">
+                        <i class="fas fa-shopping-cart section-icon"></i>Online Marketplaces
+                        <span class="badge bg-primary ms-2">{{ online_marketplaces_data.total_marketplaces }} marketplaces</span>
+                    </div>
+                    <div class="section-content">
+                        {% for marketplace in online_marketplaces_data.marketplaces %}
+                        <div class="marketplace-card mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="card-title mb-2">
+                                                {% if marketplace.url %}
+                                                <a href="{{ marketplace.url }}" target="_blank" class="text-decoration-none">
+                                                    {{ marketplace.name }}
+                                                    <i class="fas fa-external-link-alt ms-1 small"></i>
+                                                </a>
+                                                {% else %}
+                                                {{ marketplace.name }}
+                                                {% endif %}
+                                            </h5>
+                                            {% if marketplace.description %}
+                                            <p class="card-text text-muted mb-2">{{ marketplace.description }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            {% if marketplace.geographical_coverage %}
+                                            <span class="badge bg-secondary mb-2">
+                                                <i class="fas fa-globe me-1"></i>{{ marketplace.geographical_coverage }}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="marketplace-details mb-2">
+                                        {% if marketplace.sector %}
+                                        <small class="text-muted me-3">
+                                            <i class="fas fa-industry me-1"></i>{{ marketplace.sector }}
+                                        </small>
+                                        {% endif %}
+                                        
+                                        {% if marketplace.type %}
+                                        <small class="text-muted me-3">
+                                            <i class="fas fa-tag me-1"></i>{{ marketplace.type }}
+                                        </small>
+                                        {% endif %}
+                                        
+                                        {% if marketplace.language %}
+                                        <small class="text-muted">
+                                            <i class="fas fa-language me-1"></i>{{ marketplace.language }}
+                                        </small>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    {% if marketplace.tags %}
+                                    <div class="tags">
+                                        {% for tag in marketplace.tags %}
+                                        <span class="badge bg-light text-dark me-1">{{ tag }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Show message if no marketplaces found -->
+                {% if not online_marketplaces_data.marketplaces and not online_marketplaces_data.error %}
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No online marketplaces found for the selected criteria.
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.marketplace-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.marketplace-card:hover {
+    transform: translateY(-2px);
+}
+
+.marketplace-details {
+    border-top: 1px solid #e9ecef;
+    padding-top: 0.5rem;
+}
+
+.search-params {
+    font-size: 0.9rem;
+}
+
+.tags .badge {
+    font-size: 0.75rem;
+}
+
+.section-header .badge {
+    font-size: 0.75rem;
+}
+</style>
+{% endblock %}

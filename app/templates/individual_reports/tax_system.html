@@ -1,0 +1,603 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Tax System" %}
+{% set service_icon = "fas fa-file-invoice-dollar" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if tax_system_data.corporate_taxes_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-blue">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Corporate Taxes</h3>
+                    <div class="section-subtitle">Tax regulations for corporations and businesses</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.corporate_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.accounting_rules_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-purple">
+                        <i class="fas fa-book"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Accounting Rules</h3>
+                    <div class="section-subtitle">Standards and regulations for financial accounting</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.accounting_rules_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.consumption_taxes_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-green">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Consumption Taxes</h3>
+                    <div class="section-subtitle">VAT, sales tax, and other consumption-based taxes</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.consumption_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.individual_taxes_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-orange">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Individual Taxes</h3>
+                    <div class="section-subtitle">Personal income tax and individual tax obligations</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.individual_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.double_taxation_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-teal">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Double Taxation Treaties</h3>
+                    <div class="section-subtitle">International tax agreements and treaties</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.double_taxation_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.sources_section %}
+    <div class="tax-card">
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon bg-gradient-indigo">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Sources of Fiscal Information</h3>
+                    <div class="section-subtitle">Official sources and references for tax information</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.sources_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;
+    --primary-light: #6b7aab;
+    --accent-color: #10b981;
+    --text-color: #1e293b;
+    --text-light: #f9fafb;
+    --text-muted: #64748b;
+    --bg-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+.section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+}
+
+.tax-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.tax-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-body {
+    padding: 0;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.section-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.section-icon.bg-gradient-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.section-icon.bg-gradient-purple {
+    background: linear-gradient(135deg, #a855f7, #9333ea);
+}
+
+.section-icon.bg-gradient-green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.section-icon.bg-gradient-orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.section-icon.bg-gradient-teal {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+
+.section-icon.bg-gradient-indigo {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.section-title-content {
+    flex: 1;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.content-wrapper {
+    padding: 1.5rem;
+}
+
+.santander-html {
+    color: var(--text-color);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.santander-html h1,
+.santander-html h2,
+.santander-html h3,
+.santander-html h4,
+.santander-html h5,
+.santander-html h6 {
+    color: var(--text-color);
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.santander-html h1 { font-size: 1.8rem; }
+.santander-html h2 { font-size: 1.5rem; }
+.santander-html h3 { font-size: 1.3rem; }
+.santander-html h4 { font-size: 1.15rem; }
+.santander-html h5 { font-size: 1.05rem; }
+.santander-html h6 { font-size: 1rem; }
+
+.santander-html p {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.santander-html ul,
+.santander-html ol {
+    margin: 1rem 0;
+    padding-left: 1.75rem;
+}
+
+.santander-html li {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.santander-html ul li::marker {
+    color: var(--primary-color);
+}
+
+.santander-html a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.santander-html a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+.santander-html strong,
+.santander-html b {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.santander-html em,
+.santander-html i {
+    font-style: italic;
+}
+
+.santander-html table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.santander-html table thead {
+    background: var(--primary-color);
+    color: white;
+}
+
+.santander-html table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.santander-html table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.santander-html table tbody tr:hover {
+    background: rgba(75, 94, 140, 0.05);
+}
+
+.santander-html blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(75, 94, 140, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-color);
+    font-style: italic;
+}
+
+.santander-html code {
+    background: rgba(75, 94, 140, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: var(--primary-color);
+}
+
+.santander-html pre {
+    background: rgba(75, 94, 140, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.santander-html pre code {
+    background: none;
+    padding: 0;
+}
+
+.santander-html hr {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 2rem 0;
+}
+
+/* Tableau specific styling for country comparison */
+.santander-html .tableauViz,
+.santander-html iframe[src*="tableau"],
+.santander-html .tableau-placeholder {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Force Tableau text elements to use dark colors */
+.santander-html .tab-text,
+.santander-html .tab-label,
+.santander-html .tab-title,
+.santander-html .tab-caption,
+.santander-html .tab-axis,
+.santander-html .tab-legend,
+.santander-html .FIText,
+.santander-html .tab-widget text {
+    fill: #1e293b !important;
+    color: #1e293b !important;
+}
+
+/* Specific targeting for country labels in Tableau */
+.santander-html .tab-country-label,
+.santander-html [data-viz-id*="country"],
+.santander-html .tab-mark-label,
+.santander-html .tab-tooltip {
+    fill: #1e293b !important;
+    color: #1e293b !important;
+}
+
+/* Ensure Tableau headers and data labels are visible */
+.santander-html .tab-header,
+.santander-html .tab-row-header,
+.santander-html .tab-column-header,
+.santander-html .tab-panel-header {
+    color: #1e293b !important;
+    fill: #1e293b !important;
+}
+
+/* Target specific country names in the visualization */
+.santander-html text[text-anchor="middle"],
+.santander-html text[text-anchor="start"],
+.santander-html text[text-anchor="end"] {
+    fill: #1e293b !important;
+}
+
+/* Additional selectors for Tableau text elements */
+.santander-html .wkTableVis text,
+.santander-html .tab-viz text,
+.santander-html .tabCanvas text,
+.santander-html .tab-story-point text {
+    fill: #1e293b !important;
+}
+
+@media (max-width: 992px) {
+    .section-header {
+        padding: 1.25rem;
+    }
+    
+    .content-wrapper {
+        padding: 1.25rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .section-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-content {
+        gap: 1.25rem;
+    }
+    
+    .section-header {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+    
+    .content-wrapper {
+        padding: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.15rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .section-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+    
+    .santander-html {
+        font-size: 0.95rem;
+    }
+    
+    .santander-html h1 { font-size: 1.5rem; }
+    .santander-html h2 { font-size: 1.3rem; }
+    .santander-html h3 { font-size: 1.15rem; }
+    .santander-html h4 { font-size: 1.05rem; }
+    
+    .santander-html table {
+        font-size: 0.85rem;
+    }
+    
+    .santander-html table th,
+    .santander-html table td {
+        padding: 0.625rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-content {
+        gap: 1rem;
+    }
+    
+    .tax-card {
+        border-radius: 10px;
+    }
+    
+    .section-header {
+        padding: 0.875rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .section-icon-wrapper {
+        align-self: center;
+    }
+    
+    .content-wrapper {
+        padding: 0.875rem;
+    }
+    
+    .section-title {
+        font-size: 1.1rem;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .section-subtitle {
+        font-size: 0.8rem;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .section-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .santander-html {
+        font-size: 0.9rem;
+    }
+    
+    .santander-html ul,
+    .santander-html ol {
+        padding-left: 1.25rem;
+    }
+    
+    .santander-html table {
+        font-size: 0.8rem;
+    }
+    
+    .santander-html table th,
+    .santander-html table td {
+        padding: 0.5rem;
+    }
+}
+
+@media print {
+    .tax-card {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+    
+    .tax-card:hover {
+        transform: none !important;
+    }
+    
+    .section-header {
+        background: white !important;
+        border-bottom: 2px solid #ddd !important;
+    }
+    
+    .section-icon {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    .section-title,
+    .section-subtitle {
+        color: black !important;
+    }
+    
+    /* Ensure Tableau content prints with dark text */
+    .santander-html .tab-text,
+    .santander-html .tab-label,
+    .santander-html .tab-title,
+    .santander-html .FIText,
+    .santander-html .tab-widget text {
+        fill: #000000 !important;
+        color: #000000 !important;
+    }
+}
+</style>
+{% endblock %}

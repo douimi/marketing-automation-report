@@ -1,0 +1,730 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Operating a Business" %}
+{% set service_icon = "fas fa-briefcase" %}
+
+{% block report_content %}
+<!-- Wikipedia Style Header -->
+<section class="wikipedia-hero-section">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-header">
+            <div class="wikipedia-title-content">
+                <h1 class="wikipedia-title"><i class="fas fa-briefcase me-3"></i>Operating a Business</h1>
+                <div class="wikipedia-subtitle">
+                    <span class="wikipedia-badge">
+                        <i class="fas fa-graduation-cap"></i>
+                        Indatex Academy • Business Operations
+                    </span>
+                    <span class="wikipedia-divider">•</span>
+                    <span class="wikipedia-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ datetime.now().strftime('%B %d, %Y') }}
+                    </span>
+                </div>
+            </div>
+            <div class="wikipedia-actions">
+                <button onclick="window.print()" class="wikipedia-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Export PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wikipedia Style Content -->
+<div class="wikipedia-main-content">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-article">
+            {% if operating_a_business_data.legal_section %}
+            <section class="wiki-section">
+                <h2 class="wiki-heading">Legal Forms of Companies & Business Setup Procedures</h2>
+                <div class="wiki-content">
+                    <div class="wiki-infobox right">
+                        <div class="infobox-header">
+                            <h3 class="infobox-title">Legal Framework</h3>
+                        </div>
+                        <div class="infobox-content">
+                            <div class="infobox-item">
+                                <div class="infobox-label">Business Setup</div>
+                                <div class="infobox-value">Legal Requirements</div>
+                            </div>
+                            <div class="infobox-item">
+                                <div class="infobox-label">Company Types</div>
+                                <div class="infobox-value">Various Structures</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ operating_a_business_data.legal_section|safe }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if operating_a_business_data.active_population_section %}
+            <section class="wiki-section">
+                <h2 class="wiki-heading">Active Population in Figures</h2>
+                <div class="wiki-content">
+                    <div class="wiki-infobox right">
+                        <div class="infobox-header">
+                            <h3 class="infobox-title">Labor Market</h3>
+                        </div>
+                        <div class="infobox-content">
+                            <div class="infobox-item">
+                                <div class="infobox-label">Workforce Data</div>
+                                <div class="infobox-value">Current Statistics</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ operating_a_business_data.active_population_section|safe }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if operating_a_business_data.working_conditions_section %}
+            <section class="wiki-section">
+                <h2 class="wiki-heading">Working Conditions</h2>
+                <div class="wiki-content">
+                    <div class="wiki-infobox right">
+                        <div class="infobox-header">
+                            <h3 class="infobox-title">Employment Terms</h3>
+                        </div>
+                        <div class="infobox-content">
+                            <div class="infobox-item">
+                                <div class="infobox-label">Work Regulations</div>
+                                <div class="infobox-value">Labor Standards</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ operating_a_business_data.working_conditions_section|safe }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if operating_a_business_data.cost_of_labour_section %}
+            <section class="wiki-section">
+                <h2 class="wiki-heading">Cost of Labour</h2>
+                <div class="wiki-content">
+                    <div class="wiki-infobox right">
+                        <div class="infobox-header">
+                            <h3 class="infobox-title">Labor Costs</h3>
+                        </div>
+                        <div class="infobox-content">
+                            <div class="infobox-item">
+                                <div class="infobox-label">Compensation</div>
+                                <div class="infobox-value">Salary Data</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ operating_a_business_data.cost_of_labour_section|safe }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if operating_a_business_data.management_section %}
+            <section class="wiki-section">
+                <h2 class="wiki-heading">Management of Human Resources</h2>
+                <div class="wiki-content">
+                    <div class="wiki-infobox right">
+                        <div class="infobox-header">
+                            <h3 class="infobox-title">HR Management</h3>
+                        </div>
+                        <div class="infobox-content">
+                            <div class="infobox-item">
+                                <div class="infobox-label">Personnel</div>
+                                <div class="infobox-value">Staff Management</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ operating_a_business_data.management_section|safe }}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if not operating_a_business_data or (not operating_a_business_data.legal_section and not operating_a_business_data.active_population_section and not operating_a_business_data.working_conditions_section and not operating_a_business_data.cost_of_labour_section and not operating_a_business_data.management_section) %}
+            <section class="wiki-section">
+                <div class="wiki-empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="empty-title">No Business Information Available</h3>
+                    <p class="wiki-text">
+                        We couldn't find detailed business operating information for <strong class="keyword">{{ form_data.destination_country_name }}</strong> at this time.
+                    </p>
+                    <div class="empty-actions">
+                        <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="wiki-btn wiki-btn-secondary">
+                            <i class="fas fa-refresh me-2"></i>Try Again
+                        </a>
+                        <a href="{{ url_for('main.services_page') }}" class="wiki-btn wiki-btn-primary">
+                            <i class="fas fa-list me-2"></i>Browse Other Services
+                        </a>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+
+            {% if operating_a_business_data.update_date %}
+            <section class="wiki-section">
+                <div class="wiki-update-info">
+                    <i class="fas fa-clock me-1"></i>Last updated: {{ operating_a_business_data.update_date }}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --wikipedia-blue: #0645ad;
+    --wikipedia-light-blue: #eaf3ff;
+    --wikipedia-gray: #f8f9fa;
+    --wikipedia-border: #a2a9b1;
+    --wikipedia-dark-gray: #54595d;
+    --wikipedia-text: #202122;
+    --wikipedia-link: #0645ad;
+    --wikipedia-red: #cc0000;
+    --wikipedia-green: #00af89;
+    --wikipedia-orange: #ff7800;
+    --wikipedia-purple: #6b4e85;
+    --wikipedia-cyan: #00aba5;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-medium: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--wikipedia-text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.wikipedia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Wikipedia Hero Section */
+.wikipedia-hero-section {
+    background: linear-gradient(135deg, var(--wikipedia-light-blue) 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding: 2rem 0 1.5rem 0;
+}
+
+.wikipedia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.wikipedia-title-content {
+    flex: 1;
+}
+
+.wikipedia-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding-bottom: 0.5rem;
+}
+
+.wikipedia-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.wikipedia-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--wikipedia-blue);
+    color: white;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.wikipedia-divider {
+    color: var(--wikipedia-dark-gray);
+    font-weight: bold;
+}
+
+.wikipedia-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--wikipedia-dark-gray);
+    font-size: 0.85rem;
+    font-family: sans-serif;
+}
+
+.wikipedia-actions {
+    flex-shrink: 0;
+}
+
+.wikipedia-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--wikipedia-gray);
+    color: var(--wikipedia-text);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wikipedia-btn:hover {
+    background: #e6e6e6;
+    border-color: #72777d;
+}
+
+/* Main Content */
+.wikipedia-main-content {
+    padding: 2rem 0 4rem 0;
+    background: #ffffff;
+}
+
+.wikipedia-article {
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    padding: 2rem;
+    box-shadow: var(--shadow-subtle);
+}
+
+/* Wikipedia Sections */
+.wiki-section {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.wiki-heading {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.wiki-content {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--wikipedia-text);
+}
+
+.wiki-text {
+    margin-bottom: 1rem;
+}
+
+/* Wikipedia Infobox */
+.wiki-infobox {
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    margin: 0 0 1rem 1rem;
+    float: right;
+    width: 280px;
+    box-shadow: var(--shadow-subtle);
+}
+
+.wiki-infobox.right {
+    float: right;
+    margin-left: 1rem;
+    margin-right: 0;
+}
+
+.infobox-header {
+    background: var(--wikipedia-blue);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--wikipedia-border);
+}
+
+.infobox-title {
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.infobox-content {
+    padding: 1rem;
+}
+
+.infobox-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(162, 169, 177, 0.3);
+}
+
+.infobox-item:last-child {
+    border-bottom: none;
+}
+
+.infobox-label {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--wikipedia-dark-gray);
+}
+
+.infobox-value {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 0.95rem;
+    color: var(--wikipedia-text);
+    text-align: right;
+}
+
+/* Wikipedia Content Styling */
+.wiki-content table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--wikipedia-border);
+    background: var(--wikipedia-gray);
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+.wiki-content table th {
+    background: #eaecf0;
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--wikipedia-border);
+    font-weight: 600;
+    color: var(--wikipedia-text);
+}
+
+.wiki-content table td {
+    padding: 0.75rem;
+    border: 1px solid var(--wikipedia-border);
+    color: var(--wikipedia-text);
+}
+
+.wiki-content table tbody tr:nth-child(even) {
+    background: white;
+}
+
+.wiki-content table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.wiki-content ul, .wiki-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.wiki-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Keyword Highlighting */
+.keyword {
+    background: linear-gradient(120deg, var(--wikipedia-light-blue) 0%, var(--wikipedia-light-blue) 100%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    font-weight: 600;
+    color: var(--wikipedia-blue);
+}
+
+.important {
+    background: linear-gradient(120deg, #fff0f0 0%, #ffe6e6 100%);
+    color: var(--wikipedia-red);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+.positive {
+    background: linear-gradient(120deg, #f0fff4 0%, #e6ffe6 100%);
+    color: var(--wikipedia-green);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+.warning {
+    background: linear-gradient(120deg, #fff8e6 0%, #fff2cc 100%);
+    color: var(--wikipedia-orange);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+/* Empty State */
+.wiki-empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: var(--wikipedia-border);
+    margin-bottom: 1.5rem;
+}
+
+.empty-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin-bottom: 1rem;
+}
+
+.empty-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Buttons */
+.wiki-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.wiki-btn.wiki-btn-primary {
+    background: var(--wikipedia-blue);
+    color: white;
+    border-color: var(--wikipedia-blue);
+}
+
+.wiki-btn.wiki-btn-primary:hover {
+    background: #053a94;
+    color: white;
+    text-decoration: none;
+}
+
+.wiki-btn.wiki-btn-secondary {
+    background: white;
+    color: var(--wikipedia-text);
+    border-color: var(--wikipedia-border);
+}
+
+.wiki-btn.wiki-btn-secondary:hover {
+    background: #f1f1f1;
+    color: var(--wikipedia-blue);
+    border-color: var(--wikipedia-blue);
+    text-decoration: none;
+}
+
+/* Update Info */
+.wiki-update-info {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    color: var(--wikipedia-dark-gray);
+    padding: 1rem;
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .wikipedia-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wikipedia-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .wikipedia-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .wikipedia-container {
+        padding: 0 1rem;
+    }
+    
+    .wikipedia-title {
+        font-size: 1.75rem;
+    }
+    
+    .wiki-heading {
+        font-size: 1.5rem;
+    }
+    
+    .wiki-infobox {
+        float: none;
+        width: 100%;
+        margin: 0 0 1rem 0;
+    }
+    
+    .empty-actions {
+        flex-direction: column;
+    }
+    
+    .wiki-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .wikipedia-title {
+        font-size: 1.5rem;
+    }
+    
+    .wiki-heading {
+        font-size: 1.3rem;
+    }
+    
+    .wikipedia-article {
+        padding: 1.5rem;
+    }
+    
+    .wikipedia-badge, .wikipedia-date {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media print {
+    .wikipedia-hero-section,
+    .wikipedia-actions {
+        display: none !important;
+    }
+    
+    .wikipedia-main-content {
+        padding: 0;
+    }
+    
+    .wikipedia-article {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .wiki-heading {
+        color: #000;
+        border-bottom: 1px solid #000;
+    }
+    
+    .keyword, .important, .positive, .warning {
+        background: none !important;
+        color: #000 !important;
+        padding: 0 !important;
+    }
+    
+    .wiki-infobox {
+        background: #f9f9f9 !important;
+        border: 1px solid #000 !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add keyword highlighting to important business terms
+    function highlightBusinessKeywords() {
+        const keywords = [
+            'limited liability', 'corporation', 'partnership', 'sole proprietorship',
+            'business registration', 'legal entity', 'commercial law', 'corporate tax',
+            'employment law', 'labor regulations', 'workforce', 'salary', 'wages',
+            'minimum wage', 'working hours', 'overtime', 'benefits', 'social security',
+            'human resources', 'recruitment', 'training', 'performance management',
+            'compensation', 'employee rights', 'contract', 'compliance', 'regulation',
+            'license', 'permit', 'incorporation', 'shareholders', 'directors'
+        ];
+        
+        const contentElements = document.querySelectorAll('.wiki-content');
+        
+        contentElements.forEach(element => {
+            let html = element.innerHTML;
+            
+            keywords.forEach(keyword => {
+                const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                html = html.replace(regex, match => {
+                    return `<span class="keyword">${match}</span>`;
+                });
+            });
+            
+            // Highlight positive business terms
+            html = html.replace(/\b(growth|profit|efficient|competitive|advantage|opportunity|success)\b/gi, 
+                match => `<span class="positive">${match}</span>`);
+                
+            // Highlight warning terms
+            html = html.replace(/\b(restriction|limitation|penalty|fine|compliance|regulation)\b/gi, 
+                match => `<span class="warning">${match}</span>`);
+                
+            // Highlight critical legal terms
+            html = html.replace(/\b(liability|risk|legal requirement|mandatory|obligation)\b/gi, 
+                match => `<span class="important">${match}</span>`);
+            
+            element.innerHTML = html;
+        });
+    }
+    
+    // Add fade-in animation to sections
+    function animateSections() {
+        const sections = document.querySelectorAll('.wiki-section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    }
+    
+    highlightBusinessKeywords();
+    animateSections();
+    
+    console.log('Wikipedia-style Business Operations report initialized');
+});
+</script>
+{% endblock %}

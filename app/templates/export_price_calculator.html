@@ -1,0 +1,1447 @@
+{% extends "base.html" %}
+
+{% block title %}Export Price Calculator{% endblock %}
+
+{% block content %}
+<section class="calculator-hero-section">
+    <div class="converter-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Export Price <span class="highlight-text">Calculator</span></h1>
+            <p class="hero-subtitle">Calculate export prices with different Incoterms and detailed cost breakdowns</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Incoterms</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Cost Types</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">Real</span>
+                    <span class="stat-label">Time</span>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <button class="btn-action" onclick="clearAllFields()">
+                    <i class="fas fa-eraser"></i> Clear
+                </button>
+                <button class="btn-action" onclick="showIncotermsGuide()">
+                    <i class="fas fa-info-circle"></i> Guide
+                </button>
+                <button class="btn-action" onclick="exportResults()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="quick-nav-section">
+    <div class="container">
+        <div class="quick-nav-wrapper">
+            <a href="#cost-components" class="quick-nav-item">
+                <i class="fas fa-list-alt"></i>
+                <span>Cost Components</span>
+            </a>
+            <a href="#price-summary" class="quick-nav-item">
+                <i class="fas fa-chart-pie"></i>
+                <span>Price Summary</span>
+            </a>
+            <a href="#incoterms-guide" class="quick-nav-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Incoterms Guide</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="calculator-main-content">
+    <div class="container compact-container">
+        <!-- Cost Components Section -->
+        <section class="cost-components-section" id="cost-components">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Cost Components</h2>
+                    <p class="section-description">Enter all applicable costs for your export shipment</p>
+                </div>
+            </div>
+
+            <div class="converter-card">
+                <div class="table-responsive">
+                    <table class="rates-table">
+                        <thead>
+                            <tr>
+                                <th>Type of Expenses</th>
+                                <th>Values</th>
+                                <th>Incoterm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Value of goods -->
+                            <tr class="cost-row required-row">
+                                <td class="cost-name">
+                                    <strong>Value of the goods (loaded on leaving the factory)</strong>
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('value_of_goods')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="value_of_goods" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           required
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="badge bg-success">EXW</span>
+                                </td>
+                            </tr>
+
+                            <!-- Pre-carriage costs -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Cost of handling carriage before
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('handling_carriage_before')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="handling_carriage_before" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="handling_carriage_before"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Export customs -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Fixed cost of export Customs formalities
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('export_customs')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="export_customs" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="export_customs"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Loading costs -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Handling costs in originating terminal
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('loading_costs')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="loading_costs" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="loading_costs"></span>
+                                </td>
+                            </tr>
+
+                            <!-- FOB/FCA Total Row -->
+                            <tr class="total-row fob-row">
+                                <td class="cost-name">
+                                    <strong>Free on Board / Free Carrier</strong>
+                                </td>
+                                <td>
+                                    <div class="total-value" id="fob-total">0</div>
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="badge bg-primary">FOB/FCA</span>
+                                </td>
+                            </tr>
+
+                            <!-- Main transport -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Total cost of the main transport
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('main_transport')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="main_transport" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="main_transport"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Transport insurance -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Cost of insurance for the main transport*
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('transport_insurance')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="transport_insurance" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="transport_insurance"></span>
+                                </td>
+                            </tr>
+
+                            <!-- CIF Total Row -->
+                            <tr class="total-row cif-row">
+                                <td class="cost-name">
+                                    <strong>Cost of Insurance and Freight</strong>
+                                </td>
+                                <td>
+                                    <div class="total-value" id="cif-total">0</div>
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="badge bg-info">CIF</span>
+                                </td>
+                            </tr>
+
+                            <!-- Handling arrival -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Cost of handling on arrival
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('handling_arrival')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="handling_arrival" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="handling_arrival"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Customs duties -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Customs Duties
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('customs_duties')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control cost-input" 
+                                               id="customs_duties" 
+                                               placeholder="0" 
+                                               step="0.01" 
+                                               min="0" 
+                                               max="100"
+                                               oninput="calculatePrices()">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <div class="calculated-value" id="customs_duties_value">0</div>
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="customs_duties"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Import taxes -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Import Taxes
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('import_taxes')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control cost-input" 
+                                               id="import_taxes" 
+                                               placeholder="0" 
+                                               step="0.01" 
+                                               min="0" 
+                                               max="100"
+                                               oninput="calculatePrices()">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <div class="calculated-value" id="import_taxes_value">0</div>
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="import_taxes"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Import customs -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Cost of import Customs formalities
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('import_customs')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="import_customs" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="import_customs"></span>
+                                </td>
+                            </tr>
+
+                            <!-- Carriage after -->
+                            <tr class="cost-row">
+                                <td class="cost-name">
+                                    Cost of carriage after
+                                    <button class="rate-btn ms-2" onclick="showCostInfo('carriage_after')" title="More info">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control cost-input" 
+                                           id="carriage_after" 
+                                           placeholder="0" 
+                                           step="0.01" 
+                                           min="0"
+                                           oninput="calculatePrices()">
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="incoterm-indicator" data-component="carriage_after"></span>
+                                </td>
+                            </tr>
+
+                            <!-- DDP Total Row -->
+                            <tr class="total-row ddp-row">
+                                <td class="cost-name">
+                                    <strong>Delivered Duty Paid</strong>
+                                </td>
+                                <td>
+                                    <div class="total-value" id="ddp-total">0</div>
+                                </td>
+                                <td class="incoterm-cell">
+                                    <span class="badge bg-danger">DDP</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">* based on the CIF value</small>
+                    <button class="btn-calculate mt-3" onclick="calculatePrices()">
+                        <i class="fas fa-calculator me-2"></i>Calculate
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price Summary Section -->
+        <section class="price-summary-section" id="price-summary">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Price Summary</h2>
+                    <p class="section-description">View calculated prices for each Incoterm</p>
+                </div>
+            </div>
+
+            <div class="converter-card">
+                <div class="incoterm-summary">
+                    <div class="summary-item">
+                        <div class="result-content">
+                            <h3 class="result-title">
+                                <span>EXW</span>
+                                <span class="price-value" id="exw-price">$0.00</span>
+                            </h3>
+                            <p class="result-rate">Ex Works</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="result-content">
+                            <h3 class="result-title">
+                                <span>FOB/FCA</span>
+                                <span class="price-value" id="fob-price">$0.00</span>
+                            </h3>
+                            <p class="result-rate">Free On Board / Free Carrier</p>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="result-content">
+                            <h3 class="result-title">
+                                <span>CIF</span>
+                                <span class="price-value" id="cif-price">$0.00</span>
+                            </h3>
+                            <p class="result-rate">Cost, Insurance and Freight</p>
+                        </div>
+                    </div>
+                    <div class="summary-item highlight">
+                        <div class="result-content">
+                            <h3 class="result-title">
+                                <span>DDP</span>
+                                <span class="price-value text-success" id="ddp-price">$0.00</span>
+                            </h3>
+                            <p class="result-rate">Delivered Duty Paid</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Incoterms Guide Section -->
+        <section class="incoterms-guide-section" id="incoterms-guide">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Incoterms Guide</h2>
+                    <p class="section-description">Understand Incoterms and their responsibilities</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Incoterms Overview</h4>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check"></i> EXW - Minimum seller obligation</li>
+                            <li><i class="fas fa-check"></i> FOB/FCA - Seller loads goods</li>
+                            <li><i class="fas fa-check"></i> CIF - Seller arranges transport + insurance</li>
+                            <li><i class="fas fa-check"></i> DDP - Maximum seller obligation</li>
+                        </ul>
+                        <button class="btn-status w-100 mt-3" onclick="showDetailedGuide()">
+                            View Detailed Guide
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message d-none">
+            <div class="error-card">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="error-content">
+                    <h4>Calculation Error</h4>
+                    <p id="errorText">Please check your inputs and try again.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cost Info Modal -->
+<div class="modal fade" id="costInfoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="costInfoTitle">Cost Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="costInfoBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn-status" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;       /* Professional slate blue */
+    --primary-light: #6b7aab;       /* Lighter blue for highlights */
+    --secondary-color: #6b7280;     /* Neutral gray */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Success green */
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Calculator Hero Section */
+.calculator-hero-section {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    padding: 3rem 0 1rem;
+}
+
+.converter-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    line-height: 1.1;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border-color);
+}
+
+.quick-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.quick-nav-item:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.calculator-main-content {
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+.cost-components-section, .price-summary-section, .incoterms-guide-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.section-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    box-shadow: var(--shadow-md);
+}
+
+.section-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.section-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.rates-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rates-table th {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.rates-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-color);
+    vertical-align: middle;
+}
+
+.rates-table tr:last-child td {
+    border-bottom: none;
+}
+
+.rates-table tr:hover {
+    background: var(--bg-tertiary);
+}
+
+.required-row {
+    background: rgba(75, 94, 140, 0.1);
+}
+
+.total-row {
+    background: rgba(16, 185, 129, 0.1);
+    font-weight: 600;
+}
+
+.total-row td {
+    border-top: 2px solid var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.total-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    padding: 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 2px solid var(--accent-color);
+}
+
+.cost-input {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-color);
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.cost-input:focus {
+    background: var(--bg-tertiary);
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 2px rgba(75, 94, 140, 0.2);
+}
+
+.cost-input::placeholder {
+    color: var(--text-muted);
+}
+
+.cost-input:invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group .form-control {
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.input-group .input-group-text {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-left: none;
+    color: var(--text-color);
+    border-radius: 0 10px 10px 0;
+}
+
+.calculated-value {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    text-align: center;
+}
+
+.incoterm-cell {
+    min-width: 120px;
+    text-align: center;
+}
+
+.incoterm-summary {
+    display: grid;
+    gap: 1rem;
+}
+
+.summary-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.summary-item.highlight {
+    border-color: var(--accent-color);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.result-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-rate {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.info-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+}
+
+.info-list li i {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+}
+
+.btn-calculate, .btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-calculate:hover, .btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+.btn-status, .rate-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-status:hover, .rate-btn:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.error-message {
+    margin-top: 1.5rem;
+}
+
+.error-card {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.error-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(220, 53, 69, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc3545;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.error-content h4 {
+    color: #dc3545;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.error-content p {
+    color: var(--text-color);
+    margin: 0;
+}
+
+.card-footer {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-stats {
+        gap: 1rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .calculator-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    
+    .quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .section-content h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .converter-card {
+        padding: 1rem;
+    }
+    
+    .rates-table {
+        font-size: 0.8rem;
+    }
+    
+    .rates-table th, .rates-table td {
+        padding: 0.5rem;
+    }
+}
+</style>
+
+<script>
+// Global variables
+let currentCalculation = null;
+let incotermData = {};
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    updateIncotermIndicators();
+    calculatePrices();
+    console.log('Export Price Calculator initialized');
+});
+
+// Main calculation function
+async function calculatePrices() {
+    const costs = {};
+    
+    // Collect all cost inputs
+    document.querySelectorAll('.cost-input').forEach(input => {
+        const value = parseFloat(input.value) || 0;
+        costs[input.id] = value;
+    });
+    
+    // Validate required value_of_goods
+    const valueOfGoods = document.getElementById('value_of_goods');
+    if (!valueOfGoods.value || parseFloat(valueOfGoods.value) <= 0) {
+        showError('Value of goods is required and must be greater than 0.');
+        valueOfGoods.classList.add('is-invalid');
+        valueOfGoods.focus();
+        return;
+    } else {
+        valueOfGoods.classList.remove('is-invalid');
+    }
+    
+    // Show loading state
+    showLoading();
+    hideError();
+    
+    try {
+        const response = await fetch('/api/calculate-export-price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                costs: costs,
+                target_incoterm: 'DDP'
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            currentCalculation = data;
+            displayResults(data);
+            updateIncotermIndicators();
+        } else {
+            showError(data.error || 'Calculation failed', data.details);
+        }
+    } catch (error) {
+        showError('Network error. Please check your connection and try again.');
+        console.error('Calculation error:', error);
+    } finally {
+        hideLoading();
+    }
+}
+
+// Display calculation results
+function displayResults(data) {
+    const prices = data.incoterm_prices;
+    
+    // Update price summary
+    document.getElementById('exw-price').textContent = formatCurrency(prices.EXW.price);
+    document.getElementById('fob-price').textContent = formatCurrency(prices.FOB.price);
+    document.getElementById('cif-price').textContent = formatCurrency(prices.CIF.price);
+    document.getElementById('ddp-price').textContent = formatCurrency(prices.DDP.price);
+    
+    // Update total rows in table
+    document.getElementById('fob-total').textContent = formatCurrency(prices.FOB.price);
+    document.getElementById('cif-total').textContent = formatCurrency(prices.CIF.price);
+    document.getElementById('ddp-total').textContent = formatCurrency(prices.DDP.price);
+    
+    // Update calculated percentage values
+    updateCalculatedValues(data);
+}
+
+// Update calculated values for percentage-based costs
+function updateCalculatedValues(data) {
+    const cifValue = data.incoterm_prices.CIF.price;
+    
+    // Customs duties
+    const customsDuties = parseFloat(document.getElementById('customs_duties').value) || 0;
+    const customsDutiesValue = cifValue * (customsDuties / 100);
+    document.getElementById('customs_duties_value').textContent = formatCurrency(customsDutiesValue);
+    
+    // Import taxes
+    const importTaxes = parseFloat(document.getElementById('import_taxes').value) || 0;
+    const importTaxesValue = cifValue * (importTaxes / 100);
+    document.getElementById('import_taxes_value').textContent = formatCurrency(importTaxesValue);
+}
+
+// Update Incoterm indicators
+function updateIncotermIndicators() {
+    const incotermCosts = {
+        'EXW': ['value_of_goods'],
+        'FOB': ['value_of_goods', 'handling_carriage_before', 'export_customs', 'loading_costs'],
+        'CIF': ['value_of_goods', 'handling_carriage_before', 'export_customs', 'loading_costs', 'main_transport', 'transport_insurance'],
+        'DDP': ['value_of_goods', 'handling_carriage_before', 'export_customs', 'loading_costs', 'main_transport', 'transport_insurance', 'handling_arrival', 'customs_duties', 'import_taxes', 'import_customs', 'carriage_after']
+    };
+    
+    document.querySelectorAll('.incoterm-indicator').forEach(indicator => {
+        const component = indicator.dataset.component;
+        let responsibleIncoterms = [];
+        
+        for (const [incoterm, costs] of Object.entries(incotermCosts)) {
+            if (costs.includes(component)) {
+                responsibleIncoterms.push(incoterm);
+            }
+        }
+        
+        if (responsibleIncoterms.length > 0) {
+            indicator.innerHTML = `<span class="badge bg-secondary">${responsibleIncoterms.join(', ')}</span>`;
+        } else {
+            indicator.innerHTML = '';
+        }
+    });
+}
+
+// Show cost information modal
+async function showCostInfo(component) {
+    try {
+        const response = await fetch(`/api/cost-explanation/${component}`);
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('costInfoTitle').textContent = data.name;
+            
+            let content = `
+                <p><strong>Description:</strong> ${data.description}</p>
+                <p><strong>Type:</strong> ${data.type === 'percentage' ? 'Percentage-based' : 'Fixed amount'}</p>
+                <p><strong>Required:</strong> ${data.required ? 'Yes' : 'No'}</p>
+            `;
+            
+            if (data.seller_responsible && data.seller_responsible.length > 0) {
+                content += `<p><strong>Seller pays under:</strong> ${data.seller_responsible.join(', ')}</p>`;
+            }
+            
+            if (data.buyer_responsible && data.buyer_responsible.length > 0) {
+                content += `<p><strong>Buyer pays under:</strong> ${data.buyer_responsible.join(', ')}</p>`;
+            }
+            
+            document.getElementById('costInfoBody').innerHTML = content;
+            
+            const modal = new bootstrap.Modal(document.getElementById('costInfoModal'));
+            modal.show();
+        }
+    } catch (error) {
+        console.error('Error fetching cost info:', error);
+    }
+}
+
+// Utility functions
+function formatCurrency(amount, currency = 'USD') {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(amount);
+}
+
+function showLoading() {
+    const calcButton = document.querySelector('.btn-calculate');
+    if (calcButton) {
+        calcButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Calculating...';
+        calcButton.disabled = true;
+    }
+}
+
+function hideLoading() {
+    const calcButton = document.querySelector('.btn-calculate');
+    if (calcButton) {
+        calcButton.innerHTML = '<i class="fas fa-calculator me-2"></i>Calculate';
+        calcButton.disabled = false;
+    }
+}
+
+function showError(message, details = null) {
+    let errorText = message;
+    if (details && Array.isArray(details)) {
+        errorText += '<ul>';
+        details.forEach(detail => {
+            errorText += `<li>${detail}</li>`;
+        });
+        errorText += '</ul>';
+    }
+    
+    document.getElementById('errorText').innerHTML = errorText;
+    document.getElementById('errorMessage').classList.remove('d-none');
+    
+    document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
+}
+
+function hideError() {
+    document.getElementById('errorMessage').classList.add('d-none');
+}
+
+function clearAllFields() {
+    document.querySelectorAll('.cost-input').forEach(input => {
+        input.value = '';
+        input.classList.remove('is-invalid');
+    });
+    
+    document.querySelectorAll('.calculated-value').forEach(elem => {
+        elem.textContent = '0';
+    });
+    
+    document.querySelectorAll('.price-value').forEach(elem => {
+        elem.textContent = '$0.00';
+    });
+    
+    document.querySelectorAll('.total-value').forEach(elem => {
+        elem.textContent = '0';
+    });
+    
+    hideError();
+}
+
+function showIncotermsGuide() {
+    const modal = new bootstrap.Modal(document.getElementById('costInfoModal'));
+    document.getElementById('costInfoTitle').textContent = 'Incoterms Guide';
+    document.getElementById('costInfoBody').innerHTML = `
+        <p>Detailed Incoterms guide with comprehensive explanations of each term, responsibilities, and risk transfer points.</p>
+        <ul class="info-list">
+            <li><i class="fas fa-check"></i> EXW - Minimum seller obligation</li>
+            <li><i class="fas fa-check"></i> FOB/FCA - Seller loads goods</li>
+            <li><i class="fas fa-check"></i> CIF - Seller arranges transport + insurance</li>
+            <li><i class="fas fa-check"></i> DDP - Maximum seller obligation</li>
+        </ul>
+    `;
+    modal.show();
+}
+
+function showDetailedGuide() {
+    showIncotermsGuide();
+}
+
+function exportResults() {
+    if (!currentCalculation) {
+        showToast('Please calculate prices first before exporting.', 'error');
+        return;
+    }
+    
+    let csvContent = "Incoterm,Price,Description\n";
+    
+    Object.entries(currentCalculation.incoterm_prices).forEach(([code, data]) => {
+        csvContent += `${code},"${data.price.toFixed(2)}","${data.name}"\n`;
+    });
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'export_price_calculation.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Toast notification system
+function showToast(message, type = 'info') {
+    const toastHtml = `
+        <div class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'} border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : type === 'success' ? 'check' : 'info-circle'} me-2"></i>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+
+// Auto-calculate on input changes
+document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('cost-input')) {
+        clearTimeout(window.calcTimeout);
+        window.calcTimeout = setTimeout(calculatePrices, 500);
+    }
+});
+</script>
+{% endblock %}

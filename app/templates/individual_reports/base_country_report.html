@@ -1,0 +1,639 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    {{ service_title|default('Country Services') }} - {{ form_data.destination_country_name|default('Unknown Country') }}
+{% endblock %}
+
+{% block content %}
+<!-- Service Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="{{ service_icon|default('fas fa-globe') }} fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">{{ service_title|default('Country Services') }}</h1>
+                    <div class="hero-subtitle d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-flag me-1"></i>{{ form_data.destination_country_name|default('Unknown Country') }}</span>
+                        <span><i class="fas fa-calendar me-1"></i>{{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="back-button mt-4">
+                <button onclick="window.print()" class="btn-action btn-outline"><i class="fas fa-file-pdf me-2"></i>Export PDF</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="content-grid">
+            <!-- Sidebar Navigation -->
+            <div class="sidebar-section">
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-flag"></i></div>
+                        <h4 class="info-title">{{ form_data.destination_country_name|default('Unknown Country') }}</h4>
+                    </div>
+                    <p class="text-muted small mb-3">Country Services</p>
+                    <!-- General Information -->
+                    <div class="sidebar-group">
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='general-presentation')|default('#') }}"
+                           class="sidebar-item {{ 'active' if service_title == 'General Information' else '' }}">
+                            <i class="fas fa-info-circle me-2"></i>General Information
+                            {% if service_title == 'General Information' %}
+                            <span class="badge bg-accent ms-auto">Current</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <!-- Business Operations -->
+                    <div class="sidebar-group">
+                        <h6 class="sidebar-group-title"><i class="fas fa-briefcase me-2"></i>Business Operations</h6>
+                        {% for service, icon in [
+                            ('operating-business', 'fas fa-briefcase', 'Operating a Business'),
+                            ('tax-system', 'fas fa-file-invoice-dollar', 'Tax System'),
+                            ('legal-environment', 'fas fa-gavel', 'Legal Environment'),
+                            ('foreign-investment', 'fas fa-globe-americas', 'Foreign Investment'),
+                            ('business-practices', 'fas fa-handshake', 'Business Practices')
+                        ] %}
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type=service)|default('#') }}"
+                           class="sidebar-item {{ 'active' if service_title == icon[2] else '' }}">
+                            <i class="{{ icon }} me-2"></i>{{ icon[2] }}
+                            {% if service_title == icon[2] %}
+                            <span class="badge bg-accent ms-auto">Current</span>
+                            {% endif %}
+                        </a>
+                        {% else %}
+                        <div class="sidebar-item locked-service" onclick="showLoginRequiredMessage('{{ icon[2] }}')">
+                            <i class="{{ icon }} me-2"></i>{{ icon[2] }}
+                            <i class="fas fa-lock ms-auto text-muted"></i>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <!-- Travel & Entry -->
+                    <div class="sidebar-group">
+                        <h6 class="sidebar-group-title"><i class="fas fa-passport me-2"></i>Travel & Entry</h6>
+                        {% for service, icon in [
+                            ('entry-requirements', 'fas fa-id-card', 'Entry Requirements'),
+                            ('practical-information', 'fas fa-info', 'Practical Information'),
+                            ('living-in-country', 'fas fa-home', 'Living in the Country'),
+                            ('reaching-consumers', 'fas fa-users', 'Reaching the Consumer'),
+                            ('distributing-product', 'fas fa-truck', 'Distributing a Product')
+                        ] %}
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type=service)|default('#') }}"
+                           class="sidebar-item {{ 'active' if service_title == icon[2] else '' }}">
+                            <i class="{{ icon }} me-2"></i>{{ icon[2] }}
+                            {% if service_title == icon[2] %}
+                            <span class="badge bg-accent ms-auto">Current</span>
+                            {% endif %}
+                        </a>
+                        {% else %}
+                        <div class="sidebar-item locked-service" onclick="showLoginRequiredMessage('{{ icon[2] }}')">
+                            <i class="{{ icon }} me-2"></i>{{ icon[2] }}
+                            <i class="fas fa-lock ms-auto text-muted"></i>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <!-- Back Navigation -->
+                    <div class="sidebar-group mt-4">
+                        <a href="{{ url_for('main.country_information')|default('#') }}" class="btn-action btn-sm btn-outline w-100">
+                            <i class="fas fa-globe me-2"></i>Change Country
+                        </a>
+                        <a href="{{ url_for('main.services_page')|default('#') }}" class="btn-action btn-sm btn-outline w-100 mt-2">
+                            <i class="fas fa-list me-2"></i>All Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content-section">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <h4 class="mb-4">
+                            <i class="{{ service_icon|default('fas fa-globe') }} me-2" style="color: var(--accent-color);"></i>
+                            {{ service_title|default('Country Services') }}
+                        </h4>
+                        {% block report_content %}
+                        <div class="text-center py-5">
+                            <p class="text-muted">Content for {{ service_title|default('Country Services') }} will be displayed here.</p>
+                        </div>
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="info-card text-center mt-4">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4 class="info-title">Explore More About {{ form_data.destination_country_name|default('Unknown Country') }}</h4>
+                    </div>
+                    <p class="text-muted mb-4">Use the sidebar to access other business operations and travel information for this country.</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.form_page')|default('#') }}" class="btn-action btn-lg">
+                            <i class="fas fa-chart-line me-2"></i>Generate Complete Report
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('auth.register')|default('#') }}" class="btn-action btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Register for Full Access
+                        </a>
+                        {% endif %}
+                        <a href="{{ url_for('main.services_page')|default('#') }}" class="btn-action btn-outline btn-lg">
+                            <i class="fas fa-list me-2"></i>View All Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.hero-subtitle span {
+    font-size: 0.9rem;
+}
+
+.hero-subtitle i {
+    color: var(--accent-color);
+}
+
+.back-button .btn-action.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.back-button .btn-action.btn-outline:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+}
+
+.sidebar-section {
+    position: sticky;
+    top: 1rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.sidebar-group {
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-group-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.sidebar-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+    color: var(--primary-color);
+}
+
+.sidebar-item.active {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.sidebar-item i {
+    width: 16px;
+    text-align: center;
+    color: var(--accent-color);
+}
+
+.locked-service {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.locked-service:hover {
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.badge.bg-accent {
+    background: var(--accent-color) !important;
+    color: var(--text-light);
+    font-size: 0.75rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-action.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.btn-action.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-action.btn-outline:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.btn-action.btn-lg {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.santander-html {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.santander-html h1, .santander-html h2, .santander-html h3, .santander-html h4, .santander-html h5, .santander-html h6 {
+    color: var(--text-color);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.santander-html p {
+    margin-bottom: 1rem;
+}
+
+.santander-html ul, .santander-html ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.santander-html table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.santander-html th, .santander-html td {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.santander-html th {
+    background: #f1f5f9;
+    font-weight: 600;
+}
+
+/* Toast Styling */
+.toast {
+    background: var(--primary-color) !important;
+    border: 1px solid var(--primary-light) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-lg) !important;
+    color: var(--text-light) !important;
+    min-width: 200px;
+}
+
+.toast-body {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-close-white {
+    filter: invert(1);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .sidebar-section {
+        position: static;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-header {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+    .sidebar-item {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+    .sidebar-group-title {
+        font-size: 0.8rem;
+    }
+}
+
+@media print {
+    .converter-card, .info-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    .info-icon, .service-icon {
+        background: none;
+        color: #000;
+    }
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    .btn-action, .back-button, .locked-service i.fas.fa-lock {
+        display: none;
+    }
+}
+</style>
+
+<script>
+function showLoginRequiredMessage(serviceName) {
+    const toastHtml = `
+        <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-lock me-2"></i>Log in to access ${serviceName}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+    toast.show();
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card, .converter-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    console.log('Country Services page initialized');
+});
+</script>
+{% endblock %}

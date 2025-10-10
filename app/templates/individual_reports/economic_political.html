@@ -1,0 +1,755 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block service_title %}Economic and Political Outline{% endblock %}
+{% block service_icon %}fas fa-balance-scale{% endblock %}
+
+{% block report_content %}
+<section class="wikipedia-hero-section">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-header">
+            <div class="wikipedia-title-content">
+                <h1 class="wikipedia-title">Economic and Political Outline</h1>
+                <div class="wikipedia-subtitle">
+                    <span class="wikipedia-badge">
+                        <i class="fas fa-graduation-cap"></i>
+                        Indatex Academy • Country Analysis
+                    </span>
+                    <span class="wikipedia-divider">•</span>
+                    <span class="wikipedia-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ datetime.now().strftime('%B %d, %Y') }}
+                    </span>
+                </div>
+            </div>
+            <div class="wikipedia-actions">
+                <button onclick="window.print()" class="wikipedia-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Export PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="wikipedia-main-content">
+    <div class="container wikipedia-container">
+        {% if eco_political_intro %}
+        <div class="wikipedia-card infobox-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Introduction</span>
+                    </h2>
+                    <div class="section-subtitle">Overview of economic and political landscape</div>
+                </div>
+                <div class="wikipedia-content">
+                    {{ eco_political_intro|safe }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Economic Overview -->
+        <div class="wikipedia-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Economic Overview</span>
+                    </h2>
+                    <div class="section-subtitle">Key economic indicators and main sectors</div>
+                </div>
+                
+                {% if eco_political_data.eco_outline_overview %}
+                <div class="wikipedia-content">
+                    <h3 class="content-subtitle">Economic Profile</h3>
+                    {% for para in eco_political_data.eco_outline_overview.split('\n') if para.strip() %}
+                    <p>{{ para|safe }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if eco_political_data.eco_outline_main_sectors %}
+                <div class="wikipedia-content">
+                    <h3 class="content-subtitle">Main Economic Sectors</h3>
+                    <div class="sectors-container">
+                        {% for sector in eco_political_data.eco_outline_main_sectors.split('\n') if sector.strip() %}
+                        <div class="sector-item">
+                            <span class="sector-bullet">•</span>
+                            <span class="sector-text">{{ sector|safe }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="indicators-grid">
+                    {% if eco_political_data.eco_outline_economic_freedom %}
+                    <div class="indicator-card">
+                        <div class="indicator-header">
+                            <i class="fas fa-chart-line indicator-icon"></i>
+                            <span class="indicator-title">Economic Freedom</span>
+                        </div>
+                        <div class="indicator-value highlight">{{ eco_political_data.eco_outline_economic_freedom|safe }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if eco_political_data.eco_outline_business_env %}
+                    <div class="indicator-card">
+                        <div class="indicator-header">
+                            <i class="fas fa-briefcase indicator-icon"></i>
+                            <span class="indicator-title">Business Environment</span>
+                        </div>
+                        <div class="indicator-value highlight">{{ eco_political_data.eco_outline_business_env|safe }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Political Overview -->
+        <div class="wikipedia-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Political Overview</span>
+                    </h2>
+                    <div class="section-subtitle">Political structure and freedoms</div>
+                </div>
+                
+                {% if eco_political_data.political_outline %}
+                <div class="wikipedia-content">
+                    <h3 class="content-subtitle">Political Structure</h3>
+                    <p>{{ eco_political_data.political_outline|safe }}</p>
+                </div>
+                {% endif %}
+
+                <div class="indicators-grid">
+                    {% if eco_political_data.political_press_freedom %}
+                    <div class="indicator-card">
+                        <div class="indicator-header">
+                            <i class="fas fa-newspaper indicator-icon"></i>
+                            <span class="indicator-title">Press Freedom</span>
+                        </div>
+                        <div class="indicator-value">{{ eco_political_data.political_press_freedom|safe }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if eco_political_data.political_freedom %}
+                    <div class="indicator-card">
+                        <div class="indicator-header">
+                            <i class="fas fa-user-shield indicator-icon"></i>
+                            <span class="indicator-title">Political Freedom</span>
+                        </div>
+                        <div class="indicator-value">{{ eco_political_data.political_freedom|safe }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Economic Indicators Table -->
+        {% if eco_political_data.eco_outline_main_indicators_table %}
+        <div class="wikipedia-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Main Economic Indicators</span>
+                    </h2>
+                    <div class="section-subtitle">Key economic metrics and performance data</div>
+                </div>
+                <div class="table-container">
+                    {{ eco_political_data.eco_outline_main_indicators_table|safe }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Economic Breakdown Table -->
+        {% if eco_political_data.eco_outline_breakdown_table %}
+        <div class="wikipedia-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Economic Breakdown</span>
+                    </h2>
+                    <div class="section-subtitle">Detailed sectoral and structural data</div>
+                </div>
+                <div class="table-container">
+                    {{ eco_political_data.eco_outline_breakdown_table|safe }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Insights -->
+        {% if eco_political_insights %}
+        <div class="wikipedia-card insights-card">
+            <div class="card-body">
+                <div class="wikipedia-section-header">
+                    <h2 class="wikipedia-section-title">
+                        <span class="section-title-text">Key Insights</span>
+                    </h2>
+                    <div class="section-subtitle">Summary analysis and findings</div>
+                </div>
+                <div class="wikipedia-content">
+                    {{ eco_political_insights|safe }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+:root {
+    --wikipedia-blue: #3366cc;
+    --wikipedia-light-blue: #eaf3ff;
+    --wikipedia-gray: #f8f9fa;
+    --wikipedia-border: #a2a9b1;
+    --wikipedia-dark-gray: #54595d;
+    --wikipedia-text: #202122;
+    --wikipedia-link: #0645ad;
+    --wikipedia-red: #cc0000;
+    --wikipedia-green: #00af89;
+    --wikipedia-orange: #ff7800;
+    --wikipedia-purple: #6b4e85;
+    --wikipedia-cyan: #00aba5;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-medium: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--wikipedia-text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.wikipedia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.wikipedia-hero-section {
+    background: linear-gradient(135deg, var(--wikipedia-light-blue) 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding: 2rem 0 1.5rem 0;
+}
+
+.wikipedia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.wikipedia-title-content {
+    flex: 1;
+}
+
+.wikipedia-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding-bottom: 0.5rem;
+}
+
+.wikipedia-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.wikipedia-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--wikipedia-blue);
+    color: white;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.wikipedia-divider {
+    color: var(--wikipedia-dark-gray);
+    font-weight: bold;
+}
+
+.wikipedia-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--wikipedia-dark-gray);
+    font-size: 0.85rem;
+    font-family: sans-serif;
+}
+
+.wikipedia-actions {
+    flex-shrink: 0;
+}
+
+.wikipedia-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--wikipedia-gray);
+    color: var(--wikipedia-text);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wikipedia-btn:hover {
+    background: #e6e6e6;
+    border-color: #72777d;
+}
+
+.wikipedia-main-content {
+    padding: 2rem 0 4rem 0;
+    background: #ffffff;
+}
+
+.wikipedia-card {
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-subtle);
+    transition: box-shadow 0.2s ease;
+}
+
+.wikipedia-card:hover {
+    box-shadow: var(--shadow-medium);
+}
+
+.infobox-card {
+    border-left: 4px solid var(--wikipedia-blue);
+}
+
+.insights-card {
+    border-left: 4px solid var(--wikipedia-green);
+}
+
+.card-body {
+    padding: 1.5rem 2rem;
+}
+
+.wikipedia-section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--wikipedia-border);
+}
+
+.wikipedia-section-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.section-title-text {
+    background: linear-gradient(135deg, var(--wikipedia-text), var(--wikipedia-dark-gray));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    color: var(--wikipedia-dark-gray);
+    font-style: italic;
+}
+
+.wikipedia-content {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--wikipedia-text);
+}
+
+.wikipedia-content p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.wikipedia-content strong {
+    font-weight: 600;
+    color: var(--wikipedia-blue);
+}
+
+.wikipedia-content em {
+    font-style: italic;
+    color: var(--wikipedia-dark-gray);
+}
+
+.content-subtitle {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--wikipedia-text);
+    margin: 1.5rem 0 1rem 0;
+    border-left: 3px solid var(--wikipedia-blue);
+    padding-left: 0.75rem;
+}
+
+.sectors-container {
+    margin: 1rem 0;
+}
+
+.sector-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.sector-bullet {
+    color: var(--wikipedia-blue);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.sector-text {
+    flex: 1;
+}
+
+.indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.indicator-card {
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+}
+
+.indicator-card:hover {
+    background: #f1f1f1;
+    border-color: #72777d;
+}
+
+.indicator-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.indicator-icon {
+    color: var(--wikipedia-blue);
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.indicator-title {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--wikipedia-dark-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.indicator-value {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--wikipedia-text);
+    line-height: 1.4;
+}
+
+.indicator-value.highlight {
+    color: var(--wikipedia-green);
+    font-weight: 600;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+}
+
+table thead {
+    background: var(--wikipedia-light-blue);
+    border-bottom: 2px solid var(--wikipedia-border);
+}
+
+table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--wikipedia-text);
+    border-right: 1px solid var(--wikipedia-border);
+    font-family: sans-serif;
+}
+
+table th:last-child {
+    border-right: none;
+}
+
+table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--wikipedia-border);
+    border-right: 1px solid var(--wikipedia-border);
+    color: var(--wikipedia-text);
+}
+
+table td:last-child {
+    border-right: none;
+}
+
+table tbody tr:nth-child(even) {
+    background: var(--wikipedia-gray);
+}
+
+table tbody tr:hover {
+    background: #e6f3ff;
+}
+
+table strong {
+    color: var(--wikipedia-blue);
+    font-weight: 600;
+}
+
+table em {
+    color: var(--wikipedia-dark-gray);
+    font-style: italic;
+}
+
+/* Wikipedia-style keyword highlighting */
+.keyword {
+    background: linear-gradient(120deg, var(--wikipedia-light-blue) 0%, var(--wikipedia-light-blue) 100%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    font-weight: 600;
+    color: var(--wikipedia-blue);
+}
+
+.important {
+    background: linear-gradient(120deg, #fff0f0 0%, #ffe6e6 100%);
+    color: var(--wikipedia-red);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+.positive {
+    background: linear-gradient(120deg, #f0fff4 0%, #e6ffe6 100%);
+    color: var(--wikipedia-green);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+.warning {
+    background: linear-gradient(120deg, #fff8e6 0%, #fff2cc 100%);
+    color: var(--wikipedia-orange);
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wikipedia-container {
+        padding: 0 1rem;
+    }
+    
+    .wikipedia-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .wikipedia-title {
+        font-size: 2rem;
+    }
+    
+    .wikipedia-actions {
+        width: 100%;
+    }
+    
+    .wikipedia-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+    
+    .indicators-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wikipedia-section-title {
+        font-size: 1.5rem;
+    }
+    
+    .content-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .wikipedia-title {
+        font-size: 1.75rem;
+    }
+    
+    .wikipedia-subtitle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .wikipedia-divider {
+        display: none;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .wikipedia-hero-section {
+        background: white !important;
+        border-bottom: 2px solid #000;
+    }
+    
+    .wikipedia-actions {
+        display: none;
+    }
+    
+    .wikipedia-card {
+        box-shadow: none !important;
+        border: 1px solid #000;
+        page-break-inside: avoid;
+    }
+    
+    .wikipedia-main-content {
+        padding: 1rem 0;
+    }
+    
+    table {
+        page-break-inside: avoid;
+    }
+    
+    .keyword, .important, .positive, .warning {
+        background: none !important;
+        color: #000 !important;
+        padding: 0 !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add keyword highlighting to important terms
+    function highlightKeywords() {
+        const keywords = [
+            'GDP', 'economic growth', 'inflation', 'unemployment', 'exports', 'imports',
+            'trade balance', 'foreign investment', 'currency', 'exchange rate',
+            'infrastructure', 'manufacturing', 'services', 'agriculture', 'technology',
+            'innovation', 'productivity', 'competitiveness', 'market economy',
+            'political stability', 'governance', 'democracy', 'elections', 'parliament',
+            'constitution', 'legal system', 'regulatory framework', 'taxation',
+            'fiscal policy', 'monetary policy', 'central bank', 'debt', 'deficit',
+            'surplus', 'recession', 'expansion', 'development', 'sustainability'
+        ];
+        
+        const contentElements = document.querySelectorAll('.wikipedia-content, .indicator-value, table td');
+        
+        contentElements.forEach(element => {
+            let html = element.innerHTML;
+            
+            keywords.forEach(keyword => {
+                const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                html = html.replace(regex, match => {
+                    return `<span class="keyword">${match}</span>`;
+                });
+            });
+            
+            // Highlight positive indicators
+            html = html.replace(/\b(growth|increase|rise|improve|positive|strong|stable|surplus)\b/gi, 
+                match => `<span class="positive">${match}</span>`);
+                
+            // Highlight warning indicators
+            html = html.replace(/\b(decline|decrease|fall|weaken|negative|weak|unstable|deficit|debt)\b/gi, 
+                match => `<span class="warning">${match}</span>`);
+                
+            // Highlight critical terms
+            html = html.replace(/\b(crisis|recession|inflation|unemployment|corruption|instability)\b/gi, 
+                match => `<span class="important">${match}</span>`);
+            
+            element.innerHTML = html;
+        });
+    }
+    
+    // Add fade-in animation to cards
+    function animateCards() {
+        const cards = document.querySelectorAll('.wikipedia-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    }
+    
+    highlightKeywords();
+    animateCards();
+    
+    console.log('Wikipedia-style Economic and Political Outline initialized');
+});
+</script>
+{% endblock %}

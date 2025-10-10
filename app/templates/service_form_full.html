@@ -1,0 +1,680 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <!-- Back to Services -->
+            <div class="mb-4">
+                <a href="{{ url_for('main.services_page') }}" class="btn-action btn-outline-back">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Services
+                </a>
+            </div>
+            <!-- Service Header -->
+            <div class="service-header">
+                <div class="service-icon"><i class="{{ service.icon }} fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">{{ service.title }}</h1>
+                    <p class="hero-subtitle">{{ service.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="converter-main-content">
+    <div class="container compact-container">
+        <div class="converter-card">
+            <div class="card-body">
+                <div class="section-header">
+                    <div class="section-icon-flag">
+                        <div class="section-flag-fallback"><i class="{{ service.icon }}"></i></div>
+                    </div>
+                    <div class="section-title-content">
+                        <h3 class="form-title">Generate {{ service.title }} Report</h3>
+                        <p class="form-subtitle">Complete the form to analyze trade data</p>
+                    </div>
+                </div>
+
+                <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                    <input type="hidden" name="service_type" value="{{ service_type }}">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="origin_country" class="form-label">
+                                <i class="fas fa-flag me-2"></i>Origin Country
+                            </label>
+                            <select class="form-select" id="origin_country" name="origin_country" required>
+                                <option value="" disabled selected>Select Origin Country</option>
+                            </select>
+                            <div class="form-text">Select the country from which you're exporting</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destination_country" class="form-label">
+                                <i class="fas fa-flag-checkered me-2"></i>Destination Country
+                            </label>
+                            <select class="form-select" id="destination_country" name="destination_country" required>
+                                <option value="" disabled selected>Select Destination Country</option>
+                            </select>
+                            <div class="form-text">Select the country to which you're exporting</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hs6_product_code" class="form-label">
+                                <i class="fas fa-box me-2"></i>Product Category
+                            </label>
+                            <select class="form-select" id="hs6_product_code" name="hs6_product_code" required>
+                                <option value="" disabled selected>Select Product</option>
+                            </select>
+                            <div class="form-text">Choose the specific product you want to analyze</div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn-action w-100">
+                            <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Service Features -->
+        <div class="content-section mt-5">
+            <h4 class="content-title text-center">What You'll Get</h4>
+            <div class="form-row">
+                {% if service_type == 'import-export-flows' %}
+                {% for feature in [
+                    ('Trade Flow Data', 'Historical import/export volumes and values', 'fas fa-chart-line', 'bg-blue'),
+                    ('Market Partners', 'Key trading partners and market share', 'fas fa-globe', 'bg-green'),
+                    ('Trend Analysis', 'Multi-year trends and growth patterns', 'fas fa-trending-up', 'bg-purple'),
+                    ('Visual Charts', 'Interactive charts and data visualization', 'fas fa-chart-area', 'bg-orange')
+                ] %}
+                <div class="form-group">
+                    <div class="feature-item">
+                        <div class="feature-icon {{ feature[3] }}"><i class="{{ feature[2] }}"></i></div>
+                        <div>
+                            <div class="feature-label">{{ feature[0] }}</div>
+                            <div class="feature-value">{{ feature[1] }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                {% for feature in [
+                    ('Tariff Information', 'Applied tariffs and duty rates', 'fas fa-percent', 'bg-blue'),
+                    ('Trade Remedies', 'Anti-dumping and safeguard measures', 'fas fa-gavel', 'bg-green'),
+                    ('Regulatory Requirements', 'Standards and certification requirements', 'fas fa-clipboard-check', 'bg-purple'),
+                    ('Market Access', 'Entry conditions and restrictions', 'fas fa-door-open', 'bg-orange')
+                ] %}
+                <div class="form-group">
+                    <div class="feature-item">
+                        <div class="feature-icon {{ feature[3] }}"><i class="{{ feature[2] }}"></i></div>
+                        <div>
+                            <div class="feature-label">{{ feature[0] }}</div>
+                            <div class="feature-value">{{ feature[1] }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    function formatProduct(product) {
+        if (product.loading) return product.text;
+        return $('<span>' + product.text + '</span>');
+    }
+    function formatProductSelection(product) {
+        return product.text || product.id;
+    }
+
+    $('#origin_country, #destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true,
+        width: '100%'
+    });
+
+    $('#hs6_product_code').select2({
+        ajax: {
+            url: '/api/products',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 2,
+        templateResult: formatProduct,
+        templateSelection: formatProductSelection,
+        placeholder: 'Select a product',
+        allowClear: true,
+        width: '100%'
+    });
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new FormData(this)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+        } else {
+            alert('Unexpected response format. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+    });
+});
+</script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;
+    --primary-light: #6b7aab;
+    --accent-color: #10b981;
+    --text-color: #1e293b;
+    --text-light: #f9fafb;
+    --text-muted: #64748b;
+    --bg-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --bg-blue: #0ea5e9;
+    --bg-green: #10b981;
+    --bg-purple: #a855f7;
+    --bg-orange: #f59e0b;
+    --bg-red: #ef4444;
+    --bg-teal: #14b8a6;
+    --bg-indigo: #6366f1;
+    --bg-pink: #ec4899;
+    --bg-cyan: #06b6d4;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1000px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--glass-border);
+    flex-wrap: wrap;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color) !important;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.8rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-outline-back {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline-back:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-icon-flag {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.section-title-content {
+    flex: 1;
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color) !important;
+    margin-bottom: 0.4rem;
+}
+
+.form-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-color) !important;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.form-select {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem;
+    color: var(--text-color) !important;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.form-select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.2);
+}
+
+.form-select option {
+    color: var(--text-color) !important;
+    background: var(--bg-color) !important;
+}
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.d-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.content-section {
+    margin-bottom: 2rem;
+}
+
+.content-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color) !important;
+    margin-bottom: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(2px);
+}
+
+.feature-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.feature-icon.bg-blue { background: linear-gradient(135deg, var(--bg-blue), #0284c7); }
+.feature-icon.bg-green { background: linear-gradient(135deg, var(--bg-green), #059669); }
+.feature-icon.bg-purple { background: linear-gradient(135deg, var(--bg-purple), #9333ea); }
+.feature-icon.bg-orange { background: linear-gradient(135deg, var(--bg-orange), #d97706); }
+
+.feature-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.feature-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Select2 Customization - FORCED DARK TEXT */
+.select2-container--default .select2-selection--single {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    height: auto !important;
+    padding: 0.5rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #1e293b !important;
+    line-height: 1.5 !important;
+    padding-left: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #64748b !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100% !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #1e293b transparent transparent transparent !important;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #1e293b transparent !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--primary-light) !important;
+    color: #ffffff !important;
+}
+
+.select2-dropdown {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+}
+
+.select2-container--default .select2-results__option {
+    color: #1e293b !important;
+    padding: 8px 12px !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: rgba(75, 94, 140, 0.1) !important;
+    color: #1e293b !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true]:hover {
+    background: var(--primary-light) !important;
+    color: #ffffff !important;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background: var(--primary-light) !important;
+    color: #ffffff !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    color: #1e293b !important;
+    background: var(--bg-color) !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
+    border-color: var(--primary-light) !important;
+    outline: none !important;
+}
+
+.select2-results__message {
+    color: #64748b !important;
+}
+
+.select2-container--default .select2-selection--single:focus {
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.2) !important;
+    outline: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .service-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    .section-icon-flag {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    .form-title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+}
+</style>
+{% endblock %}

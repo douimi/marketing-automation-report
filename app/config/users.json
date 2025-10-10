@@ -1,0 +1,22 @@
+{
+    "admin": {
+        "password": "securepassword123",
+        "email": "admin@example.com",
+        "phone": "",
+        "company": "",
+        "preferred_target_country": "",
+        "full_name": "Admin",
+        "created_at": "2024-01-01T00:00:00Z",
+        "is_active": true
+    },
+    "testuser": {
+        "password": "testpass",
+        "email": "testuser@example.com",
+        "phone": "",
+        "company": "",
+        "preferred_target_country": "",
+        "full_name": "Testuser",
+        "created_at": "2024-01-01T00:00:00Z",
+        "is_active": true
+    }
+}

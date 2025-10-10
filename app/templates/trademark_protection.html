@@ -1,0 +1,1157 @@
+{% extends "base.html" %}
+
+{% block title %}Trademark Protection - Indatex Academy{% endblock %}
+
+{% block content %}
+<section class="trademark-hero-section">
+    <div class="payment-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container payment-container">
+        <div class="payment-card">
+            <!-- Header Section -->
+            <div class="payment-header">
+                <div class="brand-section">
+                    <div class="brand-container">
+                        <div class="brand-text">
+                            <h1 class="payment-brand-name">Indatex Academy</h1>
+                            <span class="payment-subtitle">Trademark Protection Guide</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-title-section">
+                    <div class="title-decoration">
+                        <div class="decoration-line left-line"></div>
+                        <div class="title-badge">
+                            <i class="fas fa-trademark"></i>
+                        </div>
+                        <div class="decoration-line right-line"></div>
+                    </div>
+                    <h1 class="payment-main-title">Trademark Protection</h1>
+                    <p class="payment-subtitle-text">Safeguard your brand identity in global markets</p>
+                </div>
+            </div>
+
+            <!-- Quick Navigation -->
+            <div class="payment-navigation">
+                <div class="nav-tabs">
+                    <a href="#trademark" class="nav-tab active">What is a trademark?</a>
+                    <a href="#international" class="nav-tab">How to register internationally?</a>
+                    <a href="#start" class="nav-tab">What to check before you start?</a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="payment-content">
+                <div class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> Trademark Protection Overview</h2>
+                    </div>
+                    
+                    <div class="section-body">
+                        <p class="lead">A trademark is a vital component of your brand's identity, distinguishing your products or services in the marketplace. Protecting it through registration with national and international intellectual property organizations is essential to maintain your competitive edge.</p>
+
+                        <!-- What is a Trademark Section -->
+                        <section class="content-subsection" id="trademark">
+                            <div class="subsection-header">
+                                <h3><i class="fas fa-question-circle"></i> What is a trademark?</h3>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-card alert-success">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-star"></i>
+                                        <h4>A distinctive element</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>A trademark is a unique sign, such as a word, name, logo, or combination, that personalizes your products or services, enhancing your market presence.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card alert-info">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-bullseye"></i>
+                                        <h4>A key marketing tool</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>Trademarks differentiate your offerings from competitors, shaping consumer perception and reinforcing brand reputation. <strong>Choosing the right trademark is crucial for success in export markets.</strong></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card alert-warning">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <h4>Counterfeiting risks</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>Registering your trademark is critical to prevent counterfeiting, which can damage your brand's image and market position.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- International Registration Section -->
+                        <section class="content-subsection" id="international">
+                            <div class="subsection-header">
+                                <h3><i class="fas fa-globe"></i> How to register a trademark internationally?</h3>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-card alert-primary">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-clipboard-check"></i>
+                                        <h4>Your needs</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>Trademarks are territorial rights. To protect your brand abroad, international registration is necessary. Decide the number of target countries to choose the best filing method.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <h4>Filing locally</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>For one or a few countries, file directly with national intellectual property offices. Check <a href="http://www.wipo.int/directory/en/urls.jsp" target="_blank">WIPO's directory</a> for global IP offices.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card alert-success">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-users"></i>
+                                        <h4>Filing regionally</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>For multiple countries in a region, file with a regional IP organization for streamlined registration and uniform protection across member states.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-card alert-primary">
+                                    <div class="info-card-header">
+                                        <i class="fas fa-globe-americas"></i>
+                                        <h4>International filing</h4>
+                                    </div>
+                                    <div class="info-card-body">
+                                        <p>For global coverage, use the <a href="https://www.wipo.int/treaties/en/registration/madrid/" target="_blank">Madrid System</a>, managed by <a href="http://www.wipo.int/portal/index.html.en" target="_blank">WIPO</a>, covering <a href="http://www.wipo.int/export/sites/www/treaties/en/documents/pdf/madrid_marks.pdf" target="_blank">96 member countries</a>.</p>
+                                        
+                                        <div class="nested-info">
+                                            <div class="info-card alert-info">
+                                                <div class="info-card-header">
+                                                    <i class="fas fa-info-circle"></i>
+                                                    <h5>Madrid System Details</h5>
+                                                </div>
+                                                <div class="info-card-body">
+                                                    <p>Protection is valid unless refused by a country's trademark office within a specified period, equivalent to direct registration.</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="info-card alert-warning">
+                                                <div class="info-card-header">
+                                                    <i class="fas fa-clock"></i>
+                                                    <h5>Priority Period</h5>
+                                                </div>
+                                                <div class="info-card-body">
+                                                    <p>Under <a href="http://www.wipo.int/treaties/en/text.jsp?file_id=288514" target="_blank">Article 4 of the Paris Convention</a>, a six-month priority period allows filing in other member countries using the first filing date.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Check Before Starting Section -->
+                        <section class="content-subsection" id="start">
+                            <div class="subsection-header">
+                                <h3><i class="fas fa-search"></i> What to check before you start?</h3>
+                            </div>
+                            
+                            <div class="info-card alert-danger">
+                                <div class="info-card-header">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <h4>Availability</h4>
+                                </div>
+                                <div class="info-card-body">
+                                    <p>A trademark must be <strong>distinctive, lawful, and available</strong>. Verify availability using WIPO's resources:</p>
+                                    
+                                    <div class="resources-grid">
+                                        <div class="resource-item">
+                                            <i class="fas fa-search text-success"></i>
+                                            <div class="resource-content">
+                                                <h6>Search Engine</h6>
+                                                <p><a href="https://www3.wipo.int/madrid/monitor/en/" target="_blank">Express search engine of international trademarks</a></p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="resource-item">
+                                            <i class="fas fa-newspaper text-success"></i>
+                                            <div class="resource-content">
+                                                <h6>Gazette</h6>
+                                                <p><a href="https://www.wipo.int/madrid/en/madridgazette/" target="_blank">Gazette of International Marks</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Cards -->
+        <div class="sidebar-cards">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="fas fa-key"></i>
+                    <h4>Key Takeaways</h4>
+                </div>
+                <div class="info-card-body">
+                    <ul class="info-list compact">
+                        <li><i class="fas fa-check"></i> Trademarks are essential for brand identity</li>
+                        <li><i class="fas fa-check"></i> Strategic choice enhances export success</li>
+                        <li><i class="fas fa-check"></i> Registration prevents counterfeiting</li>
+                        <li><i class="fas fa-exclamation"></i> <strong>Trademarks are territorial</strong></li>
+                        <li><i class="fas fa-clock"></i> <strong>6-month priority period</strong> under Paris Convention</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h4>Filing Methods</h4>
+                </div>
+                <div class="info-card-body">
+                    <div class="filing-methods">
+                        <div class="filing-method">
+                            <span class="badge bg-info">1</span>
+                            <div class="method-content">
+                                <h6>Local Filing</h6>
+                                <small>For one or a few countries</small>
+                            </div>
+                        </div>
+                        <div class="filing-method">
+                            <span class="badge bg-success">2</span>
+                            <div class="method-content">
+                                <h6>Regional Filing</h6>
+                                <small>For countries in the same region</small>
+                            </div>
+                        </div>
+                        <div class="filing-method">
+                            <span class="badge bg-primary">3</span>
+                            <div class="method-content">
+                                <h6>International Filing</h6>
+                                <small>Madrid System - 96 countries</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="fas fa-tasks"></i>
+                    <h4>Eligibility Criteria</h4>
+                </div>
+                <div class="info-card-body">
+                    <div class="requirements-list">
+                        <div class="requirement-item">
+                            <input class="form-check-input" type="checkbox" id="distinctive" checked>
+                            <label class="form-check-label" for="distinctive">
+                                <strong>Distinctive</strong> - Unique and recognizable
+                            </label>
+                        </div>
+                        <div class="requirement-item">
+                            <input class="form-check-input" type="checkbox" id="lawful" checked>
+                            <label class="form-check-label" for="lawful">
+                                <strong>Lawful</strong> - Complies with legal requirements
+                            </label>
+                        </div>
+                        <div class="requirement-item">
+                            <input class="form-check-input" type="checkbox" id="available" checked>
+                            <label class="form-check-label" for="available">
+                                <strong>Available</strong> - Not already registered
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card compact-card">
+                <div class="info-card-header">
+                    <i class="fas fa-external-link-alt"></i>
+                    <h4>Important Resources</h4>
+                </div>
+                <div class="info-card-body">
+                    <ul class="info-list compact">
+                        <li><i class="fas fa-check"></i> <a href="http://www.wipo.int/portal/index.html.en" target="_blank">WIPO</a>: World Intellectual Property Organization</li>
+                        <li><i class="fas fa-check"></i> <a href="https://www3.wipo.int/madrid/monitor/en/" target="_blank">Madrid Monitor</a>: Search international trademarks</li>
+                        <li><i class="fas fa-check"></i> <a href="https://www.wipo.int/madrid/en/madridgazette/" target="_blank">Madrid Gazette</a>: Official trademark publications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top-container">
+        <button id="backToTop" class="back-to-top-btn">
+            <i class="fas fa-arrow-up"></i> Back to Top
+        </button>
+    </div>
+</section>
+
+<style>
+/* Use the same CSS variables from the payment methods page */
+:root {
+    --primary-blue: #4b5e8c;
+    --primary-light: #6b7aab;
+    --secondary-orange: #f59e0b;
+    --secondary-red: #ef4444;
+    --dark-bg: #f1f5f9;
+    --light-bg: #e2e8f0;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Trademark Hero Section */
+.trademark-hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.payment-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--dark-bg);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.payment-container {
+    max-width: 1400px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.payment-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+.payment-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment-brand-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0;
+    line-height: 1;
+}
+
+.payment-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.payment-title-section {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+}
+
+.title-badge {
+    margin: 0 20px;
+    position: relative;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+.title-badge i {
+    font-size: 1.5rem;
+    color: var(--white);
+}
+
+.payment-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.payment-subtitle-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Navigation */
+.payment-navigation {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.nav-tab {
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.nav-tab:hover {
+    background: var(--primary-light);
+    color: var(--white);
+    text-decoration: none;
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+/* Content Sections */
+.payment-content {
+    padding: 0 2rem 2rem;
+}
+
+.content-section {
+    display: block;
+}
+
+.content-subsection {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+}
+
+.subsection-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.subsection-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.subsection-header h3 i {
+    color: var(--primary-light);
+}
+
+.section-body p.lead {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* Info Grid */
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Info Cards */
+.info-card {
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.info-card.alert-info {
+    border-left: 4px solid var(--success);
+}
+
+.info-card.alert-warning {
+    border-left: 4px solid var(--secondary-red);
+}
+
+.info-card.alert-primary {
+    border-left: 4px solid var(--primary-blue);
+}
+
+.info-card.alert-success {
+    border-left: 4px solid var(--success);
+}
+
+.info-card.alert-danger {
+    border-left: 4px solid var(--secondary-red);
+}
+
+.info-card.compact-card {
+    margin-bottom: 0;
+}
+
+.info-card-header {
+    background: rgba(75, 94, 140, 0.1);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-card-header i {
+    font-size: 1.2rem;
+    color: var(--primary-light);
+}
+
+.info-card-header h4 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+.info-card-header h5 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.info-card-body {
+    padding: 1.5rem;
+}
+
+.info-card-body p {
+    margin: 0 0 1rem;
+    line-height: 1.5;
+}
+
+.info-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+.info-card-body a {
+    color: var(--primary-light);
+    text-decoration: none;
+}
+
+.info-card-body a:hover {
+    text-decoration: underline;
+}
+
+/* Nested Info */
+.nested-info {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.nested-info .info-card {
+    margin-bottom: 0;
+}
+
+.nested-info .info-card-header {
+    padding: 0.75rem 1rem;
+}
+
+.nested-info .info-card-body {
+    padding: 1rem;
+}
+
+/* Resources Grid */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+}
+
+.resource-item i {
+    font-size: 1.1rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.resource-content h6 {
+    margin: 0 0 0.25rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.resource-content p {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+/* Sidebar Cards */
+.sidebar-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebar-cards .info-card {
+    margin-bottom: 0;
+}
+
+/* Info List */
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list.compact li {
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+}
+
+.info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    color: var(--text-dark);
+}
+
+.info-list li i {
+    color: var(--success);
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+/* Filing Methods */
+.filing-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.filing-method {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.filing-method:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.bg-info { background: var(--primary-blue); color: white; }
+.bg-success { background: var(--success); color: white; }
+.bg-primary { background: var(--primary-light); color: white; }
+
+.method-content h6 {
+    margin: 0 0 0.1rem;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.method-content small {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Requirements List */
+.requirements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.form-check-input {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.form-check-input:checked {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
+
+.form-check-label strong {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Back to Top Button */
+.back-to-top-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.back-to-top-btn {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-to-top-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(75, 94, 140, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .payment-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .sidebar-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .trademark-hero-section {
+        padding: 1rem 0;
+    }
+    
+    .payment-container {
+        padding: 0 1rem;
+    }
+    
+    .payment-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .payment-content {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .payment-navigation {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-tabs {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+    }
+    
+    .payment-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .payment-subtitle-text {
+        font-size: 0.9rem;
+    }
+    
+    .title-badge {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .title-badge i {
+        font-size: 1.2rem;
+    }
+    
+    .decoration-line {
+        width: 40px;
+    }
+    
+    .subsection-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .back-to-top-container {
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .back-to-top-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .payment-header {
+        padding: 1rem;
+    }
+    
+    .payment-content {
+        padding: 0 1rem 1rem;
+    }
+    
+    .payment-navigation {
+        padding: 0 1rem;
+    }
+    
+    .payment-main-title {
+        font-size: 1.25rem;
+    }
+    
+    .payment-subtitle-text {
+        font-size: 0.85rem;
+    }
+    
+    .title-badge {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .title-badge i {
+        font-size: 1rem;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+    
+    .subsection-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .info-card-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .info-card-body {
+        padding: 1rem;
+    }
+    
+    .sidebar-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .payment-background, .floating-particles, .back-to-top-container {
+        display: none;
+    }
+
+    .trademark-hero-section {
+        background: white;
+        color: black;
+    }
+
+    .payment-card, .info-card, .nav-tab {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .nav-tab.active {
+        background: #ccc;
+        color: black;
+    }
+
+    .payment-main-title {
+        background: none;
+        -webkit-text-fill-color: black;
+    }
+
+    .subsection-header h3, .info-card-header h4, .info-card-header h5 {
+        color: black;
+    }
+
+    .title-badge, .badge {
+        background: #ccc;
+        color: black;
+    }
+
+    .title-badge i {
+        color: black;
+    }
+
+    .info-list li i {
+        color: #333;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for navigation tabs and anchor links
+    document.querySelectorAll('.nav-tab, a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId.startsWith('#')) {
+                const target = document.querySelector(targetId);
+                if (target) {
+                    // Calculate offset for fixed header
+                    const headerHeight = document.querySelector('.payment-navigation').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active tab
+                    if (this.classList.contains('nav-tab')) {
+                        document.querySelectorAll('.nav-tab').forEach(tab => {
+                            tab.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                }
+            }
+        });
+    });
+    
+    // Back to top functionality
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Show/hide back to top button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.style.opacity = '1';
+            backToTopBtn.style.visibility = 'visible';
+        } else {
+            backToTopBtn.style.opacity = '0';
+            backToTopBtn.style.visibility = 'hidden';
+        }
+    });
+    
+    // Initialize back to top button as hidden
+    backToTopBtn.style.opacity = '0';
+    backToTopBtn.style.visibility = 'hidden';
+    backToTopBtn.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
+    
+    // Update active tab based on scroll position
+    const sections = document.querySelectorAll('.content-subsection');
+    const navTabs = document.querySelectorAll('.nav-tab');
+    
+    function updateActiveTab() {
+        const scrollPosition = window.pageYOffset + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.getAttribute('href') === `#${sectionId}`) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateActiveTab);
+    
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.info-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    console.log('Trademark Protection page initialized');
+});
+</script>
+{% endblock %}

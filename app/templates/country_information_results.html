@@ -1,0 +1,1282 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_data.destination_country_name }} - Country Information{% endblock %}
+
+{% block content %}
+<!-- Wikipedia Style Hero Section -->
+<section class="wikipedia-hero-section">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-header">
+            <div class="wikipedia-title-content">
+                <h1 class="wikipedia-title">{{ form_data.destination_country_name }}</h1>
+                <div class="wikipedia-subtitle">
+                    <span class="wikipedia-badge">
+                        <i class="fas fa-globe-americas"></i>
+                        Comprehensive Country Analysis
+                    </span>
+                    <span class="wikipedia-divider">•</span>
+                    <span class="wikipedia-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ datetime.now().strftime('%B %d, %Y') }}
+                    </span>
+                </div>
+            </div>
+            <div class="wikipedia-actions">
+                <button onclick="window.print()" class="wikipedia-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Export PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wikipedia Style Navigation Section -->
+<section class="wikipedia-nav-section">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-nav-container">
+            <div class="wikipedia-nav-pill active">
+                <i class="fas fa-chart-pie"></i>
+                <span>Overview</span>
+            </div>
+            
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='operating-business') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-briefcase"></i>
+                <span>Business</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='tax-system') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Tax System</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='legal-environment') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-gavel"></i>
+                <span>Legal</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='foreign-investment') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-chart-line"></i>
+                <span>Investment</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='entry-requirements') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-passport"></i>
+                <span>Entry</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='practical-information') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Practical</span>
+            </a>
+            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='living-in-country') }}" class="wikipedia-nav-pill">
+                <i class="fas fa-home"></i>
+                <span>Living</span>
+            </a>
+            {% else %}
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Business Operations')">
+                <i class="fas fa-briefcase"></i>
+                <span>Business</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Tax System')">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Tax System</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Legal Environment')">
+                <i class="fas fa-gavel"></i>
+                <span>Legal</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Foreign Investment')">
+                <i class="fas fa-chart-line"></i>
+                <span>Investment</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Entry Requirements')">
+                <i class="fas fa-passport"></i>
+                <span>Entry</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Practical Information')">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Practical</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            <div class="wikipedia-nav-pill locked" onclick="showLoginRequiredMessage('Living in Country')">
+                <i class="fas fa-home"></i>
+                <span>Living</span>
+                <i class="fas fa-lock ms-2"></i>
+            </div>
+            {% endif %}
+            
+            <a href="{{ url_for('main.services_page') }}" class="wikipedia-nav-pill nav-pill-more">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>More</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="wikipedia-main-content">
+    <div class="container wikipedia-container">
+        <div class="wikipedia-content-grid">
+            <!-- Wikipedia Style Sidebar -->
+            <div class="wikipedia-sidebar">
+                {% if market_data %}
+                <div class="wikipedia-infobox">
+                    <div class="infobox-header">
+                        <h3 class="infobox-title">Key Statistics</h3>
+                    </div>
+                    <div class="infobox-content">
+                        {% if market_data.capital %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">Capital</div>
+                            <div class="infobox-value">{{ market_data.capital }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if market_data.total_population %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">Population</div>
+                            <div class="infobox-value">{{ market_data.total_population }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if market_data.area %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">Area</div>
+                            <div class="infobox-value">{{ market_data.area }} km²</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if market_data.national_currency %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">Currency</div>
+                            <div class="infobox-value">{{ market_data.national_currency }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if market_data.official_language %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">Language</div>
+                            <div class="infobox-value">{{ market_data.official_language }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if market_data.hdi %}
+                        <div class="infobox-item">
+                            <div class="infobox-label">HDI Index</div>
+                            <div class="infobox-value highlight">{{ market_data.hdi }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Quick Services Infobox -->
+                <div class="wikipedia-infobox">
+                    <div class="infobox-header">
+                        <h3 class="infobox-title">Quick Access</h3>
+                    </div>
+                    <div class="infobox-services">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='operating-business') }}" class="service-link">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Business Operations</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='tax-system') }}" class="service-link">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Tax System</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='legal-environment') }}" class="service-link">
+                            <i class="fas fa-gavel"></i>
+                            <span>Legal Environment</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='foreign-investment') }}" class="service-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Foreign Investment</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='entry-requirements') }}" class="service-link">
+                            <i class="fas fa-passport"></i>
+                            <span>Entry Requirements</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='practical-information') }}" class="service-link">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Practical Information</span>
+                        </a>
+                        <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='living-in-country') }}" class="service-link">
+                            <i class="fas fa-home"></i>
+                            <span>Living in Country</span>
+                        </a>
+                        {% else %}
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Business Operations')">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Business Operations</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Tax System')">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Tax System</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Legal Environment')">
+                            <i class="fas fa-gavel"></i>
+                            <span>Legal Environment</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Foreign Investment')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Foreign Investment</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Entry Requirements')">
+                            <i class="fas fa-passport"></i>
+                            <span>Entry Requirements</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Practical Information')">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Practical Information</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="service-link locked" onclick="showLoginRequiredMessage('Living in Country')">
+                            <i class="fas fa-home"></i>
+                            <span>Living in Country</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- About Report Infobox -->
+                <div class="wikipedia-infobox">
+                    <div class="infobox-header">
+                        <h3 class="infobox-title">About This Report</h3>
+                    </div>
+                    <div class="infobox-details">
+                        <div class="detail-item">
+                            <i class="fas fa-database detail-icon"></i>
+                            <div class="detail-content">
+                                <strong>Data Sources</strong>
+                                <span>Verified international databases</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock detail-icon"></i>
+                            <div class="detail-content">
+                                <strong>Last Updated</strong>
+                                <span>{{ datetime.now().strftime('%B %d, %Y') }}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-shield-alt detail-icon"></i>
+                            <div class="detail-content">
+                                <strong>Reliability</strong>
+                                <span>Cross-verified sources</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wikipedia Style Main Content -->
+            <div class="wikipedia-article">
+                {% if openai_intro %}
+                <section class="wiki-section">
+                    <div class="wiki-lead">
+                        {{ openai_intro|safe }}
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if market_data %}
+                <!-- Demographics Section -->
+                {% if market_data.total_population or market_data.natural_increase or market_data.density or market_data.urban_population %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Demographics</h2>
+                    <p class="wiki-text">The demographic profile of <strong class="keyword">{{ form_data.destination_country_name }}</strong> provides insights into its population dynamics and societal structure.</p>
+                    <div class="wiki-content">
+                        {% if market_data.total_population %}
+                        <p><strong class="wiki-term">Total Population:</strong> {{ market_data.total_population }}</p>
+                        {% endif %}
+                        {% if market_data.natural_increase %}
+                        <p><strong class="wiki-term">Natural Increase:</strong> {{ market_data.natural_increase }}</p>
+                        {% endif %}
+                        {% if market_data.density %}
+                        <p><strong class="wiki-term">Population Density:</strong> {{ market_data.density }}</p>
+                        {% endif %}
+                        {% if market_data.urban_population %}
+                        <p><strong class="wiki-term">Urban Population:</strong> {{ market_data.urban_population }}</p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Geography Section -->
+                {% if market_data.area or market_data.capital or market_data.population_of_main_metropolitan_areas %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Geography</h2>
+                    <p class="wiki-text">The geographical characteristics of <strong class="keyword">{{ form_data.destination_country_name }}</strong> define its physical landscape and urban development patterns.</p>
+                    <div class="wiki-content">
+                        {% if market_data.area %}
+                        <p><strong class="wiki-term">Total Area:</strong> {{ market_data.area }} km²</p>
+                        {% endif %}
+                        {% if market_data.capital %}
+                        <p><strong class="wiki-term">Capital City:</strong> {{ market_data.capital }}</p>
+                        {% endif %}
+                        {% if market_data.population_of_main_metropolitan_areas %}
+                        <p><strong class="wiki-term">Main Metropolitan Areas:</strong> {{ market_data.population_of_main_metropolitan_areas }}</p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Culture and Society Section -->
+                {% if market_data.ethnic_origins or market_data.official_language or market_data.other_languages_spoken or market_data.business_languages or market_data.religion %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Culture and Society</h2>
+                    <p class="wiki-text">The cultural and social fabric of <strong class="keyword">{{ form_data.destination_country_name }}</strong> reflects its diverse heritage, linguistic diversity, and societal structure.</p>
+                    <div class="wiki-content">
+                        {% if market_data.ethnic_origins %}
+                        <p><strong class="wiki-term">Ethnic Origins:</strong> {{ market_data.ethnic_origins }}</p>
+                        {% endif %}
+                        {% if market_data.official_language %}
+                        <p><strong class="wiki-term">Official Language:</strong> {{ market_data.official_language }}</p>
+                        {% endif %}
+                        {% if market_data.other_languages_spoken %}
+                        <p><strong class="wiki-term">Other Languages Spoken:</strong> {{ market_data.other_languages_spoken }}</p>
+                        {% endif %}
+                        {% if market_data.business_languages %}
+                        <p><strong class="wiki-term">Business Languages:</strong> {{ market_data.business_languages }}</p>
+                        {% endif %}
+                        {% if market_data.religion %}
+                        <p><strong class="wiki-term">Religion:</strong> {{ market_data.religion }}</p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Economy Section -->
+                {% if market_data.type_of_economy or market_data.type_of_state or market_data.hdi or market_data.hdi_world_rank %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Economy</h2>
+                    <p class="wiki-text">The economy of <strong class="keyword">{{ form_data.destination_country_name }}</strong> is characterized by its structural composition, development indicators, and global competitiveness.</p>
+                    <div class="wiki-content">
+                        {% if market_data.type_of_economy %}
+                        <p><strong class="wiki-term">Type of Economy:</strong> {{ market_data.type_of_economy }}</p>
+                        {% endif %}
+                        {% if market_data.type_of_state %}
+                        <p><strong class="wiki-term">Type of State:</strong> {{ market_data.type_of_state }}</p>
+                        {% endif %}
+                        {% if market_data.hdi %}
+                        <p><strong class="wiki-term">Human Development Index:</strong> <span class="wiki-highlight">{{ market_data.hdi }}</span></p>
+                        {% endif %}
+                        {% if market_data.hdi_world_rank %}
+                        <p><strong class="wiki-term">HDI World Rank:</strong> {{ market_data.hdi_world_rank }}</p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Infrastructure Section -->
+                {% if market_data.telephone_code or market_data.internet_suffix or market_data.computers or market_data.telephone_lines or market_data.internet_users or market_data.access_to_electricity %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Infrastructure</h2>
+                    <p class="wiki-text">The infrastructure of <strong class="keyword">{{ form_data.destination_country_name }}</strong> supports its technological advancement, connectivity, and economic development.</p>
+                    <div class="wiki-content">
+                        {% if market_data.telephone_code %}
+                        <p><strong class="wiki-term">Telephone Code:</strong> {{ market_data.telephone_code }}</p>
+                        {% endif %}
+                        {% if market_data.internet_suffix %}
+                        <p><strong class="wiki-term">Internet Suffix:</strong> {{ market_data.internet_suffix }}</p>
+                        {% endif %}
+                        {% if market_data.computers %}
+                        <p><strong class="wiki-term">Computers per 100 Inhabitants:</strong> {{ market_data.computers }}</p>
+                        {% endif %}
+                        {% if market_data.telephone_lines %}
+                        <p><strong class="wiki-term">Telephone Lines per 100 Inhabitants:</strong> {{ market_data.telephone_lines }}</p>
+                        {% endif %}
+                        {% if market_data.internet_users %}
+                        <p><strong class="wiki-term">Internet Users per 100 Inhabitants:</strong> {{ market_data.internet_users }}</p>
+                        {% endif %}
+                        {% if market_data.access_to_electricity %}
+                        <p><strong class="wiki-term">Access to Electricity:</strong> <span class="wiki-highlight">{{ market_data.access_to_electricity }}%</span></p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Foreign Trade Section -->
+                {% if market_data.trade_table and market_data.trade_table|length > 0 %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Foreign Trade</h2>
+                    <p class="wiki-text">Foreign trade statistics highlight the economic interactions and global market integration of <strong class="keyword">{{ form_data.destination_country_name }}</strong>, showing trends in imports, exports, and trade balance.</p>
+                    <table class="wikitable">
+                        <thead>
+                            <tr>
+                                <th>Indicator</th>
+                                <th>2019</th>
+                                <th>2020</th>
+                                <th>2021</th>
+                                <th>2022</th>
+                                <th>2023</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in market_data.trade_table %}
+                            <tr>
+                                {% if row is mapping %}
+                                    <td><strong class="wiki-term">{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</strong></td>
+                                    <td>{{ row.get('2019', '') }}</td>
+                                    <td>{{ row.get('2020', '') }}</td>
+                                    <td>{{ row.get('2021', '') }}</td>
+                                    <td>{{ row.get('2022', '') }}</td>
+                                    <td>{{ row.get('2023', '') }}</td>
+                                {% else %}
+                                    <td><strong class="wiki-term">{{ row[0] if row|length > 0 else '' }}</strong></td>
+                                    <td>{{ row[1] if row|length > 1 else '' }}</td>
+                                    <td>{{ row[2] if row|length > 2 else '' }}</td>
+                                    <td>{{ row[3] if row|length > 3 else '' }}</td>
+                                    <td>{{ row[4] if row|length > 4 else '' }}</td>
+                                    <td>{{ row[5] if row|length > 5 else '' }}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+                {% endif %}
+                {% endif %}
+
+                {% if openai_conclusion %}
+                <section class="wiki-section">
+                    <h2 class="wiki-heading">Summary</h2>
+                    <div class="wiki-lead">
+                        {{ openai_conclusion|safe }}
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if not openai_intro and not market_data and not openai_conclusion %}
+                <section class="wiki-section">
+                    <div class="wiki-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading content... The general information for <strong>{{ form_data.destination_country_name }}</strong> is being generated. Please refresh the page in a few moments.</span>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- CTA Section -->
+                <section class="wiki-section cta-section">
+                    <h2 class="wiki-heading">Explore More</h2>
+                    <div class="cta-content">
+                        <h3 class="cta-title">Discover {{ form_data.destination_country_name }}</h3>
+                        {% if current_user.is_authenticated %}
+                        <p class="wiki-text">Access comprehensive data on <strong class="keyword">business operations</strong>, <strong class="keyword">market analysis</strong>, and <strong class="keyword">travel information</strong>.</p>
+                        <div class="cta-buttons">
+                            <a href="{{ url_for('main.form_page') }}" class="wiki-btn wiki-btn-primary">
+                                <i class="fas fa-chart-line"></i>
+                                Generate Complete Report
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="wiki-btn wiki-btn-secondary">
+                                <i class="fas fa-list"></i>
+                                View All Services
+                            </a>
+                            <a href="{{ url_for('main.country_information') }}" class="wiki-btn wiki-btn-secondary">
+                                <i class="fas fa-globe"></i>
+                                Change Country
+                            </a>
+                        </div>
+                        {% else %}
+                        <p class="wiki-text">Register or log in to access detailed information on <strong class="keyword">business operations</strong>, <strong class="keyword">travel</strong>, and <strong class="keyword">market analysis</strong> for <strong class="keyword">{{ form_data.destination_country_name }}</strong>.</p>
+                        <div class="cta-buttons">
+                            <a href="{{ url_for('auth.register') }}" class="wiki-btn wiki-btn-primary">
+                                <i class="fas fa-user-plus"></i>
+                                Register for Full Access
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="wiki-btn wiki-btn-secondary">
+                                <i class="fas fa-list"></i>
+                                View All Services
+                            </a>
+                            <a href="{{ url_for('main.country_information') }}" class="wiki-btn wiki-btn-secondary">
+                                <i class="fas fa-globe"></i>
+                                Change Country
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --wikipedia-blue: #0645ad;
+    --wikipedia-light-blue: #eaf3ff;
+    --wikipedia-gray: #f8f9fa;
+    --wikipedia-border: #a2a9b1;
+    --wikipedia-dark-gray: #54595d;
+    --wikipedia-text: #202122;
+    --wikipedia-link: #0645ad;
+    --wikipedia-red: #cc0000;
+    --wikipedia-green: #00af89;
+    --wikipedia-orange: #ff7800;
+    --wikipedia-purple: #6b4e85;
+    --wikipedia-cyan: #00aba5;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-medium: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--wikipedia-text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.wikipedia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Wikipedia Hero Section */
+.wikipedia-hero-section {
+    background: linear-gradient(135deg, var(--wikipedia-light-blue) 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding: 2rem 0 1.5rem 0;
+}
+
+.wikipedia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.wikipedia-title-content {
+    flex: 1;
+}
+
+.wikipedia-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding-bottom: 0.5rem;
+}
+
+.wikipedia-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.wikipedia-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--wikipedia-blue);
+    color: white;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.wikipedia-divider {
+    color: var(--wikipedia-dark-gray);
+    font-weight: bold;
+}
+
+.wikipedia-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--wikipedia-dark-gray);
+    font-size: 0.85rem;
+    font-family: sans-serif;
+}
+
+.wikipedia-actions {
+    flex-shrink: 0;
+}
+
+.wikipedia-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--wikipedia-gray);
+    color: var(--wikipedia-text);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wikipedia-btn:hover {
+    background: #e6e6e6;
+    border-color: #72777d;
+}
+
+/* Wikipedia Navigation */
+.wikipedia-nav-section {
+    padding: 1rem 0 2rem 0;
+    border-bottom: 1px solid var(--wikipedia-border);
+}
+
+.wikipedia-nav-container {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: var(--wikipedia-gray);
+    padding: 1rem;
+    border-radius: 3px;
+    border: 1px solid var(--wikipedia-border);
+}
+
+.wikipedia-nav-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    color: var(--wikipedia-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: sans-serif;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.wikipedia-nav-pill:hover {
+    background: #f1f1f1;
+    border-color: var(--wikipedia-blue);
+    color: var(--wikipedia-blue);
+    text-decoration: none;
+}
+
+.wikipedia-nav-pill.active {
+    background: var(--wikipedia-blue);
+    color: white;
+    border-color: var(--wikipedia-blue);
+}
+
+.wikipedia-nav-pill.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.wikipedia-nav-pill.locked:hover {
+    background: white;
+    border-color: var(--wikipedia-border);
+    color: var(--wikipedia-text);
+}
+
+.nav-pill-more {
+    background: var(--wikipedia-green);
+    color: white;
+    border-color: var(--wikipedia-green);
+}
+
+.nav-pill-more:hover {
+    background: #009975;
+    color: white;
+}
+
+/* Main Content Layout */
+.wikipedia-main-content {
+    padding: 2rem 0 4rem 0;
+    background: #ffffff;
+}
+
+.wikipedia-content-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+}
+
+/* Wikipedia Sidebar */
+.wikipedia-sidebar {
+    position: sticky;
+    top: 1rem;
+    height: fit-content;
+}
+
+.wikipedia-infobox {
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-subtle);
+}
+
+.infobox-header {
+    background: var(--wikipedia-blue);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--wikipedia-border);
+}
+
+.infobox-title {
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.infobox-content {
+    padding: 1rem;
+}
+
+.infobox-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(162, 169, 177, 0.3);
+}
+
+.infobox-item:last-child {
+    border-bottom: none;
+}
+
+.infobox-label {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--wikipedia-dark-gray);
+}
+
+.infobox-value {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 0.95rem;
+    color: var(--wikipedia-text);
+    text-align: right;
+}
+
+.infobox-value.highlight {
+    color: var(--wikipedia-green);
+    font-weight: 600;
+}
+
+.infobox-services {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.service-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    color: var(--wikipedia-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: sans-serif;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.service-link:hover {
+    background: #f1f1f1;
+    border-color: var(--wikipedia-blue);
+    color: var(--wikipedia-blue);
+    text-decoration: none;
+}
+
+.service-link.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.service-link.locked:hover {
+    background: white;
+    border-color: var(--wikipedia-border);
+    color: var(--wikipedia-text);
+}
+
+.service-link i:last-child {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--wikipedia-dark-gray);
+}
+
+.infobox-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+}
+
+.detail-icon {
+    color: var(--wikipedia-blue);
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-content strong {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--wikipedia-text);
+}
+
+.detail-content span {
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    color: var(--wikipedia-dark-gray);
+}
+
+/* Wikipedia Article Content */
+.wikipedia-article {
+    background: white;
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    padding: 2rem;
+    box-shadow: var(--shadow-subtle);
+}
+
+.wiki-section {
+    margin-bottom: 2.5rem;
+}
+
+.wiki-heading {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    border-bottom: 1px solid var(--wikipedia-border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.wiki-text {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1rem;
+    color: var(--wikipedia-text);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.wiki-lead {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--wikipedia-text);
+    margin-bottom: 1.5rem;
+}
+
+.wiki-content {
+    margin-left: 1rem;
+}
+
+.wiki-term {
+    color: var(--wikipedia-blue);
+    font-weight: 600;
+}
+
+.keyword {
+    background: linear-gradient(120deg, var(--wikipedia-light-blue) 0%, var(--wikipedia-light-blue) 100%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    font-weight: 600;
+    color: var(--wikipedia-blue);
+}
+
+.wiki-highlight {
+    color: var(--wikipedia-green);
+    font-weight: 600;
+}
+
+/* Wikipedia Table */
+.wikitable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--wikipedia-border);
+    background: var(--wikipedia-gray);
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+.wikitable th {
+    background: #eaecf0;
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--wikipedia-border);
+    font-weight: 600;
+    color: var(--wikipedia-text);
+}
+
+.wikitable td {
+    padding: 0.75rem;
+    border: 1px solid var(--wikipedia-border);
+    color: var(--wikipedia-text);
+}
+
+.wikitable tbody tr:nth-child(even) {
+    background: white;
+}
+
+.wikitable tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* CTA Section */
+.cta-section {
+    background: var(--wikipedia-gray);
+    padding: 1.5rem;
+    border-radius: 3px;
+    border: 1px solid var(--wikipedia-border);
+}
+
+.cta-content {
+    text-align: center;
+}
+
+.cta-title {
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--wikipedia-text);
+    margin-bottom: 0.75rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.wiki-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.wiki-btn.wiki-btn-primary {
+    background: var(--wikipedia-blue);
+    color: white;
+    border-color: var(--wikipedia-blue);
+}
+
+.wiki-btn.wiki-btn-primary:hover {
+    background: #053a94;
+    color: white;
+    text-decoration: none;
+}
+
+.wiki-btn.wiki-btn-secondary {
+    background: white;
+    color: var(--wikipedia-text);
+    border-color: var(--wikipedia-border);
+}
+
+.wiki-btn.wiki-btn-secondary:hover {
+    background: #f1f1f1;
+    color: var(--wikipedia-blue);
+    border-color: var(--wikipedia-blue);
+    text-decoration: none;
+}
+
+.wiki-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--wikipedia-gray);
+    border: 1px solid var(--wikipedia-border);
+    border-radius: 3px;
+    color: var(--wikipedia-text);
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.wiki-loading i {
+    font-size: 1.25rem;
+    color: var(--wikipedia-blue);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .wikipedia-content-grid {
+        grid-template-columns: 300px 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .wikipedia-content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .wikipedia-sidebar {
+        position: static;
+    }
+    
+    .wikipedia-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wikipedia-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .wikipedia-title {
+        font-size: 2rem;
+    }
+    
+    .wikipedia-nav-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .wikipedia-container {
+        padding: 0 1rem;
+    }
+    
+    .wikipedia-title {
+        font-size: 1.75rem;
+    }
+    
+    .wiki-heading {
+        font-size: 1.5rem;
+    }
+    
+    .wiki-text, .wiki-lead {
+        font-size: 0.95rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .wiki-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .wikipedia-nav-pill {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .wikipedia-title {
+        font-size: 1.5rem;
+    }
+    
+    .wiki-heading {
+        font-size: 1.3rem;
+    }
+    
+    .wikitable {
+        font-size: 0.8rem;
+    }
+    
+    .wikitable th, .wikitable td {
+        padding: 0.5rem;
+    }
+    
+    .wikipedia-nav-pill, .wiki-btn {
+        font-size: 0.8rem;
+    }
+    
+    .wikipedia-badge, .wikipedia-date {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media print {
+    .wikipedia-hero-section,
+    .wikipedia-nav-section,
+    .wikipedia-sidebar,
+    .wikipedia-actions,
+    .cta-section {
+        display: none !important;
+    }
+    
+    .wikipedia-main-content {
+        padding: 0;
+    }
+    
+    .wikipedia-article {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .wiki-heading {
+        color: #000;
+        border-bottom: 1px solid #000;
+    }
+    
+    .wiki-term, .keyword {
+        color: #000;
+        font-weight: 700;
+    }
+    
+    .wiki-highlight {
+        color: #000;
+        font-weight: 700;
+    }
+    
+    .wikitable {
+        border: 1px solid #000;
+    }
+    
+    .wikitable th, .wikitable td {
+        border: 1px solid #000;
+    }
+    
+    .wikitable th {
+        background: #eee;
+    }
+}
+</style>
+
+<script>
+function showLoginRequiredMessage(serviceName) {
+    const toastHtml = `
+        <div class="wikipedia-toast">
+            <i class="fas fa-lock"></i>
+            <span>Log in to access ${serviceName}</span>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    const toast = document.querySelector('.wikipedia-toast:last-child');
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Add keyword highlighting
+document.addEventListener('DOMContentLoaded', function() {
+    const keywords = [
+        'GDP', 'economic growth', 'inflation', 'unemployment', 'exports', 'imports',
+        'trade balance', 'foreign investment', 'currency', 'exchange rate',
+        'infrastructure', 'manufacturing', 'services', 'agriculture', 'technology',
+        'innovation', 'productivity', 'competitiveness', 'market economy',
+        'political stability', 'governance', 'democracy', 'elections', 'parliament',
+        'constitution', 'legal system', 'regulatory framework', 'taxation',
+        'fiscal policy', 'monetary policy', 'central bank', 'debt', 'deficit',
+        'surplus', 'recession', 'expansion', 'development', 'sustainability'
+    ];
+    
+    const contentElements = document.querySelectorAll('.wiki-text, .wiki-lead, .wiki-content');
+    
+    contentElements.forEach(element => {
+        let html = element.innerHTML;
+        
+        keywords.forEach(keyword => {
+            const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+            html = html.replace(regex, match => {
+                return `<span class="keyword">${match}</span>`;
+            });
+        });
+        
+        element.innerHTML = html;
+    });
+});
+
+// Add toast styles
+const toastStyles = document.createElement('style');
+toastStyles.textContent = `
+    .wikipedia-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--wikipedia-blue);
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: 3px;
+        box-shadow: var(--shadow-medium);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 9999;
+        font-family: sans-serif;
+        font-weight: 500;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+    }
+    
+    .wikipedia-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .wikipedia-toast i {
+        font-size: 1.1rem;
+    }
+`;
+document.head.appendChild(toastStyles);
+</script>
+{% endblock %}

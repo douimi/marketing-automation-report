@@ -1,0 +1,253 @@
+
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Business Practices" %}
+{% set service_icon = "fas fa-handshake" %}
+
+{% block report_content %}
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="converter-card">
+            <div class="card-body">
+                {% if business_practices_data.business_culture_section %}
+                <!-- Business Culture Section -->
+                <div class="info-card mb-4">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-users"></i></div>
+                        <h4 class="info-title">Business Culture</h4>
+                    </div>
+                    <div class="info-content">
+                        <div class="santander-html">{{ business_practices_data.business_culture_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if business_practices_data.opening_hours_section %}
+                <!-- Opening Hours Section -->
+                <div class="info-card mb-4">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <h4 class="info-title">Opening Hours</h4>
+                    </div>
+                    <div class="info-content">
+                        <div class="santander-html">{{ business_practices_data.opening_hours_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Empty State -->
+                {% if not business_practices_data.business_culture_section and not business_practices_data.opening_hours_section %}
+                <div class="info-card alert-warning text-center mb-4">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="info-title">No Business Practices Data Available</h4>
+                    </div>
+                    <p class="text-muted">No business culture or opening hours information found for the selected criteria.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card.alert-warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.info-content {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.santander-html {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+.santander-html * {
+    font-family: inherit;
+    color: inherit;
+}
+
+.santander-html h1, .santander-html h2, .santander-html h3, .santander-html h4, .santander-html h5, .santander-html h6 {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    line-height: 1.2;
+}
+
+.santander-html table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.santander-html table, .santander-html th, .santander-html td {
+    border: 1px solid var(--border-color);
+}
+
+.santander-html th, .santander-html td {
+    padding: 0.5rem 0.75rem;
+}
+
+.santander-html th {
+    background: #f1f5f9;
+    font-weight: 600;
+}
+
+.santander-html tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+}
+
+@media print {
+    .converter-card, .info-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    .info-icon {
+        background: none;
+        color: #000;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card, .converter-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    console.log('Business Practices page initialized');
+});
+</script>
+{% endblock %}

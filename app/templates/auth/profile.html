@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<section class="profile-section">
+    <div class="profile-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+        <div class="animated-background">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
+            <div class="bg-shape shape-4"></div>
+            <div class="bg-shape shape-5"></div>
+            <div class="bg-shape shape-6"></div>
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="profile-card">
+                    <div class="form-title-section">
+                        <div class="title-decoration">
+                            <div class="decoration-line left-line"></div>
+                            <div class="title-badge">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="decoration-line right-line"></div>
+                        </div>
+                        <h1 class="form-main-title">Edit Profile</h1>
+                        <p class="form-title-subtitle">Update your account details and preferences</p>
+                    </div>
+
+                    <div class="profile-card-body">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} profile-alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form method="POST" action="{{ url_for('auth.edit_profile') }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="profile-info">
+                                        <h5 class="info-section-title">Personal Information</h5>
+                                        
+                                        <div class="info-item">
+                                            <label for="full_name" class="info-label">Full Name</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                                <input type="text" class="form-control" id="full_name" name="full_name" 
+                                                       value="{{ current_user.full_name or '' }}" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="info-item">
+                                            <label for="email" class="info-label">Email Address *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-envelope"></i>
+                                                </span>
+                                                <input type="email" class="form-control" id="email" name="email" 
+                                                       value="{{ current_user.email or '' }}" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="info-item">
+                                            <label for="phone" class="info-label">Phone Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-phone"></i>
+                                                </span>
+                                                <input type="tel" class="form-control" id="phone" name="phone" 
+                                                       value="{{ current_user.phone or '' }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="profile-info">
+                                        <h5 class="info-section-title">Business Information</h5>
+                                        
+                                        <div class="info-item">
+                                            <label for="company" class="info-label">Company</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-building"></i>
+                                                </span>
+                                                <input type="text" class="form-control" id="company" name="company" 
+                                                       value="{{ current_user.company or '' }}">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="info-item">
+                                            <label for="preferred_target_country" class="info-label">Preferred Target Country</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-globe"></i>
+                                                </span>
+                                                <select class="form-select" id="preferred_target_country" name="preferred_target_country">
+                                                    <option value="">Select a country (optional)</option>
+                                                    {% for country in countries %}
+                                                        <option value="{{ country.code }}" 
+                                                                {% if current_user.preferred_target_country == country.code %}selected{% endif %}>
+                                                            {{ country.name }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-text">The country you're most interested in analyzing</div>
+                                        </div>
+                                        
+                                        <div class="info-item">
+                                            <label class="info-label">Username</label>
+                                            <div class="input-group readonly">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-at"></i>
+                                                </span>
+                                                <span class="info-value">{{ current_user.username }} <small>(cannot be changed)</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-actions">
+                                <button type="submit" class="btn btn-primary profile-btn">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                                <a href="{{ url_for('auth.profile') }}" class="btn btn-outline-secondary profile-btn">
+                                    <i class="fas fa-arrow-left me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;
+    --primary-light: #6b7aab;
+    --secondary-color: #6b7280;
+    --secondary-light: #8b95a3;
+    --accent-color: #10b981;
+    --text-color: #1e293b;
+    --text-muted: #64748b;
+    --text-light: #f9fafb;
+    --bg-color: #f1f5f9;
+    --bg-secondary: #e2e8f0;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+                0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.alert {
+    color: var(--text-color) !important;
+}
+
+/* Profile Section */
+.profile-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    padding: 2rem 0;
+    background: var(--bg-color);
+}
+
+.profile-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+.animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1) 0%, rgba(107, 122, 171, 0.05) 100%);
+    animation: floatBackground 20s ease-in-out infinite;
+}
+
+.shape-1 { width: 80px; height: 80px; top: 10%; left: 5%; animation-delay: 0s; animation-duration: 25s; }
+.shape-2 { width: 120px; height: 120px; top: 70%; left: 80%; animation-delay: 2s; animation-duration: 30s; }
+.shape-3 { width: 60px; height: 60px; top: 20%; left: 85%; animation-delay: 4s; animation-duration: 20s; }
+.shape-4 { width: 100px; height: 100px; top: 80%; left: 10%; animation-delay: 6s; animation-duration: 35s; }
+.shape-5 { width: 70px; height: 70px; top: 60%; left: 90%; animation-delay: 8s; animation-duration: 28s; }
+.shape-6 { width: 90px; height: 90px; top: 30%; left: 2%; animation-delay: 10s; animation-duration: 32s; }
+
+@keyframes floatBackground {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.3; }
+    25% { transform: translateY(-20px) translateX(15px) rotate(90deg); opacity: 0.5; }
+    50% { transform: translateY(10px) translateX(-10px) rotate(180deg); opacity: 0.7; }
+    75% { transform: translateY(-15px) translateX(-5px) rotate(270deg); opacity: 0.5; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1000px;
+    padding: 0 1.5rem;
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Title Section */
+.form-title-section {
+    text-align: center;
+    margin: 2rem 2rem 1.5rem;
+    position: relative;
+}
+
+.title-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+.title-badge {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+    box-shadow: 0 5px 15px rgba(75, 94, 140, 0.3);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.title-badge i {
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 5px 20px rgba(75, 94, 140, 0.5); }
+}
+
+.form-main-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+    transition: var(--transition);
+}
+
+.form-title-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+/* Profile Card Body */
+.profile-card-body {
+    padding: 2rem;
+}
+
+/* Profile Alert */
+.profile-alert {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Profile Info */
+.profile-info {
+    margin-bottom: 1.5rem;
+}
+
+.info-section-title {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.1rem;
+}
+
+.info-item {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+.input-group.readonly {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(107, 122, 171, 0.1);
+}
+
+.input-group-text {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.form-control, .form-select {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 0.75rem 1rem 0.75rem 0;
+    font-size: 0.95rem;
+}
+
+.form-control:focus, .form-select:focus {
+    background: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.info-value {
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 0.75rem 1rem 0.75rem 0;
+    font-size: 0.95rem;
+}
+
+.info-value small {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Profile Actions */
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.profile-btn {
+    border-radius: 10px;
+    padding: 0.875rem 1.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+.btn-outline-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: var(--text-color);
+    border-color: var(--border-light);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .profile-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .profile-card-body {
+        padding: 1.5rem;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .profile-btn {
+        width: 100%;
+    }
+    
+    .form-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .title-badge {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .title-badge i {
+        font-size: 1rem;
+    }
+    
+    .decoration-line {
+        width: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-main-title {
+        font-size: 1.25rem;
+    }
+    
+    .title-badge {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .title-badge i {
+        font-size: 0.9rem;
+    }
+    
+    .decoration-line {
+        width: 20px;
+    }
+    
+    .form-title-subtitle {
+        font-size: 0.85rem;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+{% endblock %}

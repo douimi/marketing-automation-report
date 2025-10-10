@@ -1,0 +1,17 @@
+Flask
+Flask-Login
+Flask-Session
+redis
+requests
+selenium
+openai
+webdriver-manager
+python-dotenv
+Jinja2>=3.0
+markupsafe>=2.0
+markdown2>=2.4.0
+beautifulsoup4
+html5lib
+lxml
+ijson
+# Add other dependencies as needed 

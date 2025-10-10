@@ -1,0 +1,47 @@
+{% extends "individual_reports/base_country_report.html" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if living_in_country_data.expatriates_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-users"></i></span>
+            <h5 class="mb-0">Communities of Expatriates</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.expatriates_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.ranking_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-city"></i></span>
+            <h5 class="mb-0">Ranking of Cities</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.ranking_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.renting_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-home"></i></span>
+            <h5 class="mb-0">Renting an Apartment</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.renting_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.health_section %}
+    <div class="business-card p-3 mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <span class="business-card-icon me-2"><i class="fas fa-hospital"></i></span>
+            <h5 class="mb-0">Health System</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.health_section|safe }}</div>
+    </div>
+    {% endif %}
+
+
+</div>
+{% endblock %}

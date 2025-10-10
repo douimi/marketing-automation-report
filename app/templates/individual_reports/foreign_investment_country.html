@@ -1,0 +1,498 @@
+{% extends "individual_reports/base_country_report.html" %}
+
+{% block service_title %}Foreign Investment{% endblock %}
+{% block service_icon %}fas fa-chart-line{% endblock %}
+
+{% block report_content %}
+<!-- Service Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-chart-line fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Foreign Investment</h1>
+                    <p class="hero-subtitle">Key insights for investing in international markets</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="content-grid">
+            <!-- Info Sidebar -->
+            <div class="info-sidebar">
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="info-title">What you'll get:</h4>
+                    </div>
+                    <div class="features-container">
+                        <div class="features-column">
+                            <div class="feature-item"><i class="fas fa-check"></i><span>FDI statistics and trends</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Investment considerations</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Protection policies</span></div>
+                        </div>
+                        <div class="features-column">
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Administrative procedures</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Country-specific guidelines</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Compliance insights</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="form-section">
+                {% if not foreign_investment_data or (not foreign_investment_data.fdi_figures_section and not foreign_investment_data.why_invest_section and not foreign_investment_data.protection_section and not foreign_investment_data.administrative_section) %}
+                <div class="converter-card">
+                    <div class="card-body text-center">
+                        <div class="empty-icon mb-3">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3 class="form-title">No Foreign Investment Information Available</h3>
+                        <p class="form-subtitle">
+                            We couldn't find detailed foreign investment information for <strong>{{ form_data.destination_country_name }}</strong> at this time.
+                        </p>
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a href="{{ url_for('main.country_service', country_code=form_data.destination_country_code, service_type='foreign-investment') }}" class="btn-action">
+                                <i class="fas fa-refresh me-2"></i>Try Again
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="btn-action btn-lg">
+                                <i class="fas fa-list me-2"></i>Browse Other Services
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <!-- FDI in Figures -->
+                {% if foreign_investment_data.fdi_figures_section %}
+                <div class="converter-card mb-4">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="fas fa-chart-line me-2"></i>FDI in Figures</h3>
+                        </div>
+                        <div class="santander-html">{{ foreign_investment_data.fdi_figures_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- What to Consider if You Invest -->
+                {% if foreign_investment_data.why_invest_section %}
+                <div class="converter-card mb-4">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="fas fa-question-circle me-2"></i>What to Consider if You Invest</h3>
+                        </div>
+                        <div class="santander-html">{{ foreign_investment_data.why_invest_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Protection of Foreign Investment -->
+                {% if foreign_investment_data.protection_section %}
+                <div class="converter-card mb-4">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="fas fa-shield-alt me-2"></i>Protection of Foreign Investment</h3>
+                        </div>
+                        <div class="santander-html">{{ foreign_investment_data.protection_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Administrative Procedures -->
+                {% if foreign_investment_data.administrative_section %}
+                <div class="converter-card mb-4">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="fas fa-tasks me-2"></i>Administrative Procedures</h3>
+                        </div>
+                        <div class="santander-html">{{ foreign_investment_data.administrative_section|safe }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Disclaimer -->
+                <div class="converter-card">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="fas fa-exclamation-triangle me-2"></i>Important Disclaimer</h3>
+                        </div>
+                        <p class="form-subtitle">
+                            This information is provided for informational purposes only. Foreign investment data and regulations may change. 
+                            Users should verify this information with official sources and consult relevant authorities before making investment decisions. 
+                            The accuracy and completeness of this data cannot be guaranteed.
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+}
+
+.info-sidebar {
+    position: sticky;
+    top: 1rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.features-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.features-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(2px);
+}
+
+.feature-item i {
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.feature-item span {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.form-section {
+    min-height: fit-content;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.form-title i {
+    color: var(--accent-color);
+}
+
+.form-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.santander-html {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: var(--text-muted);
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.7rem 1.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+}
+
+.btn-action.btn-lg {
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .info-sidebar {
+        position: static;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .service-header {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+}
+
+@media print {
+    .info-card, .converter-card, .service-hero-section {
+        background: #fff;
+        color: #000;
+        border-color: #ddd;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card, .converter-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    console.log('Foreign Investment page initialized');
+});
+</script>
+{% endblock %}

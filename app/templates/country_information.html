@@ -1,0 +1,986 @@
+{% extends "base.html" %}
+
+{% block title %}Country Insights - Trade Intelligence Services{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="{{ url_for('main.services_page') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Services</span>
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-globe fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Country Insights</h1>
+                    <p class="hero-subtitle">Explore detailed market intelligence and business insights by selecting a country</p>
+                    <p class="hero-stats">
+                        <small>
+                            <i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Market Intelligence
+                            {% if not current_user.is_authenticated %}
+                            <span class="sample-badge">FREE SAMPLE</span>
+                            {% endif %}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Country Selection Card -->
+        <div class="selection-section">
+            <div class="converter-card">
+                <div class="card-body">
+                    <div class="selection-content">
+                        <div class="selection-header">
+                            <div class="header-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <h2 class="card-title">Select a Country</h2>
+                            <p class="hero-subtitle">Access comprehensive information and services for your chosen country</p>
+                        </div>
+                        
+                        <div class="selection-form">
+                            <form id="countryForm" method="POST" action="{{ url_for('main.start_country_information') }}">
+                                <div class="form-group">
+                                    <label for="destination_country" class="form-label">
+                                        <i class="fas fa-search me-2"></i>Country
+                                    </label>
+                                    <div class="select-wrapper">
+                                        <select class="form-select" id="destination_country" name="destination_country" required>
+                                            <option value="" disabled selected>Select a country</option>
+                                        </select>
+                                        <div class="select-icon">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn-action explore-btn">
+                                    <i class="fas fa-search"></i>
+                                    <span>Explore Country</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h3 class="section-title">What You'll Discover</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h4 class="feature-title">General Insights</h4>
+                    <p class="feature-description">Overview of demographics, economic trends, and market dynamics</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4 class="feature-title">Business Environment</h4>
+                    <p class="feature-description">Guidance on setup, legal frameworks, taxes, and investment prospects</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h4 class="feature-title">Travel & Entry</h4>
+                    <p class="feature-description">Details on entry requirements, logistics, and local living conditions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="converter-card cta-card">
+                <div class="card-body">
+                    <div class="cta-content">
+                        <h2 class="card-title">Need Comprehensive Market Analysis?</h2>
+                        <p class="hero-subtitle">Unlock detailed country reports with in-depth market intelligence and actionable business insights to drive your strategy.</p>
+                        <div class="cta-actions">
+                            <a href="{{ url_for('main.form_page') }}" class="btn-action cta-primary">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Generate Report Now</span>
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="btn-action cta-secondary">
+                                <i class="fas fa-list"></i>
+                                <span>Explore All Services</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+/* Hero Section */
+.service-hero-section {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Back Navigation */
+.back-navigation {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(-3px);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.back-btn i {
+    font-size: 1rem;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+    box-shadow: var(--shadow-lg);
+    animation: iconPulse 4s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(75, 94, 140, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(75, 94, 140, 0.5);
+    }
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.hero-stats {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.sample-badge {
+    background: linear-gradient(135deg, var(--accent-color), #059669);
+    color: var(--text-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow);
+}
+
+/* Main Content */
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 3rem 0;
+}
+
+/* Selection Section */
+.selection-section {
+    margin-bottom: 4rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.selection-content {
+    max-width: 360px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.selection-header {
+    margin-bottom: 0.75rem;
+}
+
+.header-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.25rem;
+    margin: 0 auto 1rem;
+    box-shadow: var(--shadow);
+}
+
+.card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.75rem;
+}
+
+.selection-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 0.75rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+/* Select Wrapper */
+.select-wrapper {
+    position: relative;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.select-wrapper:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(107, 122, 171, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-select {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+    font-size: 0.9rem;
+    width: 100%;
+    appearance: none;
+    font-weight: 500;
+}
+
+.form-select:focus {
+    background: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+    outline: none;
+}
+
+.form-select option {
+    background: var(--bg-color);
+    color: #000000;
+    padding: 0.5rem;
+}
+
+.select-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.select-wrapper:focus-within .select-icon {
+    color: var(--primary-light);
+}
+
+/* Buttons */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 12px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.btn-action.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-action.secondary:hover {
+    background: rgba(75, 94, 140, 0.1);
+    color: var(--text-color);
+}
+
+.explore-btn {
+    background: linear-gradient(135deg, var(--accent-color), #059669);
+}
+
+.explore-btn:hover {
+    box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+}
+
+/* Features Section */
+.features-section {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 2px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(75, 94, 140, 0.2);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.75rem;
+    color: var(--text-light);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 35px rgba(75, 94, 140, 0.4);
+}
+
+.feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 1rem 0;
+}
+
+.feature-description {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+    margin-top: 4rem;
+}
+
+.cta-card {
+    max-width: 700px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    border: none;
+}
+
+.cta-section .card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 600px;
+}
+
+.cta-content .card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+}
+
+.cta-content .hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-light);
+    opacity: 0.9;
+    margin: 0 0 1.5rem;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-primary {
+    background: var(--accent-color);
+    color: var(--text-light);
+}
+
+.cta-primary:hover {
+    background: #059669;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+}
+
+.cta-secondary {
+    background: transparent;
+    border: 1px solid var(--text-light);
+    color: var(--text-light);
+}
+
+.cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-light);
+}
+
+/* Select2 Custom Styling */
+.select2-container--default .select2-selection--single {
+    background: transparent !important;
+    border: none !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-color) !important;
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--text-muted) !important;
+}
+
+.select2-container {
+    z-index: 10000 !important;
+}
+
+.select2-dropdown {
+    background: var(--bg-color) !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 10001 !important;
+    color: #000000 !important;
+}
+
+.select2-results__option {
+    color: #000000 !important;
+    background: var(--bg-color) !important;
+    padding: 0.5rem 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+.select2-results__option--highlighted {
+    background: rgba(75, 94, 140, 0.1) !important;
+    color: #000000 !important;
+}
+
+.select2-results__option--selected {
+    background: rgba(75, 94, 140, 0.2) !important;
+    color: #000000 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    .cta-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .back-navigation {
+        margin-bottom: 1.5rem;
+    }
+    
+    .service-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .cta-actions {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-action {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .sample-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .card-title {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 1.4rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .feature-title {
+        font-size: 1.1rem;
+    }
+    
+    .feature-description {
+        font-size: 0.9rem;
+    }
+}
+
+@media print {
+    .converter-card, .feature-card, .cta-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    
+    .service-icon, .header-icon, .feature-icon {
+        background: none;
+        color: #000;
+    }
+    
+    .btn-action {
+        background: none;
+        color: #000;
+        border: 1px solid #000;
+    }
+    
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
+</style>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span style="color: #000000;">' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return $('<span style="color: #000000;">' + (country.text || country.id) + '</span>');
+    }
+    
+    $('#destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true,
+        dropdownParent: $('.selection-section')
+    });
+
+    // Add subtle animation to form elements
+    $('.form-select').on('focus', function() {
+        $(this).closest('.select-wrapper').addClass('focused');
+    }).on('blur', function() {
+        $(this).closest('.select-wrapper').removeClass('focused');
+    });
+});
+
+document.getElementById('countryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Add loading state to button
+    const btn = this.querySelector('.explore-btn');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Loading...</span>';
+    btn.disabled = true;
+    
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new FormData(this)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+        } else {
+            alert('Unexpected response format. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+    })
+    .finally(() => {
+        // Restore button state
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+
+// Card animation on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.feature-card, .cta-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,1891 @@
+{% extends "base.html" %}
+
+{% block title %}Incoterms® - Indatex Academy{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="incoterms-hero-section">
+    <div class="incoterms-hero-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="animated-background">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
+            <div class="bg-shape shape-4"></div>
+            <div class="bg-shape shape-5"></div>
+            <div class="bg-shape shape-6"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto">
+                <div class="incoterms-hero-content text-center">
+                    <h1 class="incoterms-hero-title">Master <span class="highlight-text">Incoterms® 2020</span></h1>
+                    <p class="incoterms-hero-subtitle">Standardized Rules for International Trade Success</p>
+                    
+                    <div class="incoterms-stats">
+                        <div class="incoterms-stat-item">
+                            <span class="incoterms-stat-number">11</span>
+                            <span class="incoterms-stat-label">Rules</span>
+                        </div>
+                        <div class="incoterms-stat-divider"></div>
+                        <div class="incoterms-stat-item">
+                            <span class="incoterms-stat-number">2</span>
+                            <span class="incoterms-stat-label">Categories</span>
+                        </div>
+                        <div class="incoterms-stat-divider"></div>
+                        <div class="incoterms-stat-item">
+                            <span class="incoterms-stat-number">2020</span>
+                            <span class="incoterms-stat-label">Latest Version</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Navigation -->
+<div class="incoterms-quick-nav-section">
+    <div class="container">
+        <div class="incoterms-quick-nav-wrapper">
+            <a href="#general" class="incoterms-quick-nav-item">
+                <i class="fas fa-question-circle"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#exhaustive" class="incoterms-quick-nav-item">
+                <i class="fas fa-tools"></i>
+                <span>Usage Guide</span>
+            </a>
+            <a href="#resume" class="incoterms-quick-nav-item">
+                <i class="fas fa-list"></i>
+                <span>All Terms</span>
+            </a>
+            <a href="#logistics" class="incoterms-quick-nav-item">
+                <i class="fas fa-balance-scale"></i>
+                <span>Costs & Risks</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="incoterms-main-content">
+    <div class="container">
+        <!-- Introduction Section -->
+        <section class="incoterms-intro-section">
+            <div class="incoterms-intro-card">
+                <div class="incoterms-intro-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="incoterms-intro-content">
+                    <p class="incoterms-lead-intro">
+                        Incoterms® are standardized international rules that define responsibilities, costs, and risks between buyers and sellers in global trade transactions.
+                    </p>
+                    <p class="incoterms-intro-text">
+                        Introduced in 1936 by the International Chamber of Commerce (ICC), these rules provide clarity and prevent misunderstandings in international trade contracts.
+                    </p>
+                    <div class="incoterms-alert-card">
+                        <div class="incoterms-alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="incoterms-alert-content">
+                            <h5>Key Purpose</h5>
+                            <p>Incoterms® clarify when risks and charges transfer from seller to buyer, helping avoid disputes and litigation in international transactions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Sections -->
+        <div class="incoterms-steps-container">
+            <!-- What is an Incoterm®? -->
+            <section class="incoterms-step-section" id="general">
+                <div class="incoterms-step-header">
+                    <div class="incoterms-step-number">
+                        <span>01</span>
+                    </div>
+                    <div class="incoterms-step-content">
+                        <h2 class="incoterms-step-title">What is an Incoterm®?</h2>
+                        <p class="incoterms-step-description">Understanding the fundamentals of international trade rules</p>
+                    </div>
+                </div>
+                
+                <div class="incoterms-step-cards">
+                    <div class="incoterms-step-card">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>Definition & Purpose</h5>
+                            <p>Incoterms® are standardized rules addressing when risks and charges transfer from seller to buyer in international trade. They reduce uncertainties by clearly defining responsibilities, risks, and costs.</p>
+                            <div class="incoterms-highlight-box">
+                                <i class="fas fa-lightbulb"></i>
+                                <p><strong>Key Insight:</strong> Incoterms® dissociate risk transfer from ownership transfer, which is governed by the contract's legal framework.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="incoterms-step-card incoterms-featured">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>2020 Key Changes</h5>
+                            <ul>
+                                <li>Evolution of FCA with on-board notation for bills of lading</li>
+                                <li>New Incoterm® DPU replaces DAT</li>
+                                <li>Differentiated insurance coverage in CIF and CIP</li>
+                                <li>Transport organization in FCA, DAP, DPU, and DDP</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="incoterms-step-card">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>What Incoterms® Clarify</h5>
+                            <ol>
+                                <li>Risk transfer points during shipping</li>
+                                <li>Shipping contract responsibilities</li>
+                                <li>Distribution of logistic and administrative charges</li>
+                                <li>Packaging, labeling, and handling duties</li>
+                                <li>Export/import formalities and documentation</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How to Use Incoterms® 2020 -->
+            <section class="incoterms-step-section" id="exhaustive">
+                <div class="incoterms-step-header">
+                    <div class="incoterms-step-number">
+                        <span>02</span>
+                    </div>
+                    <div class="incoterms-step-content">
+                        <h2 class="incoterms-step-title">How to Use Incoterms® 2020</h2>
+                        <p class="incoterms-step-description">Practical guidelines for proper implementation</p>
+                    </div>
+                </div>
+                
+                <div class="incoterms-step-cards">
+                    <div class="incoterms-step-card">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>Clarify in Contract</h5>
+                            <p>Specify the chosen Incoterm®, port, or place in the contract, e.g., <strong>CIF Hong Kong Incoterms® 2020</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="incoterms-step-card">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>Choose Appropriate Rule</h5>
+                            <p>Select an Incoterm® based on your organization's capacity, transport type, and service level requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="incoterms-step-card">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>Specify Place and Port</h5>
+                            <p>Assign a precise location, e.g., <strong>FCA 25 rue Saint Charles, Bordeaux, France, Incoterms® 2020</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="incoterms-step-card incoterms-critical">
+                        <div class="incoterms-step-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="incoterms-step-card-content">
+                            <h5>Important Precautions</h5>
+                            <p class="mb-3">Modern trade trends favor buyers by shifting logistics responsibilities to exporters. Negotiate terms carefully, especially for high-risk countries, and consider securing a letter of credit.</p>
+                            <div class="incoterms-critical-alert">
+                                <div class="incoterms-critical-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="incoterms-critical-content">
+                                    <h6>Essential Knowledge</h6>
+                                    <p>Understand each Incoterm® and its acronym thoroughly. Use variants accurately to avoid confusion and disputes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Getting to Know Incoterms® 2020 -->
+            <section class="incoterms-step-section" id="resume">
+                <div class="incoterms-step-header">
+                    <div class="incoterms-step-number">
+                        <span>03</span>
+                    </div>
+                    <div class="incoterms-step-content">
+                        <h2 class="incoterms-step-title">Incoterms® 2020 Overview</h2>
+                        <p class="incoterms-step-description">Complete list of all 11 Incoterms® rules</p>
+                    </div>
+                </div>
+                
+                <div class="incoterms-tables-section">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="incoterms-table-card">
+                                <h4><i class="fas fa-truck me-2"></i>All Modes of Transport</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>EXW</strong></td>
+                                                <td>Ex Works</td>
+                                                <td>Seller makes goods available at their premises</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>FCA</strong></td>
+                                                <td>Free Carrier</td>
+                                                <td>Seller delivers to carrier at named place</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>CPT</strong></td>
+                                                <td>Carriage Paid To</td>
+                                                <td>Seller pays freight to named destination</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>CIP</strong></td>
+                                                <td>Carriage & Insurance Paid</td>
+                                                <td>Seller pays freight and insurance</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>DAP</strong></td>
+                                                <td>Delivered at Place</td>
+                                                <td>Seller delivers at named place ready for unloading</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>DPU*</strong></td>
+                                                <td>Delivered at Place Unloaded</td>
+                                                <td>Seller delivers and unloads at named place</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>DDP</strong></td>
+                                                <td>Delivered Duty Paid</td>
+                                                <td>Seller delivers with paid duties and taxes</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="incoterms-note">* New for Incoterms® 2020</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="incoterms-table-card">
+                                <h4><i class="fas fa-ship me-2"></i>Maritime & Inland Waterway</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>FAS</strong></td>
+                                                <td>Free Alongside Ship</td>
+                                                <td>Seller delivers alongside ship at named port</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>FOB</strong></td>
+                                                <td>Free On Board</td>
+                                                <td>Seller delivers on board the vessel</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>CFR</strong></td>
+                                                <td>Cost and Freight</td>
+                                                <td>Seller pays freight to named destination port</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>CIF</strong></td>
+                                                <td>Cost, Insurance, Freight</td>
+                                                <td>Seller pays freight and minimum insurance</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="incoterms-categories-section mt-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="incoterms-category-card">
+                                    <div class="incoterms-category-icon">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="incoterms-category-content">
+                                        <h5>Sale on Departure</h5>
+                                        <p>Goods are shipped at the buyer's risk from the seller's premises (EXW) or after being handed to the carrier (FCA, FAS, FOB, CFR, CIF, CPT, CIP).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="incoterms-category-card">
+                                    <div class="incoterms-category-icon">
+                                        <i class="fas fa-ship"></i>
+                                    </div>
+                                    <div class="incoterms-category-content">
+                                        <h5>Sale on Arrival</h5>
+                                        <p>Goods are shipped at the seller's risk until reaching the destination (DAP, DPU, DDP).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Costs and Risks Distribution -->
+            <section class="incoterms-step-section" id="logistics">
+                <div class="incoterms-step-header">
+                    <div class="incoterms-step-number">
+                        <span>04</span>
+                    </div>
+                    <div class="incoterms-step-content">
+                        <h2 class="incoterms-step-title">Costs & Risks Distribution</h2>
+                        <p class="incoterms-step-description">Understanding responsibilities across all Incoterms®</p>
+                    </div>
+                </div>
+                
+                <div class="incoterms-costs-section">
+                    <div class="incoterms-alert-card mb-4">
+                        <div class="incoterms-alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="incoterms-alert-content">
+                            <h5 class="mb-2">Legend Guide</h5>
+                            <p><strong>S = Seller</strong> | <strong>B = Buyer</strong> - Distribution of costs and responsibilities across different operations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="incoterms-table-card">
+                        <h4 class="mb-3">Cost Distribution Matrix</h4>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th rowspan="2" class="align-middle">Operation</th>
+                                        <th colspan="7" class="text-center">All Modes of Transport</th>
+                                        <th colspan="4" class="text-center">Maritime/Inland Waterway</th>
+                                    </tr>
+                                    <tr>
+                                        <th>EXW</th><th>FCA</th><th>CPT</th><th>CIP</th><th>DAP</th><th>DPU</th><th>DDP</th>
+                                        <th>FAS</th><th>FOB</th><th>CFR</th><th>CIF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Packaging</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td></tr>
+                                    <tr><td>Loading from warehouse</td><td>B</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td></tr>
+                                    <tr><td>Pre-carriage</td><td>B</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td></tr>
+                                    <tr><td>Export customs clearance</td><td>B</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td></tr>
+                                    <tr><td>Handling at departure</td><td>B</td><td>B</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>B</td><td>S</td></tr>
+                                    <tr><td>Main transport</td><td>B</td><td>B</td><td>S</td><td>S</td><td>S</td><td>S</td><td>S</td><td>B</td><td>B</td><td>S</td></tr>
+                                    <tr><td>Handling on arrival</td><td>B</td><td>B</td><td>B</td><td>B</td><td>S</td><td>S</td><td>S</td><td>B</td><td>B</td><td>B</td></tr>
+                                    <tr><td>Import customs clearance</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>S</td><td>B</td><td>B</td><td>B</td></tr>
+                                    <tr><td>Post-carriage</td><td>B</td><td>B</td><td>B</td><td>B</td><td>S</td><td>B</td><td>S</td><td>B</td><td>B</td><td>B</td></tr>
+                                    <tr><td>Unloading into warehouse</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="incoterms-alert-card incoterms-critical mt-4">
+                        <div class="incoterms-alert-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="incoterms-alert-content">
+                            <h5>Important Notes</h5>
+                            <ul class="mb-0">
+                                <li><strong>Insurance Coverage:</strong> "All-risk" insurance for buyer in some terms, "Minimum" insurance in others</li>
+                                <li><strong>Bill of Lading:</strong> Optional based on agreed location in certain Incoterms®</li>
+                                <li><strong>Risk Transfer:</strong> Critical to understand when responsibility shifts from seller to buyer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Key Definitions Section -->
+        <section class="incoterms-takeaways-section">
+            <div class="incoterms-section-header">
+                <h2 class="incoterms-section-title">Key Incoterms® Definitions</h2>
+                <p class="incoterms-section-description">Detailed explanations of commonly used Incoterms®</p>
+            </div>
+            
+            <div class="incoterms-definitions-grid">
+                <div class="incoterms-definition-card">
+                    <div class="incoterms-definition-header">
+                        <div class="incoterms-definition-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <h5>EXW<br><span class="incoterms-full-name">Ex Works</span></h5>
+                    </div>
+                    <div class="incoterms-definition-content">
+                        <div class="incoterms-responsibility">
+                            <div class="seller-responsibility">
+                                <span class="responsibility-label">Seller</span>
+                                <p>Prepares goods at their premises</p>
+                            </div>
+                            <div class="buyer-responsibility">
+                                <span class="responsibility-label">Buyer</span>
+                                <p>Bears all charges and risks from seller's warehouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="incoterms-definition-card">
+                    <div class="incoterms-definition-header">
+                        <div class="incoterms-definition-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h5>FCA<br><span class="incoterms-full-name">Free Carrier</span></h5>
+                    </div>
+                    <div class="incoterms-definition-content">
+                        <div class="incoterms-responsibility">
+                            <div class="seller-responsibility">
+                                <span class="responsibility-label">Seller</span>
+                                <p>Loads goods and handles export clearance</p>
+                            </div>
+                            <div class="buyer-responsibility">
+                                <span class="responsibility-label">Buyer</span>
+                                <p>Chooses transport and pays main transportation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="incoterms-definition-card">
+                    <div class="incoterms-definition-header">
+                        <div class="incoterms-definition-icon">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <h5>FOB<br><span class="incoterms-full-name">Free On Board</span></h5>
+                    </div>
+                    <div class="incoterms-definition-content">
+                        <div class="incoterms-responsibility">
+                            <div class="seller-responsibility">
+                                <span class="responsibility-label">Seller</span>
+                                <p>Delivers goods on board the vessel</p>
+                            </div>
+                            <div class="buyer-responsibility">
+                                <span class="responsibility-label">Buyer</span>
+                                <p>Bears all costs and risks from that point</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="incoterms-definition-card">
+                    <div class="incoterms-definition-header">
+                        <div class="incoterms-definition-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h5>CIF<br><span class="incoterms-full-name">Cost, Insurance, Freight</span></h5>
+                    </div>
+                    <div class="incoterms-definition-content">
+                        <div class="incoterms-responsibility">
+                            <div class="seller-responsibility">
+                                <span class="responsibility-label">Seller</span>
+                                <p>Pays freight and minimum insurance</p>
+                            </div>
+                            <div class="buyer-responsibility">
+                                <span class="responsibility-label">Buyer</span>
+                                <p>Takes risk once goods are on board</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="incoterms-definition-card incoterms-critical">
+                    <div class="incoterms-definition-header">
+                        <div class="incoterms-definition-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h5>Legal Framework</h5>
+                    </div>
+                    <div class="incoterms-definition-content">
+                        <div class="incoterms-legal-info">
+                            <p>Swiss law often favored for exporter-friendly terms and neutrality in international disputes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference Section -->
+        <section class="incoterms-checklist-section">
+            <div class="incoterms-checklist-card">
+                <div class="incoterms-checklist-header">
+                    <h3><i class="fas fa-clipboard-check me-2"></i>Incoterms® Selection Guide</h3>
+                    <p>Key considerations when choosing the right Incoterm®</p>
+                </div>
+                
+                <div class="incoterms-checklist-content">
+                    <div class="incoterms-checklist-column">
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="transport-mode" checked>
+                            <label for="transport-mode">Consider transport mode (all modes vs maritime only)</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="risk-allocation" checked>
+                            <label for="risk-allocation">Define preferred risk allocation point</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="cost-control" checked>
+                            <label for="cost-control">Determine desired cost control level</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="insurance" checked>
+                            <label for="insurance">Evaluate insurance requirements</label>
+                        </div>
+                    </div>
+                    
+                    <div class="incoterms-checklist-column">
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="customs" checked>
+                            <label for="customs">Assess customs clearance capabilities</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="logistics" checked>
+                            <label for="logistics">Review logistics arrangement capacity</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="negotiation" checked>
+                            <label for="negotiation">Consider negotiation leverage</label>
+                        </div>
+                        <div class="incoterms-checklist-item">
+                            <input type="checkbox" id="specify" checked>
+                            <label for="specify">Always specify Incoterms® 2020 version</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="incoterms-cta-section">
+            <div class="incoterms-cta-background">
+                <div class="incoterms-cta-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h3 class="incoterms-cta-title">Master International Trade Rules</h3>
+                            <p class="incoterms-cta-subtitle">Apply Incoterms® 2020 correctly to ensure smooth global transactions and avoid costly misunderstandings.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="incoterms-cta-buttons">
+                                <a href="#general" class="btn btn-incoterms-cta-primary">
+                                    <i class="fas fa-book me-2"></i>Learn More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+/* Updated Color Variables to Match Business Trips Page */
+:root {
+    --primary-color: #4b5e8c;       /* Lighter slate blue (navbar bg) */
+    --primary-light: #6b7aab;       /* Lighter blue for hover/bg highlights */
+    --secondary-color: #6b7280;     /* Neutral gray (buttons, accents) */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Keep accent green for success messages */
+    
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for dropdowns, panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    
+    --border-color: rgba(0, 0, 0, 0.1); /* Subtle dark borders on light bg */
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+                0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+                0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Incoterms Hero Section */
+.incoterms-hero-section {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    background: var(--bg-color);
+    padding: 3rem 0 1rem;
+}
+
+.incoterms-hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+/* Animated Background Elements */
+.animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1) 0%, rgba(107, 122, 171, 0.05) 100%);
+    animation: floatBackground 20s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+}
+
+.shape-2 {
+    width: 120px;
+    height: 120px;
+    top: 70%;
+    left: 80%;
+    animation-delay: 2s;
+    animation-duration: 30s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    left: 85%;
+    animation-delay: 4s;
+    animation-duration: 20s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    top: 80%;
+    left: 10%;
+    animation-delay: 6s;
+    animation-duration: 35s;
+}
+
+.shape-5 {
+    width: 70px;
+    height: 70px;
+    top: 60%;
+    left: 90%;
+    animation-delay: 8s;
+    animation-duration: 28s;
+}
+
+.shape-6 {
+    width: 90px;
+    height: 90px;
+    top: 30%;
+    left: 2%;
+    animation-delay: 10s;
+    animation-duration: 32s;
+}
+
+@keyframes floatBackground {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translateY(-20px) translateX(15px) rotate(90deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(10px) translateX(-10px) rotate(180deg);
+        opacity: 0.7;
+    }
+    75% {
+        transform: translateY(-15px) translateX(-5px) rotate(270deg);
+        opacity: 0.5;
+    }
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Hero Content */
+.incoterms-hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 3;
+}
+
+.incoterms-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    line-height: 1.1;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.incoterms-hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.incoterms-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.incoterms-stat-item {
+    text-align: center;
+}
+
+.incoterms-stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.incoterms-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.incoterms-stat-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Quick Navigation */
+.incoterms-quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.incoterms-quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.incoterms-quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.incoterms-quick-nav-item:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.incoterms-quick-nav-item i {
+    font-size: 1rem;
+}
+
+/* Incoterms Main Content */
+.incoterms-main-content {
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Introduction Section */
+.incoterms-intro-section {
+    margin-bottom: 4rem;
+}
+
+.incoterms-intro-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.incoterms-intro-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.incoterms-intro-content {
+    flex: 1;
+}
+
+.incoterms-lead-intro {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.incoterms-intro-text {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.incoterms-alert-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.incoterms-alert-card.incoterms-critical {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.incoterms-alert-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.incoterms-alert-card.incoterms-critical .incoterms-alert-icon {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--secondary-color);
+}
+
+.incoterms-alert-content h5 {
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.incoterms-alert-card.incoterms-critical .incoterms-alert-content h5 {
+    color: var(--secondary-color);
+}
+
+.incoterms-alert-content p {
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Steps Container */
+.incoterms-steps-container {
+    margin-bottom: 4rem;
+}
+
+/* Step Sections */
+.incoterms-step-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+}
+
+.incoterms-step-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.incoterms-step-number {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.incoterms-step-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.incoterms-step-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Step Cards */
+.incoterms-step-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.incoterms-step-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.incoterms-step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.incoterms-featured {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.05));
+    border-color: var(--primary-color);
+}
+
+.incoterms-critical {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    border-color: var(--secondary-color);
+}
+
+.incoterms-step-card-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(75, 94, 140, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.incoterms-step-card:hover .incoterms-step-card-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.incoterms-step-card-icon i {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.incoterms-step-card:hover .incoterms-step-card-icon i {
+    color: var(--text-light);
+}
+
+.incoterms-featured .incoterms-step-card-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.incoterms-featured .incoterms-step-card-icon i {
+    color: var(--text-light);
+}
+
+.incoterms-critical .incoterms-step-card-icon {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.incoterms-critical .incoterms-step-card-icon i {
+    color: var(--secondary-color);
+}
+
+.incoterms-step-card-content h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.incoterms-step-card-content p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.incoterms-step-card-content ul, .incoterms-step-card-content ol {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+}
+
+.incoterms-step-card-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.incoterms-highlight-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.incoterms-highlight-box i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.incoterms-highlight-box p {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.incoterms-critical-alert {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.incoterms-critical-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.incoterms-critical-content h6 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.incoterms-critical-content p {
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Tables Section */
+.incoterms-tables-section {
+    margin-top: 1rem;
+}
+
+.incoterms-table-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.incoterms-table-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.incoterms-table-card h4 i {
+    color: var(--primary-color);
+}
+
+.table {
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: rgba(75, 94, 140, 0.1);
+    border-color: var(--border-color);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.table tbody td {
+    border-color: var(--border-color);
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(75, 94, 140, 0.05);
+}
+
+.incoterms-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Categories Section */
+.incoterms-categories-section {
+    margin-top: 2rem;
+}
+
+.incoterms-category-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.incoterms-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.incoterms-category-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(75, 94, 140, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.incoterms-category-card:hover .incoterms-category-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+}
+
+.incoterms-category-content h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+}
+
+.incoterms-category-content p {
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Costs Section */
+.incoterms-costs-section {
+    margin-top: 1rem;
+}
+
+/* Definitions Section */
+.incoterms-takeaways-section {
+    margin-bottom: 4rem;
+}
+
+.incoterms-section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.incoterms-section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.incoterms-section-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.incoterms-definitions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.incoterms-definition-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.incoterms-definition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.incoterms-definition-card.incoterms-critical {
+    border-color: var(--secondary-color);
+}
+
+.incoterms-definition-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.incoterms-definition-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(75, 94, 140, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.incoterms-definition-card.incoterms-critical .incoterms-definition-icon {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--secondary-color);
+}
+
+.incoterms-definition-header h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.incoterms-full-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.2rem;
+}
+
+.incoterms-definition-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.incoterms-responsibility {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+}
+
+.seller-responsibility, .buyer-responsibility {
+    padding: 0.8rem;
+    border-radius: 8px;
+    background: rgba(75, 94, 140, 0.05);
+}
+
+.seller-responsibility {
+    border-left: 3px solid var(--primary-color);
+}
+
+.buyer-responsibility {
+    border-left: 3px solid var(--accent-color);
+}
+
+.responsibility-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.seller-responsibility .responsibility-label {
+    color: var(--primary-color);
+}
+
+.buyer-responsibility .responsibility-label {
+    color: var(--accent-color);
+}
+
+.incoterms-responsibility p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.incoterms-legal-info {
+    padding: 0.8rem;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.05);
+    border-left: 3px solid var(--secondary-color);
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.incoterms-legal-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Checklist Section */
+.incoterms-checklist-section {
+    margin-bottom: 4rem;
+}
+
+.incoterms-checklist-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.incoterms-checklist-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.incoterms-checklist-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.incoterms-checklist-header p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.incoterms-checklist-content {
+    display: flex;
+    gap: 2rem;
+}
+
+.incoterms-checklist-column {
+    flex: 1;
+}
+
+.incoterms-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.incoterms-checklist-item:last-child {
+    border-bottom: none;
+}
+
+.incoterms-checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.incoterms-checklist-item input[type="checkbox"]:checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.incoterms-checklist-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.incoterms-checklist-item label {
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.incoterms-checklist-item input[type="checkbox"]:checked + label {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* CTA Section */
+.incoterms-cta-section {
+    margin: 4rem 0 2rem;
+}
+
+.incoterms-cta-background {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 24px;
+    padding: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.incoterms-cta-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.incoterms-cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.incoterms-cta-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: white;
+}
+
+.incoterms-cta-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.incoterms-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-incoterms-cta-primary {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.btn-incoterms-cta-primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .incoterms-hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .incoterms-stats {
+        gap: 1rem;
+    }
+    
+    .incoterms-step-cards, .incoterms-definitions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+    }
+    
+    .incoterms-step-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .incoterms-section-title {
+        font-size: 1.8rem;
+    }
+    
+    .incoterms-cta-background {
+        padding: 2rem 1.5rem;
+    }
+    
+    .incoterms-cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .incoterms-checklist-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .incoterms-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    
+    .incoterms-hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .incoterms-hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .incoterms-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .incoterms-stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .incoterms-quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    
+    .incoterms-quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    
+    .incoterms-step-cards, .incoterms-definitions-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .incoterms-intro-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .incoterms-step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .incoterms-step-content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .incoterms-cta-background {
+        padding: 1.5rem 1rem;
+    }
+    
+    .incoterms-cta-title {
+        font-size: 1.6rem;
+    }
+    
+    .incoterms-cta-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .incoterms-step-card, .incoterms-definition-card {
+        padding: 1rem;
+    }
+    
+    .incoterms-step-card-content h5, .incoterms-definition-header h5 {
+        font-size: 1rem;
+    }
+    
+    .incoterms-step-card-content p, .incoterms-responsibility p {
+        font-size: 0.8rem;
+    }
+    
+    .incoterms-table-card {
+        padding: 1rem;
+    }
+    
+    .table {
+        font-size: 0.8rem;
+    }
+    
+    .incoterms-definition-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .incoterms-responsibility {
+        gap: 0.8rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for quick nav
+    const quickNavItems = document.querySelectorAll('.incoterms-quick-nav-item');
+    
+    quickNavItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerOffset = 120;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Add animation to cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.incoterms-step-card, .incoterms-definition-card, .incoterms-category-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Highlight active section in navigation
+    const sections = document.querySelectorAll('.incoterms-step-section');
+    const navLinks = document.querySelectorAll('.incoterms-quick-nav-item');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Checklist functionality
+    const checkboxes = document.querySelectorAll('.incoterms-checklist-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.parentElement.classList.add('completed');
+            } else {
+                this.parentElement.classList.remove('completed');
+            }
+        });
+    });
+
+    console.log('Incoterms page initialized successfully');
+});
+</script>
+
+{% endblock %}

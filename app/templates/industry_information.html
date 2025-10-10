@@ -1,0 +1,1002 @@
+{% extends "base.html" %}
+
+{% block title %}Industry Information - Trade Intelligence Services{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="{{ url_for('main.services_page') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Services</span>
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-chart-bar fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Industry Information</h1>
+                    <p class="hero-subtitle">Comprehensive industry analysis and trade intelligence services</p>
+                    <p class="hero-stats"><small><i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Market Intelligence</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Service Cards Grid -->
+        <div class="services-grid">
+            <!-- Best Country for Trade -->
+            <div class="service-card placeholder-card" onclick="showComingSoon('Best Country for Trade')">
+                <div class="card-header">
+                    <div class="service-icon-wrapper">
+                        <i class="fas fa-globe service-icon"></i>
+                    </div>
+                    <span class="status-badge coming-soon">Coming Soon</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="service-title">Best Country for Trade</h3>
+                    <p class="service-description">Identify optimal countries for your trade expansion based on market potential and accessibility</p>
+                </div>
+                <div class="card-footer">
+                    <div class="feature-highlights">
+                        <span class="highlight-item">Market Analysis</span>
+                        <span class="highlight-item">Trade Potential</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trade Flows -->
+            <a href="{{ url_for('main.service_form', service_type='import-export-flows') }}" class="service-link">
+                <div class="service-card active-card">
+                    <div class="card-header">
+                        <div class="service-icon-wrapper">
+                            <i class="fas fa-exchange-alt service-icon"></i>
+                        </div>
+                        <span class="status-badge available">Available</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="service-title">Trade Flows</h3>
+                        <p class="service-description">Product-specific trade flows between origin and destination countries with trend analysis</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="feature-highlights">
+                            <span class="highlight-item">Flow Analysis</span>
+                            <span class="highlight-item">Trend Data</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Market Report -->
+            <a href="{{ url_for('main.form_page') }}" class="service-link">
+                <div class="service-card featured-card">
+                    <div class="card-header">
+                        <div class="service-icon-wrapper premium">
+                            <i class="fas fa-file-alt service-icon"></i>
+                        </div>
+                        <span class="status-badge premium">Premium</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="service-title">Market Report</h3>
+                        <p class="service-description">Complete market intelligence report with all sections combined</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="feature-highlights">
+                            <span class="highlight-item">Full Analysis</span>
+                            <span class="highlight-item">AI Insights</span>
+                            <span class="highlight-item">Premium Data</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="converter-card">
+                <div class="card-body">
+                    <div class="cta-content">
+                        <div class="cta-header">
+                            <h2 class="card-title">Need More Market Intelligence?</h2>
+                            <p class="hero-subtitle">Explore our complete range of trade intelligence services to make informed business decisions.</p>
+                        </div>
+                        <div class="cta-actions">
+                            <a href="{{ url_for('main.form_page') }}" class="btn-action">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Generate Complete Report</span>
+                            </a>
+                            <a href="{{ url_for('main.services_page') }}" class="btn-action secondary">
+                                <i class="fas fa-list"></i>
+                                <span>View All Services</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cta-visual">
+                        <div class="visual-icons">
+                            <div class="visual-icon" style="--delay: 0s;">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="visual-icon" style="--delay: 0.3s;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="visual-icon" style="--delay: 0.6s;">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+/* Hero Section */
+.service-hero-section {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Back Navigation */
+.back-navigation {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(-3px);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.back-btn i {
+    font-size: 1rem;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+    box-shadow: var(--shadow-lg);
+    animation: iconPulse 4s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(75, 94, 140, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(75, 94, 140, 0.5);
+    }
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.hero-stats {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Main Content */
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 3rem 0;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.service-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 0;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+}
+
+.service-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.service-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(75, 94, 140, 0.2);
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.service-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    box-shadow: var(--shadow);
+}
+
+.service-icon-wrapper.premium {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    box-shadow: var(--shadow);
+}
+
+.service-icon {
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.available {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--accent-color);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.premium {
+    background: rgba(75, 94, 140, 0.2);
+    color: var(--primary-light);
+    border: 1px solid rgba(75, 94, 140, 0.3);
+}
+
+.status-badge.coming-soon {
+    background: rgba(156, 163, 175, 0.2);
+    color: #d1d5db;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+/* Card Content */
+.card-content {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.service-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.75rem;
+}
+
+.service-description {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Card Footer */
+.card-footer {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.feature-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.highlight-item {
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    font-size: 0.75rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Card Variants */
+.featured-card {
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(75, 94, 140, 0.3);
+}
+
+.featured-card:hover {
+    border-color: rgba(75, 94, 140, 0.5);
+    box-shadow: 0 20px 40px rgba(75, 94, 140, 0.2);
+}
+
+.placeholder-card {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.placeholder-card:hover {
+    opacity: 1;
+    background: rgba(156, 163, 175, 0.1);
+}
+
+/* CTA Section */
+.cta-section {
+    margin-top: 4rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    flex: 1;
+}
+
+.cta-header {
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 1rem;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 12px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.btn-action.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-action.secondary:hover {
+    background: rgba(75, 94, 140, 0.1);
+    color: var(--text-color);
+}
+
+.cta-visual {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visual-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.visual-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    animation: visualFloat 4s ease-in-out infinite;
+    animation-delay: var(--delay);
+    box-shadow: var(--shadow);
+}
+
+@keyframes visualFloat {
+    0%, 100% { 
+        transform: translateY(0px);
+    }
+    50% { 
+        transform: translateY(-10px);
+    }
+}
+
+/* Toast Notification */
+.custom-toast {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(75, 94, 140, 0.95);
+    color: var(--text-light);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease-out;
+    max-width: 350px;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast-content i {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.toast-content span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Select2 Styling */
+.select2-container--default .select2-selection--single {
+    background: var(--bg-color) !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    height: 42px !important;
+    line-height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-color) !important;
+    padding-left: 0.7rem !important;
+    line-height: 38px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 0.7rem !important;
+    height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--text-color) transparent transparent transparent !important;
+    border-width: 6px 5px 0 5px !important;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent var(--text-color) transparent !important;
+    border-width: 0 5px 6px 5px !important;
+}
+
+.select2-dropdown {
+    background: var(--bg-color) !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 9999 !important;
+}
+
+.select2-results__option {
+    color: var(--text-color) !important;
+    padding: 0.7rem !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    background: var(--bg-color) !important;
+}
+
+.select2-results__option--highlighted {
+    background: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+.select2-results__option--selected {
+    background: #e2e8f0 !important;
+    color: var(--text-color) !important;
+}
+
+.select2-container--default .select2-selection--single:focus {
+    outline: none !important;
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.2) !important;
+}
+
+.select2-search--dropdown .select2-search__field {
+    background: #f8fafc !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    padding: 0.5rem !important;
+    font-weight: 500 !important;
+}
+
+.select2-search--dropdown .select2-search__field:focus {
+    outline: none !important;
+    border-color: var(--primary-light) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    .card-body {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .cta-visual {
+        flex: none;
+    }
+    
+    .visual-icons {
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .back-navigation {
+        margin-bottom: 1.5rem;
+    }
+    
+    .service-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .service-card {
+        margin: 0;
+    }
+    
+    .card-body {
+        padding: 2rem;
+        gap: 2rem;
+    }
+    
+    .card-title {
+        font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-actions {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-action {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+    
+    .custom-toast {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .service-icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .service-icon {
+        font-size: 1.25rem;
+    }
+    
+    .service-title {
+        font-size: 1.1rem;
+    }
+    
+    .service-description {
+        font-size: 0.9rem;
+    }
+    
+    .card-header {
+        padding: 1.25rem 1.25rem 0;
+    }
+    
+    .card-content {
+        padding: 1.25rem;
+    }
+    
+    .card-footer {
+        padding: 0 1.25rem 1.25rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .visual-icons {
+        gap: 0.75rem;
+    }
+    
+    .visual-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media print {
+    .service-card, .converter-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    
+    .service-icon-wrapper, .service-icon, .visual-icon {
+        background: none;
+        color: #000;
+    }
+    
+    .btn-action {
+        background: none;
+        color: #000;
+        border: 1px solid #000;
+    }
+    
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
+</style>
+
+<script>
+function showComingSoon(feature) {
+    if (typeof showToast === 'function') {
+        showToast(`${feature} is coming soon! Stay tuned for updates.`, 'info');
+    } else {
+        showCustomToast(`${feature} is coming soon! Stay tuned for updates.`);
+    }
+}
+
+function showCustomToast(message) {
+    const existingToast = document.querySelector('.custom-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'custom-toast';
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas fa-info-circle"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease-in forwards';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300);
+    }, 4000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // External link tracking
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Industry Information page initialized');
+});
+</script>
+{% endblock %}

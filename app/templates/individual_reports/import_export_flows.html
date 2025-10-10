@@ -1,0 +1,1142 @@
+{% extends "base.html" %}
+
+{% block title %}Import/Export Flows - {{ form_data.product_name }}{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="{{ url_for('main.services_page') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Services</span>
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-exchange-alt fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Import/Export Flows</h1>
+                    <p class="hero-subtitle">Trade flow analysis for {{ form_data.product_name }} between {{ form_data.origin_country_name }} and {{ form_data.destination_country_name }}</p>
+                    <p class="hero-stats">
+                        <small>
+                            <i class="fas fa-calendar me-1"></i>{{ datetime.now().strftime('%B %d, %Y') }} • 
+                            <i class="fas fa-box me-1"></i>{{ form_data.product_name }}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Navigation -->
+        <nav class="service-nav">
+            <div class="nav-content">
+                <span class="nav-label">Related Services:</span>
+                <div class="nav-actions">
+                    <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="nav-btn">Market Access</a>
+                    <a href="{{ url_for('main.service_form', service_type='foreign-trade') }}" class="nav-btn">Trade Figures</a>
+                    <a href="{{ url_for('main.form_page') }}" class="nav-btn primary">Complete Report</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <!-- Trade Flow Analysis Section -->
+        <section class="report-section">
+            <div class="section-header">
+                <i class="fas fa-random section-icon"></i>
+                <span>Trade Flow Analysis</span>
+            </div>
+            
+            {% if flows_intro %}
+            <div class="section-intro">
+                {{ flows_intro|plain_text }}
+            </div>
+            {% endif %}
+
+            <div class="section-content">
+                <!-- Trade Flow Chart -->
+                <div class="chart-container-wrapper">
+                    <div class="chart-container">
+                        <canvas id="flowsChart" height="120"></canvas>
+                    </div>
+                </div>
+
+                <!-- Trade Flow Tables -->
+                <div class="flows-grid">
+                    <div class="flow-card">
+                        <div class="flow-card-header">
+                            <div class="flow-header-content">
+                                <span class="flow-icon">
+                                    <i class="fas fa-arrow-up"></i>
+                                </span>
+                                <div class="flow-text">
+                                    <h3 class="flow-title">Export Flows</h3>
+                                    <p class="flow-subtitle">{{ form_data.origin_country_name }} exports to global markets</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-card-body">
+                            {% if flows_data.export_table_html %}
+                            <div class="table-responsive" id="export-flows-table">
+                                {{ flows_data.export_table_html|safe }}
+                            </div>
+                            {% else %}
+                            <div class="empty-data">
+                                <i class="fas fa-chart-line"></i>
+                                <p>No export flow data available.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flow-card">
+                        <div class="flow-card-header">
+                            <div class="flow-header-content">
+                                <span class="flow-icon import">
+                                    <i class="fas fa-arrow-down"></i>
+                                </span>
+                                <div class="flow-text">
+                                    <h3 class="flow-title">Import Flows</h3>
+                                    <p class="flow-subtitle">{{ form_data.destination_country_name }} imports from global suppliers</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-card-body">
+                            {% if flows_data.import_table_html %}
+                            <div class="table-responsive" id="import-flows-table">
+                                {{ flows_data.import_table_html|safe }}
+                            </div>
+                            {% else %}
+                            <div class="empty-data">
+                                <i class="fas fa-chart-line"></i>
+                                <p>No import flow data available.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trade Summary -->
+                <div class="summary-section">
+                    <h3 class="summary-title">Trade Flow Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Product</div>
+                                <div class="summary-value">{{ form_data.product_name }}</div>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon export">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Export Origin</div>
+                                <div class="summary-value">{{ form_data.origin_country_name }}</div>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon import">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-label">Import Destination</div>
+                                <div class="summary-value">{{ form_data.destination_country_name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if flows_insights %}
+            <div class="section-insights">
+                {{ flows_insights|plain_text }}
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <div class="converter-card">
+                <div class="card-body">
+                    <div class="cta-content">
+                        <div class="cta-header">
+                            <h2 class="card-title">Need Market Access Information?</h2>
+                            <p class="hero-subtitle">Understand tariffs, regulations, and entry requirements for your product.</p>
+                        </div>
+                        <div class="cta-actions">
+                            <a href="{{ url_for('main.service_form', service_type='market-access') }}" class="btn-action">
+                                <i class="fas fa-door-open"></i>
+                                <span>Check Market Access</span>
+                            </a>
+                            <a href="{{ url_for('main.form_page') }}" class="btn-action secondary">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Get Complete Report</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cta-visual">
+                        <div class="visual-icons">
+                            <div class="visual-icon" style="--delay: 0s;">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="visual-icon" style="--delay: 0.3s;">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="visual-icon" style="--delay: 0.6s;">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Helper to parse flows table for time series data
+function parseFlowsTimeSeries(tableId) {
+    const table = document.getElementById(tableId)?.querySelector('table');
+    if (!table) return {partners: [], years: [], data: {}};
+    let years = [];
+    let partners = [];
+    let data = {};
+    // Try to get years from <thead>
+    const thead = table.querySelector('thead');
+    if (thead) {
+        const ths = thead.querySelectorAll('th');
+        for (let i = 1; i < ths.length; ++i) {
+            let year = ths[i].innerText.trim();
+            if (/^\d{4}$/.test(year)) years.push(year);
+        }
+    }
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    // If no <thead>, check if first row is header
+    let startIdx = 0;
+    if (years.length === 0 && rows.length > 0) {
+        const firstRowCells = Array.from(rows[0].querySelectorAll('td, th'));
+        if (firstRowCells.length > 1 && firstRowCells[0].innerText.trim().toLowerCase() === 'country') {
+            for (let i = 1; i < firstRowCells.length; ++i) {
+                let year = firstRowCells[i].innerText.trim();
+                if (/^\d{4}$/.test(year)) years.push(year);
+            }
+            startIdx = 1; // skip this row for data
+        }
+    }
+    for (let r = startIdx; r < rows.length; ++r) {
+        const cells = rows[r].querySelectorAll('td, th');
+        if (cells.length >= 2) {
+            let partner = cells[0].innerText.trim();
+            if (partner.toLowerCase() === 'country') continue;
+            partners.push(partner);
+            data[partner] = [];
+            for (let i = 1; i < cells.length && i <= years.length; ++i) {
+                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
+                data[partner].push(!isNaN(num) ? num : null);
+            }
+        }
+    }
+    return {partners, years, data};
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const exportSeries = parseFlowsTimeSeries('export-flows-table');
+    const importSeries = parseFlowsTimeSeries('import-flows-table');
+    // Use the same years for both charts (union)
+    const allYears = Array.from(new Set([...(exportSeries.years || []), ...(importSeries.years || [])])).sort();
+    // Prepare datasets for each partner (export and import)
+    const datasets = [];
+    // Export partners
+    exportSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Export: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = exportSeries.years.indexOf(year);
+                return yearIdx !== -1 ? exportSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(52, 152, 219, 1)',
+            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+    // Import partners
+    importSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Import: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = importSeries.years.indexOf(year);
+                return yearIdx !== -1 ? importSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(46, 204, 113, 1)',
+            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+            borderDash: [5, 5],
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+    const ctx = document.getElementById('flowsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: allYears,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Import/Export Flows Evolution by Year' }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Year' } },
+                y: { title: { display: true, text: 'Value' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.flow-card, .summary-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+});
+</script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+/* Hero Section */
+.service-hero-section {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Back Navigation */
+.back-navigation {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(-3px);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.back-btn i {
+    font-size: 1rem;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+    box-shadow: var(--shadow-lg);
+    animation: iconPulse 4s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(75, 94, 140, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(75, 94, 140, 0.5);
+    }
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.hero-stats {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Service Navigation */
+.service-nav {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.nav-btn:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateY(-2px);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.nav-btn.primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    box-shadow: var(--shadow);
+}
+
+.nav-btn.primary:hover {
+    box-shadow: var(--shadow-lg);
+    color: var(--text-light);
+}
+
+/* Main Content */
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 3rem 0;
+}
+
+/* Report Section */
+.report-section {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    padding: 1.5rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.section-icon {
+    font-size: 1.5rem;
+}
+
+.section-intro {
+    background: rgba(75, 94, 140, 0.05);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.section-content {
+    padding: 2rem;
+}
+
+.section-insights {
+    background: rgba(16, 185, 129, 0.05);
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Chart Container */
+.chart-container-wrapper {
+    margin-bottom: 3rem;
+}
+
+.chart-container {
+    background: var(--bg-color);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+/* Flows Grid */
+.flows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.flow-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.flow-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.flow-card-header {
+    background: rgba(75, 94, 140, 0.05);
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.flow-header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.flow-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.3rem;
+}
+
+.flow-icon.import {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.flow-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.25rem;
+}
+
+.flow-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.flow-card-body {
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.empty-data {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+}
+
+.empty-data i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-data p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Summary Section */
+.summary-section {
+    margin-top: 3rem;
+}
+
+.summary-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.3rem;
+    margin-right: 1rem;
+}
+
+.summary-icon.export {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.summary-icon.import {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.summary-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* CTA Section */
+.cta-section {
+    margin-top: 4rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-content {
+    flex: 1;
+}
+
+.cta-header {
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 1rem;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 12px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.btn-action.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-action.secondary:hover {
+    background: rgba(75, 94, 140, 0.1);
+    color: var(--text-color);
+}
+
+.cta-visual {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visual-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.visual-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    animation: visualFloat 4s ease-in-out infinite;
+    animation-delay: var(--delay);
+    box-shadow: var(--shadow);
+}
+
+@keyframes visualFloat {
+    0%, 100% { 
+        transform: translateY(0px);
+    }
+    50% { 
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .flows-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-body {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .cta-visual {
+        flex: none;
+    }
+    
+    .visual-icons {
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .back-navigation {
+        margin-bottom: 1.5rem;
+    }
+    
+    .service-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-actions {
+        justify-content: center;
+    }
+    
+    .section-header {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .section-intro,
+    .section-content,
+    .section-insights {
+        padding: 1.5rem;
+    }
+    
+    .chart-container {
+        padding: 1.5rem;
+    }
+    
+    .flows-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .flow-card-header,
+    .flow-card-body {
+        padding: 1.25rem;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .card-body {
+        padding: 2rem;
+        gap: 2rem;
+    }
+    
+    .card-title {
+        font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-actions {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-action {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .nav-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    
+    .section-header {
+        padding: 1rem 1.25rem;
+        font-size: 1.1rem;
+    }
+    
+    .section-icon {
+        font-size: 1.25rem;
+    }
+    
+    .flow-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .flow-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .flow-title {
+        font-size: 1.1rem;
+    }
+    
+    .flow-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .summary-card {
+        padding: 1.25rem;
+    }
+    
+    .summary-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        margin-right: 0.75rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .visual-icons {
+        gap: 0.75rem;
+    }
+    
+    .visual-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media print {
+    .service-card, .converter-card, .flow-card, .summary-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    
+    .service-icon-wrapper, .service-icon, .visual-icon, .flow-icon, .summary-icon {
+        background: none;
+        color: #000;
+    }
+    
+    .btn-action, .nav-btn {
+        background: none;
+        color: #000;
+        border: 1px solid #000;
+    }
+    
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
+</style>
+{% endblock %}

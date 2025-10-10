@@ -1,0 +1,811 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    {% if service.title %}
+        {{ service.title }} - Market Research Service
+    {% else %}
+        Blacklisted Companies and Vessels - Market Research Service
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Service Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="{{ service.icon|default('fas fa-ban') }} fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">{{ service.title|default('Blacklisted Companies and Vessels') }}</h1>
+                    <p class="hero-subtitle">{{ service.description|default('Identify restricted entities to ensure compliance') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="content-grid">
+            <!-- Info Sidebar -->
+            <div class="info-sidebar">
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-list-check"></i></div>
+                        <h4 class="info-title">What You'll Get:</h4>
+                    </div>
+                    <div class="features-container">
+                        <div class="features-column">
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Comprehensive blacklist search</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Multiple sanctions databases</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Entity details and links</span></div>
+                        </div>
+                        <div class="features-column">
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Blacklisting authorities</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Real-time data access</span></div>
+                            <div class="feature-item"><i class="fas fa-check"></i><span>Detailed compliance information</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Details Card -->
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="info-title">Service Details</h4>
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-database"></i></div>
+                            <div class="detail-content">
+                                <h6>Data Sources</h6>
+                                <p>Multiple government and international sanctions databases</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-clock"></i></div>
+                            <div class="detail-content">
+                                <h6>Processing Time</h6>
+                                <p>Results typically available within 30-60 seconds</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="detail-content">
+                                <h6>Compliance</h6>
+                                <p>Supports international trade compliance requirements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title">Search Blacklist Databases</h3>
+                            <p class="form-subtitle">Enter entity details and select a country to check sanctions and blacklist databases</p>
+                        </div>
+                        <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service')|default('#') }}">
+                            <input type="hidden" name="service_type" value="{{ service_type|default('blacklisted_companies') }}">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="entity_name" class="form-label"><i class="fas fa-building me-2"></i>Entity Name *</label>
+                                    <input type="text" class="form-control form-control-enhanced" id="entity_name" name="entity_name" placeholder="Enter company or vessel name..." required>
+                                    <div class="form-text">Enter the name of the company or vessel to search for in blacklist databases</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="destination_country" class="form-label"><i class="fas fa-globe-americas me-2"></i>Target Country *</label>
+                                    <select class="form-select" id="destination_country" name="destination_country" required>
+                                        <option value="">Choose a country</option>
+                                    </select>
+                                    <div class="form-text">Select the country for blacklist analysis</div>
+                                </div>
+                            </div>
+                            <div class="warning-card">
+                                <div class="warning-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div class="warning-content">
+                                    <h6>Important Notice</h6>
+                                    <p>Results should be verified independently for compliance purposes.</p>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+                                <button type="submit" class="btn-action btn-lg"><i class="fas fa-search me-2"></i>Search Blacklist Databases</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- About Service Card -->
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="info-title">About This Service</h4>
+                    </div>
+                    <p class="about-description">
+                        Our Blacklisted Companies and Vessels service provides comprehensive access to sanctions and blacklist databases 
+                        from various countries and international organizations. This tool helps you perform due diligence checks on 
+                        potential business partners, suppliers, or customers to ensure compliance with international trade regulations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    
+    $('#destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) { return { search: params.term }; },
+            processResults: function(data) {
+                if (!data || !data.items) {
+                    console.error('Invalid API response:', data);
+                    return { results: [] };
+                }
+                return { results: data.items };
+            },
+            cache: true,
+            error: function(xhr, status, error) {
+                console.error('Select2 AJAX error:', status, error);
+                alert('Failed to load country list. Please try again later.');
+            }
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Choose a country',
+        allowClear: true
+    }).on('select2:open', function() {
+        console.log('Select2 dropdown opened');
+    });
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const entityName = document.getElementById('entity_name').value.trim();
+    const country = $('#destination_country').val();
+    
+    if (!entityName) {
+        alert('Please enter an entity name to search for.');
+        return;
+    }
+    if (!country) {
+        alert('Please select a target country.');
+        return;
+    }
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching...';
+    submitBtn.disabled = true;
+    
+    fetch(this.action, {
+        method: 'POST',
+        headers: { 
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(new FormData(this)).toString()
+    })
+    .then(response => {
+        console.log('Server response status:', response.status);
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.message || `HTTP error ${response.status}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Server response data:', data);
+        if (data.redirect_url) {
+            window.location.href = data.redirect_url;
+        } else {
+            throw new Error('No redirect URL provided in response');
+        }
+    })
+    .catch(error => {
+        console.error('Form submission error:', error);
+        alert('Error: ' + (error.message || 'An error occurred while processing your request. Please try again.'));
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+</script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+}
+
+.info-sidebar {
+    position: sticky;
+    top: 1rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.features-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.features-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(2px);
+}
+
+.feature-item i {
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.feature-item span {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.detail-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.detail-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+}
+
+.detail-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.detail-content h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.2rem;
+}
+
+.detail-content p {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.form-section {
+    min-height: fit-content;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.form-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.form-label i {
+    color: var(--accent-color);
+}
+
+.form-control-enhanced {
+    width: 100%;
+    padding: 0.7rem;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.form-control-enhanced:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.1);
+}
+
+.form-control-enhanced::placeholder {
+    color: var(--text-muted);
+}
+
+.form-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+.warning-card {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 2px solid rgba(245, 158, 11, 0.2);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.warning-icon {
+    width: 28px;
+    height: 28px;
+    background: #f59e0b;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.warning-content h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.2rem;
+}
+
+.warning-content p {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.submit-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-action:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.about-description {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Select2 Styling */
+.select2-container--default .select2-selection--single {
+    background: #f1f5f9 !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    height: 42px !important;
+    line-height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-color) !important;
+    padding-left: 0.7rem !important;
+    line-height: 38px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 0.7rem !important;
+    height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--text-color) transparent transparent transparent !important;
+    border-width: 6px 5px 0 5px !important;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent var(--text-color) transparent !important;
+    border-width: 0 5px 6px 5px !important;
+}
+
+.select2-dropdown {
+    background: var(--bg-color) !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 9999 !important;
+}
+
+.select2-results {
+    background: var(--bg-color) !important;
+}
+
+.select2-results__options {
+    background: var(--bg-color) !important;
+}
+
+.select2-results__option {
+    color: var(--text-color) !important;
+    padding: 0.7rem !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    background: var(--bg-color) !important;
+}
+
+.select2-results__option span {
+    color: var(--text-color) !important;
+}
+
+.select2-results__option--highlighted {
+    background: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+.select2-results__option--selected {
+    background: #e2e8f0 !important;
+    color: var(--text-color) !important;
+}
+
+.select2-container--default .select2-selection--single:focus {
+    outline: none !important;
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.2) !important;
+}
+
+.select2-search--dropdown .select2-search__field {
+    background: #f8fafc !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    padding: 0.5rem !important;
+    font-weight: 500 !important;
+}
+
+.select2-search--dropdown .select2-search__field:focus {
+    outline: none !important;
+    border-color: var(--primary-light) !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background: #e2e8f0 !important;
+    color: var(--text-color) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+.select2-results__option.loading-results {
+    color: var(--text-muted) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .info-sidebar {
+        position: static;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .service-header {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+}
+</style>
+{% endblock %}

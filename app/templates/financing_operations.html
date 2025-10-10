@@ -1,0 +1,1263 @@
+{% extends "base.html" %}
+
+{% block title %}Financing Operations - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<section class="financing-section">
+    <div class="financing-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(8) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="financing-header">
+            <div class="header-decoration">
+                <div class="decoration-line left-line"></div>
+                <div class="header-badge">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="decoration-line right-line"></div>
+            </div>
+            <h1 class="page-main-title">Financing Operations</h1>
+            <p class="page-subtitle">Comprehensive guide to export and import financing solutions</p>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="nav-cards">
+            <a href="#export_financing" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Export Financing</h3>
+                <p>Credit operations for exporters</p>
+            </a>
+            <a href="#import_financing" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Import Financing</h3>
+                <p>Financing solutions for importers</p>
+            </a>
+            <a href="#guarantees" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Guarantees</h3>
+                <p>Risk management solutions</p>
+            </a>
+        </div>
+
+        <!-- Export Financing Section -->
+        <div id="export_financing" class="financing-card">
+            <div class="card-header">
+                <div class="header-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="header-content">
+                    <h2>Export Financing/Advances</h2>
+                    <p>Advanced credit solutions for Spanish exporters</p>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="section-block">
+                    <h3>Overview</h3>
+                    <p>A specialized credit operation enabling banks to advance predetermined amounts in Euros or any officially quoted currency to Spanish exporters, facilitating collection of deferred payment sales to foreign importers.</p>
+                    
+                    <div class="participants-grid">
+                        <div class="participant-item">
+                            <i class="fas fa-university"></i>
+                            <span>Financial Institution</span>
+                        </div>
+                        <div class="participant-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Spanish Exporter</span>
+                        </div>
+                        <div class="participant-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Foreign Importer</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Critical Requirement:</strong> Financing must always be linked to an export operation.
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Operation Process</h3>
+                    <div class="process-flow">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Commercial Agreement</h4>
+                                <p>Establishment of purchase-sale agreement between Spanish Exporter and foreign Importer</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Goods Delivery</h4>
+                                <p>Spanish exporter delivers goods with future payment commitment</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Financial Advance</h4>
+                                <p>Financial Institution advances operation amount in Euros or Foreign Currency</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Payment Collection</h4>
+                                <p>Upon maturity, Importer pays the purchase amount</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Advance Repayment</h4>
+                                <p>Exporter repays advance with Importer reimbursement</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Key Characteristics</h3>
+                    <div class="characteristics-grid">
+                        <div class="characteristic-card primary">
+                            <div class="char-header">
+                                <i class="fas fa-clock"></i>
+                                <h4>Contract Term</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Term typically coincides with payment deferral granted to importer:</p>
+                                <div class="term-types">
+                                    <div class="term-type">
+                                        <strong>Pre-financing:</strong> Bank finances manufacturing phase
+                                    </div>
+                                    <div class="term-type">
+                                        <strong>Post-financing (Advance):</strong> Bank advances after shipment (typically ≤ 90 days)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card success">
+                            <div class="char-header">
+                                <i class="fas fa-euro-sign"></i>
+                                <h4>Amount</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Maximum financing equals goods value plus expenses (transport, insurance, etc.) initially borne by Exporter but reimbursed by Importer.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card warning">
+                            <div class="char-header">
+                                <i class="fas fa-coins"></i>
+                                <h4>Currency</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Available in any currency with official quotation. Currency alignment with export operation recommended to minimize exchange rate risk.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card info">
+                            <div class="char-header">
+                                <i class="fas fa-percentage"></i>
+                                <h4>Interest Rate</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Reference rate depends on financing currency denomination.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <div class="alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <h4>Exchange Rate Risk Management</h4>
+                            <p>Currency misalignment between financing and reimbursement creates exchange rate risk. Exporters can assume risk or mitigate through Exchange Rate Insurance or Currency Options.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Forfaiting: Integrated Financing & Credit Insurance</h3>
+                    <p>A non-recourse financing solution allowing financial institutions to offer exporters the ability to sell commercial credits without recourse. In insolvency cases, banks cannot claim amounts from exporters.</p>
+                    
+                    <div class="forfaiting-benefits">
+                        <h4>Key Benefits</h4>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Collection guarantee assurance</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Exchange & interest rate risk elimination</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-umbrella"></i>
+                                <span>Political & commercial risk mitigation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-tint"></i>
+                                <span>Immediate liquidity provision</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>Off-balance sheet positioning</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-handshake"></i>
+                                <span>Enhanced sales terms flexibility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import Financing Section -->
+        <div id="import_financing" class="financing-card">
+            <div class="card-header">
+                <div class="header-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="header-content">
+                    <h2>Import Financing</h2>
+                    <p>Credit solutions for import payment operations</p>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="section-block">
+                    <h3>Overview</h3>
+                    <p>Credit operation financing the period necessary for marketing and collection of imported products, enabling importers to manage cash flow and secure better purchase terms.</p>
+                    
+                    <div class="financing-reasons">
+                        <div class="reason-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Insufficient funds for cash payments</span>
+                        </div>
+                        <div class="reason-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Securing improved purchase prices</span>
+                        </div>
+                    </div>
+                    
+                    <div class="participants-grid">
+                        <div class="participant-item">
+                            <i class="fas fa-university"></i>
+                            <span>Financial Institution</span>
+                        </div>
+                        <div class="participant-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Spanish Importer</span>
+                        </div>
+                        <div class="participant-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Foreign Exporter</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Critical Requirement:</strong> Financing must always be linked to import payment operations.
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Operation Process</h3>
+                    <div class="process-flow">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Commercial Agreement</h4>
+                                <p>Purchase/sale agreement between Spanish Importer and foreign Exporter</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Goods Delivery</h4>
+                                <p>Foreign Exporter delivers goods to Spanish Importer</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Financing Request</h4>
+                                <p>Spanish Importer requests bank financing for exporter payment</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Payment Processing</h4>
+                                <p>Importer's Bank pays the foreign Exporter</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Financing Repayment</h4>
+                                <p>Spanish Importer repays financing from sales proceeds</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h3>Import Financing Characteristics</h3>
+                    <div class="characteristics-grid">
+                        <div class="characteristic-card primary">
+                            <div class="char-header">
+                                <i class="fas fa-clock"></i>
+                                <h4>Contract Term</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Aligns with marketing and collection period for imported products. Typically ≤ 90 days, varying by product type.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card success">
+                            <div class="char-header">
+                                <i class="fas fa-euro-sign"></i>
+                                <h4>Amount</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Up to 100% of operation value, potentially higher for F.O.B. Incoterm purchases.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card warning">
+                            <div class="char-header">
+                                <i class="fas fa-coins"></i>
+                                <h4>Currency</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Available in any officially quoted currency. Currency alignment with import/export operation recommended.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="characteristic-card info">
+                            <div class="char-header">
+                                <i class="fas fa-percentage"></i>
+                                <h4>Interest Rate</h4>
+                            </div>
+                            <div class="char-content">
+                                <p>Reference rate determined by financing currency.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <div class="alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <h4>Exchange Rate Risk in Import Financing</h4>
+                            <p>Currency misalignment between financing and sales proceeds creates exchange rate risk. Importers can assume risk or hedge through Exchange Rate Insurance or Currency Options.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guarantees Section -->
+        <div id="guarantees" class="financing-card">
+            <div class="card-header">
+                <div class="header-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="header-content">
+                    <h2>International Guarantees</h2>
+                    <p>Comprehensive risk management and payment assurance</p>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="section-block">
+                    <h3>Definition</h3>
+                    <p>Any form of guarantee whereby one party undertakes to pay on behalf of a third party should they fail to fulfill contracted obligations with the beneficiary.</p>
+                </div>
+
+                <div class="section-block">
+                    <h3>Essential Guarantee Information</h3>
+                    <div class="guarantee-requirements">
+                        <div class="requirement-item">
+                            <i class="fas fa-user"></i>
+                            <span>Guarantor name and address</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Principal/applicant details</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-users"></i>
+                            <span>Beneficiary information</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Guarantee issuance reason</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-euro-sign"></i>
+                            <span>Currency and guaranteed amount</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Maturity or guarantee term</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-gavel"></i>
+                            <span>Execution conditions and terms</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Applicable legislation</span>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Additional relevant data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <div class="alert-info">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <h4>ICC Rules Recommendation</h4>
+                            <p>Subject on-demand guarantees, counter-guarantees, or standby letters of credit to International Chamber of Commerce rules (URDG 758, UCP 600, ISP 98) for enhanced security and clarity between issuers and users.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;       /* Professional slate blue */
+    --primary-light: #6b7aab;       /* Lighter blue for highlights */
+    --secondary-color: #6b7280;     /* Neutral gray */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Success green */
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.financing-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.financing-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+.particle-7 { top: 85%; left: 50%; animation-delay: 6s; }
+.particle-8 { top: 10%; left: 75%; animation-delay: 4.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+.container {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.financing-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+}
+
+.header-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.header-badge i {
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+.page-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+.nav-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.nav-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.nav-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+.nav-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.nav-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.financing-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    background: rgba(75, 94, 140, 0.1);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.header-content h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+}
+
+.header-content p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.section-block {
+    margin-bottom: 2rem;
+}
+
+.section-block:last-child {
+    margin-bottom: 0;
+}
+
+.section-block h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.section-block p {
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.participants-grid, .financing-reasons, .guarantee-requirements, .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.participant-item, .reason-item, .requirement-item, .benefit-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+}
+
+.participant-item:hover, .reason-item:hover, .requirement-item:hover, .benefit-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.participant-item i, .reason-item i, .requirement-item i, .benefit-item i {
+    color: var(--primary-light);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.alert-info, .alert-warning {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.alert-info {
+    border-left: 4px solid var(--accent-color);
+}
+
+.alert-warning {
+    border-left: 4px solid var(--primary-light);
+}
+
+.alert-info i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.alert-warning i {
+    color: var(--primary-light);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.alert-info div, .alert-warning div {
+    flex: 1;
+}
+
+.alert-info h4, .alert-warning h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+}
+
+.alert-info p, .alert-warning p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.process-flow {
+    margin: 2rem 0;
+}
+
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.process-step:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    bottom: -1rem;
+    width: 2px;
+    height: 1rem;
+    background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.5rem 0;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.characteristic-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.characteristic-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.characteristic-card.primary {
+    border-left: 4px solid var(--primary-color);
+}
+
+.characteristic-card.success {
+    border-left: 4px solid var(--accent-color);
+}
+
+.characteristic-card.warning {
+    border-left: 4px solid var(--primary-light);
+}
+
+.characteristic-card.info {
+    border-left: 4px solid var(--secondary-color);
+}
+
+.char-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.char-header i {
+    color: var(--primary-light);
+    font-size: 1.2rem;
+}
+
+.char-header h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.char-content {
+    padding: 1.5rem;
+}
+
+.char-content p {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.char-content p:last-child {
+    margin-bottom: 0;
+}
+
+.term-types {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.term-type {
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.term-type strong {
+    color: var(--primary-light);
+}
+
+.forfaiting-benefits {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.forfaiting-benefits h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .nav-cards {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .characteristics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .financing-section {
+        padding: 1rem 0;
+    }
+
+    .page-main-title {
+        font-size: 1.5rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .header-badge {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header-badge i {
+        font-size: 1.2rem;
+    }
+
+    .decoration-line {
+        width: 40px;
+    }
+
+    .card-header {
+        padding: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .header-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .nav-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .participants-grid, .financing-reasons, .guarantee-requirements, .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .characteristics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .process-step:not(:last-child)::after {
+        left: 20px;
+        bottom: -0.75rem;
+        height: 0.75rem;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .forfaiting-benefits {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-main-title {
+        font-size: 1.25rem;
+    }
+
+    .header-badge {
+        width: 45px;
+        height: 45px;
+    }
+
+    .header-badge i {
+        font-size: 1rem;
+    }
+
+    .decoration-line {
+        width: 30px;
+    }
+
+    .card-header {
+        padding: 1rem;
+    }
+
+    .header-content h2 {
+        font-size: 1.25rem;
+    }
+
+    .header-content p {
+        font-size: 0.85rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .nav-card {
+        padding: 1.5rem;
+    }
+
+    .nav-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .section-block h3 {
+        font-size: 1.25rem;
+    }
+
+    .char-header, .char-content {
+        padding: 1rem;
+    }
+
+    .forfaiting-benefits {
+        padding: 1rem;
+    }
+
+    .alert-info, .alert-warning {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .process-step {
+        padding: 1rem;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.nav-card:focus, .process-step:focus, .characteristic-card:focus {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+@media print {
+    .financing-background, .floating-particles {
+        display: none;
+    }
+
+    .financing-section {
+        background: white;
+        color: black;
+    }
+
+    .financing-card, .nav-card {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .header-icon, .nav-icon, .step-number {
+        background: #ccc;
+        color: black;
+    }
+
+    .page-main-title {
+        background: none;
+        -webkit-text-fill-color: black;
+    }
+
+    .alert-info, .alert-warning {
+        border-left: 4px solid #ccc;
+    }
+
+    .participant-item i, .reason-item i, .requirement-item i, .benefit-item i {
+        color: #333;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navCards = document.querySelectorAll('.nav-card');
+    
+    navCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    const animatedElements = document.querySelectorAll('.financing-card, .process-step, .characteristic-card, .nav-card');
+    
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+    
+    const gridItems = document.querySelectorAll('.participant-item, .reason-item, .requirement-item, .benefit-item');
+    
+    gridItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = `opacity 0.4s ease ${index * 0.1}s, transform 0.4s ease ${index * 0.1}s`;
+        observer.observe(item);
+    });
+    
+    const cards = document.querySelectorAll('.characteristic-card, .nav-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    const processSteps = document.querySelectorAll('.process-step');
+    
+    processSteps.forEach((step, index) => {
+        step.addEventListener('mouseenter', function() {
+            this.querySelector('.step-number').style.transform = 'scale(1.1) rotate(5deg)';
+            this.querySelector('.step-number').style.boxShadow = '0 8px 25px rgba(75, 94, 140, 0.4)';
+        });
+        
+        step.addEventListener('mouseleave', function() {
+            this.querySelector('.step-number').style.transform = 'scale(1) rotate(0deg)';
+            this.querySelector('.step-number').style.boxShadow = '0 5px 15px rgba(75, 94, 140, 0.3)';
+        });
+    });
+});
+</script>
+{% endblock %}

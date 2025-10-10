@@ -1,0 +1,492 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Tax System" %}
+{% set service_icon = "fas fa-file-invoice-dollar" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if tax_system_data.corporate_taxes_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Corporate Taxes</h3>
+                    <div class="section-subtitle">Tax regulations for corporations and businesses</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.corporate_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.accounting_rules_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Accounting Rules</h3>
+                    <div class="section-subtitle">Standards and regulations for financial accounting</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.accounting_rules_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.consumption_taxes_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Consumption Taxes</h3>
+                    <div class="section-subtitle">VAT, sales tax, and other consumption-based taxes</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.consumption_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.individual_taxes_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Individual Taxes</h3>
+                    <div class="section-subtitle">Personal income tax and individual tax obligations</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.individual_taxes_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.double_taxation_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Double Taxation Treaties</h3>
+                    <div class="section-subtitle">International tax agreements and treaties</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.double_taxation_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if tax_system_data.sources_section %}
+    <div class="tax-card modern-card">
+        <div class="card-accent" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+        <div class="card-body">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon modern-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </div>
+                <div class="section-title-content">
+                    <h3 class="section-title">Sources of Fiscal Information</h3>
+                    <div class="section-subtitle">Official sources and references for tax information</div>
+                </div>
+            </div>
+            <div class="santander-html content-wrapper">{{ tax_system_data.sources_section|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+/* Modern Card Design */
+.section-content {
+    display: grid;
+    gap: 2rem;
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.modern-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modern-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    z-index: 1;
+}
+
+.card-body {
+    padding: 2.5rem;
+    position: relative;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.modern-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.modern-card:hover .modern-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.modern-icon i {
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.section-title-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: #666666;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    background: #f8f9fa;
+    border-radius: 14px;
+    padding: 2rem;
+    line-height: 1.7;
+    color: #2d3436;
+}
+
+.content-wrapper p {
+    margin-bottom: 1rem;
+    color: #2d3436;
+}
+
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4 {
+    color: #1a1a1a;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.content-wrapper ul,
+.content-wrapper ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.content-wrapper li {
+    margin-bottom: 0.5rem;
+    color: #2d3436;
+}
+
+.content-wrapper a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.content-wrapper a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.content-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.content-wrapper table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.content-wrapper table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #2d3436;
+}
+
+.content-wrapper table tr:last-child td {
+    border-bottom: none;
+}
+
+.content-wrapper table tr:hover {
+    background: #f8f9fa;
+}
+
+/* Tableau Fixes */
+.santander-html .tableauPlaceholder,
+.santander-html .tableauViz {
+    margin: 1.5rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.santander-html .tableauPlaceholder text,
+.santander-html .tableauViz text,
+.santander-html .tab-text,
+.santander-html .tab-label,
+.santander-html .tab-title,
+.santander-html .tab-caption,
+.santander-html .tab-country-label,
+.santander-html .tab-mark-label,
+.santander-html .FIText,
+.santander-html .wkTableVis text,
+.santander-html .tab-viz text,
+.santander-html .tabCanvas text {
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+    font-weight: 500 !important;
+}
+
+.santander-html .tableauViz tspan,
+.santander-html .tableauPlaceholder tspan,
+.santander-html .tab-viz tspan {
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+}
+
+.santander-html .tableauViz svg text,
+.santander-html .tableauPlaceholder svg text {
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-content {
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .modern-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .modern-icon i {
+        font-size: 28px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .content-wrapper {
+        padding: 1.5rem;
+    }
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.modern-card.loading {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0px,
+        #f8f8f8 40px,
+        #f0f0f0 80px
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* Print Styles */
+@media print {
+    .modern-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .modern-card:hover {
+        transform: none;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function enhanceTableauVisuals() {
+        const tableauContainers = document.querySelectorAll('.tableauViz, .tableauPlaceholder, [class*="tableau"], [class*="tab-"]');
+        
+        tableauContainers.forEach(container => {
+            const texts = container.querySelectorAll('text, tspan');
+            texts.forEach(text => {
+                text.style.fill = '#1a1a1a';
+                text.style.color = '#1a1a1a';
+                text.style.fontWeight = '500';
+                text.setAttribute('fill', '#1a1a1a');
+            });
+        });
+        
+        const svgs = document.querySelectorAll('svg');
+        svgs.forEach(svg => {
+            if (svg.closest('.tableauViz') || svg.closest('.tableauPlaceholder') || 
+                svg.closest('[class*="tableau"]') || svg.closest('[class*="tab-"]')) {
+                const texts = svg.querySelectorAll('text, tspan');
+                texts.forEach(text => {
+                    text.style.fill = '#1a1a1a';
+                    text.style.color = '#1a1a1a';
+                    text.style.fontWeight = '500';
+                    text.setAttribute('fill', '#1a1a1a');
+                });
+            }
+        });
+    }
+    
+    setTimeout(enhanceTableauVisuals, 500);
+    setTimeout(enhanceTableauVisuals, 1500);
+    setTimeout(enhanceTableauVisuals, 3000);
+    
+    const observer = new MutationObserver(function(mutations) {
+        let shouldEnhance = false;
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) {
+                    if (node.classList && (
+                        node.classList.contains('tableauViz') || 
+                        node.classList.contains('tableauPlaceholder') ||
+                        Array.from(node.classList).some(cls => cls.includes('tableau') || cls.includes('tab-'))
+                    )) {
+                        shouldEnhance = true;
+                    }
+                }
+            });
+        });
+        if (shouldEnhance) {
+            setTimeout(enhanceTableauVisuals, 500);
+        }
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    
+    const cards = document.querySelectorAll('.modern-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.style.animation = 'fadeInUp 0.6s ease forwards';
+    });
+});
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

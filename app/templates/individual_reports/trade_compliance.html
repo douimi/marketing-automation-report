@@ -1,0 +1,665 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}International Trade Compliance{% endblock %}
+
+{% block report_icon %}fas fa-gavel{% endblock %}
+
+{% block report_content %}
+<div class="trade-compliance-container">
+    <!-- Hero Section -->
+    <section class="trade-compliance-hero-section">
+        <div class="trade-compliance-hero-background">
+            <div class="animated-shapes">
+                {% for i in range(8) %}
+                <div class="shape shape-{{ i+1 }}"></div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="container compact-container">
+            <div class="trade-compliance-hero-content">
+                <div class="hero-icon-wrapper">
+                    <div class="hero-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                </div>
+                <h1 class="trade-compliance-hero-title">International Trade Compliance</h1>
+                <p class="trade-compliance-hero-subtitle">Comprehensive regulatory framework and trade requirements</p>
+                
+                <div class="trade-compliance-stats">
+                    <div class="trade-stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <span class="trade-stat-label">Regulatory Framework</span>
+                    </div>
+                    <div class="trade-stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <span class="trade-stat-label">Documentation</span>
+                    </div>
+                    <div class="trade-stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span class="trade-stat-label">Compliance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <div class="trade-compliance-main-content">
+        <div class="container compact-container">
+            {% if trade_compliance_data.error %}
+                <!-- Error State -->
+                <section class="trade-compliance-error-section">
+                    <div class="trade-compliance-error-card">
+                        <div class="trade-compliance-error-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="trade-compliance-error-content">
+                            <h3 class="trade-compliance-error-title">Data Unavailable</h3>
+                            <p class="trade-compliance-error-message">{{ trade_compliance_data.error }}</p>
+                        </div>
+                    </div>
+                </section>
+            {% else %}
+                <!-- Trade Compliance Content -->
+                {% if trade_compliance_data.trade_compliance_section %}
+                <section class="trade-compliance-content-section">
+                    <div class="trade-compliance-content-card">
+                        <div class="trade-compliance-content-header">
+                            <div class="header-content">
+                                <div class="header-icon">
+                                    <i class="fas fa-gavel"></i>
+                                </div>
+                                <div class="header-text">
+                                    <h3>International Trade Regulations</h3>
+                                    <p>Complete compliance guidelines and requirements</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="trade-compliance-content-body">
+                            <div class="compliance-content">
+                                {{ trade_compliance_data.trade_compliance_section|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- No Data Available -->
+                {% if not trade_compliance_data.trade_compliance_section %}
+                <section class="trade-compliance-empty-section">
+                    <div class="trade-compliance-empty-card">
+                        <div class="trade-compliance-empty-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="trade-compliance-empty-content">
+                            <h3 class="trade-compliance-empty-title">Information Coming Soon</h3>
+                            <p class="trade-compliance-empty-message">
+                                No trade compliance information is currently available for this country. 
+                                Our team is working to provide comprehensive trade compliance data.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Update Information -->
+                {% if trade_compliance_data.update_date %}
+                <section class="trade-compliance-update-section">
+                    <div class="trade-compliance-update-card">
+                        <i class="fas fa-clock"></i>
+                        <span><strong>Last updated:</strong> {{ trade_compliance_data.update_date }}</span>
+                    </div>
+                </section>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* Color Variables - Matching Service Form */
+:root {
+    --primary-color: #4b5e8c;
+    --primary-light: #6b7aab;
+    --accent-color: #10b981;
+    --text-color: #1e293b;
+    --text-light: #f9fafb;
+    --text-muted: #64748b;
+    --bg-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+/* Container */
+.trade-compliance-container {
+    background: var(--bg-color);
+    min-height: 100vh;
+}
+
+.compact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Hero Section - Reduced Height */
+.trade-compliance-hero-section {
+    position: relative;
+    min-height: 35vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0 1.5rem;
+    overflow: hidden;
+}
+
+.trade-compliance-hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+/* Hero Content - Centered */
+.trade-compliance-hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.hero-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.trade-compliance-hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.trade-compliance-hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Stats - Reduced Size */
+.trade-compliance-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.trade-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.3rem;
+    box-shadow: var(--shadow);
+}
+
+.trade-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Main Content - Reduced Padding */
+.trade-compliance-main-content {
+    background: var(--bg-color);
+    padding: 1.5rem 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Content Card - Compact */
+.trade-compliance-content-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 1.5rem;
+}
+
+.trade-compliance-content-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    padding: 1.5rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.header-text h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+    color: var(--text-light);
+}
+
+.header-text p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.trade-compliance-content-body {
+    padding: 2rem;
+}
+
+.compliance-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+}
+
+.compliance-content h1,
+.compliance-content h2,
+.compliance-content h3 {
+    color: var(--text-color);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.compliance-content h1 {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+}
+
+.compliance-content h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.compliance-content h3 {
+    font-size: 1.3rem;
+    margin-top: 1.2rem;
+}
+
+.compliance-content p {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.compliance-content ul,
+.compliance-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.compliance-content li {
+    margin-bottom: 0.5rem;
+}
+
+.compliance-content strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Error Card */
+.trade-compliance-error-card {
+    background: var(--glass-bg);
+    border: 2px solid #ef4444;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.trade-compliance-error-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ef4444;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+}
+
+.trade-compliance-error-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ef4444;
+    margin-bottom: 0.5rem;
+}
+
+.trade-compliance-error-message {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* Empty State */
+.trade-compliance-empty-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.trade-compliance-empty-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+}
+
+.trade-compliance-empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.trade-compliance-empty-message {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Update Card */
+.trade-compliance-update-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.trade-compliance-update-card i {
+    color: var(--primary-color);
+}
+
+.trade-compliance-update-card strong {
+    color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .trade-compliance-hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .trade-compliance-stats {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .trade-compliance-hero-section {
+        min-height: 30vh;
+        padding: 1.5rem 0 1rem;
+    }
+    
+    .hero-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    
+    .trade-compliance-hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .trade-compliance-hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .trade-compliance-stats {
+        gap: 1rem;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .trade-stat-label {
+        font-size: 0.7rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+    }
+    
+    .header-text h3 {
+        font-size: 1.3rem;
+    }
+    
+    .trade-compliance-content-body {
+        padding: 1.5rem;
+    }
+    
+    .compliance-content h1 {
+        font-size: 1.6rem;
+    }
+    
+    .compliance-content h2 {
+        font-size: 1.4rem;
+    }
+    
+    .compliance-content h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .trade-compliance-hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .trade-compliance-hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .trade-compliance-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .trade-compliance-content-card {
+        border-radius: 12px;
+    }
+    
+    .trade-compliance-content-header {
+        padding: 1.2rem;
+    }
+    
+    .trade-compliance-content-body {
+        padding: 1.2rem;
+    }
+    
+    .compliance-content {
+        font-size: 0.95rem;
+    }
+    
+    .trade-compliance-error-card,
+    .trade-compliance-empty-card {
+        padding: 1.5rem 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add animation to content cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    // Animate main content cards
+    document.querySelectorAll('.trade-compliance-content-card, .trade-compliance-error-card, .trade-compliance-empty-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+    });
+
+    // Enhance compliance content styling
+    const complianceContent = document.querySelector('.compliance-content');
+    if (complianceContent) {
+        // Add styling to tables if they exist
+        complianceContent.querySelectorAll('table').forEach(table => {
+            table.classList.add('table', 'table-bordered', 'table-striped');
+            table.style.width = '100%';
+            table.style.margin = '1.5rem 0';
+        });
+
+        // Style blockquotes
+        complianceContent.querySelectorAll('blockquote').forEach(blockquote => {
+            blockquote.style.borderLeft = '4px solid var(--primary-color)';
+            blockquote.style.paddingLeft = '1.5rem';
+            blockquote.style.margin = '1rem 0';
+            blockquote.style.fontStyle = 'italic';
+            blockquote.style.color = 'var(--text-muted)';
+        });
+
+        // Style code blocks
+        complianceContent.querySelectorAll('code').forEach(code => {
+            code.style.background = 'rgba(75, 94, 140, 0.1)';
+            code.style.padding = '0.2rem 0.4rem';
+            code.style.borderRadius = '4px';
+            code.style.fontSize = '0.9em';
+            code.style.color = 'var(--primary-color)';
+        });
+    }
+
+    console.log('Trade Compliance page initialized');
+});
+</script>
+
+{% endblock %}

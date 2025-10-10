@@ -1,0 +1,2144 @@
+[
+    {
+        "Id": 4,
+        "iso_numeric": "004",
+        "name": "Afghanistan",
+        "ISO2": "AF",
+        "code": "AFG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 8,
+        "iso_numeric": "008",
+        "name": "Albania",
+        "ISO2": "85",
+        "code": "ALB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 12,
+        "iso_numeric": "012",
+        "name": "Algeria",
+        "ISO2": "73",
+        "code": "DZA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 16,
+        "iso_numeric": "016",
+        "name": "American Samoa",
+        "ISO2": "AS",
+        "code": "ASM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 20,
+        "iso_numeric": "020",
+        "name": "Andorra",
+        "ISO2": "AD",
+        "code": "AND",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 24,
+        "iso_numeric": "024",
+        "name": "Angola",
+        "ISO2": "98",
+        "code": "AGO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 660,
+        "iso_numeric": "660",
+        "name": "Anguilla",
+        "ISO2": "AI",
+        "code": "AIA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 28,
+        "iso_numeric": "028",
+        "name": "Antigua and Barbuda",
+        "ISO2": "AG",
+        "code": "ATG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 32,
+        "iso_numeric": "032",
+        "name": "Argentina",
+        "ISO2": "3",
+        "code": "ARG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 51,
+        "iso_numeric": "051",
+        "name": "Armenia",
+        "ISO2": "86",
+        "code": "ARM",
+        "ValidFrom": "1991-09-23T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 533,
+        "iso_numeric": "533",
+        "name": "Aruba",
+        "ISO2": "AB",
+        "code": "ABW",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 36,
+        "iso_numeric": "036",
+        "name": "Australia",
+        "ISO2": "4",
+        "code": "AUS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 40,
+        "iso_numeric": "040",
+        "name": "Austria",
+        "ISO2": "5",
+        "code": "AUT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 31,
+        "iso_numeric": "031",
+        "name": "Azerbaijan",
+        "ISO2": "55",
+        "code": "AZE",
+        "ValidFrom": "1991-08-30T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 44,
+        "iso_numeric": "044",
+        "name": "Bahamas",
+        "ISO2": "99",
+        "code": "BHS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 48,
+        "iso_numeric": "048",
+        "name": "Bahrain",
+        "ISO2": "100",
+        "code": "BHR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 50,
+        "iso_numeric": "050",
+        "name": "Bangladesh",
+        "ISO2": "101",
+        "code": "BGD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 52,
+        "iso_numeric": "052",
+        "name": "Barbados",
+        "ISO2": "BB",
+        "code": "BRB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 112,
+        "iso_numeric": "112",
+        "name": "Belarus",
+        "ISO2": "BY",
+        "code": "BLR",
+        "ValidFrom": "1991-08-25T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 56,
+        "iso_numeric": "056",
+        "name": "Belgium",
+        "ISO2": "6",
+        "code": "BEL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 84,
+        "iso_numeric": "084",
+        "name": "Belize",
+        "ISO2": "BZ",
+        "code": "BLZ",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 204,
+        "iso_numeric": "204",
+        "name": "Benin",
+        "ISO2": "103",
+        "code": "BEN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 60,
+        "iso_numeric": "060",
+        "name": "Bermuda",
+        "ISO2": "BM",
+        "code": "BMU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 64,
+        "iso_numeric": "064",
+        "name": "Bhutan",
+        "ISO2": "104",
+        "code": "BTN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 68,
+        "iso_numeric": "068",
+        "name": "Bolivia (Plurinational State of)",
+        "ISO2": "105",
+        "code": "BOL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 70,
+        "iso_numeric": "070",
+        "name": "Bosnia and Herzegovina",
+        "ISO2": "BA",
+        "code": "BIH",
+        "ValidFrom": "1992-03-03T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 72,
+        "iso_numeric": "072",
+        "name": "Botswana",
+        "ISO2": "107",
+        "code": "BWA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 74,
+        "iso_numeric": "074",
+        "name": "Bouvet Island",
+        "ISO2": "BV",
+        "code": "BVT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 76,
+        "iso_numeric": "076",
+        "name": "Brazil",
+        "ISO2": "7",
+        "code": "BRA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 86,
+        "iso_numeric": "086",
+        "name": "British Indian Ocean Territory",
+        "ISO2": "25",
+        "code": "IOT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 96,
+        "iso_numeric": "096",
+        "name": "Brunei Darussalam",
+        "ISO2": "BN",
+        "code": "BRN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1011,
+        "iso_numeric": "100",
+        "name": "Bulgaria",
+        "ISO2": "8",
+        "code": "BGR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 854,
+        "iso_numeric": "854",
+        "name": "Burkina Faso",
+        "ISO2": "109",
+        "code": "BFA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 108,
+        "iso_numeric": "108",
+        "name": "Burundi",
+        "ISO2": "BI",
+        "code": "BDI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 132,
+        "iso_numeric": "132",
+        "name": "Cabo Verde",
+        "ISO2": "CV",
+        "code": "CPV",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 116,
+        "iso_numeric": "116",
+        "name": "Cambodia",
+        "ISO2": "110",
+        "code": "KHM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 120,
+        "iso_numeric": "120",
+        "name": "Cameroon",
+        "ISO2": "74",
+        "code": "CMR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 124,
+        "iso_numeric": "124",
+        "name": "Canada",
+        "ISO2": "9",
+        "code": "CAN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 136,
+        "iso_numeric": "136",
+        "name": "Cayman Islands",
+        "ISO2": "KY",
+        "code": "CYM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 140,
+        "iso_numeric": "140",
+        "name": "Central African Republic",
+        "ISO2": "CF",
+        "code": "CAF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 148,
+        "iso_numeric": "148",
+        "name": "Chad",
+        "ISO2": "TD",
+        "code": "TCD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 152,
+        "iso_numeric": "152",
+        "name": "Chile",
+        "ISO2": "10",
+        "code": "CHL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 156,
+        "iso_numeric": "156",
+        "name": "China",
+        "ISO2": "11",
+        "code": "CHN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 162,
+        "iso_numeric": "162",
+        "name": "Christmas Island",
+        "ISO2": "CX",
+        "code": "CXR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 166,
+        "iso_numeric": "166",
+        "name": "Cocos (Keeling) Islands",
+        "ISO2": "CC",
+        "code": "CCK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 170,
+        "iso_numeric": "170",
+        "name": "Colombia",
+        "ISO2": "12",
+        "code": "COL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 174,
+        "iso_numeric": "174",
+        "name": "Comoros",
+        "ISO2": "KM",
+        "code": "COM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 178,
+        "iso_numeric": "178",
+        "name": "Congo",
+        "ISO2": "CG",
+        "code": "COG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 180,
+        "iso_numeric": "180",
+        "name": "Congo, Democratic Republic of",
+        "ISO2": "CD",
+        "code": "COD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 184,
+        "iso_numeric": "184",
+        "name": "Cook Islands",
+        "ISO2": "CK",
+        "code": "COK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 188,
+        "iso_numeric": "188",
+        "name": "Costa Rica",
+        "ISO2": "115",
+        "code": "CRI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 384,
+        "iso_numeric": "384",
+        "name": "Côte d'Ivoire",
+        "ISO2": "CI",
+        "code": "CIV",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1013,
+        "iso_numeric": "191",
+        "name": "Croatia",
+        "ISO2": "14",
+        "code": "HRV",
+        "ValidFrom": "1991-10-08T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 192,
+        "iso_numeric": "192",
+        "name": "Cuba",
+        "ISO2": "CU",
+        "code": "CUB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 530,
+        "iso_numeric": "530",
+        "name": "Curacao",
+        "ISO2": "CW",
+        "code": "CUW",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1001,
+        "iso_numeric": "196",
+        "name": "Cyprus",
+        "ISO2": "87",
+        "code": "CYP",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1002,
+        "iso_numeric": "203",
+        "name": "Czech Republic",
+        "ISO2": "42",
+        "code": "CZE",
+        "ValidFrom": "1993-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 208,
+        "iso_numeric": "208",
+        "name": "Denmark",
+        "ISO2": "15",
+        "code": "DNK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 262,
+        "iso_numeric": "262",
+        "name": "Djibouti",
+        "ISO2": "116",
+        "code": "DJI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 212,
+        "iso_numeric": "212",
+        "name": "Dominica",
+        "ISO2": "117",
+        "code": "DMA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 214,
+        "iso_numeric": "214",
+        "name": "Dominican Republic",
+        "ISO2": "DO",
+        "code": "DOM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 218,
+        "iso_numeric": "218",
+        "name": "Ecuador",
+        "ISO2": "118",
+        "code": "ECU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 818,
+        "iso_numeric": "818",
+        "name": "Egypt",
+        "ISO2": "16",
+        "code": "EGY",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 222,
+        "iso_numeric": "222",
+        "name": "El Salvador",
+        "ISO2": "119",
+        "code": "SLV",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 226,
+        "iso_numeric": "226",
+        "name": "Equatorial Guinea",
+        "ISO2": "128",
+        "code": "GNQ",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 232,
+        "iso_numeric": "232",
+        "name": "Eritrea",
+        "ISO2": "ER",
+        "code": "ERI",
+        "ValidFrom": "1993-05-24T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1003,
+        "iso_numeric": "233",
+        "name": "Estonia",
+        "ISO2": "58",
+        "code": "EST",
+        "ValidFrom": "1991-08-20T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 748,
+        "iso_numeric": "748",
+        "name": "Eswatini",
+        "ISO2": "SZ",
+        "code": "SWZ",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 231,
+        "iso_numeric": "231",
+        "name": "Ethiopia",
+        "ISO2": "122",
+        "code": "ETH",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 238,
+        "iso_numeric": "238",
+        "name": "Falkland Islands (Malvinas)",
+        "ISO2": "FK",
+        "code": "FLK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 234,
+        "iso_numeric": "234",
+        "name": "Faroe Islands",
+        "ISO2": "FO",
+        "code": "FRO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 242,
+        "iso_numeric": "242",
+        "name": "Fiji",
+        "ISO2": "FJ",
+        "code": "FJI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 246,
+        "iso_numeric": "246",
+        "name": "Finland",
+        "ISO2": "19",
+        "code": "FIN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 251,
+        "iso_numeric": "251",
+        "name": "France",
+        "ISO2": "20",
+        "code": "FRA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 254,
+        "iso_numeric": "254",
+        "name": "French Guiana",
+        "ISO2": "GF",
+        "code": "GUF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 258,
+        "iso_numeric": "258",
+        "name": "French Polynesia",
+        "ISO2": "PF",
+        "code": "PYF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 260,
+        "iso_numeric": "260",
+        "name": "French Southern territories",
+        "ISO2": "FQ",
+        "code": "ATF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 266,
+        "iso_numeric": "266",
+        "name": "Gabon",
+        "ISO2": "124",
+        "code": "GAB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 270,
+        "iso_numeric": "270",
+        "name": "Gambia",
+        "ISO2": "GM",
+        "code": "GMB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 268,
+        "iso_numeric": "268",
+        "name": "Georgia",
+        "ISO2": "88",
+        "code": "GEO",
+        "ValidFrom": "1991-04-08T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 276,
+        "iso_numeric": "276",
+        "name": "Germany",
+        "ISO2": "54",
+        "code": "DEU",
+        "ValidFrom": "1991-03-15T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 288,
+        "iso_numeric": "288",
+        "name": "Ghana",
+        "ISO2": "126",
+        "code": "GHA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 292,
+        "iso_numeric": "292",
+        "name": "Gibraltar",
+        "ISO2": "GI",
+        "code": "GIB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 300,
+        "iso_numeric": "300",
+        "name": "Greece",
+        "ISO2": "21",
+        "code": "GRC",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 304,
+        "iso_numeric": "304",
+        "name": "Greenland",
+        "ISO2": "209",
+        "code": "GRL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 308,
+        "iso_numeric": "308",
+        "name": "Grenada",
+        "ISO2": "GD",
+        "code": "GRD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 316,
+        "iso_numeric": "316",
+        "name": "Guam",
+        "ISO2": "GU",
+        "code": "GUM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 320,
+        "iso_numeric": "320",
+        "name": "Guatemala",
+        "ISO2": "22",
+        "code": "GTM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 324,
+        "iso_numeric": "324",
+        "name": "Guinea",
+        "ISO2": "128",
+        "code": "GIN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 624,
+        "iso_numeric": "624",
+        "name": "Guinea-Bissau",
+        "ISO2": "128",
+        "code": "GNB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 328,
+        "iso_numeric": "328",
+        "name": "Guyana",
+        "ISO2": "GY",
+        "code": "GUY",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 332,
+        "iso_numeric": "332",
+        "name": "Haiti",
+        "ISO2": "HT",
+        "code": "HTI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 334,
+        "iso_numeric": "334",
+        "name": "Heard and McDonald Islands",
+        "ISO2": "HM",
+        "code": "HMD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 340,
+        "iso_numeric": "340",
+        "name": "Honduras",
+        "ISO2": "132",
+        "code": "HND",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 344,
+        "iso_numeric": "344",
+        "name": "Hong Kong, China Special Administrative Region",
+        "ISO2": "11",
+        "code": "HKG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1004,
+        "iso_numeric": "348",
+        "name": "Hungary",
+        "ISO2": "24",
+        "code": "HUN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 352,
+        "iso_numeric": "352",
+        "name": "Iceland",
+        "ISO2": "28",
+        "code": "ISL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 699,
+        "iso_numeric": "699",
+        "name": "India",
+        "ISO2": "25",
+        "code": "IND",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 360,
+        "iso_numeric": "360",
+        "name": "Indonesia",
+        "ISO2": "26",
+        "code": "IDN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 364,
+        "iso_numeric": "364",
+        "name": "Iran (Islamic Republic of)",
+        "ISO2": "IR",
+        "code": "IRN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 368,
+        "iso_numeric": "368",
+        "name": "Iraq",
+        "ISO2": "IQ",
+        "code": "IRQ",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 372,
+        "iso_numeric": "372",
+        "name": "Ireland",
+        "ISO2": "27",
+        "code": "IRL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 376,
+        "iso_numeric": "376",
+        "name": "Israel",
+        "ISO2": "29",
+        "code": "ISR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 381,
+        "iso_numeric": "381",
+        "name": "Italy",
+        "ISO2": "30",
+        "code": "ITA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 388,
+        "iso_numeric": "388",
+        "name": "Jamaica",
+        "ISO2": "134",
+        "code": "JAM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 392,
+        "iso_numeric": "392",
+        "name": "Japan",
+        "ISO2": "31",
+        "code": "JPN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 400,
+        "iso_numeric": "400",
+        "name": "Jordan",
+        "ISO2": "32",
+        "code": "JOR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 398,
+        "iso_numeric": "398",
+        "name": "Kazakhstan",
+        "ISO2": "60",
+        "code": "KAZ",
+        "ValidFrom": "1991-12-16T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 404,
+        "iso_numeric": "404",
+        "name": "Kenya",
+        "ISO2": "135",
+        "code": "KEN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 296,
+        "iso_numeric": "296",
+        "name": "Kiribati",
+        "ISO2": "KI",
+        "code": "KIR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 408,
+        "iso_numeric": "408",
+        "name": "Korea, Democratic People's Republic of",
+        "ISO2": "KP",
+        "code": "PRK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 410,
+        "iso_numeric": "410",
+        "name": "Korea, Republic of",
+        "ISO2": "KR",
+        "code": "KOR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 895,
+        "iso_numeric": "895",
+        "name": "Kosovo",
+        "ISO2": "KO",
+        "code": "KSV",
+        "ValidFrom": "2008-02-17T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 414,
+        "iso_numeric": "414",
+        "name": "Kuwait",
+        "ISO2": "77",
+        "code": "KWT",
+        "ValidFrom": "1991-02-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 417,
+        "iso_numeric": "417",
+        "name": "Kyrgyzstan",
+        "ISO2": "136",
+        "code": "KGZ",
+        "ValidFrom": "1991-08-31T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 418,
+        "iso_numeric": "418",
+        "name": "Lao, People's Democratic Republic",
+        "ISO2": "LA",
+        "code": "LAO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1005,
+        "iso_numeric": "428",
+        "name": "Latvia",
+        "ISO2": "61",
+        "code": "LVA",
+        "ValidFrom": "1990-05-04T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 422,
+        "iso_numeric": "422",
+        "name": "Lebanon",
+        "ISO2": "LB",
+        "code": "LBN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 426,
+        "iso_numeric": "426",
+        "name": "Lesotho",
+        "ISO2": "LS",
+        "code": "LSO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 430,
+        "iso_numeric": "430",
+        "name": "Liberia",
+        "ISO2": "LR",
+        "code": "LBR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 434,
+        "iso_numeric": "434",
+        "name": "Libya",
+        "ISO2": "LY",
+        "code": "LBY",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 438,
+        "iso_numeric": "438",
+        "name": "Liechtenstein",
+        "ISO2": "LI",
+        "code": "LIE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1006,
+        "iso_numeric": "440",
+        "name": "Lithuania",
+        "ISO2": "62",
+        "code": "LTU",
+        "ValidFrom": "1990-03-11T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 442,
+        "iso_numeric": "442",
+        "name": "Luxembourg",
+        "ISO2": "79",
+        "code": "LUX",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 446,
+        "iso_numeric": "446",
+        "name": "Macao, China Special Administrative Region",
+        "ISO2": "11",
+        "code": "MAC",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 450,
+        "iso_numeric": "450",
+        "name": "Madagascar",
+        "ISO2": "142",
+        "code": "MDG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 454,
+        "iso_numeric": "454",
+        "name": "Malawi",
+        "ISO2": "143",
+        "code": "MWI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 458,
+        "iso_numeric": "458",
+        "name": "Malaysia",
+        "ISO2": "33",
+        "code": "MYS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 462,
+        "iso_numeric": "462",
+        "name": "Maldives",
+        "ISO2": "144",
+        "code": "MDV",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 466,
+        "iso_numeric": "466",
+        "name": "Mali",
+        "ISO2": "145",
+        "code": "MLI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1007,
+        "iso_numeric": "470",
+        "name": "Malta",
+        "ISO2": "91",
+        "code": "MLT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 584,
+        "iso_numeric": "584",
+        "name": "Marshall Islands",
+        "ISO2": "MH",
+        "code": "MHL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 478,
+        "iso_numeric": "478",
+        "name": "Mauritania",
+        "ISO2": "MR",
+        "code": "MRT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 480,
+        "iso_numeric": "480",
+        "name": "Mauritius",
+        "ISO2": "147",
+        "code": "MUS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 175,
+        "iso_numeric": "175",
+        "name": "Mayotte",
+        "ISO2": "YT",
+        "code": "MYT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 484,
+        "iso_numeric": "484",
+        "name": "Mexico",
+        "ISO2": "35",
+        "code": "MEX",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 583,
+        "iso_numeric": "583",
+        "name": "Micronesia (Federated States of)",
+        "ISO2": "FM",
+        "code": "FSM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 488,
+        "iso_numeric": "488",
+        "name": "Midway Islands",
+        "ISO2": "MI",
+        "code": "MID",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 498,
+        "iso_numeric": "498",
+        "name": "Moldova, Republic of",
+        "ISO2": "93",
+        "code": "MDA",
+        "ValidFrom": "1991-08-27T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 496,
+        "iso_numeric": "496",
+        "name": "Mongolia",
+        "ISO2": "150",
+        "code": "MNG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 499,
+        "iso_numeric": "499",
+        "name": "Montenegro",
+        "ISO2": "151",
+        "code": "MNE",
+        "ValidFrom": "2006-06-03T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 500,
+        "iso_numeric": "500",
+        "name": "Montserrat",
+        "ISO2": "MS",
+        "code": "MSR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 504,
+        "iso_numeric": "504",
+        "name": "Morocco",
+        "ISO2": "34",
+        "code": "MAR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 508,
+        "iso_numeric": "508",
+        "name": "Mozambique",
+        "ISO2": "152",
+        "code": "MOZ",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 104,
+        "iso_numeric": "104",
+        "name": "Myanmar",
+        "ISO2": "MM",
+        "code": "MMR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 516,
+        "iso_numeric": "516",
+        "name": "Namibia",
+        "ISO2": "154",
+        "code": "NAM",
+        "ValidFrom": "1990-03-21T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 520,
+        "iso_numeric": "520",
+        "name": "Nauru",
+        "ISO2": "NR",
+        "code": "NRU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 524,
+        "iso_numeric": "524",
+        "name": "Nepal",
+        "ISO2": "155",
+        "code": "NPL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 528,
+        "iso_numeric": "528",
+        "name": "Netherlands",
+        "ISO2": "37",
+        "code": "NLD",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 540,
+        "iso_numeric": "540",
+        "name": "New Caledonia",
+        "ISO2": "NC",
+        "code": "NCL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 554,
+        "iso_numeric": "554",
+        "name": "New Zealand",
+        "ISO2": "63",
+        "code": "NZL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 558,
+        "iso_numeric": "558",
+        "name": "Nicaragua",
+        "ISO2": "NI",
+        "code": "NIC",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 562,
+        "iso_numeric": "562",
+        "name": "Niger",
+        "ISO2": "157",
+        "code": "NER",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 566,
+        "iso_numeric": "566",
+        "name": "Nigeria",
+        "ISO2": "158",
+        "code": "NGA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 570,
+        "iso_numeric": "570",
+        "name": "Niue",
+        "ISO2": "NU",
+        "code": "NIU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 574,
+        "iso_numeric": "574",
+        "name": "Norfolk Island",
+        "ISO2": "NF",
+        "code": "NFK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 807,
+        "iso_numeric": "807",
+        "name": "North Macedonia, Republic of",
+        "ISO2": "MK",
+        "code": "MKD",
+        "ValidFrom": "1991-09-08T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 580,
+        "iso_numeric": "580",
+        "name": "Northern Mariana Islands",
+        "ISO2": "MP",
+        "code": "MNP",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 579,
+        "iso_numeric": "579",
+        "name": "Norway",
+        "ISO2": "64",
+        "code": "NOR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 512,
+        "iso_numeric": "512",
+        "name": "Oman",
+        "ISO2": "160",
+        "code": "OMN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 582,
+        "iso_numeric": "582",
+        "name": "Pacific Islands",
+        "ISO2": "PC",
+        "code": "PCE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 586,
+        "iso_numeric": "586",
+        "name": "Pakistan",
+        "ISO2": "66",
+        "code": "PAK",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 585,
+        "iso_numeric": "585",
+        "name": "Palau",
+        "ISO2": "PW",
+        "code": "PLW",
+        "ValidFrom": "1994-10-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 275,
+        "iso_numeric": "275",
+        "name": "Palestine, State of",
+        "ISO2": "GZ",
+        "code": "GZS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 591,
+        "iso_numeric": "591",
+        "name": "Panama",
+        "ISO2": "36",
+        "code": "PAN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 598,
+        "iso_numeric": "598",
+        "name": "Papua New Guinea",
+        "ISO2": "128",
+        "code": "PNG",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 600,
+        "iso_numeric": "600",
+        "name": "Paraguay",
+        "ISO2": "164",
+        "code": "PRY",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 604,
+        "iso_numeric": "604",
+        "name": "Peru",
+        "ISO2": "38",
+        "code": "PER",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 608,
+        "iso_numeric": "608",
+        "name": "Philippines",
+        "ISO2": "39",
+        "code": "PHL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 612,
+        "iso_numeric": "612",
+        "name": "Pitcairn",
+        "ISO2": "PN",
+        "code": "PCN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1008,
+        "iso_numeric": "616",
+        "name": "Poland",
+        "ISO2": "40",
+        "code": "POL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 620,
+        "iso_numeric": "620",
+        "name": "Portugal",
+        "ISO2": "41",
+        "code": "PRT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 630,
+        "iso_numeric": "630",
+        "name": "Puerto Rico",
+        "ISO2": "237",
+        "code": "PRI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 634,
+        "iso_numeric": "634",
+        "name": "Qatar",
+        "ISO2": "165",
+        "code": "QAT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1012,
+        "iso_numeric": "642",
+        "name": "Romania",
+        "ISO2": "RO",
+        "code": "ROU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 643,
+        "iso_numeric": "643",
+        "name": "Russian Federation",
+        "ISO2": "45",
+        "code": "RUS",
+        "ValidFrom": "1991-12-26T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 646,
+        "iso_numeric": "646",
+        "name": "Rwanda",
+        "ISO2": "82",
+        "code": "RWA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 654,
+        "iso_numeric": "654",
+        "name": "Saint Helena",
+        "ISO2": "SH",
+        "code": "SHN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 659,
+        "iso_numeric": "659",
+        "name": "Saint Kitts and Nevis",
+        "ISO2": "KN",
+        "code": "KNA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 662,
+        "iso_numeric": "662",
+        "name": "Saint Lucia",
+        "ISO2": "LC",
+        "code": "LCA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 666,
+        "iso_numeric": "666",
+        "name": "Saint Pierre and Miquelon",
+        "ISO2": "PM",
+        "code": "SPM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 670,
+        "iso_numeric": "670",
+        "name": "Saint Vincent and the Grenadines",
+        "ISO2": "VC",
+        "code": "VCT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 882,
+        "iso_numeric": "882",
+        "name": "Samoa",
+        "ISO2": "WS",
+        "code": "WSM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 674,
+        "iso_numeric": "674",
+        "name": "San Marino",
+        "ISO2": "SM",
+        "code": "SMR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 678,
+        "iso_numeric": "678",
+        "name": "Sao Tome and Principe",
+        "ISO2": "ST",
+        "code": "STP",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 682,
+        "iso_numeric": "682",
+        "name": "Saudi Arabia",
+        "ISO2": "2",
+        "code": "SAU",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 686,
+        "iso_numeric": "686",
+        "name": "Senegal",
+        "ISO2": "80",
+        "code": "SEN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 688,
+        "iso_numeric": "688",
+        "name": "Serbia",
+        "ISO2": "95",
+        "code": "SRB",
+        "ValidFrom": "2006-06-03T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 690,
+        "iso_numeric": "690",
+        "name": "Seychelles",
+        "ISO2": "168",
+        "code": "SYC",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 694,
+        "iso_numeric": "694",
+        "name": "Sierra Leone",
+        "ISO2": "SL",
+        "code": "SLE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 702,
+        "iso_numeric": "702",
+        "name": "Singapore",
+        "ISO2": "46",
+        "code": "SGP",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1009,
+        "iso_numeric": "703",
+        "name": "Slovakia",
+        "ISO2": "67",
+        "code": "SVK",
+        "ValidFrom": "1993-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1010,
+        "iso_numeric": "705",
+        "name": "Slovenia",
+        "ISO2": "68",
+        "code": "SVN",
+        "ValidFrom": "1991-06-25T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 90,
+        "iso_numeric": "090",
+        "name": "Solomon Islands",
+        "ISO2": "SB",
+        "code": "SLB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 706,
+        "iso_numeric": "706",
+        "name": "Somalia",
+        "ISO2": "SO",
+        "code": "SOM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 710,
+        "iso_numeric": "710",
+        "name": "South Africa",
+        "ISO2": "1",
+        "code": "ZAF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 239,
+        "iso_numeric": "239",
+        "name": "South Georgia and the South Sandwich Islands",
+        "ISO2": "88",
+        "code": "SGS",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 728,
+        "iso_numeric": "728",
+        "name": "South Sudan",
+        "ISO2": "SS",
+        "code": "SSD",
+        "ValidFrom": "2011-06-09T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 724,
+        "iso_numeric": "724",
+        "name": "Spain",
+        "ISO2": "17",
+        "code": "ESP",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 144,
+        "iso_numeric": "144",
+        "name": "Sri Lanka",
+        "ISO2": "171",
+        "code": "LKA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 736,
+        "iso_numeric": "736",
+        "name": "Sudan",
+        "ISO2": "SD",
+        "code": "SDN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 740,
+        "iso_numeric": "740",
+        "name": "Suriname",
+        "ISO2": "SR",
+        "code": "SUR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 744,
+        "iso_numeric": "744",
+        "name": "Svalbard and Jan Mayen Islands",
+        "ISO2": "SJ",
+        "code": "SJM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 752,
+        "iso_numeric": "752",
+        "name": "Sweden",
+        "ISO2": "47",
+        "code": "SWE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 757,
+        "iso_numeric": "757",
+        "name": "Switzerland",
+        "ISO2": "48",
+        "code": "CHE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 760,
+        "iso_numeric": "760",
+        "name": "Syrian Arab Republic",
+        "ISO2": "SY",
+        "code": "SYR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 490,
+        "iso_numeric": "490",
+        "name": "Taipei, Chinese",
+        "ISO2": "TW",
+        "code": "TWN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 762,
+        "iso_numeric": "762",
+        "name": "Tajikistan",
+        "ISO2": "TJ",
+        "code": "TJK",
+        "ValidFrom": "1991-09-09T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 834,
+        "iso_numeric": "834",
+        "name": "Tanzania, United Republic of",
+        "ISO2": "176",
+        "code": "TZA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 764,
+        "iso_numeric": "764",
+        "name": "Thailand",
+        "ISO2": "50",
+        "code": "THA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 626,
+        "iso_numeric": "626",
+        "name": "Timor-Leste",
+        "ISO2": "TP",
+        "code": "TMP",
+        "ValidFrom": "2002-05-20T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 768,
+        "iso_numeric": "768",
+        "name": "Togo",
+        "ISO2": "178",
+        "code": "TGO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 772,
+        "iso_numeric": "772",
+        "name": "Tokelau",
+        "ISO2": "TK",
+        "code": "TKL",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 776,
+        "iso_numeric": "776",
+        "name": "Tonga",
+        "ISO2": "TO",
+        "code": "TON",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 780,
+        "iso_numeric": "780",
+        "name": "Trinidad and Tobago",
+        "ISO2": "TT",
+        "code": "TTO",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 788,
+        "iso_numeric": "788",
+        "name": "Tunisia",
+        "ISO2": "51",
+        "code": "TUN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 792,
+        "iso_numeric": "792",
+        "name": "Türkiye",
+        "ISO2": "52",
+        "code": "TUR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 795,
+        "iso_numeric": "795",
+        "name": "Turkmenistan",
+        "ISO2": "181",
+        "code": "TKM",
+        "ValidFrom": "1991-10-27T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 796,
+        "iso_numeric": "796",
+        "name": "Turks and Caicos Islands",
+        "ISO2": "TC",
+        "code": "TCA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 798,
+        "iso_numeric": "798",
+        "name": "Tuvalu",
+        "ISO2": "TV",
+        "code": "TUV",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 800,
+        "iso_numeric": "800",
+        "name": "Uganda",
+        "ISO2": "182",
+        "code": "UGA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 804,
+        "iso_numeric": "804",
+        "name": "Ukraine",
+        "ISO2": "70",
+        "code": "UKR",
+        "ValidFrom": "1991-08-24T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 784,
+        "iso_numeric": "784",
+        "name": "United Arab Emirates",
+        "ISO2": "AE",
+        "code": "ARE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 1014,
+        "iso_numeric": "826",
+        "name": "United Kingdom",
+        "ISO2": "44",
+        "code": "GBR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 849,
+        "iso_numeric": "849",
+        "name": "United States Minor Outlying Islands",
+        "ISO2": "18",
+        "code": "UMI",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 842,
+        "iso_numeric": "842",
+        "name": "United States",
+        "ISO2": "18",
+        "code": "USA",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 858,
+        "iso_numeric": "858",
+        "name": "Uruguay",
+        "ISO2": "53",
+        "code": "URY",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 860,
+        "iso_numeric": "860",
+        "name": "Uzbekistan",
+        "ISO2": "65",
+        "code": "UZB",
+        "ValidFrom": "1991-09-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 548,
+        "iso_numeric": "548",
+        "name": "Vanuatu",
+        "ISO2": "VU",
+        "code": "VUT",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 862,
+        "iso_numeric": "862",
+        "name": "Venezuela (Bolivarian Republic of)",
+        "ISO2": "71",
+        "code": "VEN",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 704,
+        "iso_numeric": "704",
+        "name": "Viet Nam",
+        "ISO2": "VN",
+        "code": "VNM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 92,
+        "iso_numeric": "092",
+        "name": "Virgin Islands, British",
+        "ISO2": "VG",
+        "code": "VGB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 850,
+        "iso_numeric": "850",
+        "name": "Virgin Islands, United States",
+        "ISO2": "18",
+        "code": "VIR",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 876,
+        "iso_numeric": "876",
+        "name": "Wallis and Futuna",
+        "ISO2": "WF",
+        "code": "WLF",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 732,
+        "iso_numeric": "732",
+        "name": "Western Sahara",
+        "ISO2": "EH",
+        "code": "ESH",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 887,
+        "iso_numeric": "887",
+        "name": "Yemen",
+        "ISO2": "YE",
+        "code": "YEM",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 894,
+        "iso_numeric": "894",
+        "name": "Zambia",
+        "ISO2": "185",
+        "code": "ZMB",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    },
+    {
+        "Id": 716,
+        "iso_numeric": "716",
+        "name": "Zimbabwe",
+        "ISO2": "ZW",
+        "code": "ZWE",
+        "ValidFrom": "1900-01-01T00:00:00",
+        "ValidUntil": "9999-12-31T00:00:00"
+    }
+]

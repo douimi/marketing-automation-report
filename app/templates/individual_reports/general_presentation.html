@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}General Presentation - {{ form_data.destination_country_name }}{% endblock %}
+
+{% block content %}
+<div class="container-xl my-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-2 mb-md-0">
+                <span class="country-flag me-2"><i class="fas fa-info-circle fa-2x text-accent"></i></span>
+                <div>
+                    <h1 class="h2 fw-bold mb-1">General Presentation</h1>
+                    <div class="d-flex flex-wrap gap-3 align-items-center">
+                        <span><i class="fas fa-flag me-1"></i> {{ form_data.destination_country_name }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ datetime.now().strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                </button>
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary px-4 py-2">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Navigation -->
+    <nav class="service-nav mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <span class="fw-bold text-muted">Related Services:</span>
+            <a href="{{ url_for('main.service_form', service_type='economic-political') }}" class="btn btn-sm btn-outline-primary">Economic Outline</a>
+            <a href="{{ url_for('main.service_form', service_type='operating-business') }}" class="btn btn-sm btn-outline-primary">Operating Business</a>
+            <a href="{{ url_for('main.form_page') }}" class="btn btn-sm btn-primary">Complete Report</a>
+        </div>
+    </nav>
+
+    <!-- General Presentation Section -->
+    <section class="report-section mb-4">
+        <div class="section-header"><i class="fas fa-info-circle section-icon"></i>Country Overview</div>
+        {% if openai_intro %}
+        <div class="section-intro">{{ openai_intro|plain_text }}</div>
+        {% endif %}
+        <div class="section-content">
+            <div class="stat-row">
+                {% set facts = [
+                    ('Capital', market_data.capital, 'fa-landmark'),
+                    ('Population', market_data.total_population, 'fa-users'),
+                    ('Area', market_data.area ~ ' km²', 'fa-map'),
+                    ('Currency', market_data.national_currency, 'fa-money-bill-wave'),
+                    ('HDI', market_data.hdi, 'fa-chart-line'),
+                    ('Urban Population', market_data.urban_population, 'fa-city'),
+                    ('Density', market_data.density, 'fa-layer-group'),
+                    ('Type of Economy', market_data.type_of_economy, 'fa-briefcase')
+                ] %}
+                {% for label, value, icon in facts if value %}
+                <div class="stat-block">
+                    <div class="stat-icon mb-1"><i class="fas {{ icon }} fa-lg"></i></div>
+                    <div class="stat-label">{{ label }}</div>
+                    <div class="stat-value">{{ value }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-4">
+                <ul class="list-unstyled mb-0">
+                    {% if market_data.type_of_state %}<li class="mb-2"><b>Type of State:</b> {{ market_data.type_of_state }}</li>{% endif %}
+                    {% if market_data.ethnic_origins %}<li class="mb-2"><b>Ethnic Origins:</b> {{ market_data.ethnic_origins }}</li>{% endif %}
+                    {% if market_data.population_of_main_metropolitan_areas %}<li class="mb-2"><b>Main Metropolitan Areas:</b> {{ market_data.population_of_main_metropolitan_areas }}</li>{% endif %}
+                    {% if market_data.official_language %}<li class="mb-2"><b>Official Language:</b> {{ market_data.official_language }}</li>{% endif %}
+                    {% if market_data.other_languages_spoken %}<li class="mb-2"><b>Other Languages Spoken:</b> {{ market_data.other_languages_spoken }}</li>{% endif %}
+                    {% if market_data.business_languages %}<li class="mb-2"><b>Business Language(s):</b> {{ market_data.business_languages }}</li>{% endif %}
+                    {% if market_data.religion %}<li class="mb-2"><b>Religion:</b> {{ market_data.religion }}</li>{% endif %}
+                </ul>
+            </div>
+        </div>
+        {% if openai_conclusion %}
+        <div class="section-insights">{{ openai_conclusion|plain_text }}</div>
+        {% endif %}
+    </section>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="card bg-light">
+            <div class="card-body py-4">
+                <h4 class="mb-3">Need More Insights?</h4>
+                <p class="text-muted mb-4">Get the complete market analysis with all sections included.</p>
+                <a href="{{ url_for('main.form_page') }}" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-chart-line me-2"></i>Get Complete Report
+                </a>
+                <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-list me-2"></i>View All Services
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.service-nav {
+    border: 1px solid #e2e8f0;
+    background: #f8f9fa;
+}
+
+.report-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.section-icon {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.section-intro {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.section-content {
+    padding: 2rem;
+}
+
+.section-insights {
+    background: #e8f4f8;
+    padding: 1.5rem;
+    border-top: 1px solid #d1ecf1;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-block {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.stat-icon {
+    color: #3498db;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+@media (max-width: 768px) {
+    .stat-row {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .section-content {
+        padding: 1.5rem;
+    }
+    
+    .section-header {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+}
+</style>
+{% endblock %}

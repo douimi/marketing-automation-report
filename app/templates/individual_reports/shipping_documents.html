@@ -1,0 +1,384 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_content %}
+{% set data = shipping_documents_data %}
+
+<!-- Search Parameters -->
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-search me-2"></i>Search Parameters
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% if data.search_params %}
+            <div class="col-md-3">
+                <strong>Import Country:</strong> {{ data.search_params.import_country_name or data.import_country_name or 'N/A' }}
+            </div>
+            <div class="col-md-3">
+                <strong>Export Country:</strong> {{ data.search_params.export_country_name or data.export_country_name or 'N/A' }}
+            </div>
+            <div class="col-md-3">
+                <strong>Manufacture Country:</strong> {{ data.search_params.manufacture_country_name or data.manufacture_country_name or 'N/A' }}
+            </div>
+            <div class="col-md-3">
+                <strong>Transport Mode:</strong> {{ data.search_params.transport_mode or data.transport_mode or 'N/A' }}
+            </div>
+            <div class="col-md-6 mt-2">
+                <strong>Shipment Date:</strong> {{ data.search_params.shipment_date or data.shipment_date or 'N/A' }}
+            </div>
+            <div class="col-md-6 mt-2">
+                <strong>Document Type:</strong> 
+                {% if data.search_params.document_type == 'country_specific' or data.document_type == 'country_specific' %}
+                    Country Specific
+                {% elif data.search_params.document_type == 'country_product_specific' or data.document_type == 'country_product_specific' %}
+                    Country and Product Specific
+                {% else %}
+                    {{ data.search_params.document_type or data.document_type or 'N/A' }}
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Search parameters not available.
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if data.error %}
+<!-- Error Display -->
+<div class="alert alert-danger">
+    <h5 class="alert-heading">
+        <i class="fas fa-exclamation-circle me-2"></i>Error
+    </h5>
+    <p class="mb-0">{{ data.error }}</p>
+</div>
+{% else %}
+
+<!-- Results Summary -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-file-export fa-3x text-primary mb-3"></i>
+                <h4 class="text-primary">{{ data.total_export_documents or 0 }}</h4>
+                <p class="card-text">Export Documents</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-file-import fa-3x text-success mb-3"></i>
+                <h4 class="text-success">{{ data.total_import_documents or 0 }}</h4>
+                <p class="card-text">Import Documents</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-file-contract fa-3x text-info mb-3"></i>
+                <h4 class="text-info">{{ (data.total_export_documents or 0) + (data.total_import_documents or 0) }}</h4>
+                <p class="card-text">Total Documents</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Tabbed Documents Section -->
+<div class="card">
+    <div class="card-header bg-light">
+        <ul class="nav nav-tabs card-header-tabs" id="documentsTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="export-tab" data-bs-toggle="tab" data-bs-target="#export-documents" type="button" role="tab" aria-controls="export-documents" aria-selected="true">
+                    <i class="fas fa-file-export me-2"></i>Export Documents ({{ data.total_export_documents or 0 }})
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import-documents" type="button" role="tab" aria-controls="import-documents" aria-selected="false">
+                    <i class="fas fa-file-import me-2"></i>Import Documents ({{ data.total_import_documents or 0 }})
+                </button>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="card-body">
+        <div class="tab-content" id="documentsTabContent">
+            <!-- Export Documents Tab -->
+            <div class="tab-pane fade show active" id="export-documents" role="tabpanel" aria-labelledby="export-tab">
+                {% if data and data.export_documents %}
+                    {% for category_group in data.export_documents|groupby('category') %}
+                        {% set category_name = category_group[0] %}
+                        {% set category_docs = category_group[1] %}
+                        <div class="category-section mb-4">
+                            <h6 class="category-header text-primary border-bottom pb-2 mb-3">
+                                <i class="fas fa-folder me-2"></i>{{ category_name }}
+                            </h6>
+                            {% for doc in category_docs %}
+                            <div class="document-card mb-3 p-3 border rounded">
+                                <div class="row align-items-start">
+                                    <div class="col-md-8">
+                                        <h6 class="document-name mb-2">
+                                            <i class="fas fa-file-alt text-primary me-2"></i>
+                                            {{ doc.name }}
+                                        </h6>
+                                        {% if doc.description %}
+                                        <p class="document-description text-muted mb-2">{{ doc.description }}</p>
+                                        {% endif %}
+                                        {% if doc.source %}
+                                        <small class="text-muted">
+                                            <i class="fas fa-info-circle me-1"></i>Source: {{ doc.source }}
+                                        </small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        {% if doc.download_link %}
+                                        <a href="{{ doc.download_link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-download me-1"></i>Download Example
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle fa-2x mb-3"></i>
+                        <h5>No Export Documents Found</h5>
+                        <p class="mb-0">No export documents were found for the specified criteria.</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Import Documents Tab -->
+            <div class="tab-pane fade" id="import-documents" role="tabpanel" aria-labelledby="import-tab">
+                {% if data and data.import_documents %}
+                    {% for category_group in data.import_documents|groupby('category') %}
+                        {% set category_name = category_group[0] %}
+                        {% set category_docs = category_group[1] %}
+                        <div class="category-section mb-4">
+                            <h6 class="category-header text-success border-bottom pb-2 mb-3">
+                                <i class="fas fa-folder me-2"></i>{{ category_name }}
+                            </h6>
+                            {% for doc in category_docs %}
+                            <div class="document-card mb-3 p-3 border rounded">
+                                <div class="row align-items-start">
+                                    <div class="col-md-8">
+                                        <h6 class="document-name mb-2">
+                                            <i class="fas fa-file-alt text-success me-2"></i>
+                                            {{ doc.name }}
+                                        </h6>
+                                        {% if doc.description %}
+                                        <p class="document-description text-muted mb-2">{{ doc.description }}</p>
+                                        {% endif %}
+                                        {% if doc.source %}
+                                        <small class="text-muted">
+                                            <i class="fas fa-info-circle me-1"></i>Source: {{ doc.source }}
+                                        </small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        {% if doc.download_link %}
+                                        <a href="{{ doc.download_link }}" target="_blank" class="btn btn-outline-success btn-sm">
+                                            <i class="fas fa-download me-1"></i>Download Example
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle fa-2x mb-3"></i>
+                        <h5>No Import Documents Found</h5>
+                        <p class="mb-0">No import documents were found for the specified criteria.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- No Data Message -->
+{% if not data.export_documents and not data.import_documents %}
+<div class="alert alert-info text-center">
+    <i class="fas fa-info-circle fa-3x mb-3"></i>
+    <h5>No Documents Found</h5>
+    <p class="mb-0">No shipping documents were found for the specified criteria. Please try different search parameters.</p>
+</div>
+{% endif %}
+
+{% endif %}
+
+<style>
+.category-section {
+    margin-bottom: 2rem;
+}
+
+.category-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.document-card {
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+    border: 1px solid #e9ecef !important;
+}
+
+.document-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.document-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.document-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Tab styling */
+.nav-tabs .nav-link {
+    border-radius: 0.5rem 0.5rem 0 0;
+    border: 2px solid #dee2e6;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: -2px;
+    margin-right: 0.25rem;
+    background-color: #f8f9fa;
+    color: #495057 !important;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: white;
+    border-color: #0d6efd #0d6efd white;
+    color: #0d6efd !important;
+    font-weight: 700;
+    box-shadow: 0 -2px 4px rgba(13, 110, 253, 0.1);
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: #0d6efd #0d6efd #dee2e6;
+    background-color: #e7f1ff;
+    color: #0d6efd !important;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link:focus {
+    color: #0d6efd !important;
+    text-decoration: none;
+}
+
+.card-header-tabs {
+    margin-bottom: -0.5rem;
+}
+
+.tab-content {
+    min-height: 400px;
+}
+
+/* Badge styling in tabs */
+.nav-link i {
+    opacity: 0.7;
+}
+
+.nav-link.active i {
+    opacity: 1;
+}
+
+/* Debug styling to make tabs visible */
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tab-content {
+    border: 1px solid #dee2e6;
+    border-top: none;
+    padding: 1rem;
+    background-color: white;
+    color: #333;
+}
+
+/* Ensure text in tab panes is visible */
+.tab-pane {
+    color: #333;
+}
+
+.tab-pane h5, .tab-pane h6 {
+    color: #212529;
+}
+
+.tab-pane p {
+    color: #6c757d;
+}
+
+/* Document card text colors */
+.document-name {
+    color: #212529 !important;
+}
+
+.document-description {
+    color: #6c757d !important;
+}
+
+.category-header {
+    color: #495057 !important;
+}
+
+/* Source and small text visibility */
+.tab-pane small {
+    color: #6c757d !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Alert text colors */
+.alert h5 {
+    color: #0c5460 !important;
+}
+
+.alert p {
+    color: #055160 !important;
+}
+</style>
+
+<script>
+// Initialize Bootstrap tabs
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing shipping documents tabs...');
+    
+    // Initialize all tab triggers
+    var triggerTabList = [].slice.call(document.querySelectorAll('#documentsTab button[data-bs-toggle="tab"]'));
+    triggerTabList.forEach(function (triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl);
+        
+        triggerEl.addEventListener('click', function (event) {
+            event.preventDefault();
+            tabTrigger.show();
+        });
+    });
+    
+    console.log('Found ' + triggerTabList.length + ' tab triggers');
+});
+</script>
+{% endblock %}

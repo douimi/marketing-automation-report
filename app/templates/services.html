@@ -1,0 +1,1686 @@
+{% extends "base.html" %}
+
+{% block title %}Trade Intelligence Services{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Trade Intelligence <span class="highlight-text">Services</span></h1>
+            <p class="hero-subtitle">Comprehensive trade intelligence and market analysis tools for strategic business expansion across global markets</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Companies</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Navigation -->
+<div class="quick-nav-section">
+    <div class="container">
+        <div class="quick-nav-wrapper">
+            <a href="#market-intelligence" class="quick-nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Market Intelligence</span>
+            </a>
+            <a href="#b2b-partners" class="quick-nav-item">
+                <i class="fas fa-handshake"></i>
+                <span>B2B Partners</span>
+            </a>
+            <a href="#logistics" class="quick-nav-item">
+                <i class="fas fa-truck"></i>
+                <span>Logistics</span>
+            </a>
+            <a href="#market-tools" class="quick-nav-item">
+                <i class="fas fa-tools"></i>
+                <span>Market Tools</span>
+            </a>
+            <a href="#academy" class="quick-nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Academy</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="services-main-content">
+    <div class="container compact-container">
+        <!-- Market Intelligence Section -->
+        <section class="service-section" id="market-intelligence">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Market Intelligence</h2>
+                    <p class="section-description">Access comprehensive market data and industry insights to make informed business decisions</p>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.industry_information') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Industry Information</h5>
+                                <p class="card-description">Access comprehensive industry data including best countries for trade, trade flows, and market reports</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Industry Information</h5>
+                            <p class="card-description">Access comprehensive industry data including best countries for trade, trade flows, and market reports</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    <a href="{{ url_for('main.country_information') }}" class="service-card-link">
+                        <div class="service-card featured">
+                            <div class="card-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Country Information</h5>
+                                <p class="card-description">Select a country to access general information and explore business operations and travel services</p>
+                                {% if not current_user.is_authenticated %}
+                                <span class="card-badge">FREE SAMPLE</span>
+                                {% endif %}
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- B2B Partners Section -->
+        <section class="service-section" id="b2b-partners">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">B2B Partners</h2>
+                    <p class="section-description">Connect with verified suppliers, distributors, and business partners worldwide</p>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='identify-suppliers') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Find Counterparts</h5>
+                                <p class="card-description">Production types, professional associations, marketplaces, trade shows, and manufacturer directories</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Find Counterparts</h5>
+                            <p class="card-description">Production types, professional associations, marketplaces, trade shows, and manufacturer directories</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='business-directories') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Business Directories</h5>
+                                <p class="card-description">Find industry-specific business directories and commercial partners in your target country</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Business Directories</h5>
+                            <p class="card-description">Find industry-specific business directories and commercial partners in your target country</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='trade-shows') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Trade Shows</h5>
+                                <p class="card-description">Upcoming trade shows and exhibitions in your target market and industry sector</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Trade Shows</h5>
+                            <p class="card-description">Upcoming trade shows and exhibitions in your target market and industry sector</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='online-marketplaces') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Online Marketplaces</h5>
+                                <p class="card-description">Discover relevant online trading platforms and marketplaces for your industry and target market</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Online Marketplaces</h5>
+                            <p class="card-description">Discover relevant online trading platforms and marketplaces for your industry and target market</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='professional-associations') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Professional Associations</h5>
+                                <p class="card-description">Connect with industry associations and chambers</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Professional Associations</h5>
+                            <p class="card-description">Connect with industry associations and chambers</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='blacklisted-companies') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Blacklisted Companies and Vessels</h5>
+                                <p class="card-description">Check sanctions and blacklist databases</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Blacklisted Companies and Vessels</h5>
+                            <p class="card-description">Check sanctions and blacklist databases</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Logistics Section -->
+        <section class="service-section" id="logistics">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Logistics</h2>
+                    <p class="section-description">Navigate complex international trade regulations and compliance requirements</p>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='trade-compliance') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-gavel"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Trade Compliance</h5>
+                                <p class="card-description">International conventions, trade regulations, customs procedures, and compliance requirements</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Trade Compliance</h5>
+                            <p class="card-description">International conventions, trade regulations, customs procedures, and compliance requirements</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.service_form', service_type='shipping-documents') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Shipping Documents</h5>
+                                <p class="card-description">Find required documents for importing and exporting goods between countries</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Shipping Documents</h5>
+                            <p class="card-description">Find required documents for importing and exporting goods between countries</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    <div class="service-card coming-soon" onclick="showComingSoon('Import Controls')">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Import Controls</h5>
+                            <p class="card-description">Navigate import regulations and requirements</p>
+                        </div>
+                        <div class="card-badge coming-soon-badge">Coming Soon</div>
+                    </div>
+                </div>
+
+                <div class="service-card-wrapper">
+                    <div class="service-card coming-soon" onclick="showComingSoon('Export Controls')">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Export Controls</h5>
+                            <p class="card-description">Understand export regulations and compliance</p>
+                        </div>
+                        <div class="card-badge coming-soon-badge">Coming Soon</div>
+                    </div>
+                </div>
+
+                <div class="service-card-wrapper">
+                    <div class="service-card coming-soon" onclick="showComingSoon('Customs Duties')">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Customs Duties</h5>
+                            <p class="card-description">Calculate customs duties and tariffs</p>
+                        </div>
+                        <div class="card-badge coming-soon-badge">Coming Soon</div>
+                    </div>
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.hs_customs_classification') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">HS Customs Classification</h5>
+                                <p class="card-description">Find correct HS codes for your products</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">HS Customs Classification</h5>
+                            <p class="card-description">Find correct HS codes for your products</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Tools Section -->
+        <section class="service-section" id="market-tools">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Market Tools</h2>
+                    <p class="section-description">Professional calculators and tools for pricing, costs, and market analysis</p>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.export_price_calculator') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Export Price Calculator</h5>
+                                <p class="card-description">Calculate optimal export pricing strategies</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Export Price Calculator</h5>
+                            <p class="card-description">Calculate optimal export pricing strategies</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    <div class="service-card coming-soon" onclick="showComingSoon('Landed Cost Calculator')">
+                        <div class="card-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Landed Cost Calculator</h5>
+                            <p class="card-description">Calculate total landed costs including duties</p>
+                        </div>
+                        <div class="card-badge coming-soon-badge">Coming Soon</div>
+                    </div>
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.measurement_converter') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-ruler"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Measurement Converter</h5>
+                                <p class="card-description">Convert between different measurement units</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-ruler"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Measurement Converter</h5>
+                            <p class="card-description">Convert between different measurement units</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.currency_converter') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Currency Converter</h5>
+                                <p class="card-description">Real-time currency conversion and rates</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Currency Converter</h5>
+                            <p class="card-description">Real-time currency conversion and rates</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Academy Section -->
+        <section class="service-section" id="academy">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <div class="section-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2 class="section-title">Indatex Academy</h2>
+                    <p class="section-description">Educational resources and training materials for international trade professionals</p>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card-wrapper">
+                    <div class="service-card coming-soon" onclick="showComingSoon('Indatex Trade')">
+                        <div class="card-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Indatex Trade</h5>
+                            <p class="card-description">Access Indatex Trade educational resources</p>
+                        </div>
+                        <div class="card-badge coming-soon-badge">Coming Soon</div>
+                    </div>
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.payment_means') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Payment Means</h5>
+                                <p class="card-description">Comprehensive guide to international payment instruments and methods</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Payment Means</h5>
+                            <p class="card-description">Comprehensive guide to international payment instruments and methods</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.financing_operations') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Financing Operations</h5>
+                                <p class="card-description">Comprehensive guide to export and import financing solutions</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Financing Operations</h5>
+                            <p class="card-description">Comprehensive guide to export and import financing solutions</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.risk_management') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Risk Management</h5>
+                                <p class="card-description">Comprehensive guide to managing international trade risks and hedging strategies</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Risk Management</h5>
+                            <p class="card-description">Comprehensive guide to managing international trade risks and hedging strategies</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.incoterms') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Incoterms®</h5>
+                                <p class="card-description">Master international commercial terms</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Incoterms®</h5>
+                            <p class="card-description">Master international commercial terms</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.business_trips') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Business Trips</h5>
+                                <p class="card-description">Plan effective international business travel</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Business Trips</h5>
+                            <p class="card-description">Plan effective international business travel</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.trademark_protection') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-trademark"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Trademark Protection</h5>
+                                <p class="card-description">Protect your brand in international markets</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-trademark"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Trademark Protection</h5>
+                            <p class="card-description">Protect your brand in international markets</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.patent_protection') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Patent Protection</h5>
+                                <p class="card-description">Secure intellectual property rights globally</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Patent Protection</h5>
+                            <p class="card-description">Secure intellectual property rights globally</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="service-card-wrapper">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.emerging_markets') }}" class="service-card-link">
+                        <div class="service-card">
+                            <div class="card-icon">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5 class="card-title">Exporting to Emerging Markets</h5>
+                                <p class="card-description">Navigate opportunities in emerging economies</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <div class="service-card locked" onclick="showLoginPrompt()">
+                        <div class="card-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="card-content">
+                            <h5 class="card-title">Exporting to Emerging Markets</h5>
+                            <p class="card-description">Navigate opportunities in emerging economies</p>
+                        </div>
+                        <div class="card-lock">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-background">
+                <div class="cta-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h3 class="cta-title">Ready to Expand Your Business Globally?</h3>
+                            <p class="cta-subtitle">Get started with our comprehensive trade intelligence services and unlock new market opportunities with data-driven insights.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="cta-buttons">
+                                {% if current_user.is_authenticated %}
+                                <a href="{{ url_for('main.form_page') }}" class="btn btn-action">
+                                    <i class="fas fa-chart-line me-2"></i>Generate Report
+                                </a>
+                                {% else %}
+                                <a href="{{ url_for('main.service_form', service_type='general-presentation') }}" class="btn btn-action btn-outline me-3">
+                                    <i class="fas fa-gift me-2"></i>Free Sample
+                                </a>
+                                <a href="{{ url_for('auth.register') }}" class="btn btn-action">
+                                    <i class="fas fa-user-plus me-2"></i>Join Now
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h5>Need Assistance?</h5>
+                        <p>Our trade experts are here to help you succeed</p>
+                        <a href="mailto:support@indatex.com" class="contact-link">
+                            <i class="fas fa-envelope me-2"></i>support@indatex.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 3rem 0 1rem;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--border-color);
+}
+
+.quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: var(--glass-bg);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.quick-nav-item:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.quick-nav-item i {
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+.services-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.service-section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 100px;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-icon-wrapper {
+    flex-shrink: 0;
+}
+
+.section-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    box-shadow: var(--shadow);
+}
+
+.section-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.section-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card-wrapper {
+    height: 100%;
+}
+
+.service-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.service-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.card-icon i {
+    font-size: 1.3rem;
+    color: var(--text-light);
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+}
+
+.card-description {
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.card-arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: var(--transition);
+}
+
+.service-card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.service-card.featured {
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1), rgba(107, 122, 171, 0.05));
+    border-color: var(--primary-light);
+}
+
+.card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: var(--accent-color);
+    color: var(--text-light);
+}
+
+.coming-soon-badge {
+    background: var(--text-muted);
+}
+
+.service-card.locked {
+    opacity: 0.7;
+}
+
+.service-card.locked:hover {
+    opacity: 1;
+}
+
+.card-lock {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+}
+
+.service-card.coming-soon {
+    opacity: 0.7;
+}
+
+.service-card.coming-soon:hover {
+    opacity: 1;
+    border-color: var(--text-muted);
+}
+
+.cta-section {
+    margin: 4rem 0 2rem;
+}
+
+.cta-background {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 24px;
+    padding: 3rem;
+    color: var(--text-light);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.cta-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.cta-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    background: var(--accent-color);
+    border: none;
+    color: var(--text-light);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: #059669;
+}
+
+.btn-action.btn-outline {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+}
+
+.btn-action.btn-outline:hover {
+    background: var(--text-light);
+    color: var(--primary-color);
+}
+
+.contact-section {
+    margin-top: 2rem;
+}
+
+.contact-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: var(--transition);
+}
+
+.contact-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.3rem;
+}
+
+.contact-content h5 {
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.contact-content p {
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+}
+
+.contact-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.contact-link:hover {
+    color: var(--primary-light);
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-stats {
+        gap: 1rem;
+    }
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+    }
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .section-content h2 {
+        font-size: 1.8rem;
+    }
+    .cta-background {
+        padding: 2rem 1.5rem;
+    }
+    .cta-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .hero-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    .quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    .quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    .section-content h2 {
+        font-size: 1.6rem;
+    }
+    .cta-background {
+        padding: 1.5rem 1rem;
+    }
+    .cta-title {
+        font-size: 1.6rem;
+    }
+    .cta-buttons {
+        flex-direction: column;
+    }
+    .contact-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .service-card {
+        padding: 1rem;
+    }
+    .card-title {
+        font-size: 1rem;
+    }
+    .card-description {
+        font-size: 0.8rem;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .section-content h2 {
+        font-size: 1.4rem;
+    }
+    .compact-container {
+        padding: 0 1rem;
+    }
+}
+
+@media print {
+    .service-hero-section, .quick-nav-section, .services-main-content, .cta-background, .contact-card {
+        background: #fff;
+        color: #000;
+        border-color: #ddd;
+    }
+    .card-icon, .section-icon {
+        background: #e2e8f0;
+        color: #000;
+    }
+    .btn-action, .quick-nav-item {
+        background: #e2e8f0;
+        color: #000;
+        border-color: #ddd;
+    }
+}
+</style>
+
+<script>
+function showLoginPrompt() {
+    const toastHtml = `
+        <div class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 12px; box-shadow: var(--shadow-lg);">
+            <div class="d-flex">
+                <div class="toast-body" style="padding: 1rem 1.5rem;">
+                    <i class="fas fa-lock me-2"></i>Please log in to access this premium service
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 5000
+    });
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+
+function showComingSoon(feature) {
+    const toastHtml = `
+        <div class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, var(--text-muted), #4A5568); border-radius: 12px; box-shadow: var(--shadow-lg);">
+            <div class="d-flex">
+                <div class="toast-body" style="padding: 1rem 1.5rem;">
+                    <i class="fas fa-clock me-2"></i>${feature} is coming soon! Stay tuned for updates.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 4000
+    });
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const quickNavItems = document.querySelectorAll('.quick-nav-item');
+    
+    quickNavItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerOffset = 120;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.service-card, .contact-card, .cta-background').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    console.log('Trade Intelligence Services page initialized');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,479 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<div class="converter-main-content">
+    <div class="container compact-container py-5">
+        <!-- Back to Services -->
+        <div class="mb-4">
+            <a href="{{ url_for('main.services_page') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Services
+            </a>
+        </div>
+
+        <!-- Service Header -->
+        <div class="text-center mb-5">
+            <div class="service-icon-large mb-3">
+                <i class="{{ service.icon }}"></i>
+            </div>
+            <h1 class="info-title mb-3">{{ service.title }}</h1>
+            <p class="text-muted">{{ service.description }}</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="converter-card shadow-lg">
+                    <div class="card-header">
+                        <h3 class="mb-0">
+                            <i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                            <input type="hidden" name="service_type" value="{{ service_type }}">
+                            
+                            <div class="mb-4">
+                                <label for="destination_country" class="form-label">
+                                    <i class="fas fa-flag me-2"></i>Target Country
+                                </label>
+                                <select class="form-select" id="destination_country" name="destination_country" required style="width: 100%">
+                                    <option value="" disabled selected>Select Target Country</option>
+                                </select>
+                                <div class="form-text">Select the country where you want to find trade shows</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="sector" class="form-label">
+                                    <i class="fas fa-industry me-2"></i>Industry Sector
+                                </label>
+                                <select class="form-select" id="sector" name="sector" required>
+                                    <option value="" disabled selected>Select Industry Sector</option>
+                                    {% for sector in sectors %}
+                                        <option value="{{ sector.name }}">{{ sector.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Choose your industry sector to find relevant events</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Features -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-4">What You'll Get</h4>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="info-card text-center">
+                            <div class="info-icon mb-3">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h6>Event Listings</h6>
+                            <p class="text-muted small">Comprehensive list of upcoming trade shows</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center">
+                            <div class="info-icon mb-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h6>Location Details</h6>
+                            <p class="text-muted small">Venue information and contact details</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center">
+                            <div class="info-icon mb-3">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h6>Event Dates</h6>
+                            <p class="text-muted small">Precise timing and duration information</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-card text-center">
+                            <div class="info-icon mb-3">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <h6>Direct Links</h6>
+                            <p class="text-muted small">Links to official event websites</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select2 initialization for country dropdown
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+    
+    $('#destination_country').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+
+    // Form submission handling
+    document.getElementById('serviceForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new FormData(this)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => Promise.reject(err));
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else if (data.status === 'error') {
+                alert('Error: ' + (data.message || 'An error occurred'));
+            } else {
+                alert('Unexpected response format. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+        });
+    });
+
+    // Intersection Observer for animation
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card, .converter-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+});
+</script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --dropdown-bg: #ffffff; /* White background for dropdown */
+    --dropdown-text: #1e293b; /* Dark text for dropdown */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.service-icon-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2rem;
+    margin: 0 auto;
+    transition: var(--transition);
+}
+
+.service-icon-large:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--text-light);
+    padding: 1.5rem;
+    border-radius: 12px 12px 0 0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--text-color) !important;
+    margin-bottom: 0.5rem;
+}
+
+.form-label[for="destination_country"] {
+    color: var(--text-color) !important;
+}
+
+.form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: var(--dropdown-bg) !important;
+    color: var(--dropdown-text) !important;
+}
+
+.form-select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 0.2rem rgba(107, 122, 171, 0.25);
+    background-color: var(--dropdown-bg) !important;
+    color: var(--dropdown-text) !important;
+}
+
+/* Select2 Custom Styles */
+.select2-container--default .select2-selection--single {
+    background-color: var(--dropdown-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px;
+    height: 44px;
+    padding: 0.5rem;
+    color: var(--dropdown-text) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--dropdown-text) !important;
+    line-height: 30px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--dropdown-text) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
+}
+
+.select2-container--default .select2-results__option {
+    background-color: var(--dropdown-bg) !important;
+    color: var(--dropdown-text) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option--highlighted[aria-selected]:hover {
+    background-color: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+.select2-container--default .select2-dropdown {
+    background-color: var(--dropdown-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: var(--dropdown-bg) !important;
+    color: var(--dropdown-text) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-color);
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--primary-light);
+    color: var(--text-light);
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    height: 180px; /* Fixed height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    margin: 0 auto 1rem;
+}
+
+.info-card h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.info-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-align: center;
+    line-height: 1.3;
+    max-height: 2.6rem; /* Limit height to prevent overflow */
+    overflow: hidden;
+}
+
+.info-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-title {
+        font-size: 1.5rem;
+    }
+    
+    .service-icon-large {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .info-card {
+        height: 200px; /* Slightly taller for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    
+    .info-card {
+        height: 220px; /* Adjust height for very small screens */
+    }
+}
+</style>
+{% endblock %}

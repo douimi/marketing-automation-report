@@ -1,0 +1,760 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Trade Intelligence Platform{% endblock %}
+
+{% block content %}
+<section class="login-hero-section">
+    <div class="login-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <div class="login-content-wrapper">
+            <div class="login-card">
+                <div class="login-main-content">
+                    <div class="brand-section">
+                        <div class="brand-text text-center">
+                            <h1 class="login-brand-name"><br>Trade Intelligence</h1>
+                            <span class="login-subtitle">Market Analysis Portal</span>
+                        </div>
+                    </div>
+
+                    <h2 class="login-title text-center">Access your <span class="highlight-text">global trade intelligence</span></h2>
+                    <p class="login-subtext text-center">Enter your credentials to continue</p>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} login-alert">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" action="{{ url_for('auth.login') }}" class="login-form">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password">
+                                <button type="button" class="password-toggle" id="passwordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 login-btn">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+
+                        <div class="text-center register-prompt">
+                            <p class="text-muted mb-0">
+                                Don't have an account? 
+                                <a href="{{ url_for('auth.register') }}" class="register-link">Register here</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="login-visual">
+                    <div class="security-badge">
+                        <div class="badge-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span>Secure Login</span>
+                    </div>
+                    
+                    <div class="visual-container">
+                        <!-- Data Flow Animation -->
+                        <div class="data-flow">
+                            <div class="flow-line flow-1"></div>
+                            <div class="flow-line flow-2"></div>
+                            <div class="flow-line flow-3"></div>
+                            <div class="flow-line flow-4"></div>
+                        </div>
+                        
+                        <!-- Network Nodes -->
+                        <div class="network-node node-1">
+                            <div class="node-pulse"></div>
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="network-node node-2">
+                            <div class="node-pulse"></div>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="network-node node-3">
+                            <div class="node-pulse"></div>
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="network-node node-4">
+                            <div class="node-pulse"></div>
+                            <i class="fas fa-analytics"></i>
+                        </div>
+                        
+                        <!-- Central Hub -->
+                        <div class="central-hub">
+                            <div class="hub-rings">
+                                <div class="ring ring-1"></div>
+                                <div class="ring ring-2"></div>
+                                <div class="ring ring-3"></div>
+                            </div>
+                            <div class="hub-core">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+:root {
+    --primary-color: #4b5e8c;       /* Lighter slate blue (navbar bg) */
+    --primary-light: #6b7aab;       /* Lighter blue for hover/bg highlights */
+    --secondary-color: #6b7280;     /* Neutral gray (buttons, accents) */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Keep accent green for success messages */
+    
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for dropdowns, panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    
+    --border-color: rgba(0, 0, 0, 0.1); /* Subtle dark borders on light bg */
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+                0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+                0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Login Section */
+.login-hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    padding: 2rem 0;
+    background: var(--bg-color);
+}
+
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Container */
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+}
+
+.login-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-card {
+    display: flex;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 900px;
+    width: 100%;
+    max-height: 550px;
+}
+
+/* Login Content */
+.login-main-content {
+    flex: 1;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-brand-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.login-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Main Content */
+.login-main-content {
+    margin-bottom: 1.5rem;
+}
+
+.login-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.login-subtext {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+/* Alert Messages */
+.login-alert {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    background: rgba(75, 94, 140, 0.1);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Login Form */
+.login-form {
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(75, 94, 140, 0.1);
+}
+
+.input-group-text {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.form-control {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 0.75rem 1rem 0.75rem 0;
+    height: auto;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    background: transparent;
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.password-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem 0.75rem 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Login Button */
+.login-btn {
+    border-radius: 10px;
+    padding: 0.875rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(75, 94, 140, 0.3);
+    color: var(--text-light);
+}
+
+.register-prompt {
+    margin-top: 1.5rem;
+}
+
+.register-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.register-link:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Login Visual */
+.login-visual {
+    flex: 0 0 45%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1) 0%, rgba(107, 122, 171, 0.1) 100%);
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.security-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    z-index: 10;
+}
+
+.badge-icon {
+    color: var(--accent-color);
+}
+
+/* New Visual Design */
+.visual-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Data Flow Animation */
+.data-flow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.flow-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    height: 2px;
+    opacity: 0.3;
+    animation: flow 8s linear infinite;
+}
+
+.flow-1 {
+    top: 20%;
+    left: 0;
+    width: 100%;
+    animation-delay: 0s;
+}
+
+.flow-2 {
+    top: 40%;
+    right: 0;
+    width: 100%;
+    animation-delay: 2s;
+    transform: rotate(180deg);
+}
+
+.flow-3 {
+    top: 60%;
+    left: 0;
+    width: 100%;
+    animation-delay: 4s;
+}
+
+.flow-4 {
+    top: 80%;
+    right: 0;
+    width: 100%;
+    animation-delay: 6s;
+    transform: rotate(180deg);
+}
+
+@keyframes flow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Network Nodes */
+.network-node {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-md);
+    z-index: 5;
+    transition: var(--transition);
+}
+
+.network-node:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.node-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0.2;
+    animation: pulse 2s ease-out infinite;
+}
+
+.node-1 {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.node-2 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 0.5s;
+}
+
+.node-3 {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.node-4 {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.5); opacity: 0.1; }
+    100% { transform: scale(1); opacity: 0.2; }
+}
+
+/* Central Hub */
+.central-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+.hub-rings {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.ring-1 {
+    width: 80px;
+    height: 80px;
+    animation: ring-pulse 3s ease-in-out infinite;
+}
+
+.ring-2 {
+    width: 100px;
+    height: 100px;
+    animation: ring-pulse 3s ease-in-out infinite 0.5s;
+}
+
+.ring-3 {
+    width: 120px;
+    height: 120px;
+    animation: ring-pulse 3s ease-in-out infinite 1s;
+}
+
+@keyframes ring-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.1; }
+}
+
+.hub-core {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    animation: core-rotate 10s linear infinite;
+}
+
+@keyframes core-rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .login-card {
+        flex-direction: column;
+        max-height: none;
+    }
+    
+    .login-visual {
+        flex: none;
+        height: 200px;
+        order: -1;
+    }
+    
+    .visual-container {
+        height: 150px;
+    }
+    
+    .network-node {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .hub-core {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .ring-1 { width: 60px; height: 60px; }
+    .ring-2 { width: 80px; height: 80px; }
+    .ring-3 { width: 100px; height: 100px; }
+}
+
+@media (max-width: 576px) {
+    .login-hero-section {
+        padding: 1rem 0;
+    }
+    
+    .compact-container {
+        padding: 0 1rem;
+    }
+    
+    .login-main-content {
+        padding: 1.5rem;
+    }
+    
+    .login-title {
+        font-size: 1.5rem;
+    }
+    
+    .login-brand-name {
+        font-size: 1.8rem;
+    }
+    
+    .security-badge {
+        top: 1rem;
+        right: 1rem;
+    }
+    
+    .login-visual {
+        padding: 1.5rem;
+    }
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Password visibility toggle
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        
+        if (passwordToggle && passwordInput) {
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        }
+        
+        // Add animation to form elements on focus
+        const formInputs = document.querySelectorAll('.form-control');
+        
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+                this.parentElement.style.boxShadow = '0 6px 20px rgba(75, 94, 140, 0.15)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+    });
+</script>
+
+{% endblock %}

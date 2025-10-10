@@ -1,0 +1,1495 @@
+{% extends "base.html" %}
+
+{% block title %}Business Trips - Indatex Academy{% endblock %}
+
+{% block content %}
+<section class="business-trips-hero-section">
+    <div class="business-trips-hero-background">
+        <div class="gradient-overlay"></div>
+        <div class="floating-particles">
+            {% for i in range(6) %}
+            <div class="particle particle-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="animated-background">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
+            <div class="bg-shape shape-4"></div>
+            <div class="bg-shape shape-5"></div>
+            <div class="bg-shape shape-6"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto">
+                <div class="business-trips-hero-content text-center">
+                    <h1 class="business-trips-hero-title">Business <span class="highlight-text">Trips</span></h1>
+                    <p class="business-trips-hero-subtitle">Master the art of professional business travel for export success</p>
+                    
+                    <div class="business-trips-stats">
+                        <div class="business-stat-item">
+                            <span class="business-stat-number">3</span>
+                            <span class="business-stat-label">Steps</span>
+                        </div>
+                        <div class="business-stat-divider"></div>
+                        <div class="business-stat-item">
+                            <span class="business-stat-number">2-4</span>
+                            <span class="business-stat-label">Meetings/Day</span>
+                        </div>
+                        <div class="business-stat-divider"></div>
+                        <div class="business-stat-item">
+                            <span class="business-stat-number">1</span>
+                            <span class="business-stat-label">Week Follow-up</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Navigation -->
+<div class="business-trips-quick-nav-section">
+    <div class="container">
+        <div class="business-trips-quick-nav-wrapper">
+            <a href="#depart" class="business-trips-quick-nav-item">
+                <i class="fas fa-suitcase"></i>
+                <span>Preparation</span>
+            </a>
+            <a href="#surplace" class="business-trips-quick-nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>On Site</span>
+            </a>
+            <a href="#suivi" class="business-trips-quick-nav-item">
+                <i class="fas fa-tasks"></i>
+                <span>Follow-up</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="business-trips-main-content">
+    <div class="container">
+        <!-- Introduction Section -->
+        <section class="business-trips-intro-section">
+            <div class="business-trips-intro-card">
+                <div class="business-trips-intro-icon">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="business-trips-intro-content">
+                    <p class="business-trips-lead-intro">
+                        Today the professional business trip is considered to be one of the most effective tools in export prospection. The business trip is a high cost investment; that is why business travel should be prepared meticulously, in order to avoid unnecessary expense.
+                    </p>
+                    <p class="business-trips-intro-text">
+                        Good preparation can determine the success of the mission. It enables the company to have access to foreign markets, to seek new commercial partners and to draw up contracts with foreign firms.
+                    </p>
+                    <div class="business-trips-alert-card">
+                        <div class="business-trips-alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="business-trips-alert-content">
+                            <h5>Key Success Factors</h5>
+                            <p>The organisation of a professional business trip comprises three essential steps: preparing the departure, organisation on the spot and the follow up of the mission.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Steps Section -->
+        <div class="business-trips-steps-container">
+            <!-- Step 1: Preparing your departure -->
+            <section class="business-trips-step-section" id="depart">
+                <div class="business-trips-step-header">
+                    <div class="business-trips-step-number">
+                        <span>01</span>
+                    </div>
+                    <div class="business-trips-step-content">
+                        <h2 class="business-trips-step-title">Preparing your departure</h2>
+                        <p class="business-trips-step-description">Essential preparations for a successful business trip</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-step-cards">
+                    <div class="business-trips-step-card">
+                        <div class="business-trips-step-card-icon">
+                            <i class="fas fa-plane-departure"></i>
+                        </div>
+                        <div class="business-trips-step-card-content">
+                            <h5>Transportation & Accommodation</h5>
+                            <p>You should book your plane ticket as quickly as possible, all the more so as some destinations do not have a regular service. Booking in advance allows you to ask travel agencies for quotations and to find the best value for money.</p>
+                            <p>Accommodation is as important as the journey. Indeed, booking your hotel should also be done in advance. You should know that during trade fairs, hotels are often full.</p>
+                        </div>
+                    </div>
+
+                    <div class="business-trips-step-card">
+                        <div class="business-trips-step-card-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="business-trips-step-card-content">
+                            <h5>Cultural Preparation</h5>
+                            <p>Before each departure, the traveler should find out about local customs by gathering practical information about his destination. He should adapt as much as possible to local customs. This information takes into account meal times, presents or even the way of dressing.</p>
+                        </div>
+                    </div>
+
+                    <div class="business-trips-step-card">
+                        <div class="business-trips-step-card-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="business-trips-step-card-content">
+                            <h5>Documentation & Legal Requirements</h5>
+                            <p>You should prepare sufficiently ahead of time the documents you will need on the spot (leaflets, catalogs, price lists). They should be translated into the language of the country (or at least into English).</p>
+                            <p>Do not wait till the last minute to check how long your passport is valid for, or to request visas and have the vaccinations done that are required for certain destinations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: On the spot -->
+            <section class="business-trips-step-section" id="surplace">
+                <div class="business-trips-step-header">
+                    <div class="business-trips-step-number">
+                        <span>02</span>
+                    </div>
+                    <div class="business-trips-step-content">
+                        <h2 class="business-trips-step-title">On the spot</h2>
+                        <p class="business-trips-step-description">Effective management during your business trip</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-step-cards">
+                    <div class="business-trips-step-card business-trips-featured">
+                        <div class="business-trips-step-card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="business-trips-step-card-content">
+                            <h5>Time Management & Meetings</h5>
+                            <p>Once you are on the spot, the greater part of your time will be devoted to your various meetings. Above all you must confirm your meetings or give warning if you are late.</p>
+                            <p>An exporter must know how to manage his time so as not to get overwhelmed (and give prospective customers a bad impression). He must remain flexible and limit the number of meetings in a day.</p>
+                            <div class="business-trips-highlight-box">
+                                <i class="fas fa-lightbulb"></i>
+                                <p><strong>It has generally been observed that 2 to 4 meetings can be held in one day.</strong> It is better to plan for a few more days in order to best manage your time and work on each contact thoroughly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Organizing a follow up -->
+            <section class="business-trips-step-section" id="suivi">
+                <div class="business-trips-step-header">
+                    <div class="business-trips-step-number">
+                        <span>03</span>
+                    </div>
+                    <div class="business-trips-step-content">
+                        <h2 class="business-trips-step-title">Organizing a follow up</h2>
+                        <p class="business-trips-step-description">Crucial steps after returning from your trip</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-step-cards">
+                    <div class="business-trips-step-card business-trips-critical">
+                        <div class="business-trips-step-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="business-trips-step-card-content">
+                            <h5>Critical Success Factor</h5>
+                            <p><strong>The follow up is maybe the most important step of the mission.</strong> It amounts to giving concrete expression to and securing the various contacts set up abroad.</p>
+                            <p>As soon as he arrives back, an exporter should always thank his contacts personally and send them the documentation they requested or the information they were promised. A company which does not do this, risks wrecking its contacts immediately.</p>
+                            <div class="business-trips-critical-alert">
+                                <div class="business-trips-critical-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="business-trips-critical-content">
+                                    <h6>Time-Critical Action</h6>
+                                    <p>The firm must capitalize on the results of the mission at once. <strong>A contact which is not reactivated in the week following the trip is considered to be a lost contact.</strong> This lost contact makes for a commercial failure and a loss of money.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Key Takeaways Section -->
+        <section class="business-trips-takeaways-section">
+            <div class="business-trips-section-header">
+                <h2 class="business-trips-section-title">Key Takeaways</h2>
+                <p class="business-trips-section-description">Essential points to remember for successful business trips</p>
+            </div>
+            
+            <div class="business-trips-takeaways-grid">
+                <div class="business-trips-takeaway-card">
+                    <div class="business-trips-takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="business-trips-takeaway-content">
+                        <h5>Advance Planning</h5>
+                        <p>Book transportation and accommodation well in advance, especially during trade fairs.</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-takeaway-card">
+                    <div class="business-trips-takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="business-trips-takeaway-content">
+                        <h5>Cultural Awareness</h5>
+                        <p>Research local customs, meal times, and appropriate business etiquette.</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-takeaway-card">
+                    <div class="business-trips-takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="business-trips-takeaway-content">
+                        <h5>Document Preparation</h5>
+                        <p>Prepare and translate all necessary documents before departure.</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-takeaway-card">
+                    <div class="business-trips-takeaway-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="business-trips-takeaway-content">
+                        <h5>Meeting Management</h5>
+                        <p>Limit meetings to 2-4 per day for quality interactions and proper follow-up.</p>
+                    </div>
+                </div>
+                
+                <div class="business-trips-takeaway-card business-trips-critical">
+                    <div class="business-trips-takeaway-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="business-trips-takeaway-content">
+                        <h5>Immediate Follow-up</h5>
+                        <p><strong>Follow up within one week</strong> or risk losing the contact entirely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist Section -->
+        <section class="business-trips-checklist-section">
+            <div class="business-trips-checklist-card">
+                <div class="business-trips-checklist-header">
+                    <h3><i class="fas fa-clipboard-list me-2"></i>Pre-Departure Checklist</h3>
+                    <p>Essential items to verify before your business trip</p>
+                </div>
+                
+                <div class="business-trips-checklist-content">
+                    <div class="business-trips-checklist-column">
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="passport">
+                            <label for="passport">Check passport validity</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="visa">
+                            <label for="visa">Obtain necessary visas</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="vaccinations">
+                            <label for="vaccinations">Get required vaccinations</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="documents">
+                            <label for="documents">Prepare & translate documents</label>
+                        </div>
+                    </div>
+                    
+                    <div class="business-trips-checklist-column">
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="creditcard">
+                            <label for="creditcard">Verify credit card validity</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="license">
+                            <label for="license">Get international driver's license</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="currency">
+                            <label for="currency">Exchange local currency</label>
+                        </div>
+                        <div class="business-trips-checklist-item">
+                            <input type="checkbox" id="insurance">
+                            <label for="insurance">Arrange travel insurance</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Topics Section -->
+        <section class="business-trips-related-section">
+            <div class="business-trips-section-header">
+                <h2 class="business-trips-section-title">Related Academy Topics</h2>
+                <p class="business-trips-section-description">Expand your knowledge with these related subjects</p>
+            </div>
+            
+            <div class="business-trips-related-grid">
+                <a href="#" class="business-trips-related-card">
+                    <div class="business-trips-related-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="business-trips-related-content">
+                        <h5>International Negotiations</h5>
+                        <p>Master the art of cross-cultural business negotiations</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="business-trips-related-card">
+                    <div class="business-trips-related-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="business-trips-related-content">
+                        <h5>Cultural Business Etiquette</h5>
+                        <p>Understand business customs around the world</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="business-trips-related-card">
+                    <div class="business-trips-related-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="business-trips-related-content">
+                        <h5>Export Documentation</h5>
+                        <p>Learn about essential export documents and procedures</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="business-trips-related-card">
+                    <div class="business-trips-related-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="business-trips-related-content">
+                        <h5>Trade Show Preparation</h5>
+                        <p>Maximize your participation in international trade shows</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="business-trips-cta-section">
+            <div class="business-trips-cta-background">
+                <div class="business-trips-cta-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h3 class="business-trips-cta-title">Ready to Master Business Travel?</h3>
+                            <p class="business-trips-cta-subtitle">Apply these strategies to make your next business trip more productive and successful.</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="business-trips-cta-buttons">
+                                <a href="#depart" class="btn btn-business-trips-cta-primary">
+                                    <i class="fas fa-suitcase me-2"></i>Start Planning
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+/* Updated Color Variables to Match Header */
+:root {
+    --primary-color: #4b5e8c;       /* Lighter slate blue (navbar bg) */
+    --primary-light: #6b7aab;       /* Lighter blue for hover/bg highlights */
+    --secondary-color: #6b7280;     /* Neutral gray (buttons, accents) */
+    --secondary-light: #8b95a3;     /* Hover state for secondary elements */
+    --accent-color: #10b981;        /* Keep accent green for success messages */
+    
+    --text-color: #1e293b;          /* Dark text for light backgrounds */
+    --text-muted: #64748b;          /* Muted gray text */
+    --text-light: #f9fafb;          /* Light text for dark backgrounds */
+    
+    --bg-color: #f1f5f9;            /* Light gray for main background */
+    --bg-secondary: #e2e8f0;        /* Lighter gray for dropdowns, panels */
+    --bg-tertiary: #d1dae6;         /* Slightly darker gray for sections */
+    
+    --border-color: rgba(0, 0, 0, 0.1); /* Subtle dark borders on light bg */
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+                0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2),
+                0 4px 6px -2px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+                0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    
+    --transition: all 0.3s ease;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Business Trips Hero Section */
+.business-trips-hero-section {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    overflow: hidden;
+    background: var(--bg-color);
+    padding: 3rem 0 1rem;
+}
+
+.business-trips-hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--bg-color);
+}
+
+/* NEW: Animated Background Elements */
+.animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(75, 94, 140, 0.1) 0%, rgba(107, 122, 171, 0.05) 100%);
+    animation: floatBackground 20s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+}
+
+.shape-2 {
+    width: 120px;
+    height: 120px;
+    top: 70%;
+    left: 80%;
+    animation-delay: 2s;
+    animation-duration: 30s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    left: 85%;
+    animation-delay: 4s;
+    animation-duration: 20s;
+}
+
+.shape-4 {
+    width: 100px;
+    height: 100px;
+    top: 80%;
+    left: 10%;
+    animation-delay: 6s;
+    animation-duration: 35s;
+}
+
+.shape-5 {
+    width: 70px;
+    height: 70px;
+    top: 60%;
+    left: 90%;
+    animation-delay: 8s;
+    animation-duration: 28s;
+}
+
+.shape-6 {
+    width: 90px;
+    height: 90px;
+    top: 30%;
+    left: 2%;
+    animation-delay: 10s;
+    animation-duration: 32s;
+}
+
+@keyframes floatBackground {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translateY(-20px) translateX(15px) rotate(90deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(10px) translateX(-10px) rotate(180deg);
+        opacity: 0.7;
+    }
+    75% {
+        transform: translateY(-15px) translateX(-5px) rotate(270deg);
+        opacity: 0.5;
+    }
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(75, 94, 140, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(107, 122, 171, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.floating-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(75, 94, 140, 0.5);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particle-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 65%; left: 15%; animation-delay: 2s; }
+.particle-3 { top: 25%; right: 20%; animation-delay: 4s; }
+.particle-4 { top: 75%; right: 25%; animation-delay: 1s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 3s; }
+.particle-6 { top: 35%; right: 5%; animation-delay: 5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(10px); opacity: 1; }
+}
+
+/* Hero Content */
+.business-trips-hero-content {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 3;
+}
+
+.business-trips-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    line-height: 1.1;
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.business-trips-hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-weight: 300;
+}
+
+.business-trips-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.business-stat-item {
+    text-align: center;
+}
+
+.business-stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.business-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.business-stat-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Quick Navigation */
+.business-trips-quick-nav-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.business-trips-quick-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.business-trips-quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.business-trips-quick-nav-item:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.business-trips-quick-nav-item i {
+    font-size: 1rem;
+}
+
+/* Trips Main Content */
+.business-trips-main-content {
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Introduction Section */
+.business-trips-intro-section {
+    margin-bottom: 4rem;
+}
+
+.business-trips-intro-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.business-trips-intro-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.business-trips-intro-content {
+    flex: 1;
+}
+
+.business-trips-lead-intro {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.business-trips-intro-text {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.business-trips-alert-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.business-trips-alert-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.business-trips-alert-content h5 {
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.business-trips-alert-content p {
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Steps Container */
+.business-trips-steps-container {
+    margin-bottom: 4rem;
+}
+
+/* Step Sections */
+.business-trips-step-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+}
+
+.business-trips-step-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.business-trips-step-number {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.business-trips-step-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.business-trips-step-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Step Cards */
+.business-trips-step-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.business-trips-step-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.business-trips-step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.business-trips-featured {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.05));
+    border-color: var(--primary-color);
+}
+
+.business-trips-critical {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    border-color: var(--secondary-color);
+}
+
+.business-trips-step-card-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(75, 94, 140, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.business-trips-step-card:hover .business-trips-step-card-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.business-trips-step-card-icon i {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.business-trips-step-card:hover .business-trips-step-card-icon i {
+    color: var(--text-light);
+}
+
+.business-trips-featured .business-trips-step-card-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.business-trips-featured .business-trips-step-card-icon i {
+    color: var(--text-light);
+}
+
+.business-trips-critical .business-trips-step-card-icon {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.business-trips-critical .business-trips-step-card-icon i {
+    color: var(--secondary-color);
+}
+
+.business-trips-step-card-content h5 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.business-trips-step-card-content p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.business-trips-highlight-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.business-trips-highlight-box i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.business-trips-highlight-box p {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.business-trips-critical-alert {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.business-trips-critical-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.business-trips-critical-content h6 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.business-trips-critical-content p {
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Takeaways Section */
+.business-trips-takeaways-section {
+    margin-bottom: 4rem;
+}
+
+.business-trips-section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.business-trips-section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.business-trips-section-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.business-trips-takeaways-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.business-trips-takeaway-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: var(--transition);
+}
+
+.business-trips-takeaway-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.business-trips-takeaway-card.business-trips-critical {
+    border-color: var(--secondary-color);
+}
+
+.business-trips-takeaway-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.business-trips-takeaway-card.business-trips-critical .business-trips-takeaway-icon {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--secondary-color);
+}
+
+.business-trips-takeaway-content h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.business-trips-takeaway-content p {
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Checklist Section */
+.business-trips-checklist-section {
+    margin-bottom: 4rem;
+}
+
+.business-trips-checklist-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.business-trips-checklist-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.business-trips-checklist-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.business-trips-checklist-header p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.business-trips-checklist-content {
+    display: flex;
+    gap: 2rem;
+}
+
+.business-trips-checklist-column {
+    flex: 1;
+}
+
+.business-trips-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.business-trips-checklist-item:last-child {
+    border-bottom: none;
+}
+
+.business-trips-checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.business-trips-checklist-item input[type="checkbox"]:checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.business-trips-checklist-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.business-trips-checklist-item label {
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.business-trips-checklist-item input[type="checkbox"]:checked + label {
+    color: var(--accent-color);
+    text-decoration: line-through;
+}
+
+/* Related Section */
+.business-trips-related-section {
+    margin-bottom: 4rem;
+}
+
+.business-trips-related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.business-trips-related-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+}
+
+.business-trips-related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+    text-decoration: none;
+    color: inherit;
+}
+
+.business-trips-related-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(75, 94, 140, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.business-trips-related-card:hover .business-trips-related-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+}
+
+.business-trips-related-content h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.business-trips-related-content p {
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* CTA Section */
+.business-trips-cta-section {
+    margin: 4rem 0 2rem;
+}
+
+.business-trips-cta-background {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 24px;
+    padding: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.business-trips-cta-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.business-trips-cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.business-trips-cta-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: white;
+}
+
+.business-trips-cta-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.business-trips-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-business-trips-cta-primary {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.btn-business-trips-cta-primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .business-trips-hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .business-trips-stats {
+        gap: 1rem;
+    }
+    
+    .business-trips-step-cards, .business-trips-takeaways-grid, .business-trips-related-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.2rem;
+    }
+    
+    .business-trips-step-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .business-trips-section-title {
+        font-size: 1.8rem;
+    }
+    
+    .business-trips-cta-background {
+        padding: 2rem 1.5rem;
+    }
+    
+    .business-trips-cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .business-trips-checklist-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .business-trips-hero-section {
+        padding: 2rem 0 0.5rem;
+    }
+    
+    .business-trips-hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .business-trips-hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .business-trips-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .business-stat-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .business-trips-quick-nav-wrapper {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+    }
+    
+    .business-trips-quick-nav-item {
+        flex-shrink: 0;
+        padding: 0.5rem 1rem;
+    }
+    
+    .business-trips-step-cards, .business-trips-takeaways-grid, .business-trips-related-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .business-trips-intro-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .business-trips-step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .business-trips-step-content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .business-trips-cta-background {
+        padding: 1.5rem 1rem;
+    }
+    
+    .business-trips-cta-title {
+        font-size: 1.6rem;
+    }
+    
+    .business-trips-cta-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .business-trips-step-card, .business-trips-takeaway-card, .business-trips-related-card {
+        padding: 1rem;
+    }
+    
+    .business-trips-step-card-content h5, .business-trips-takeaway-content h5, .business-trips-related-content h5 {
+        font-size: 1rem;
+    }
+    
+    .business-trips-step-card-content p, .business-trips-takeaway-content p, .business-trips-related-content p {
+        font-size: 0.8rem;
+    }
+}
+</style>
+
+<script>
+// Smooth scrolling for quick nav
+document.addEventListener('DOMContentLoaded', function() {
+    const quickNavItems = document.querySelectorAll('.business-trips-quick-nav-item');
+    
+    quickNavItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerOffset = 120;
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Add animation to cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.business-trips-step-card, .business-trips-takeaway-card, .business-trips-related-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Highlight active section in navigation
+    const sections = document.querySelectorAll('.business-trips-step-section');
+    const navLinks = document.querySelectorAll('.business-trips-quick-nav-item');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Checklist functionality
+    const checkboxes = document.querySelectorAll('.business-trips-checklist-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.parentElement.classList.add('completed');
+            } else {
+                this.parentElement.classList.remove('completed');
+            }
+        });
+    });
+
+    console.log('Business Trips page initialized');
+});
+</script>
+
+{% endblock %}

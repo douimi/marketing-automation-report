@@ -1,0 +1,218 @@
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% set service_title = "Living in the Country" %}
+{% set service_icon = "fas fa-home" %}
+
+{% block report_content %}
+<div class="section-content">
+    {% if living_in_country_data.expatriates_section %}
+    <div class="business-card p-4 mb-5">
+        <div class="d-flex align-items-center mb-3">
+            <span class="business-card-icon me-3"><i class="fas fa-users"></i></span>
+            <h5 class="mb-0">Expatriate Communities</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.expatriates_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.ranking_section %}
+    <div class="business-card p-4 mb-5">
+        <div class="d-flex align-items-center mb-3">
+            <span class="business-card-icon me-3"><i class="fas fa-city"></i></span>
+            <h5 class="mb-0">City Rankings</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.ranking_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.renting_section %}
+    <div class="business-card p-4 mb-5">
+        <div class="d-flex align-items-center mb-3">
+            <span class="business-card-icon me-3"><i class="fas fa-home"></i></span>
+            <h5 class="mb-0">Apartment Rentals</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.renting_section|safe }}</div>
+    </div>
+    {% endif %}
+
+    {% if living_in_country_data.health_section %}
+    <div class="business-card p-4 mb-5">
+        <div class="d-flex align-items-center mb-3">
+            <span class="business-card-icon me-3"><i class="fas fa-hospital"></i></span>
+            <h5 class="mb-0">Healthcare System</h5>
+        </div>
+        <div class="santander-html">{{ living_in_country_data.health_section|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+:root {
+    --primary-color: #2c3e50; /* Deep slate blue */
+    --primary-light: #4b6cb7; /* Vibrant blue */
+    --accent-color: #16a34a; /* Modern green */
+    --text-color: #111827; /* Dark gray text */
+    --text-light: #f8fafc; /* Light text */
+    --text-muted: #6b7280; /* Muted gray */
+    --bg-color: #f9fafb; /* Off-white background */
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.business-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    backdrop-filter: blur(12px);
+}
+
+.business-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.business-card-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.business-card h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: -0.025em;
+}
+
+.santander-html {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.santander-html p {
+    margin-bottom: 1rem;
+}
+
+.santander-html ul, .santander-html ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.santander-html li {
+    margin-bottom: 0.5rem;
+}
+
+.santander-html a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.santander-html a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .business-card {
+        padding: 1.5rem;
+    }
+
+    .business-card h5 {
+        font-size: 1.25rem;
+    }
+
+    .business-card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-content {
+        padding: 1rem 0.75rem;
+    }
+
+    .business-card {
+        margin: 0 -0.5rem 1.5rem;
+        border-radius: 12px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .business-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        box-shadow: none;
+    }
+
+    .business-card-icon {
+        background: none;
+        color: #000;
+    }
+
+    .santander-html a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.business-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    document.querySelectorAll('.santander-html a').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Living in the Country page initialized');
+});
+</script>
+{% endblock %}

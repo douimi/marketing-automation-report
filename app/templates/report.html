@@ -1,0 +1,1488 @@
+{% extends "base.html" %}
+
+{% block title %}Market Analysis Report - {{ form_data.destination_country_name }}{% endblock %}
+
+{% block content %}
+<!-- Report Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-file-alt fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Market Analysis Report</h1>
+                    <p class="hero-subtitle">
+                        <span><i class="fas fa-flag me-2"></i>{{ form_data.destination_country_name }}</span>
+                        <span class="hero-divider">•</span>
+                        <span><i class="fas fa-calendar-alt me-2"></i>{{ datetime.now().strftime('%B %d, %Y') }}</span>
+                        <span class="hero-divider">•</span>
+                        <span><i class="fas fa-industry me-2"></i>{{ form_data.sector }}</span>
+                    </p>
+                </div>
+                <div class="header-actions">
+                    <button onclick="window.print()" class="btn-action"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                    <button id="exportWordBtn" class="btn-action"><i class="fas fa-file-word"></i> Export Word</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Report Navigation Section -->
+<section class="services-navigation-section">
+    <div class="container compact-container">
+        <div class="services-nav-container">
+            {% for section in [
+                ('country-profile', 'fas fa-info-circle', 'General Presentation'),
+                ('economic-political-outline', 'fas fa-balance-scale', 'Economic & Political'),
+                ('operating-a-business', 'fas fa-briefcase', 'Business Operations'),
+                ('tax-system', 'fas fa-file-invoice-dollar', 'Tax System'),
+                ('legal-environment', 'fas fa-gavel', 'Legal Environment'),
+                ('foreign-investment', 'fas fa-globe-americas', 'Foreign Investment'),
+                ('business-practices', 'fas fa-handshake', 'Business Practices'),
+                ('entry-requirements', 'fas fa-id-card', 'Entry Requirements'),
+                ('practical-information', 'fas fa-info', 'Practical Information'),
+                ('living-in-country', 'fas fa-home', 'Living in Country'),
+                ('foreign-trade-in-figures', 'fas fa-exchange-alt', 'Foreign Trade'),
+                ('import-export-flows', 'fas fa-random', 'Import/Export Flows')
+            ] %}
+            <a href="#{{ section[0] }}" class="nav-pill {{ 'active' if loop.index == 1 }}">
+                <i class="{{ section[1] }}"></i>
+                <span>{{ section[2] }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Main Report Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        <div class="content-grid">
+            <!-- Info Sidebar -->
+            <div class="info-sidebar">
+                {% if market_data %}
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4 class="info-title">Country Overview</h4>
+                    </div>
+                    <div class="features-container">
+                        {% for stat in [
+                            ('Capital', market_data.capital, 'fas fa-city', 'bg-blue'),
+                            ('Population', market_data.total_population, 'fas fa-users', 'bg-purple'),
+                            ('Area', market_data.area ~ ' km²', 'fas fa-map', 'bg-green'),
+                            ('Currency', market_data.national_currency, 'fas fa-money-bill-wave', 'bg-orange'),
+                            ('Language', market_data.official_language, 'fas fa-language', 'bg-red'),
+                            ('HDI Index', market_data.hdi, 'fas fa-star', 'bg-teal')
+                        ] if stat[1] %}
+                        <div class="feature-item">
+                            <div class="feature-icon {{ stat[3] }}"><i class="{{ stat[2] }}"></i></div>
+                            <div>
+                                <div class="feature-label">{{ stat[0] }}</div>
+                                <div class="feature-value {{ 'highlight' if stat[0] == 'HDI Index' }}">{{ stat[1] }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-rocket"></i></div>
+                        <h4 class="info-title">Report Sections</h4>
+                    </div>
+                    <div class="features-container">
+                        {% for section in [
+                            ('country-profile', 'fas fa-info-circle', 'General Presentation'),
+                            ('economic-political-outline', 'fas fa-balance-scale', 'Economic & Political'),
+                            ('operating-a-business', 'fas fa-briefcase', 'Business Operations'),
+                            ('tax-system', 'fas fa-file-invoice-dollar', 'Tax System'),
+                            ('legal-environment', 'fas fa-gavel', 'Legal Environment'),
+                            ('foreign-investment', 'fas fa-globe-americas', 'Foreign Investment')
+                        ] %}
+                        <a href="#{{ section[0] }}" class="feature-item service-pill">
+                            <i class="{{ section[1] }}"></i>
+                            <span>{{ section[2] }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-header">
+                        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                        <h4 class="info-title">Report Details</h4>
+                    </div>
+                    <div class="features-container">
+                        {% for detail in [
+                            ('Country', form_data.destination_country_name, 'fas fa-flag'),
+                            ('Sector', form_data.sector, 'fas fa-industry'),
+                            ('Generated', datetime.now().strftime('%B %d, %Y'), 'fas fa-calendar')
+                        ] %}
+                        <div class="feature-item">
+                            <div class="feature-icon bg-primary"><i class="{{ detail[2] }}"></i></div>
+                            <div>
+                                <div class="feature-label">{{ detail[0] }}</div>
+                                <div class="feature-value">{{ detail[1] }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Main Report Content -->
+            <div class="form-section">
+                <!-- General Presentation Section -->
+                <section class="report-section" id="country-profile">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <img src="https://flagcdn.com/w80/{{ form_data.destination_country_code|lower }}.png" 
+                                         alt="{{ form_data.destination_country_name }} Flag" 
+                                         class="section-flag-img"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="section-flag-fallback" style="display: none;">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">General Presentation</h3>
+                                    <p class="form-subtitle">Overview of {{ form_data.destination_country_name }}</p>
+                                </div>
+                            </div>
+
+                            {% if openai_intro %}
+                            <div class="intro-content mb-4">{{ openai_intro|plain_text }}</div>
+                            {% endif %}
+
+                            <div class="form-row">
+                                {% for fact in [
+                                    ('Capital', market_data.capital, 'fa-landmark', 'bg-gradient-blue'),
+                                    ('Population', market_data.total_population, 'fa-users', 'bg-gradient-purple'),
+                                    ('Area', market_data.area ~ ' km²', 'fa-map', 'bg-gradient-green'),
+                                    ('Currency', market_data.national_currency, 'fa-money-bill-wave', 'bg-gradient-orange'),
+                                    ('HDI', market_data.hdi, 'fa-chart-line', 'bg-gradient-teal'),
+                                    ('Urban Population', market_data.urban_population, 'fa-city', 'bg-gradient-indigo'),
+                                    ('Density', market_data.density, 'fa-layer-group', 'bg-gradient-pink'),
+                                    ('Type of Economy', market_data.type_of_economy, 'fa-briefcase', 'bg-gradient-cyan')
+                                ] if fact[1] %}
+                                <div class="form-group">
+                                    <div class="feature-item">
+                                        <div class="feature-icon {{ fact[3] }}"><i class="fas {{ fact[2] }}"></i></div>
+                                        <div>
+                                            <div class="feature-label">{{ fact[0] }}</div>
+                                            <div class="feature-value {{ 'highlight' if fact[0] == 'HDI' }}">{{ fact[1] }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="form-row">
+                                {% for detail in [
+                                    ('Type of State', market_data.type_of_state, 'fas fa-university'),
+                                    ('Ethnic Origins', market_data.ethnic_origins, 'fas fa-globe-americas'),
+                                    ('Main Metropolitan Areas', market_data.population_of_main_metropolitan_areas, 'fas fa-building'),
+                                    ('Official Language', market_data.official_language, 'fas fa-language'),
+                                    ('Other Languages', market_data.other_languages_spoken, 'fas fa-comments'),
+                                    ('Business Languages', market_data.business_languages, 'fas fa-briefcase'),
+                                    ('Religion', market_data.religion, 'fas fa-praying-hands')
+                                ] if detail[1] %}
+                                <div class="form-group">
+                                    <div class="feature-item">
+                                        <div class="feature-icon bg-primary"><i class="{{ detail[2] }}"></i></div>
+                                        <div>
+                                            <div class="feature-label">{{ detail[0] }}</div>
+                                            <div class="feature-value">{{ detail[1] }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if market_data.trade_table and market_data.trade_table|length > 0 %}
+                            <div class="table-card">
+                                <h5 class="table-card-title"><i class="fas fa-exchange-alt me-2"></i>Foreign Trade in Figures (Million USD)</h5>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Foreign Trade Indicators</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                                <th>2023</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for row in market_data.trade_table %}
+                                            <tr>
+                                                {% if row is mapping %}
+                                                    <td class="indicator-cell">{{ row.get('Foreign Trade Indicators', row.get('Indicators (million USD)', row.get('Indicator', ''))) }}</td>
+                                                    <td>{{ row.get('2019', '') }}</td>
+                                                    <td>{{ row.get('2020', '') }}</td>
+                                                    <td>{{ row.get('2021', '') }}</td>
+                                                    <td>{{ row.get('2022', '') }}</td>
+                                                    <td>{{ row.get('2023', '') }}</td>
+                                                {% else %}
+                                                    <td class="indicator-cell">{{ row[0] if row|length > 0 else '' }}</td>
+                                                    <td>{{ row[1] if row|length > 1 else '' }}</td>
+                                                    <td>{{ row[2] if row|length > 2 else '' }}</td>
+                                                    <td>{{ row[3] if row|length > 3 else '' }}</td>
+                                                    <td>{{ row[4] if row|length > 4 else '' }}</td>
+                                                    <td>{{ row[5] if row|length > 5 else '' }}</td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if trade_insights %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="fas fa-lightbulb me-2"></i>Trade Insights</h5>
+                                {{ trade_insights|plain_text }}
+                            </div>
+                            {% endif %}
+
+                            {% if openai_conclusion %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="fas fa-flag-checkered me-2"></i>Summary</h5>
+                                {{ openai_conclusion|plain_text }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Economic and Political Outline Section -->
+                <section class="report-section" id="economic-political-outline">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <div class="section-flag-fallback"><i class="fas fa-balance-scale"></i></div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">Economic and Political Outline</h3>
+                                    <p class="form-subtitle">Economic indicators and political environment</p>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                {% if eco_outline_overview %}
+                                <div class="form-group full-width">
+                                    <div class="feature-item">
+                                        <div class="feature-icon bg-gradient-blue"><i class="fas fa-chart-area"></i></div>
+                                        <div>
+                                            <div class="feature-label">Economic Overview</div>
+                                            <div class="feature-value">
+                                                {% for para in eco_outline_overview.split('\n') if para.strip() %}
+                                                <p>{{ para|safe }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if eco_outline_main_sectors %}
+                                <div class="form-group full-width">
+                                    <div class="feature-item">
+                                        <div class="feature-icon bg-gradient-green"><i class="fas fa-industry"></i></div>
+                                        <div>
+                                            <div class="feature-label">Main Economic Sectors</div>
+                                            <div class="feature-value sectors-list">
+                                                {% for sector in eco_outline_main_sectors.split('\n') if sector.strip() %}
+                                                <span class="sector-tag">{{ sector|safe }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% for indicator in [
+                                    ('Economic Freedom', eco_outline_economic_freedom, 'fas fa-unlock-alt', 'bg-gradient-orange'),
+                                    ('Business Environment', eco_outline_business_env, 'fas fa-briefcase', 'bg-gradient-purple')
+                                ] if indicator[1] %}
+                                <div class="form-group">
+                                    <div class="feature-item">
+                                        <div class="feature-icon {{ indicator[3] }}"><i class="{{ indicator[2] }}"></i></div>
+                                        <div>
+                                            <div class="feature-label">{{ indicator[0] }}</div>
+                                            <div class="feature-value">{{ indicator[1]|safe }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="form-row">
+                                {% if political_outline %}
+                                <div class="form-group full-width">
+                                    <div class="feature-item">
+                                        <div class="feature-icon bg-gradient-indigo"><i class="fas fa-landmark"></i></div>
+                                        <div>
+                                            <div class="feature-label">Political Overview</div>
+                                            <div class="feature-value">
+                                                {% for para in political_outline.split('\n') if para.strip() %}
+                                                <p>{{ para|safe }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% for freedom in [
+                                    ('Press Freedom', political_press_freedom, 'fas fa-newspaper', 'bg-gradient-teal'),
+                                    ('Political Freedom', political_freedom, 'fas fa-user-shield', 'bg-gradient-pink')
+                                ] if freedom[1] %}
+                                <div class="form-group">
+                                    <div class="feature-item">
+                                        <div class="feature-icon {{ freedom[3] }}"><i class="{{ freedom[2] }}"></i></div>
+                                        <div>
+                                            <div class="feature-label">{{ freedom[0] }}</div>
+                                            <div class="feature-value">{{ freedom[1]|safe }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            {% for table, title in [
+                                (eco_outline_main_indicators_table, 'Main Economic Indicators'),
+                                (eco_outline_breakdown_table, 'Economic Breakdown')
+                            ] if table %}
+                            <div class="table-card">
+                                <h5 class="table-card-title"><i class="fas fa-table me-2"></i>{{ title }}</h5>
+                                <div class="table-responsive">{{ table|safe }}</div>
+                            </div>
+                            {% endfor %}
+
+                            {% if eco_political_insights %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="fas fa-lightbulb me-2"></i>Economic & Political Insights</h5>
+                                {{ eco_political_insights|plain_text }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Operating a Business Section -->
+                <section class="report-section" id="operating-a-business">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <div class="section-flag-fallback"><i class="fas fa-briefcase"></i></div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">Operating a Business</h3>
+                                    <p class="form-subtitle">Business setup and operations in {{ form_data.destination_country_name }}</p>
+                                </div>
+                            </div>
+
+                            {% for section, title, icon in [
+                                ('legal_section', 'Legal Forms of Companies', 'fas fa-gavel'),
+                                ('active_population_section', 'Active Population', 'fas fa-users'),
+                                ('working_conditions_section', 'Working Conditions', 'fas fa-clock'),
+                                ('cost_of_labour_section', 'Cost of Labour', 'fas fa-dollar-sign'),
+                                ('management_section', 'Human Resources Management', 'fas fa-user-tie')
+                            ] if operating_a_business_data[section] %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="{{ icon }} me-2"></i>{{ title }}</h5>
+                                <div class="santander-html">{{ operating_a_business_data[section]|safe }}</div>
+                            </div>
+                            {% endfor %}
+
+                            {% if operating_a_business_data.update_date %}
+                            <div class="update-info text-muted small">Last updated: {{ operating_a_business_data.update_date }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tax System Section -->
+                <section class="report-section" id="tax-system">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <div class="section-flag-fallback"><i class="fas fa-file-invoice-dollar"></i></div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">Tax System</h3>
+                                    <p class="form-subtitle">Tax regulations and requirements</p>
+                                </div>
+                            </div>
+
+                            {% for section, title, icon in [
+                                ('corporate_taxes_section', 'Corporate Taxes', 'fas fa-building'),
+                                ('accounting_rules_section', 'Accounting Rules', 'fas fa-book'),
+                                ('consumption_taxes_section', 'Consumption Taxes', 'fas fa-shopping-cart'),
+                                ('individual_taxes_section', 'Individual Taxes', 'fas fa-user'),
+                                ('double_taxation_section', 'Double Taxation Treaties', 'fas fa-globe'),
+                                ('sources_section', 'Sources of Fiscal Information', 'fas fa-info-circle')
+                            ] if tax_system_data[section] %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="{{ icon }} me-2"></i>{{ title }}</h5>
+                                <div class="santander-html">{{ tax_system_data[section]|safe }}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Foreign Trade in Figures Section -->
+                <section class="report-section" id="foreign-trade-in-figures">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <div class="section-flag-fallback"><i class="fas fa-exchange-alt"></i></div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">Foreign Trade in Figures</h3>
+                                    <p class="form-subtitle">Detailed trade statistics and analysis</p>
+                                </div>
+                            </div>
+
+                            <div class="trade-subnav">
+                                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                                    {% for link in [
+                                        ('trade-partners', 'fas fa-users', 'Partners'),
+                                        ('trade-products', 'fas fa-box', 'Products'),
+                                        ('trade-services', 'fas fa-shipping-fast', 'Services'),
+                                        ('trade-exchange', 'fas fa-coins', 'Exchange Rate'),
+                                        ('trade-monetary', 'fas fa-chart-bar', 'Monetary')
+                                    ] %}
+                                    <a href="#{{ link[0] }}" class="trade-nav-link"><i class="{{ link[1] }} me-1"></i>{{ link[2] }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% for section, title, icon, tables in [
+                                ('trade-partners', 'Main Trade Partners', 'fas fa-users', [
+                                    ('main_customers_table', 'Main Export Partners', 'fas fa-arrow-up'),
+                                    ('main_suppliers_table', 'Main Import Partners', 'fas fa-arrow-down')
+                                ]),
+                                ('trade-products', 'Main Products', 'fas fa-box', [
+                                    ('main_export_products_table', 'Products Exported', 'fas fa-box-open'),
+                                    ('main_import_products_table', 'Products Imported', 'fas fa-boxes')
+                                ]),
+                                ('trade-services', 'Main Services', 'fas fa-shipping-fast', [
+                                    ('main_export_services_table', 'Services Exported', 'fas fa-shipping-fast'),
+                                    ('main_import_services_table', 'Services Imported', 'fas fa-truck-loading')
+                                ])
+                            ] %}
+                            <div id="{{ section }}" class="trade-section">
+                                <h4 class="table-card-title"><i class="{{ icon }} me-2"></i>{{ title }}</h4>
+                                <div class="form-row">
+                                    {% for table_id, table_title, table_icon in tables if globals()[table_id] %}
+                                    <div class="form-group">
+                                        <div class="table-card">
+                                            <h5 class="table-card-title"><i class="{{ table_icon }} me-2"></i>{{ table_title }}</h5>
+                                            <div class="table-responsive">{{ globals()[table_id]|safe }}</div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            {% for section, title, icon, table in [
+                                ('trade-exchange', 'Exchange Rate System', 'fas fa-coins', 'exchange_rate_dl'),
+                                ('trade-monetary', 'Monetary Indicators', 'fas fa-chart-bar', 'monetary_indicators_table')
+                            ] if globals()[table] %}
+                            <div id="{{ section }}" class="trade-section">
+                                <h4 class="table-card-title"><i class="{{ icon }} me-2"></i>{{ title }}</h4>
+                                <div class="table-card">
+                                    <div class="table-responsive">{{ globals()[table]|safe }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Import/Export Flows Section -->
+                <section class="report-section" id="import-export-flows">
+                    <div class="converter-card">
+                        <div class="card-body">
+                            <div class="section-header">
+                                <div class="section-icon-flag">
+                                    <div class="section-flag-fallback"><i class="fas fa-random"></i></div>
+                                </div>
+                                <div class="section-title-content">
+                                    <h3 class="form-title">Import/Export Flows</h3>
+                                    <p class="form-subtitle">Trade flow analysis and trends</p>
+                                </div>
+                            </div>
+
+                            {% if flows_intro %}
+                            <div class="content-section">
+                                {{ flows_intro|plain_text }}
+                            </div>
+                            {% endif %}
+
+                            <div class="chart-container">
+                                <canvas id="flowsChart" height="120"></canvas>
+                            </div>
+
+                            <div class="form-row">
+                                {% for flow, title, icon, table in [
+                                    ('export-flows-table', 'Export Flows', 'fas fa-arrow-up', 'flows_data.export_table_html'),
+                                    ('import-flows-table', 'Import Flows', 'fas fa-arrow-down', 'flows_data.import_table_html')
+                                ] %}
+                                <div class="form-group">
+                                    <div class="table-card">
+                                        <h5 class="table-card-title"><i class="{{ icon }} me-2"></i>{{ title }}</h5>
+                                        {% if globals()[table.split('.')[0]][table.split('.')[1]] %}
+                                        <div class="table-responsive" id="{{ flow }}">{{ globals()[table.split('.')[0]][table.split('.')[1]]|safe }}</div>
+                                        {% else %}
+                                        <p class="no-data">No {{ title|lower }} data available.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if flows_insights %}
+                            <div class="content-section">
+                                <h5 class="content-title"><i class="fas fa-lightbulb me-2"></i>Flow Analysis Insights</h5>
+                                {{ flows_insights|plain_text }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    --bg-blue: #0ea5e9;
+    --bg-green: #10b981;
+    --bg-purple: #a855f7;
+    --bg-orange: #f59e0b;
+    --bg-red: #ef4444;
+    --bg-teal: #14b8a6;
+    --bg-indigo: #6366f1;
+    --bg-pink: #ec4899;
+    --bg-cyan: #06b6d4;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--glass-border);
+    flex-wrap: wrap;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.hero-divider {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.8rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.services-navigation-section {
+    padding: 1rem 0 2rem 0;
+}
+
+.services-nav-container {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--glass-border);
+    justify-content: center;
+}
+
+.nav-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.nav-pill:hover, .nav-pill.active {
+    background: var(--accent-color);
+    color: var(--text-light);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+}
+
+.info-sidebar {
+    position: sticky;
+    top: 1rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    margin-bottom: 1.5rem;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.info-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.features-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    background: rgba(75, 94, 140, 0.1);
+    transform: translateX(2px);
+}
+
+.feature-item i {
+    color: var(--accent-color);
+    font-size: 0.75rem;
+}
+
+.feature-item span {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.feature-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.feature-icon.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+}
+
+.feature-icon.bg-blue { background: linear-gradient(135deg, var(--bg-blue), #0284c7); }
+.feature-icon.bg-green { background: linear-gradient(135deg, var(--bg-green), #059669); }
+.feature-icon.bg-purple { background: linear-gradient(135deg, var(--bg-purple), #9333ea); }
+.feature-icon.bg-orange { background: linear-gradient(135deg, var(--bg-orange), #d97706); }
+.feature-icon.bg-red { background: linear-gradient(135deg, var(--bg-red), #dc2626); }
+.feature-icon.bg-teal { background: linear-gradient(135deg, var(--bg-teal), #0d9488); }
+.feature-icon.bg-indigo { background: linear-gradient(135deg, var(--bg-indigo), #4f46e5); }
+.feature-icon.bg-pink { background: linear-gradient(135deg, var(--bg-pink), #db2777); }
+.feature-icon.bg-cyan { background: linear-gradient(135deg, var(--bg-cyan), #0891b2); }
+
+.feature-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.feature-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.feature-value.highlight {
+    color: var(--bg-orange);
+}
+
+.form-section {
+    min-height: fit-content;
+}
+
+.report-section {
+    scroll-margin-top: 2rem;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-icon-flag {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.section-flag-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.section-flag-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+}
+
+.section-title-content {
+    flex: 1;
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.form-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    max-width: 400px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.content-section {
+    margin-bottom: 1.5rem;
+}
+
+.content-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.santander-html {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+.santander-html h1, .santander-html h2, .santander-html h3, 
+.santander-html h4, .santander-html h5, .santander-html h6 {
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.santander-html p {
+    margin-bottom: 1rem;
+}
+
+.santander-html table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.santander-html table th, .santander-html table td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    color: var(--text-color);
+}
+
+.santander-html table th {
+    background: rgba(75, 94, 140, 0.1);
+    font-weight: 600;
+}
+
+.santander-html ul, .santander-html ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.santander-html li {
+    margin-bottom: 0.5rem;
+}
+
+.trade-subnav {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+.trade-nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+
+.trade-nav-link:hover {
+    background: rgba(75, 94, 140, 0.1);
+    color: var(--primary-color);
+}
+
+.trade-section {
+    margin-bottom: 2rem;
+}
+
+.table-card {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.table-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.data-table thead {
+    background: var(--primary-color);
+    color: var(--text-light);
+}
+
+.data-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.data-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    background: var(--bg-color);
+}
+
+.data-table tbody tr:hover {
+    background: rgba(75, 94, 140, 0.05);
+}
+
+.indicator-cell {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.chart-container {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.no-data {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+}
+
+.update-info {
+    text-align: right;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.sectors-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.sector-tag {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.sector-tag:hover {
+    background: rgba(16, 185, 129, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .info-sidebar {
+        position: static;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .service-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .service-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    .section-icon-flag {
+        width: 50px;
+        height: 50px;
+    }
+    .form-title {
+        font-size: 1.4rem;
+    }
+    .nav-pill {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .data-table {
+        font-size: 0.8rem;
+    }
+    .data-table th, .data-table td {
+        padding: 0.625rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .service-hero-section,
+    .hero-background,
+    .animated-shapes,
+    .services-navigation-section,
+    .info-sidebar,
+    .header-actions,
+    .trade-subnav {
+        display: none !important;
+    }
+    
+    .converter-main-content {
+        background: var(--bg-color) !important;
+        padding: 0;
+    }
+    
+    .converter-card {
+        background: var(--bg-color) !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+    }
+    
+    .form-title {
+        color: var(--text-color) !important;
+    }
+}
+</style>
+
+<script>
+// Parse flows table for chart data
+function parseFlowsTimeSeries(tableId) {
+    const table = document.getElementById(tableId)?.querySelector('table');
+    if (!table) return {partners: [], years: [], data: {}};
+    let years = [];
+    let partners = [];
+    let data = {};
+    const thead = table.querySelector('thead');
+    if (thead) {
+        const ths = thead.querySelectorAll('th');
+        for (let i = 1; i < ths.length; ++i) {
+            let year = ths[i].innerText.trim();
+            if (/^\d{4}$/.test(year)) years.push(year);
+        }
+    }
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    let startIdx = 0;
+    if (years.length === 0 && rows.length > 0) {
+        const firstRowCells = Array.from(rows[0].querySelectorAll('td, th'));
+        if (firstRowCells.length > 1 && firstRowCells[0].innerText.trim().toLowerCase() === 'country') {
+            for (let i = 1; i < firstRowCells.length; ++i) {
+                let year = firstRowCells[i].innerText.trim();
+                if (/^\d{4}$/.test(year)) years.push(year);
+            }
+            startIdx = 1;
+        }
+    }
+    for (let r = startIdx; r < rows.length; ++r) {
+        const cells = rows[r].querySelectorAll('td, th');
+        if (cells.length >= 2) {
+            let partner = cells[0].innerText.trim();
+            if (partner.toLowerCase() === 'country') continue;
+            partners.push(partner);
+            data[partner] = [];
+            for (let i = 1; i < cells.length && i <= years.length; ++i) {
+                let num = parseFloat(cells[i].innerText.replace(/[^\d.-]/g, ''));
+                data[partner].push(!isNaN(num) ? num : null);
+            }
+        }
+    }
+    return {partners, years, data};
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize flows chart
+    const exportSeries = parseFlowsTimeSeries('export-flows-table');
+    const importSeries = parseFlowsTimeSeries('import-flows-table');
+    const allYears = Array.from(new Set([...(exportSeries.years || []), ...(importSeries.years || [])])).sort();
+    const datasets = [];
+
+    exportSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Export: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = exportSeries.years.indexOf(year);
+                return yearIdx !== -1 ? exportSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(75, 94, 140, 1)',
+            backgroundColor: 'rgba(75, 94, 140, 0.1)',
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+
+    importSeries.partners.forEach((partner, idx) => {
+        datasets.push({
+            label: `Import: ${partner}`,
+            data: allYears.map((year, i) => {
+                const yearIdx = importSeries.years.indexOf(year);
+                return yearIdx !== -1 ? importSeries.data[partner][yearIdx] : null;
+            }),
+            borderColor: 'rgba(16, 185, 129, 1)',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderDash: [5, 5],
+            tension: 0.3,
+            spanGaps: true
+        });
+    });
+
+    const ctx = document.getElementById('flowsChart')?.getContext('2d');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: allYears,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Import/Export Flows Evolution by Year' }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Year' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Value' }, 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    }
+                }
+            }
+        });
+    }
+
+    // Export as Word document
+    function exportReportToWord(filename = 'report.doc') {
+        const content = document.querySelector('.form-section').cloneNode(true);
+        const header = document.querySelector('.service-header').cloneNode(true);
+        header.querySelector('.header-actions')?.remove();
+        
+        const exportContainer = document.createElement('div');
+        exportContainer.appendChild(header);
+        exportContainer.appendChild(content);
+        
+        exportContainer.querySelectorAll('.services-nav-container, .trade-subnav').forEach(el => el.remove());
+        
+        const html = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head><meta charset='utf-8'><title>Market Analysis Report - {{ form_data.destination_country_name }}</title></head>
+            <body>${exportContainer.innerHTML}</body>
+            </html>
+        `;
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+
+    document.getElementById('exportWordBtn')?.addEventListener('click', function() {
+        exportReportToWord('Market_Analysis_Report_{{ form_data.destination_country_name }}.doc');
+    });
+
+    // Smooth scrolling and active nav
+    document.querySelectorAll('.nav-pill, .trade-nav-link, .service-pill').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (this.getAttribute('href')?.startsWith('#')) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+
+    const sections = document.querySelectorAll('.report-section');
+    const navPills = document.querySelectorAll('.nav-pill');
+
+    function updateActiveNav() {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= (sectionTop - 100)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navPills.forEach(pill => {
+            pill.classList.remove('active');
+            if (pill.getAttribute('href') === `#${current}`) {
+                pill.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+});
+</script>
+{% endblock %}

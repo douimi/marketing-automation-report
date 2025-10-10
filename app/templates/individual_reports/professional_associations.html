@@ -1,0 +1,460 @@
+
+{% extends "individual_reports/base_individual_report.html" %}
+
+{% block report_title %}Professional Associations{% endblock %}
+{% block report_icon %}fas fa-certificate{% endblock %}
+
+{% block report_content %}
+<!-- Report Hero Section -->
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container compact-container">
+        <div class="hero-content">
+            <div class="service-header">
+                <div class="service-icon"><i class="fas fa-certificate fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">Professional Associations</h1>
+                    <p class="hero-subtitle">Discover industry-specific professional organizations</p>
+                    <p class="hero-stats"><small><i class="fas fa-graduation-cap me-1"></i>Indatex Academy • Industry Insights</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="converter-main-content">
+    <div class="container compact-container">
+        {% if professional_associations_data.error %}
+        <!-- Error Message -->
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card alert-danger">
+                    <div class="info-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="info-content">
+                        <h4>Error</h4>
+                        <p>{{ professional_associations_data.error }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Search Summary -->
+        {% if professional_associations_data.results_summary %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-search"></i></div>
+                    <div class="info-content">
+                        <h4>Search Results</h4>
+                        <p>{{ professional_associations_data.results_summary }}</p>
+                        {% if professional_associations_data.country_name %}
+                        <div class="search-params mt-2">
+                            <small class="text-muted">
+                                <strong>Search Parameters:</strong>
+                                Industry: {{ professional_associations_data.search_params.industry_name }},
+                                Country: {{ professional_associations_data.search_params.country_name }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Professional Associations -->
+        {% if professional_associations_data.associations %}
+        <div class="row">
+            <div class="col-12">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <h4 class="mb-4">
+                            <i class="fas fa-certificate me-2" style="color: var(--accent-color);"></i>
+                            Professional Associations
+                            <span class="badge bg-primary ms-2">{{ professional_associations_data.total_associations }} associations</span>
+                        </h4>
+                        <div class="row">
+                            {% for association in professional_associations_data.associations %}
+                            <div class="col-md-6 mb-4">
+                                <div class="info-card h-100">
+                                    <div class="info-content">
+                                        <h5 class="card-title mb-2">
+                                            {% if association.url %}
+                                            <a href="{{ association.url }}" target="_blank" class="text-decoration-none">
+                                                {{ association.name }}
+                                                <i class="fas fa-external-link-alt ms-1 small"></i>
+                                            </a>
+                                            {% else %}
+                                            {{ association.name }}
+                                            {% endif %}
+                                        </h5>
+                                        {% if association.description %}
+                                        <p class="card-text text-muted mb-2">{{ association.description }}</p>
+                                        {% endif %}
+                                        {% if association.geographical_coverage %}
+                                        <span class="badge bg-secondary mb-2">
+                                            <i class="fas fa-globe me-1"></i>{{ association.geographical_coverage }}
+                                        </span>
+                                        {% endif %}
+                                        {% if association.sector %}
+                                        <div class="association-details mt-2">
+                                            <small class="text-muted">
+                                                <i class="fas fa-industry me-1"></i>{{ association.sector }}
+                                            </small>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- No Results Message -->
+        {% if not professional_associations_data.associations and not professional_associations_data.error %}
+        <div class="row">
+            <div class="col-12">
+                <div class="info-card alert-warning">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="info-content">
+                        <p>No professional associations found for the selected criteria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1200px;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.hero-stats {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.converter-main-content {
+    background: var(--bg-color);
+    padding: 2rem 0;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.info-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card.alert-danger {
+    border-left: 4px solid #dc2626;
+}
+
+.info-card.alert-warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.info-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-content h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.info-content p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.search-params {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.badge.bg-primary {
+    background: var(--primary-light) !important;
+    color: var(--text-light);
+    font-size: 0.75rem;
+}
+
+.badge.bg-secondary {
+    background: var(--text-muted) !important;
+    color: var(--text-light);
+    font-size: 0.75rem;
+}
+
+.association-details {
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.text-decoration-none {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.text-decoration-none:hover {
+    color: var(--primary-light);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-hero-section {
+        padding: 2rem 0;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card, .converter-card {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+}
+
+@media print {
+    .converter-card, .info-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    .info-icon, .service-icon {
+        background: none;
+        color: #000;
+    }
+    .hero-background, .animated-shapes {
+        display: none;
+    }
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Card animation on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.info-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // External link tracking
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('External link clicked:', this.href);
+        });
+    });
+
+    console.log('Professional Associations page initialized');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,681 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Market Research Service{% endblock %}
+
+{% block content %}
+<section class="service-hero-section">
+    <div class="hero-background">
+        <div class="animated-shapes">
+            {% for i in range(8) %}
+            <div class="shape shape-{{ i+1 }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container compact-container">
+        <!-- Back to Services -->
+        <div class="mb-4">
+            <a href="{{ url_for('main.services_page') }}" class="btn-action btn-outline">
+                <i class="fas fa-arrow-left me-2"></i>Back to Services
+            </a>
+        </div>
+
+        <!-- Service Header -->
+        <div class="hero-content text-center mb-5">
+            <div class="service-header">
+                <div class="service-icon"><i class="{{ service.icon }} fa-2x"></i></div>
+                <div>
+                    <h1 class="hero-title">{{ service.title }}</h1>
+                    <p class="hero-subtitle">{{ service.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="converter-card">
+                    <div class="card-body">
+                        <div class="form-header">
+                            <h3 class="form-title"><i class="{{ service.icon }} me-2"></i>Generate {{ service.title }} Report</h3>
+                        </div>
+                        <form id="serviceForm" method="POST" action="{{ url_for('main.start_individual_service') }}">
+                            <input type="hidden" name="service_type" value="{{ service_type }}">
+                            
+                            <div class="form-group">
+                                <label for="industry" class="form-label">
+                                    <i class="fas fa-industry me-2"></i>Industry Sector
+                                </label>
+                                <select class="form-select" id="industry" name="industry" required style="width: 100%">
+                                    <option value="" disabled selected>Select Industry Sector</option>
+                                </select>
+                                <div class="form-text">Select the industry sector you want to analyze</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="geographical_area" class="form-label">
+                                    <i class="fas fa-globe me-2"></i>Country
+                                </label>
+                                <select class="form-select" id="geographical_area" name="geographical_area" required style="width: 100%">
+                                    <option value="" disabled selected>Select Country</option>
+                                </select>
+                                <div class="form-text">Select the country to search in</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn-action w-100">
+                                    <i class="fas fa-play me-2"></i>Generate {{ service.title }} Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Features -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-4 service-features-title">What You'll Get</h4>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h6>Targeted Directories</h6>
+                            <p class="text-muted small">Industry-specific business directories for your target market</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h6>Country-Specific</h6>
+                            <p class="text-muted small">Find business directories specific to your target country</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <h6>Direct Links</h6>
+                            <p class="text-muted small">Ready-to-use links to business directory websites</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Select2 CSS/JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize industry selector with static options
+    const industries = [
+        {id: "1", text: "Administration, Institutions, Justice, Social services"},
+        {id: "18", text: "Aeronautics, Aerospace"},
+        {id: "2", text: "Agriculture, Horticulture, Livestock, Fishing, Forestry"},
+        {id: "3", text: "Arts, Culture, Handcraft, Museums, Entertainment"},
+        {id: "4", text: "Audiovisual, Cinema, Photography, Multimedia"},
+        {id: "17", text: "Automotive, Lorries, Cycles, Motorcycles"},
+        {id: "5", text: "Banking, Finance, Investment, Insurance"},
+        {id: "30", text: "Business services: Services, Outsourcing"},
+        {id: "14", text: "Chemicals, Cosmetics, Pharma, Plastics, Fertilisers"},
+        {id: "8", text: "Communication, Marketing, Advertising, Incentive"},
+        {id: "6", text: "Construction, Real Estate, Architecture, Urbanism"},
+        {id: "16", text: "Defense, Armaments, Security"},
+        {id: "9", text: "Education, Training, Apprenticeship"},
+        {id: "21", text: "Electricity and electronics: Equipment and components"},
+        {id: "19", text: "Energy, Oil, Gas, Hydrogen, Electricity, Renewables"},
+        {id: "10", text: "Environment, Ecology, Water, Recycling, Waste"},
+        {id: "12", text: "Fresh & Processed Food, Beverages, Cereals, Tobacco"},
+        {id: "11", text: "Furniture, Decoration, DIY, Garden"},
+        {id: "28", text: "Health, Hospital, Pharmacies, Dental, Veterinary"},
+        {id: "25", text: "Industrial subcontracting, Maintenance, Design, IP"},
+        {id: "27", text: "IT, Hardware, Software, Telecommunications, Internet"},
+        {id: "23", text: "Materials, Metals, Metallurgy, Mining, Quarries"},
+        {id: "15", text: "Mechanical, Railway, Naval, Machinery, Agricultural machinery"},
+        {id: "22", text: "Packaging, Conditioning"},
+        {id: "31", text: "Personal Services, Family, Pets"},
+        {id: "26", text: "Press, Information, Events, Bookstores, Libraries"},
+        {id: "20", text: "Printing, Publishing, Graphic Art, Stamps, Cards"},
+        {id: "29", text: "Science, Humanities, Research, Technology"},
+        {id: "32", text: "Sports, Leisure, Hunting, Hobbies, Toys"},
+        {id: "24", text: "Textile, Clothing, Footwear, Accessories, Jewellery"},
+        {id: "34", text: "Tourism, Travel, Hosting, Bars, Restaurants, Parks"},
+        {id: "7", text: "Trade, Distribution, Retail, Import/Export"},
+        {id: "33", text: "Transport, Logistics, Handling, Parcel Shipping"},
+        {id: "13", text: "Wood, Paper, Cardboard"},
+        {id: "all", text: "All Industries"}
+    ];
+
+    function formatCountry(country) {
+        if (country.loading) return country.text;
+        return $('<span>' + country.text + '</span>');
+    }
+    function formatCountrySelection(country) {
+        return country.text || country.id;
+    }
+
+    $('#industry').select2({
+        data: industries,
+        placeholder: 'Select an industry',
+        allowClear: true
+    });
+
+    $('#geographical_area').select2({
+        ajax: {
+            url: '/api/countries',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { results: data.items };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        templateResult: formatCountry,
+        templateSelection: formatCountrySelection,
+        placeholder: 'Select a country',
+        allowClear: true
+    });
+});
+
+document.getElementById('serviceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Submit form directly - centralized loading page will handle loading state
+    fetch(this.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new FormData(this)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => Promise.reject(err));
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.redirect_url) {
+            // Redirect to the centralized loading page
+            window.location.href = data.redirect_url;
+        } else if (data.status === 'error') {
+            alert('Error: ' + (data.message || 'An error occurred'));
+        } else {
+            alert('Unexpected response format. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'An error occurred. Please try again.'));
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.converter-card, .feature-box').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    console.log('Market Research Service page initialized');
+});
+</script>
+
+<style>
+:root {
+    --primary-color: #4b5e8c; /* Slate blue */
+    --primary-light: #6b7aab; /* Lighter blue */
+    --accent-color: #10b981; /* Success green */
+    --text-color: #1e293b; /* Dark text */
+    --text-light: #f9fafb; /* Light text */
+    --text-muted: #64748b; /* Muted gray */
+    --bg-color: #ffffff; /* White background */
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+}
+
+.service-hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 0;
+}
+
+.animated-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(75, 94, 140, 0.3);
+    border-radius: 50%;
+    animation: moveShape 15s linear infinite;
+}
+
+.shape-1 { width: 50px; height: 50px; top: 10%; left: 5%; animation-delay: 0s; }
+.shape-2 { width: 30px; height: 30px; top: 20%; left: 15%; animation-delay: 2s; }
+.shape-3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-delay: 4s; }
+.shape-4 { width: 60px; height: 60px; top: 50%; left: 20%; animation-delay: 6s; }
+.shape-5 { width: 25px; height: 25px; top: 60%; right: 15%; animation-delay: 8s; }
+.shape-6 { width: 45px; height: 45px; top: 70%; left: 30%; animation-delay: 10s; }
+.shape-7 { width: 35px; height: 35px; top: 80%; right: 25%; animation-delay: 12s; }
+.shape-8 { width: 55px; height: 55px; top: 90%; left: 10%; animation-delay: 14s; }
+
+@keyframes moveShape {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translate(100px, -50px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+}
+
+.compact-container {
+    max-width: 1000px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0.5rem auto;
+}
+
+.converter-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.converter-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+}
+
+.form-title i {
+    color: var(--accent-color);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-color) !important;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.form-label i {
+    color: var(--primary-color);
+}
+
+.form-select {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem;
+    width: 100%;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.form-select:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(107, 122, 171, 0.3);
+}
+
+.form-text {
+    color: var(--text-muted) !important;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border: none;
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background: rgba(75, 94, 140, 0.1);
+}
+
+.service-features-title {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.feature-box {
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    height: 200px; /* Fixed height for all cards */
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    margin: 0 auto 1rem;
+    box-shadow: var(--shadow);
+}
+
+.feature-box h6 {
+    color: var(--text-color);
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.feature-box p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 1.3;
+    max-height: 2.6rem; /* Limit height to prevent overflow */
+    overflow: hidden;
+}
+
+/* ========================================
+   SELECT2 DROPDOWN FIXES - VISIBILITY
+======================================== */
+
+/* Main selection box */
+.select2-container--default .select2-selection--single {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    height: auto !important;
+    padding: 0.5rem !important;
+}
+
+/* Selected text in the box */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--text-color) !important;
+    line-height: 1.5;
+}
+
+/* Placeholder text */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: var(--text-muted) !important;
+}
+
+/* Arrow icon */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--text-color) transparent transparent transparent !important;
+}
+
+/* Dropdown container */
+.select2-dropdown {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px !important;
+    color: var(--text-color) !important;
+}
+
+/* Search input in dropdown */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    border-radius: 8px !important;
+    padding: 0.5rem !important;
+}
+
+/* All dropdown options */
+.select2-container--default .select2-results__option {
+    color: var(--text-color) !important;
+    padding: 0.5rem 1rem;
+    background: var(--bg-color);
+}
+
+/* Highlighted option on hover */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+/* Selected option in dropdown */
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background: rgba(75, 94, 140, 0.1) !important;
+    color: var(--text-color) !important;
+}
+
+/* Selected option on hover */
+.select2-container--default .select2-results__option[aria-selected=true]:hover {
+    background: var(--primary-light) !important;
+    color: var(--text-light) !important;
+}
+
+/* Loading message */
+.select2-container--default .select2-results__option.loading-results {
+    color: var(--text-muted) !important;
+}
+
+/* No results message */
+.select2-container--default .select2-results__option.select2-results__message {
+    color: var(--text-muted) !important;
+}
+
+/* Focus state */
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 0 0 3px rgba(107, 122, 171, 0.3) !important;
+}
+
+/* Disabled state */
+.select2-container--default .select2-selection--single.select2-selection--disabled {
+    background-color: #f1f5f9 !important;
+    color: var(--text-muted) !important;
+}
+
+/* Clear button */
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    color: var(--text-muted) !important;
+    font-size: 1.2rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear:hover {
+    color: var(--text-color) !important;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .feature-box {
+        height: 220px; /* Adjust height for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .service-header {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .card-body {
+        padding: 1.5rem;
+    }
+    .feature-box {
+        height: 240px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .converter-card, .feature-box {
+        margin: 0 -0.5rem;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .compact-container {
+        padding: 0 0.5rem;
+    }
+    .feature-box {
+        height: 260px; /* Adjust height for very small screens */
+    }
+}
+
+@media print {
+    .converter-card, .feature-box {
+        background: #fff;
+        color: #000;
+        border-color: #ddd;
+    }
+}
+</style>
+{% endblock %}
